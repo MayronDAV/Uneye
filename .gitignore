@@ -1,8 +1,14 @@
-﻿# Directories
-.vs/
-bin/
+﻿# Binaries
+**/bin/
 bin-int/
 
-# Files
-.gitignore
-*.user
+# Hazel files
+*.log
+
+# Visual Studio files and folder
+.vs/
+**.sln
+**.vcxproj
+**.vcxproj.filters
+**.vcxproj.user
+**.csproj

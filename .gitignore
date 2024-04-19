@@ -1,4 +1,8 @@
 ﻿# Directories
-/.vs/
-/bin/
-/bin-int/
+.vs/
+bin/
+bin-int/
+
+# Files
+.gitignore
+*.user

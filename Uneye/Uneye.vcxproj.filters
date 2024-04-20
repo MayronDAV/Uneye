@@ -4,6 +4,9 @@
     <Filter Include="Uneye">
       <UniqueIdentifier>{4B323F0E-B746-67BF-80C8-0A1FEC9B63F0}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Uneye\Events">
+      <UniqueIdentifier>{CFFBB18F-BB5E-4134-64E4-79EA50260DB7}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Uneye.h" />
@@ -16,10 +19,21 @@
     <ClInclude Include="src\Uneye\EntryPoint.h">
       <Filter>Uneye</Filter>
     </ClInclude>
+    <ClInclude Include="src\Uneye\Events\ApplicationEvent.h">
+      <Filter>Uneye\Events</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Uneye\Events\Event.h">
+      <Filter>Uneye\Events</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Uneye\Events\KeyEvent.h">
+      <Filter>Uneye\Events</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Uneye\Events\MouseEvent.h">
+      <Filter>Uneye\Events</Filter>
+    </ClInclude>
     <ClInclude Include="src\Uneye\Log.h">
       <Filter>Uneye</Filter>
     </ClInclude>
-    <ClInclude Include="src\Uneye\Events\Event.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Uneye\Application.cpp">

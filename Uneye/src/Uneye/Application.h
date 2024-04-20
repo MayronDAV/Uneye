@@ -10,7 +10,7 @@ namespace Uneye {
 			Application();
 			virtual ~Application();
 
-			virtual void Run();
+			void Run();
 	};
 
 

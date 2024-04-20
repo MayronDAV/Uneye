@@ -26,6 +26,7 @@ project "Uneye"
 
 	includedirs
 	{
+		"%{prj.name}/src",
 		"%{prj.name}/thirdyparty/spdlog/include"
 	}
 

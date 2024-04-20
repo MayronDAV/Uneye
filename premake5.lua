@@ -18,6 +18,9 @@ project "Uneye"
 	targetdir("bin/" .. outputdir .. "/%{prj.name}")
 	objdir("bin-int/" .. outputdir .. "/%{prj.name}")
 
+	pchheader "Uneyepch.h"
+	pchsource "Uneye/src/Uneyepch.cpp"
+
 	files
 	{
 		"%{prj.name}/src/**.h",

@@ -1,5 +1,4 @@
 #pragma once
-
 #ifdef UNEYE_PLATFORM_WINDOWS
 
 #include "Application.h"

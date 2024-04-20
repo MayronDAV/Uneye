@@ -1,3 +1,5 @@
+#include "Uneyepch.h"
+
 #include "Application.h"
 
 #include <Uneye/Events/ApplicationEvent.h>

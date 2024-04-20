@@ -2,10 +2,6 @@
 
 #include "Uneye/Core.h"
 
-#include <string>
-#include <functional>
-#include <iostream>
-
 
 namespace Uneye
 {

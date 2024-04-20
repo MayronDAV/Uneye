@@ -1,19 +1,26 @@
 #pragma once
 
-#ifdef UY_PLATFORM_WINDOWS
+#ifdef UNEYE_PLATFORM_WINDOWS
 
 #include "Application.h"
 
-extern uy::Application* uy::CreateApplication();
+extern Uneye::Application* Uneye::CreateApplication();
 
 int main(int argc, char** argv)
 {
-	auto app = uy::CreateApplication();
+	Uneye::Log::Init();
+	//Uneye::Log::GetCoreLogger()->warn("Initialized");
+	//Uneye::Log::GetClientLogger()->info("Hello");
+	UNEYE_CORE_WARN("Initialized!");
+	int a = 10;
+	UNEYE_INFO("Hello Var = {0}", a);
+		
+	auto app = Uneye::CreateApplication();
 	app->Run();
 	delete app;
-
+	
 	return 0;
 }
 
 
-#endif // UY_PLATFORM_WINDOWS
+#endif // UNEYE_PLATFORM_WINDOWS

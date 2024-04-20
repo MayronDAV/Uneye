@@ -2,9 +2,9 @@
 
 #include "Core.h"
 
-namespace uy {
+namespace Uneye {
 
-	class UY_API Application
+	class UNEYE_API Application
 	{
 		public:
 			Application();

@@ -1,13 +1,15 @@
 #pragma once
 
-#ifdef UY_PLATFORM_WINDOWS
+#ifdef UNEYE_PLATFORM_WINDOWS
 
-	#ifdef UY_BUILD_DLL
-		#define UY_API __declspec(dllexport)
+	#ifdef UNEYE_BUILD_DLL
+		#define UNEYE_API __declspec(dllexport)
 	#else
-		#define UY_API __declspec(dllimport)
+		#define UNEYE_API __declspec(dllimport)
 	#endif
 
 #else
 	#error Uneye Engine only support windows
 #endif
+
+#define BIT(x) (1 << x)

@@ -1,0 +1,3 @@
+[submodule "Uneye/thirdyparty/spdlog"]
+	path = Uneye/thirdyparty/spdlog
+	url = https://github.com/gabime/spdlog

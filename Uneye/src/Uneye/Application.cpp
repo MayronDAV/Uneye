@@ -1,6 +1,6 @@
 #include "Application.h"
 
-namespace uy {
+namespace Uneye {
 
 	Application::Application()
 	{

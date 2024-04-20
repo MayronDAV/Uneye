@@ -1,6 +1,6 @@
 #include <Uneye.h>
 
-class Sandbox : public uy::Application
+class Sandbox : public Uneye::Application
 {
 	public:
 		Sandbox() { }
@@ -16,7 +16,7 @@ class Sandbox : public uy::Application
 		}
 };
 
-uy::Application* uy::CreateApplication()
+Uneye::Application* Uneye::CreateApplication()
 {
 	return new Sandbox();
 }

@@ -80,10 +80,11 @@
       <PrecompiledHeaderFile>Uneyepch.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>UNEYE_PLATFORM_WINDOWS;UNEYE_BUILD_DLL;UNEYE_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>src;thirdyparty\spdlog\include;thirdyparty\GLFW\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>src;thirdyparty\spdlog\include;thirdyparty\GLFW\include;thirdyparty\Glad\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
       <Optimization>Disabled</Optimization>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
+      <AdditionalOptions>/MDd %(AdditionalOptions)</AdditionalOptions>
       <LanguageStandard>stdcpp17</LanguageStandard>
       <ExternalWarningLevel>Level3</ExternalWarningLevel>
     </ClCompile>
@@ -103,13 +104,14 @@
       <PrecompiledHeaderFile>Uneyepch.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>UNEYE_PLATFORM_WINDOWS;UNEYE_BUILD_DLL;UNEYE_RELEASE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>src;thirdyparty\spdlog\include;thirdyparty\GLFW\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>src;thirdyparty\spdlog\include;thirdyparty\GLFW\include;thirdyparty\Glad\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <Optimization>Full</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <MinimalRebuild>false</MinimalRebuild>
       <StringPooling>true</StringPooling>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <AdditionalOptions>/MD %(AdditionalOptions)</AdditionalOptions>
       <LanguageStandard>stdcpp17</LanguageStandard>
       <ExternalWarningLevel>Level3</ExternalWarningLevel>
     </ClCompile>
@@ -130,13 +132,14 @@
       <PrecompiledHeaderFile>Uneyepch.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>UNEYE_PLATFORM_WINDOWS;UNEYE_BUILD_DLL;UNEYE_DIST;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>src;thirdyparty\spdlog\include;thirdyparty\GLFW\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>src;thirdyparty\spdlog\include;thirdyparty\GLFW\include;thirdyparty\Glad\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <Optimization>Full</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <MinimalRebuild>false</MinimalRebuild>
       <StringPooling>true</StringPooling>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <AdditionalOptions>/MD %(AdditionalOptions)</AdditionalOptions>
       <LanguageStandard>stdcpp17</LanguageStandard>
       <ExternalWarningLevel>Level3</ExternalWarningLevel>
     </ClCompile>
@@ -161,6 +164,8 @@
     <ClInclude Include="src\Uneye\Events\Event.h" />
     <ClInclude Include="src\Uneye\Events\KeyEvent.h" />
     <ClInclude Include="src\Uneye\Events\MouseEvent.h" />
+    <ClInclude Include="src\Uneye\Layer.h" />
+    <ClInclude Include="src\Uneye\LayerStack.h" />
     <ClInclude Include="src\Uneye\Log.h" />
     <ClInclude Include="src\Uneye\Window.h" />
     <ClInclude Include="src\Uneyepch.h" />
@@ -168,6 +173,8 @@
   <ItemGroup>
     <ClCompile Include="src\Platform\Windows\WinWindow.cpp" />
     <ClCompile Include="src\Uneye\Application.cpp" />
+    <ClCompile Include="src\Uneye\Layer.cpp" />
+    <ClCompile Include="src\Uneye\LayerStack.cpp" />
     <ClCompile Include="src\Uneye\Log.cpp" />
     <ClCompile Include="src\Uneyepch.cpp">
       <PrecompiledHeader>Create</PrecompiledHeader>
@@ -176,6 +183,9 @@
   <ItemGroup>
     <ProjectReference Include="thirdyparty\GLFW\GLFW.vcxproj">
       <Project>{154B857C-0182-860D-AA6E-6C109684020F}</Project>
+    </ProjectReference>
+    <ProjectReference Include="thirdyparty\Glad\Glad.vcxproj">
+      <Project>{BDD6857C-A90D-870D-52FA-6C103E10030F}</Project>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

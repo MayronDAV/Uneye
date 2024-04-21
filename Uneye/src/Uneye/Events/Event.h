@@ -42,18 +42,16 @@ namespace Uneye
 		public:
 			virtual ~Event() = default;
 
+			bool handled = false;
+
 			virtual EventType GetEventType() const = 0;
 			virtual const char* GetName() const = 0;
 			virtual int GetCategoryFlags() const = 0;
 			virtual std::string ToString() const { return GetName(); }
 
-			bool IsInCategory(EventCategory category)
-			{
+			bool IsInCategory(EventCategory category) const {
 				return GetCategoryFlags() & category;
 			}
-
-		protected:
-			bool m_Handled = false;
 	};
 
 
@@ -64,7 +62,7 @@ namespace Uneye
 
 
 		public:
-			EventDispatcher(Event& event)
+			explicit EventDispatcher(Event& event)
 				: m_Event(event)
 			{
 			}
@@ -75,7 +73,7 @@ namespace Uneye
 			{
 				if (m_Event.GetEventType() == T::GetStaticType())
 				{
-					m_Event.m_Handled |= func(*(T*)&m_Event);
+					m_Event.handled |= func(*(T*)&m_Event);
 					return true;
 				}
 

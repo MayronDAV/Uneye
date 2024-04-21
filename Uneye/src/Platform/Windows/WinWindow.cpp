@@ -12,7 +12,6 @@
 
 
 
-
 namespace Uneye
 {
 	static bool s_GLFWInitialized = false;
@@ -54,10 +53,15 @@ namespace Uneye
 
 
 		m_Window = glfwCreateWindow((int)props.Width, (int)props.Height, m_Data.Title.c_str(), nullptr, nullptr);
-		UNEYE_CORE_ASSERT(m_Window == NULL, "An Error has ocurred on window create");
+		UNEYE_CORE_ASSERT(m_Window == nullptr, "An Error has ocurred on window create");
 		UNEYE_CORE_INFO("Window '{0}' was created", m_Data.Title);
 
 		glfwMakeContextCurrent(m_Window);
+
+		// Load glad
+		int status = gladLoadGLLoader((GLADloadproc)glfwGetProcAddress);
+		UNEYE_CORE_ASSERT(!status, "Faile to initialize Glad!");
+
 		glfwSetWindowUserPointer(m_Window, &m_Data);
 		SetVSync(true);
 

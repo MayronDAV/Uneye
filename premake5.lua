@@ -12,8 +12,10 @@ outputdir = "%{cfg.buildcfg}-%{cfg.system}-%{cfg.architecture}"
 
 IncludeDir = {}
 IncludeDir["GLFW"] = "Uneye/thirdyparty/GLFW/include"
+IncludeDir["Glad"] = "Uneye/thirdyparty/Glad/include"
 
 include "Uneye/thirdyparty/GLFW"
+include "Uneye/thirdyparty/Glad"
 
 project "Uneye"
 	location "Uneye"
@@ -36,12 +38,14 @@ project "Uneye"
 	{
 		"%{prj.name}/src",
 		"%{prj.name}/thirdyparty/spdlog/include",
-		"%{IncludeDir.GLFW}"
+		"%{IncludeDir.GLFW}",
+		"%{IncludeDir.Glad}"
 	}
 
 	links
 	{
 		"GLFW",
+		"Glad",
 		"opengl32.lib"
 	}
 
@@ -64,16 +68,19 @@ project "Uneye"
 	filter "configurations:Debug"
 		runtime "Debug"
 		defines "UNEYE_DEBUG"
+		buildoptions "/MDd"
 		symbols "On"
 
 	filter "configurations:Release"
 		runtime "Release"
 		defines "UNEYE_RELEASE"
+		buildoptions "/MD"
 		optimize "On"
 
 	filter "configurations:Dist"
 		runtime "Release"
 		defines "UNEYE_DIST"
+		buildoptions "/MD"
 		optimize "On"
 
 
@@ -115,14 +122,17 @@ project "Sandbox"
 	filter "configurations:Debug"
 		runtime "Debug"
 		defines "UNEYE_DEBUG"
+		buildoptions "/MDd"
 		symbols "On"
 
 	filter "configurations:Release"
 		runtime "Release"
 		defines "UNEYE_RELEASE"
+		buildoptions "/MD"
 		optimize "On"
 
 	filter "configurations:Dist"
 		runtime "Release"
 		defines "UNEYE_DIST"
+		buildoptions "/MD"
 		optimize "On"

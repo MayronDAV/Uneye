@@ -5,6 +5,7 @@
 
 #include "Core.h"
 #include "Uneye/Window.h"
+#include <Uneye/Events/ApplicationEvent.h>
 
 
 namespace Uneye {
@@ -17,7 +18,11 @@ namespace Uneye {
 
 			void Run();
 
+			void OnEvent(Event& e);
+
 		private:
+			bool OnWindowClose(WindowCloseEvent& e);
+
 			std::unique_ptr<Window> m_Window;
 			bool m_Running = true;
 	};

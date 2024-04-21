@@ -10,6 +10,11 @@ workspace "Uneye"
 
 outputdir = "%{cfg.buildcfg}-%{cfg.system}-%{cfg.architecture}"
 
+IncludeDir = {}
+IncludeDir["GLFW"] = "Uneye/thirdyparty/GLFW/include"
+
+include "Uneye/thirdyparty/GLFW"
+
 project "Uneye"
 	location "Uneye"
 	kind "SharedLib"
@@ -30,7 +35,14 @@ project "Uneye"
 	includedirs
 	{
 		"%{prj.name}/src",
-		"%{prj.name}/thirdyparty/spdlog/include"
+		"%{prj.name}/thirdyparty/spdlog/include",
+		"%{IncludeDir.GLFW}"
+	}
+
+	links
+	{
+		"GLFW",
+		"opengl32.lib"
 	}
 
 	filter "system:windows"
@@ -50,14 +62,17 @@ project "Uneye"
 		}
 
 	filter "configurations:Debug"
+		runtime "Debug"
 		defines "UNEYE_DEBUG"
 		symbols "On"
 
 	filter "configurations:Release"
+		runtime "Release"
 		defines "UNEYE_RELEASE"
 		optimize "On"
 
 	filter "configurations:Dist"
+		runtime "Release"
 		defines "UNEYE_DIST"
 		optimize "On"
 
@@ -98,13 +113,16 @@ project "Sandbox"
 		}
 
 	filter "configurations:Debug"
+		runtime "Debug"
 		defines "UNEYE_DEBUG"
 		symbols "On"
 
 	filter "configurations:Release"
+		runtime "Release"
 		defines "UNEYE_RELEASE"
 		optimize "On"
 
 	filter "configurations:Dist"
+		runtime "Release"
 		defines "UNEYE_DIST"
 		optimize "On"

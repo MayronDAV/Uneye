@@ -13,6 +13,11 @@
 #include <unordered_map>
 #include <unordered_set>
 
+#include <cstdint>
+
+// Uneye files
+#include "Uneye/Log.h"
+
 
 #ifdef UNEYE_PLATFORM_WINDOWS
 	#include <Windows.h>

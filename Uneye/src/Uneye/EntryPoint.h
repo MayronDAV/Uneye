@@ -8,9 +8,7 @@ extern Uneye::Application* Uneye::CreateApplication();
 int main(int argc, char** argv)
 {
 	Uneye::Log::Init();
-	UNEYE_CORE_WARN("Initialized!");
-	int a = 10;
-	UNEYE_INFO("Hello Var = {0}", a);
+	UNEYE_CORE_INFO("Initialized!");
 		
 	auto app = Uneye::CreateApplication();
 	app->Run();

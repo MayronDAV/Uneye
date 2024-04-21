@@ -4,6 +4,8 @@
 #include "Uneyepch.h"
 
 #include "Core.h"
+#include "Uneye/Window.h"
+
 
 namespace Uneye {
 
@@ -14,6 +16,10 @@ namespace Uneye {
 			virtual ~Application();
 
 			void Run();
+
+		private:
+			std::unique_ptr<Window> m_Window;
+			bool m_Running = true;
 	};
 
 

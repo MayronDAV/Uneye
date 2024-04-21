@@ -1,7 +1,5 @@
 #include "Uneyepch.h"
 
-#include "Log.h"
-
 namespace Uneye {
 
 	std::shared_ptr<spdlog::logger> Log::s_CoreLogger;

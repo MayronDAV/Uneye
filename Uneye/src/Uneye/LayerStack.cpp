@@ -12,7 +12,10 @@ namespace Uneye
 	LayerStack::~LayerStack()
 	{
 		for (auto layer : m_Layers)
+		{
+			layer->OnDetach();
 			delete layer;
+		}
 	}
 
 	void LayerStack::PushLayer(Layer* layer)
@@ -28,6 +31,7 @@ namespace Uneye
 		auto it = std::find(m_Layers.begin(), m_Layers.end(), layer);
 		if (it != m_Layers.end())
 		{
+			(*it)->OnDetach();
 			m_Layers.erase(it);
 			m_LayerInsert--;
 		}
@@ -36,7 +40,10 @@ namespace Uneye
 	{
 		auto it = std::find(m_Layers.begin(), m_Layers.end(), overlay);
 		if (it != m_Layers.end())
+		{
+			(*it)->OnDetach();
 			m_Layers.erase(it);
+		}
 	}
 
 };

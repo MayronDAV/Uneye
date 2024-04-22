@@ -37,6 +37,11 @@ project "GLFW"
 		"deps/**.h",
 		"deps/**.c"
 	}
+	
+	includedirs
+	{
+		"include/",
+	}
 
 	filter "system:linux"
 		pic "On"

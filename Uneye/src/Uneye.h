@@ -11,6 +11,8 @@ Single include dir for Uneye applications
 #include "Uneye/Log.h"
 #include "Uneye/Layer.h"
 
+#include "Uneye/ImGui/ImGuiLayer.h"
+
 // ====================== Entry Point ======================
 #include "Uneye/EntryPoint.h"
 // =========================================================

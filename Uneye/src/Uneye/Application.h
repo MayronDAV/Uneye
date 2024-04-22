@@ -5,6 +5,7 @@
 #include <Uneye/Events/Event.h>
 #include <Uneye/Events/ApplicationEvent.h>
 #include "Uneye/LayerStack.h"
+#include "Uneye/ImGui/ImGuiLayer.h"
 
 
 namespace Uneye {
@@ -22,6 +23,9 @@ namespace Uneye {
 			void PushLayer(Layer* layer);
 			void PushOverlay(Layer* overlay);
 
+			inline static Application& Get() { return *s_Instance; }
+			inline Window& GetWindow() { return *m_Window; }
+
 		private:
 			bool OnWindowClose(WindowCloseEvent& e);
 
@@ -29,6 +33,9 @@ namespace Uneye {
 			bool m_Running = true;
 
 			LayerStack m_LayerStack;
+			ImGuiLayer* m_ImGuiLayer;
+
+			static Application* s_Instance;
 	};
 
 

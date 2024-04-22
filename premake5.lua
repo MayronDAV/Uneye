@@ -1,3 +1,5 @@
+startproject "Sandbox"
+
 workspace "Uneye"
 	architecture "x64"
 
@@ -13,9 +15,11 @@ outputdir = "%{cfg.buildcfg}-%{cfg.system}-%{cfg.architecture}"
 IncludeDir = {}
 IncludeDir["GLFW"] = "Uneye/thirdyparty/GLFW/include"
 IncludeDir["Glad"] = "Uneye/thirdyparty/Glad/include"
+IncludeDir["ImGui"] = "Uneye/thirdyparty/imgui"
 
 include "Uneye/thirdyparty/GLFW"
 include "Uneye/thirdyparty/Glad"
+include "Uneye/thirdyparty/imgui"
 
 project "Uneye"
 	location "Uneye"
@@ -39,13 +43,15 @@ project "Uneye"
 		"%{prj.name}/src",
 		"%{prj.name}/thirdyparty/spdlog/include",
 		"%{IncludeDir.GLFW}",
-		"%{IncludeDir.Glad}"
+		"%{IncludeDir.Glad}",
+		"%{IncludeDir.ImGui}"
 	}
 
 	links
 	{
 		"GLFW",
 		"Glad",
+		"ImGui",
 		"opengl32.lib"
 	}
 

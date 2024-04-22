@@ -20,6 +20,7 @@ class Sandbox : public Uneye::Application
 	public:
 		Sandbox() {
 			PushLayer(new ExampleLayer());
+			PushOverlay(new Uneye::ImGuiLayer() );
 		}
 		~Sandbox() = default;
 };

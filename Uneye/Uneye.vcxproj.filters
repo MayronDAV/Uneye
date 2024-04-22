@@ -13,6 +13,9 @@
     <Filter Include="Uneye\Events">
       <UniqueIdentifier>{CFFBB18F-BB5E-4134-64E4-79EA50260DB7}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Uneye\ImGui">
+      <UniqueIdentifier>{B5F3B461-21A9-2D57-AA9D-272E1652245B}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Platform\Windows\WinWindow.h">
@@ -40,6 +43,9 @@
     <ClInclude Include="src\Uneye\Events\MouseEvent.h">
       <Filter>Uneye\Events</Filter>
     </ClInclude>
+    <ClInclude Include="src\Uneye\ImGui\ImGuiLayer.h">
+      <Filter>Uneye\ImGui</Filter>
+    </ClInclude>
     <ClInclude Include="src\Uneye\Layer.h">
       <Filter>Uneye</Filter>
     </ClInclude>
@@ -60,6 +66,9 @@
     </ClCompile>
     <ClCompile Include="src\Uneye\Application.cpp">
       <Filter>Uneye</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Uneye\ImGui\ImGuiLayer.cpp">
+      <Filter>Uneye\ImGui</Filter>
     </ClCompile>
     <ClCompile Include="src\Uneye\Layer.cpp">
       <Filter>Uneye</Filter>

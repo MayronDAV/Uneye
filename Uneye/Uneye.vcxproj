@@ -166,6 +166,7 @@
     <ClInclude Include="src\Uneye\Events\MouseEvent.h" />
     <ClInclude Include="src\Uneye\ImGui\ImGuiLayer.h" />
     <ClInclude Include="src\Uneye\Input.h" />
+    <ClInclude Include="src\Uneye\KeyCodes.h" />
     <ClInclude Include="src\Uneye\Layer.h" />
     <ClInclude Include="src\Uneye\LayerStack.h" />
     <ClInclude Include="src\Uneye\Log.h" />

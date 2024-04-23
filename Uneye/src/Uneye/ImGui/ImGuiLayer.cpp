@@ -21,7 +21,7 @@ namespace Uneye
 	ImGuiLayer::ImGuiLayer()
 		: Layer("ImGuiLayer")
 	{
-		UNEYE_CORE_INFO("TESTE");
+		//UNEYE_CORE_INFO("TESTE");
 	}
 
 
@@ -170,11 +170,13 @@ namespace Uneye
 		style.GrabRounding = 3;
 		style.LogSliderDeadzone = 4;
 		style.TabRounding = 4;
+		UNEYE_CORE_INFO("has set Deep Dark theme for ImGui");
 	}
 
 	void ImGuiLayer::SetLightThemeColors()
 	{
 		ImGui::StyleColorsLight();
+		UNEYE_CORE_INFO("has set Light theme for ImGui");
 	}
 
 	void ImGuiLayer::SetPurpleThemeColors()
@@ -227,11 +229,13 @@ namespace Uneye
 		style.FrameRounding = 3;
 		style.PopupRounding = 4;
 		style.ChildRounding = 4;
+		UNEYE_CORE_INFO("has set Purple theme for ImGui");
 	}
 
 	void ImGuiLayer::SetDarkThemeColors()
 	{
 		ImGui::StyleColorsDark();
+		UNEYE_CORE_INFO("has set Dark theme for ImGui");
 	}
 
 	uint32_t ImGuiLayer::GetActiveWidgetID() const

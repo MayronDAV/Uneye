@@ -6,11 +6,21 @@ class ExampleLayer : public Uneye::Layer
 		ExampleLayer() : Layer("Example") {}
 
 		void OnUpdate() override {
-			UNEYE_INFO("ExampleLayer::Update");
+			//UNEYE_INFO("ExampleLayer::Update");
+			if (Uneye::Input::isKeyPressed(Uneye::Key::Tab))
+				UNEYE_FATAL("Tab has pressed");
 		}
 
 		void OnEvent(Uneye::Event& e) override {
-			UNEYE_TRACE("{0}", e);
+			//UNEYE_TRACE("{0}", e);
+			if (e.GetEventType() == Uneye::EventType::KeyPressed)
+			{
+				Uneye::KeyPressedEvent& event = (Uneye::KeyPressedEvent&)e;
+				//UNEYE_TRACE("{0}", static_cast<char>(event.GetKeyCode()));
+				//if (event.GetKeyCode() == Uneye::Key::Tab)
+				//	UNEYE_FATAL("Tab has pressed");
+				//UNEYE_TRACE("{0}", (char)event.GetKeyCode());
+			}
 		}
 };
 

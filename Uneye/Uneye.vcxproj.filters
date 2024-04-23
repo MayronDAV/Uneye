@@ -61,6 +61,7 @@
     <ClInclude Include="src\Uneyepch.h" />
     <ClInclude Include="src\Uneye\Input.h" />
     <ClInclude Include="src\Platform\Windows\WindowInput.h" />
+    <ClInclude Include="src\Uneye\KeyCodes.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Platform\Windows\WinWindow.cpp">

@@ -43,9 +43,6 @@ namespace Uneye {
 			}
 			m_ImGuiLayer->End();
 
-			auto [x, y] = Input::GetMousePos();
-			UNEYE_CORE_TRACE("{0}, {1}", x, y);
-
 			m_Window->OnUpdate();
 		}
 	}

@@ -165,11 +165,13 @@
     <ClInclude Include="src\Uneye\Events\KeyEvent.h" />
     <ClInclude Include="src\Uneye\Events\MouseEvent.h" />
     <ClInclude Include="src\Uneye\ImGui\ImGuiLayer.h" />
+    <ClInclude Include="src\Uneye\Input.h" />
     <ClInclude Include="src\Uneye\Layer.h" />
     <ClInclude Include="src\Uneye\LayerStack.h" />
     <ClInclude Include="src\Uneye\Log.h" />
     <ClInclude Include="src\Uneye\Window.h" />
     <ClInclude Include="src\Uneyepch.h" />
+    <ClInclude Include="src\Platform\Windows\WindowInput.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Platform\Windows\WinWindow.cpp" />
@@ -181,6 +183,7 @@
     <ClCompile Include="src\Uneyepch.cpp">
       <PrecompiledHeader>Create</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="src\Platform\Windows\WindowInput.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="thirdyparty\GLFW\GLFW.vcxproj">

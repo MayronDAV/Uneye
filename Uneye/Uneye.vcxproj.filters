@@ -59,6 +59,8 @@
       <Filter>Uneye</Filter>
     </ClInclude>
     <ClInclude Include="src\Uneyepch.h" />
+    <ClInclude Include="src\Uneye\Input.h" />
+    <ClInclude Include="src\Platform\Windows\WindowInput.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Platform\Windows\WinWindow.cpp">
@@ -80,5 +82,6 @@
       <Filter>Uneye</Filter>
     </ClCompile>
     <ClCompile Include="src\Uneyepch.cpp" />
+    <ClCompile Include="src\Platform\Windows\WindowInput.cpp" />
   </ItemGroup>
 </Project>

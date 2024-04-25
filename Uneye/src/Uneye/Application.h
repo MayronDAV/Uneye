@@ -1,45 +1,44 @@
 #pragma once
 
-#include "Core.h"
-#include "Uneye/Window.h"
-#include <Uneye/Events/Event.h>
-#include <Uneye/Events/ApplicationEvent.h>
-#include "Uneye/LayerStack.h"
-#include "Uneye/ImGui/ImGuiLayer.h"
+#include "Uneye/Core.h"
 
+#include "Uneye/Window.h"
+#include "Uneye/LayerStack.h"
+#include "Uneye/Events/Event.h"
+#include "Uneye/Events/ApplicationEvent.h"
+
+#include "Uneye/ImGui/ImGuiLayer.h"
 
 namespace Uneye {
 
 	class UNEYE_API Application
 	{
-		public:
-			Application();
-			virtual ~Application() = default;
+	public:
+		Application();
+		virtual ~Application();
 
-			void Run();
+		void Run();
 
-			void OnEvent(Event& e);
+		void OnEvent(Event& e);
 
-			void PushLayer(Layer* layer);
-			void PushOverlay(Layer* overlay);
+		void PushLayer(Layer* layer);
+		void PushOverlay(Layer* layer);
 
-			inline static Application& Get() { return *s_Instance; }
-			inline Window& GetWindow() { return *m_Window; }
+		inline Window& GetWindow() { return *m_Window; }
 
-		private:
-			bool OnWindowClose(WindowCloseEvent& e);
+		inline static Application& Get() { return *s_Instance; }
+	private:
+		bool OnWindowClose(WindowCloseEvent& e);
 
-			std::unique_ptr<Window> m_Window;
-			bool m_Running = true;
-
-			LayerStack m_LayerStack;
-			ImGuiLayer* m_ImGuiLayer;
-
-			static Application* s_Instance;
+		std::unique_ptr<Window> m_Window;
+		ImGuiLayer* m_ImGuiLayer;
+		bool m_Running = true;
+		LayerStack m_LayerStack;
+	private:
+		static Application* s_Instance;
 	};
 
-
-	// Defined by CLIENT
+	// To be defined in CLIENT
 	Application* CreateApplication();
-};
 
+}

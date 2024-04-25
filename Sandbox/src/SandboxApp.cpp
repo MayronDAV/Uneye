@@ -1,42 +1,52 @@
 #include <Uneye.h>
 
+#include "imgui/imgui.h"
+
 class ExampleLayer : public Uneye::Layer
 {
-	public:
-		ExampleLayer() : Layer("Example") {}
+public:
+	ExampleLayer()
+		: Layer("Example")
+	{
+	}
 
-		void OnUpdate() override {
-			//UNEYE_INFO("ExampleLayer::Update");
-			if (Uneye::Input::isKeyPressed(Uneye::Key::Tab))
-				UNEYE_FATAL("Tab has pressed");
-		}
+	void OnUpdate() override
+	{
+		if (Uneye::Input::IsKeyPressed(Uneye::Key::Tab))
+			UNEYE_TRACE("Tab key is pressed (poll)!");
+	}
 
-		void OnEvent(Uneye::Event& e) override {
-			//UNEYE_TRACE("{0}", e);
-			if (e.GetEventType() == Uneye::EventType::KeyPressed)
-			{
-				Uneye::KeyPressedEvent& event = (Uneye::KeyPressedEvent&)e;
-				//UNEYE_TRACE("{0}", static_cast<char>(event.GetKeyCode()));
-				//if (event.GetKeyCode() == Uneye::Key::Tab)
-				//	UNEYE_FATAL("Tab has pressed");
-				//UNEYE_TRACE("{0}", (char)event.GetKeyCode());
-			}
+	virtual void OnImGuiRender() override
+	{
+		ImGui::Begin("Test");
+		ImGui::Text("Hello World");
+		ImGui::End();
+	}
+
+	void OnEvent(Uneye::Event& event) override
+	{
+		if (event.GetEventType() == Uneye::EventType::KeyPressed)
+		{
+			Uneye::KeyPressedEvent& e = (Uneye::KeyPressedEvent&)event;
+			if (e.GetKeyCode() == Uneye::Key::Tab)
+				UNEYE_TRACE("Tab key is pressed (event)!");
+			UNEYE_TRACE("{0}", (char)e.GetKeyCode());
 		}
+	}
+
 };
-
 
 class Sandbox : public Uneye::Application
 {
-	public:
-		Sandbox() {
-			PushLayer(new ExampleLayer());
-			PushOverlay(new Uneye::ImGuiLayer() );
-		}
-		~Sandbox() = default;
+public:
+	Sandbox()
+	{
+		PushLayer(new ExampleLayer());
+	}
+
+	~Sandbox() = default;
+
 };
-
-
-
 
 Uneye::Application* Uneye::CreateApplication()
 {

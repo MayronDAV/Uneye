@@ -1,7 +1,12 @@
-[submodule "Uneye/thirdyparty/spdlog"]
-	path = Uneye/thirdyparty/spdlog
+[submodule "Hazel/vendor/spdlog"]
+	path = Hazel/vendor/spdlog
 	url = https://github.com/gabime/spdlog
-
-[submodule "Uneye/thirdyparty/glfw"]
-	path = Uneye/thirdyparty/glfw
-	url = https://github.com/glfw/glfw
+[submodule "Hazel/vendor/GLFW"]
+	path = Hazel/vendor/GLFW
+	url = https://github.com/TheCherno/glfw
+[submodule "Hazel/vendor/imgui"]
+	path = Hazel/vendor/imgui
+	url = https://github.com/TheCherno/imgui
+[submodule "Hazel/vendor/glm"]
+	path = Hazel/vendor/glm
+	url = https://github.com/g-truc/glm

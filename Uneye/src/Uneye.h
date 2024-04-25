@@ -1,21 +1,17 @@
 #pragma once
 
-/*
-Single include dir for Uneye applications
-
-*/
-
-#include <stdio.h>
+// For use by Uneye applications
 
 #include "Uneye/Application.h"
-#include "Uneye/Input.h"
-#include "Uneye/Log.h"
 #include "Uneye/Layer.h"
+#include "Uneye/Log.h"
+
+#include "Uneye/Input.h"
 #include "Uneye/KeyCodes.h"
+#include "Uneye/MouseButtonCodes.h"
 
 #include "Uneye/ImGui/ImGuiLayer.h"
 
-// ====================== Entry Point ======================
+// ---Entry Point---------------------
 #include "Uneye/EntryPoint.h"
-// =========================================================
-
+// -----------------------------------

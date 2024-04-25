@@ -1,16 +1,13 @@
 #pragma once
 
-#include <Uneye/Layer.h>
+#include "Uneye/Layer.h"
 
-#include "Uneye/Core.h"
-
-#include "Uneye/Events/MouseEvent.h"
-#include "Uneye/Events/KeyEvent.h"
 #include "Uneye/Events/ApplicationEvent.h"
+#include "Uneye/Events/KeyEvent.h"
+#include "Uneye/Events/MouseEvent.h"
 
+namespace Uneye {
 
-namespace Uneye
-{
 	enum ImGuiThemes
 	{
 		PurpleThemeDefault,
@@ -19,40 +16,39 @@ namespace Uneye
 		LightThemeDefault
 	};
 
-
-	class UNEYE_API ImGuiLayer : public Uneye::Layer
+	class UNEYE_API ImGuiLayer : public Layer
 	{
-		public:
-			ImGuiLayer();
-			~ImGuiLayer() = default;
+	public:
+		ImGuiLayer();
+		~ImGuiLayer();
 
-			virtual void OnAttach();
-			virtual void OnDetach();
-			virtual void OnEvent(Event& event);
+		virtual void OnAttach() override;
+		virtual void OnDetach() override;
+		virtual void OnImGuiRender() override;
+		virtual void OnEvent(Event& event) override;
 
-			void Begin();
-			void End();
+		void BlockEvents(bool block) { m_BlockEvents = block; }
 
-			void BlockEvents(bool block) { m_BlockEvents = block; }
+		void Begin();
+		void End();
 
-			void SetDeepDarkThemeColors();
-			void SetPurpleThemeColors();
-			void SetDarkThemeColors();
-			void SetLightThemeColors();
+		void SetDeepDarkThemeColors();
+		void SetPurpleThemeColors();
+		void SetDarkThemeColors();
+		void SetLightThemeColors();
 
-			uint32_t GetActiveWidgetID() const;
 
-		private:
-			float m_Time = 0.0f;
+	private:
+		float m_Time = 0.0f;
 
-			bool m_BlockEvents = true;
-			ImGuiThemes m_Theme = PurpleThemeDefault;
-			std::unordered_map<int, std::function<void()>> m_AllThemes = {
-				{PurpleThemeDefault, [=]() { SetPurpleThemeColors(); }},
-				{DeepDarkThemeDefault, [=]() { SetDarkThemeColors(); }},
-				{DarkThemeDefault, [=]() { SetDarkThemeColors(); }},
-				{LightThemeDefault, [=]() { SetLightThemeColors(); }}
-			};
+		bool m_BlockEvents = true;
+		ImGuiThemes m_Theme = PurpleThemeDefault;
+		std::unordered_map<int, std::function<void()>> m_AllThemes = {
+			{PurpleThemeDefault, [=]() { SetPurpleThemeColors(); }},
+			{DeepDarkThemeDefault, [=]() { SetDarkThemeColors(); }},
+			{DarkThemeDefault, [=]() { SetDarkThemeColors(); }},
+			{LightThemeDefault, [=]() { SetLightThemeColors(); }}
+		};
 	};
 
 }

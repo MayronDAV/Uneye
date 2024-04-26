@@ -8,7 +8,6 @@
 
 #include "Uneye/Input.h"
 #include "Uneye/KeyCodes.h"
-#include "Uneye/MouseButtonCodes.h"
 
 #include "Uneye/ImGui/ImGuiLayer.h"
 

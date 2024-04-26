@@ -16,39 +16,39 @@ namespace Uneye {
 		LightThemeDefault
 	};
 
-	class UNEYE_API ImGuiLayer : public Layer
+	class ImGuiLayer : public Layer
 	{
-	public:
-		ImGuiLayer();
-		~ImGuiLayer();
+		public:
+			ImGuiLayer();
+			~ImGuiLayer();
 
-		virtual void OnAttach() override;
-		virtual void OnDetach() override;
-		virtual void OnImGuiRender() override;
-		virtual void OnEvent(Event& event) override;
+			virtual void OnAttach() override;
+			virtual void OnDetach() override;
+			virtual void OnImGuiRender() override;
+			virtual void OnEvent(Event& event) override;
 
-		void BlockEvents(bool block) { m_BlockEvents = block; }
+			void BlockEvents(bool block) { m_BlockEvents = block; }
 
-		void Begin();
-		void End();
+			void Begin();
+			void End();
 
-		void SetDeepDarkThemeColors();
-		void SetPurpleThemeColors();
-		void SetDarkThemeColors();
-		void SetLightThemeColors();
+			void SetDeepDarkThemeColors();
+			void SetPurpleThemeColors();
+			void SetDarkThemeColors();
+			void SetLightThemeColors();
 
 
-	private:
-		float m_Time = 0.0f;
+		private:
+			float m_Time = 0.0f;
 
-		bool m_BlockEvents = true;
-		ImGuiThemes m_Theme = PurpleThemeDefault;
-		std::unordered_map<int, std::function<void()>> m_AllThemes = {
-			{PurpleThemeDefault, [=]() { SetPurpleThemeColors(); }},
-			{DeepDarkThemeDefault, [=]() { SetDarkThemeColors(); }},
-			{DarkThemeDefault, [=]() { SetDarkThemeColors(); }},
-			{LightThemeDefault, [=]() { SetLightThemeColors(); }}
-		};
+			bool m_BlockEvents = true;
+			ImGuiThemes m_Theme = PurpleThemeDefault;
+			std::unordered_map<int, std::function<void()>> m_AllThemes = {
+				{PurpleThemeDefault, [=]() { SetPurpleThemeColors(); }},
+				{DeepDarkThemeDefault, [=]() { SetDarkThemeColors(); }},
+				{DarkThemeDefault, [=]() { SetDarkThemeColors(); }},
+				{LightThemeDefault, [=]() { SetLightThemeColors(); }}
+			};
 	};
 
 }

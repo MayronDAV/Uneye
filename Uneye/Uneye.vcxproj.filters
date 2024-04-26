@@ -90,9 +90,6 @@
     <ClInclude Include="src\Uneye\Log.h">
       <Filter>src\Uneye</Filter>
     </ClInclude>
-    <ClInclude Include="src\Uneye\MouseButtonCodes.h">
-      <Filter>src\Uneye</Filter>
-    </ClInclude>
     <ClInclude Include="src\Uneye\Window.h">
       <Filter>src\Uneye</Filter>
     </ClInclude>

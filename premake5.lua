@@ -2,6 +2,12 @@ workspace "Uneye"
 	architecture "x64"
 	startproject "Sandbox"
 
+	defines
+	{
+		"_SILENCE_ALL_MS_EXT_DEPRECATION_WARNINGS",
+		"_SILENCE_STDEXT_ARR_ITERS_DEPRECATION_WARNING"
+	}
+
 	configurations
 	{
 		"Debug",
@@ -11,7 +17,6 @@ workspace "Uneye"
 
 outputdir = "%{cfg.buildcfg}-%{cfg.system}-%{cfg.architecture}"
 
--- Include directories relative to root folder (solution directory)
 IncludeDir = {}
 IncludeDir["GLFW"] = "Uneye/vendor/GLFW/include"
 IncludeDir["Glad"] = "Uneye/vendor/Glad/include"

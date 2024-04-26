@@ -1,16 +1,6 @@
 #pragma once
 
-#ifdef UNEYE_PLATFORM_WINDOWS
-#ifdef UNEYE_DYNAMIC_LINK
-	#ifdef UNEYE_BUILD_DLL
-		#define UNEYE_API __declspec(dllexport)
-	#else
-		#define UNEYE_API __declspec(dllimport)
-	#endif
-#else
-    #define UNEYE_API
-#endif
-#else
+#ifndef UNEYE_PLATFORM_WINDOWS
 	#error Uneye only supports Windows!
 #endif
 

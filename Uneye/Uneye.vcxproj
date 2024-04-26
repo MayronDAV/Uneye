@@ -158,6 +158,7 @@
     <ClInclude Include="src\Uneye\LayerStack.h" />
     <ClInclude Include="src\Uneye\Log.h" />
     <ClInclude Include="src\Uneye\Renderer\GraphicsContext.h" />
+    <ClInclude Include="src\Uneye\Renderer\Shader.h" />
     <ClInclude Include="src\Uneye\Window.h" />
     <ClInclude Include="src\uypch.h" />
     <ClInclude Include="vendor\glm\glm\common.hpp" />
@@ -533,6 +534,7 @@
     <ClCompile Include="src\Uneye\Layer.cpp" />
     <ClCompile Include="src\Uneye\LayerStack.cpp" />
     <ClCompile Include="src\Uneye\Log.cpp" />
+    <ClCompile Include="src\Uneye\Renderer\Shader.cpp" />
     <ClCompile Include="src\uypch.cpp">
       <PrecompiledHeader>Create</PrecompiledHeader>
     </ClCompile>

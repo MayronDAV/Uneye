@@ -24,6 +24,36 @@ namespace Uneye {
 		m_ImGuiLayer = new ImGuiLayer();
 		PushOverlay(m_ImGuiLayer);
 
+		std::string vertexSrc = R"(
+			#version 330 core
+							
+			layout(location = 0) in vec3 a_Position;
+
+			out vec3 v_pos;
+			
+			void main()
+			{
+				v_pos = a_Position;
+				gl_Position = vec4(a_Position, 1.0f);
+			}
+		)";
+
+		std::string fragmentSrc = R"(
+			#version 330 core
+							
+			out vec4 color;
+
+			in vec3 v_pos;
+
+			void main()
+			{
+				color = vec4(v_pos * 0.5f + 0.5f, 1.0f);
+			}
+		)";
+
+
+		m_Shader.reset(new Shader(vertexSrc, fragmentSrc));
+
 		glCreateVertexArrays(1, &m_VAO);
 		glBindVertexArray(m_VAO);
 
@@ -77,7 +107,10 @@ namespace Uneye {
 		{
 			(*--it)->OnEvent(e);
 			if (e.Handled)
+			{
+				UNEYE_CORE_TRACE("{0} -> {1}",(*it)->GetName(), e);
 				break;
+			}
 		}
 	}
 
@@ -89,6 +122,9 @@ namespace Uneye {
 		{
 			glClearColor(color[0], color[1], color[2], color[3]);
 			glClear(GL_COLOR_BUFFER_BIT);
+
+			m_Shader->Bind();
+
 
 			glBindVertexArray(m_VAO);
 			glDrawElements(GL_TRIANGLES, 3, GL_UNSIGNED_INT, nullptr);

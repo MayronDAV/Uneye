@@ -9,6 +9,10 @@
 
 #include "Uneye/ImGui/ImGuiLayer.h"
 
+#include "Uneye/Renderer/Shader.h"
+
+
+
 namespace Uneye {
 
 	class Application
@@ -36,6 +40,9 @@ namespace Uneye {
 			LayerStack m_LayerStack;
 
 			unsigned int m_VAO, m_VBO, m_EBO;
+
+			std::unique_ptr<Shader> m_Shader;
+
 		private:
 			static Application* s_Instance;
 	};

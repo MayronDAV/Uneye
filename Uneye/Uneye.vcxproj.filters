@@ -102,6 +102,9 @@
     <ClInclude Include="src\Uneye\Renderer\GraphicsContext.h">
       <Filter>src\Uneye\Renderer</Filter>
     </ClInclude>
+    <ClInclude Include="src\Uneye\Renderer\Shader.h">
+      <Filter>src\Uneye\Renderer</Filter>
+    </ClInclude>
     <ClInclude Include="src\Uneye\Window.h">
       <Filter>src\Uneye</Filter>
     </ClInclude>
@@ -1222,6 +1225,9 @@
     </ClCompile>
     <ClCompile Include="src\Uneye\Log.cpp">
       <Filter>src\Uneye</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Uneye\Renderer\Shader.cpp">
+      <Filter>src\Uneye\Renderer</Filter>
     </ClCompile>
     <ClCompile Include="src\uypch.cpp">
       <Filter>src</Filter>

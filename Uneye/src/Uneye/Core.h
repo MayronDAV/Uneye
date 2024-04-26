@@ -9,8 +9,8 @@
 #endif
 
 #ifdef UNEYE_ENABLE_ASSERTS
-	#define UNEYE_ASSERT(x, ...) { if(!(x)) { UNEYE_ERROR("Assertion Failed: {0}", __VA_ARGS__); __debugbreak(); } }
-	#define UNEYE_CORE_ASSERT(x, ...) { if(!(x)) { UNEYE_CORE_ERROR("Assertion Failed: {0}", __VA_ARGS__); __debugbreak(); } }
+	#define UNEYE_ASSERT(x, ...) { if((x)) { UNEYE_ERROR("Assertion Failed: {0}", __VA_ARGS__); __debugbreak(); } }
+	#define UNEYE_CORE_ASSERT(x, ...) { if((x)) { UNEYE_CORE_ERROR("Assertion Failed: {0}", __VA_ARGS__); __debugbreak(); } }
 #else
 	#define UNEYE_ASSERT(x, ...)
 	#define UNEYE_CORE_ASSERT(x, ...)

@@ -7,6 +7,9 @@
 
 #include <glad/glad.h>
 
+
+
+
 namespace Uneye {
 	
 	static bool s_GLFWInitialized = false;
@@ -37,23 +40,26 @@ namespace Uneye {
 		m_Data.Width = props.Width;
 		m_Data.Height = props.Height;
 
-		UNEYE_CORE_INFO("Creating window {0} ({1}, {2})", props.Title, props.Width, props.Height);
-
 		if (!s_GLFWInitialized)
 		{
 			// TODO: glfwTerminate on system shutdown
 			int success = glfwInit();
-			UNEYE_CORE_ASSERT(success, "Could not intialize GLFW!");
+			UNEYE_CORE_ASSERT(!success, "Could not intialize GLFW!");
+			UNEYE_CORE_INFO("GLFW has been initialized!");
 			glfwSetErrorCallback(GLFWErrorCallback);
 			s_GLFWInitialized = true;
 		}
+		glfwWindowHint(GLFW_SAMPLES, 8);
 
 		m_Window = glfwCreateWindow((int)props.Width, (int)props.Height, m_Data.Title.c_str(), nullptr, nullptr);
-		glfwMakeContextCurrent(m_Window);
-		int status = gladLoadGLLoader((GLADloadproc)glfwGetProcAddress);
-		UNEYE_CORE_ASSERT(status, "Failed to initialize Glad!");
+		UNEYE_CORE_ASSERT(m_Window == nullptr, "An error has ocurred on window create");
+		UNEYE_CORE_INFO("Window {0} was created with ({1}, {2})", props.Title, props.Width, props.Height);
+		m_Context = new OpenGLContext(m_Window);
+		m_Context->Init();
 		glfwSetWindowUserPointer(m_Window, &m_Data);
 		SetVSync(true);
+
+		glEnable(GL_MULTISAMPLE);
 
 		// Set GLFW callbacks
 		glfwSetWindowSizeCallback(m_Window, [](GLFWwindow* window, int width, int height)
@@ -65,6 +71,7 @@ namespace Uneye {
 			WindowResizeEvent event(width, height);
 			data.EventCallback(event);
 		});
+		UNEYE_CORE_INFO("Setted window size callback");
 
 		glfwSetWindowCloseCallback(m_Window, [](GLFWwindow* window)
 		{
@@ -72,6 +79,7 @@ namespace Uneye {
 			WindowCloseEvent event;
 			data.EventCallback(event);
 		});
+		UNEYE_CORE_INFO("Setted window close callback");
 
 		glfwSetKeyCallback(m_Window, [](GLFWwindow* window, int key, int scancode, int action, int mods)
 		{
@@ -99,14 +107,16 @@ namespace Uneye {
 				}
 			}
 		});
+		UNEYE_CORE_INFO("Setted key callback");
 
 		glfwSetCharCallback(m_Window, [](GLFWwindow* window, unsigned int keycode)
 		{
-			WindowData& data = *(WindowData*)glfwGetWindowUserPointer(window);
+				WindowData& data = *(WindowData*)glfwGetWindowUserPointer(window);
 
-			KeyTypedEvent event(keycode);
-			data.EventCallback(event);
+				KeyTypedEvent event(keycode);
+				data.EventCallback(event);
 		});
+		UNEYE_CORE_INFO("Setted char callback");
 
 		glfwSetMouseButtonCallback(m_Window, [](GLFWwindow* window, int button, int action, int mods)
 		{
@@ -128,6 +138,7 @@ namespace Uneye {
 				}
 			}
 		});
+		UNEYE_CORE_INFO("Setted mouse button callback");
 
 		glfwSetScrollCallback(m_Window, [](GLFWwindow* window, double xOffset, double yOffset)
 		{
@@ -136,6 +147,7 @@ namespace Uneye {
 			MouseScrolledEvent event((float)xOffset, (float)yOffset);
 			data.EventCallback(event);
 		});
+		UNEYE_CORE_INFO("Setted scroll callback");
 
 		glfwSetCursorPosCallback(m_Window, [](GLFWwindow* window, double xPos, double yPos)
 		{
@@ -144,17 +156,19 @@ namespace Uneye {
 			MouseMovedEvent event((float)xPos, (float)yPos);
 			data.EventCallback(event);
 		});
+		UNEYE_CORE_INFO("Setted cursor pos callback");
 	}
 
 	void WindowsWindow::Shutdown()
 	{
+		UNEYE_CORE_WARN("Window {0} has shutdown", m_Data.Title);
 		glfwDestroyWindow(m_Window);
 	}
 
 	void WindowsWindow::OnUpdate()
 	{
 		glfwPollEvents();
-		glfwSwapBuffers(m_Window);
+		m_Context->SwapBuffers();
 	}
 
 	void WindowsWindow::SetVSync(bool enabled)
@@ -165,6 +179,7 @@ namespace Uneye {
 			glfwSwapInterval(0);
 
 		m_Data.VSync = enabled;
+		UNEYE_CORE_INFO("Vsync has setted to {0}", enabled);
 	}
 
 	bool WindowsWindow::IsVSync() const

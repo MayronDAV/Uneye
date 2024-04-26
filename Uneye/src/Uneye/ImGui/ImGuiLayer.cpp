@@ -117,6 +117,10 @@ namespace Uneye {
 		ImVec4* colors = ImGui::GetStyle().Colors;
 		colors[ImGuiCol_Text] = ImVec4(1.00f, 1.00f, 1.00f, 1.00f);
 		colors[ImGuiCol_TextDisabled] = ImVec4(0.50f, 0.50f, 0.50f, 1.00f);
+		m_BgColor[0] = 0.10f;
+		m_BgColor[1] = 0.10f;
+		m_BgColor[2] = 0.10f;
+		m_BgColor[3] = 1.00f;
 		colors[ImGuiCol_WindowBg] = ImVec4(0.10f, 0.10f, 0.10f, 1.00f);
 		colors[ImGuiCol_ChildBg] = ImVec4(0.00f, 0.00f, 0.00f, 0.00f);
 		colors[ImGuiCol_PopupBg] = ImVec4(0.19f, 0.19f, 0.19f, 0.92f);
@@ -201,10 +205,19 @@ namespace Uneye {
 		UNEYE_CORE_INFO("has set Light theme for ImGui");
 	}
 
+	float* ImGuiLayer::GetColorBG()
+	{
+		return m_BgColor;
+	}
+
 	void ImGuiLayer::SetPurpleThemeColors()
 	{
 		auto& colors = ImGui::GetStyle().Colors;
 
+		m_BgColor[0] = 0.1f;
+		m_BgColor[1] = 0.1f;
+		m_BgColor[2] = 0.13f;
+		m_BgColor[3] = 1.0f;
 		colors[ImGuiCol_WindowBg] = ImVec4{ 0.1f, 0.1f, 0.13f, 1.0f };
 		colors[ImGuiCol_MenuBarBg] = ImVec4{ 0.16f, 0.16f, 0.21f, 1.0f };
 		colors[ImGuiCol_Border] = ImVec4{ 0.44f, 0.37f, 0.61f, 0.29f };

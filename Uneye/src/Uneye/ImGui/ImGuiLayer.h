@@ -6,6 +6,10 @@
 #include "Uneye/Events/KeyEvent.h"
 #include "Uneye/Events/MouseEvent.h"
 
+struct ImVec4;
+
+
+
 namespace Uneye {
 
 	enum ImGuiThemes
@@ -37,9 +41,12 @@ namespace Uneye {
 			void SetDarkThemeColors();
 			void SetLightThemeColors();
 
+			float* GetColorBG();
 
 		private:
 			float m_Time = 0.0f;
+			float m_BgColor[4] = {1.0f, 1.0f, 1.0f, 1.0f};
+
 
 			bool m_BlockEvents = true;
 			ImGuiThemes m_Theme = PurpleThemeDefault;

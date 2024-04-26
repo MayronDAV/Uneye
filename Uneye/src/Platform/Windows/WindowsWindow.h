@@ -4,6 +4,12 @@
 
 #include <GLFW/glfw3.h>
 
+#include "Platform/OpenGL/OpenGLContext.h"
+
+
+
+
+
 namespace Uneye {
 
 	class WindowsWindow : public Window
@@ -27,7 +33,8 @@ namespace Uneye {
 		virtual void Init(const WindowProps& props);
 		virtual void Shutdown();
 	private:
-		GLFWwindow* m_Window;
+		GLFWwindow* m_Window = nullptr;
+		GraphicsContext* m_Context = nullptr;
 
 		struct WindowData
 		{

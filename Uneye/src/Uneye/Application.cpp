@@ -14,6 +14,27 @@ namespace Uneye {
 
 	Application* Application::s_Instance = nullptr;
 
+	static GLenum ShaderDataTypeToOpenGLBaseType(ShaderDataType type)
+	{
+		switch (type)
+		{
+			case Uneye::ShaderDataType::Float:		return GL_FLOAT;
+			case Uneye::ShaderDataType::Float2:		return GL_FLOAT;
+			case Uneye::ShaderDataType::Float3:		return GL_FLOAT;
+			case Uneye::ShaderDataType::Float4:		return GL_FLOAT;
+			case Uneye::ShaderDataType::Mat3:		return GL_FLOAT;
+			case Uneye::ShaderDataType::Mat4:		return GL_FLOAT;
+			case Uneye::ShaderDataType::Int:		return GL_INT;
+			case Uneye::ShaderDataType::Int2:		return GL_INT;
+			case Uneye::ShaderDataType::Int3:		return GL_INT;
+			case Uneye::ShaderDataType::Int4:		return GL_INT;
+			case Uneye::ShaderDataType::Bool:		return GL_BOOL;
+		}
+
+		UNEYE_CORE_ASSERT(true, "Unknown ShaderDataType!");
+		return 0;
+	}
+
 	Application::Application() 
 	{
 		UNEYE_CORE_ASSERT(s_Instance, "Application already exists!");
@@ -29,12 +50,15 @@ namespace Uneye {
 			#version 330 core
 							
 			layout(location = 0) in vec3 a_Position;
+			layout(location = 1) in vec4 a_Color;
 
 			out vec3 v_pos;
+			out vec4 v_color;
 			
 			void main()
 			{
 				v_pos = a_Position;
+				v_color = a_Color;
 				gl_Position = vec4(a_Position, 1.0f);
 			}
 		)";
@@ -45,10 +69,12 @@ namespace Uneye {
 			out vec4 color;
 
 			in vec3 v_pos;
+			in vec4 v_color;
 
 			void main()
 			{
 				color = vec4(v_pos * 0.5f + 0.5f, 1.0f);
+				color = v_color;
 			}
 		)";
 
@@ -58,17 +84,39 @@ namespace Uneye {
 		glCreateVertexArrays(1, &m_VAO);
 		glBindVertexArray(m_VAO);
 
-		float vertices[3 * 3] = {
-			-0.5f, -0.5f, 0.0f,
-			 0.5f, -0.5f, 0.0f,
-			 0.0f,  0.5f, 0.0f,
+		float vertices[3 * 7] = {
+			-0.5f, -0.5f, 0.0f, 0.8f, 0.2f, 0.8f, 1.0f,
+			 0.5f, -0.5f, 0.0f, 0.2f, 0.3f, 0.8f, 1.0f,
+			 0.0f,  0.5f, 0.0f, 0.8f, 0.8f, 0.2f, 1.0f,
 		};
 
 		m_VertexBuffer.reset(VertexBuffer::Create(vertices, sizeof(vertices)));
 
-		glEnableVertexAttribArray(0);
-		glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE,
-			3 * sizeof(float), nullptr);
+		{
+
+			BufferLayout layout = {
+				{ ShaderDataType::Float3, "a_Position" },
+				{ ShaderDataType::Float4, "a_Color" }
+			};
+
+			m_VertexBuffer->SetLayout(layout);
+		}
+
+		uint32_t index = 0;
+		const auto& layout = m_VertexBuffer->GetLayout();
+		for (const auto& element : layout)
+		{
+			glEnableVertexAttribArray(index);
+			glVertexAttribPointer(
+				index,
+				element.GetComponentCount(),
+				ShaderDataTypeToOpenGLBaseType(element.Type),
+				(element.Normalized) ? GL_TRUE : GL_FALSE,
+				layout.GetStride(),
+				(const void*)element.Offset
+			);
+			index++;
+		}
 
 		uint32_t indices[3] = {
 			0, 1, 2

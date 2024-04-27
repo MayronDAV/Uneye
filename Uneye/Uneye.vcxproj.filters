@@ -108,6 +108,9 @@
     <ClInclude Include="src\Uneye\Renderer\GraphicsContext.h">
       <Filter>src\Uneye\Renderer</Filter>
     </ClInclude>
+    <ClInclude Include="src\Uneye\Renderer\Renderer.h">
+      <Filter>src\Uneye\Renderer</Filter>
+    </ClInclude>
     <ClInclude Include="src\Uneye\Renderer\Shader.h">
       <Filter>src\Uneye\Renderer</Filter>
     </ClInclude>
@@ -1203,7 +1206,6 @@
     <ClInclude Include="vendor\glm\glm\vector_relational.hpp">
       <Filter>vendor\glm\glm</Filter>
     </ClInclude>
-    <ClInclude Include="src\Uneye\Renderer\Renderer.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Platform\OpenGL\OpenGLBuffer.cpp">
@@ -1239,12 +1241,14 @@
     <ClCompile Include="src\Uneye\Renderer\Buffer.cpp">
       <Filter>src\Uneye\Renderer</Filter>
     </ClCompile>
+    <ClCompile Include="src\Uneye\Renderer\Renderer.cpp">
+      <Filter>src\Uneye\Renderer</Filter>
+    </ClCompile>
     <ClCompile Include="src\Uneye\Renderer\Shader.cpp">
       <Filter>src\Uneye\Renderer</Filter>
     </ClCompile>
     <ClCompile Include="src\uypch.cpp">
       <Filter>src</Filter>
     </ClCompile>
-    <ClCompile Include="src\Uneye\Renderer\Renderer.cpp" />
   </ItemGroup>
 </Project>

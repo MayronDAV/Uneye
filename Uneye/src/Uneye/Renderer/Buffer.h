@@ -111,8 +111,6 @@ namespace Uneye
 	{
 		public:
 			virtual ~VertexBuffer() = default;
-			
-			//virtual void SetData(); 
 
 			virtual void Bind() const = 0;
 			virtual void Unbind() const = 0;

@@ -1221,6 +1221,9 @@
     <ClInclude Include="src\Platform\OpenGL\OpenGLRendererAPI.h">
       <Filter>src\Platform\OpenGL</Filter>
     </ClInclude>
+    <ClInclude Include="src\Uneye\Renderer\Camera.h">
+      <Filter>src\Uneye\Renderer</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Platform\OpenGL\OpenGLBuffer.cpp">
@@ -1279,6 +1282,9 @@
     </ClCompile>
     <ClCompile Include="src\Platform\OpenGL\OpenGLRendererAPI.cpp">
       <Filter>src\Platform\OpenGL</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Uneye\Renderer\Camera.cpp">
+      <Filter>src\Uneye\Renderer</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

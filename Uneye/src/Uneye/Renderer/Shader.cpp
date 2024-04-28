@@ -2,6 +2,7 @@
 #include "Shader.h"
 
 #include <glad/glad.h>
+#include <glm/gtc/type_ptr.hpp>
 
 namespace Uneye
 {
@@ -100,5 +101,20 @@ namespace Uneye
 	void Shader::Unbind() const
 	{
 		glUseProgram(0);
+	}
+	void Shader::SetMat4(std::string name, const glm::mat4& value)
+	{
+		GLint loc = glGetUniformLocation(m_RendererID, name.c_str());
+		glUniformMatrix4fv(loc, 1, GL_FALSE, glm::value_ptr(value));
+	}
+	void Shader::SetVec4(std::string name, const glm::vec4& value)
+	{
+		GLint loc = glGetUniformLocation(m_RendererID, name.c_str());
+		glUniform4f(loc, value.x, value.y, value.z, value.w);
+	}
+	void Shader::SetVec3(std::string name, const glm::vec3& value)
+	{
+		GLint loc = glGetUniformLocation(m_RendererID, name.c_str());
+		glUniform3f(loc, value.x, value.y, value.z);
 	}
 }

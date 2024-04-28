@@ -2,6 +2,10 @@
 
 #include "imgui/imgui.h"
 
+#include <GLFW/include/GLFW/glfw3.h>
+
+
+
 class ExampleLayer : public Uneye::Layer
 {
 	public:
@@ -12,6 +16,8 @@ class ExampleLayer : public Uneye::Layer
 
 		void OnAttach() override
 		{
+			m_Camera = Uneye::OrthographicCamera(-1.6f, 1.6f, -0.9f, 0.9f);
+
 			std::string vertexSrc = R"(
 				#version 330 core
 							
@@ -20,12 +26,14 @@ class ExampleLayer : public Uneye::Layer
 
 				out vec3 v_pos;
 				out vec4 v_color;
+
+				uniform mat4 u_ViewProjection;
 			
 				void main()
 				{
 					v_pos = a_Position;
 					v_color = a_Color;
-					gl_Position = vec4(a_Position, 1.0f);
+					gl_Position = u_ViewProjection * vec4(a_Position, 1.0f);
 				}
 			)";
 
@@ -81,10 +89,12 @@ class ExampleLayer : public Uneye::Layer
 
 				out vec3 v_pos;
 			
+				uniform mat4 u_ViewProjection;
+
 				void main()
 				{
 					v_pos = a_Position;
-					gl_Position = vec4(a_Position, 1.0f);
+					gl_Position = u_ViewProjection * vec4(a_Position, 1.0f);
 				}
 			)";
 
@@ -130,18 +140,29 @@ class ExampleLayer : public Uneye::Layer
 
 		void OnUpdate() override
 		{
-			Uneye::Renderer::BeginScene();
-			{
-				m_SquareShader->Bind();
-				Uneye::Renderer::Submit(m_SquareVA);
+			m_Direction = glm::vec3(0.0f);
 
-				m_Shader->Bind();
-				Uneye::Renderer::Submit(m_VertexArray);
+			if (Uneye::Input::IsKeyPressed(Uneye::Key::W))
+				m_Direction.y = -1.0f;
+			if (Uneye::Input::IsKeyPressed(Uneye::Key::A))
+				m_Direction.x = 1.0f;
+			if (Uneye::Input::IsKeyPressed(Uneye::Key::S))
+				m_Direction.y = 1.0f;
+			if (Uneye::Input::IsKeyPressed(Uneye::Key::D))
+				m_Direction.x = -1.0f;
+
+			m_CameraPosition += m_Direction * m_Speed;
+
+			//m_Camera.SetRotation(45.0f);
+			m_Camera.SetPosition(m_CameraPosition);
+
+			Uneye::Renderer::BeginScene(m_Camera);
+			{
+				Uneye::Renderer::Submit(m_SquareShader, m_SquareVA);
+
+				Uneye::Renderer::Submit(m_Shader, m_VertexArray);
 			}
 			Uneye::Renderer::EndScene();
-
-			if (Uneye::Input::IsKeyPressed(Uneye::Key::Tab))
-				UNEYE_TRACE("Tab key is pressed (poll)!");
 		}
 
 		virtual void OnImGuiRender() override
@@ -153,13 +174,29 @@ class ExampleLayer : public Uneye::Layer
 
 		void OnEvent(Uneye::Event& event) override
 		{
-			if (event.GetEventType() == Uneye::EventType::KeyPressed)
-			{
-				Uneye::KeyPressedEvent& e = (Uneye::KeyPressedEvent&)event;
-				if (e.GetKeyCode() == Uneye::Key::Tab)
-					UNEYE_TRACE("Tab key is pressed (event)!");
-				UNEYE_TRACE("{0}", (char)e.GetKeyCode());
-			}
+			//m_Direction = glm::vec3(0.0f);
+
+			//if (Uneye::Input::IsKeyPressed(Uneye::Key::W))
+			//	m_Direction.y = -1.0f;
+			//if (Uneye::Input::IsKeyPressed(Uneye::Key::A))
+			//	m_Direction.x =  1.0f;
+			//if (Uneye::Input::IsKeyPressed(Uneye::Key::S))
+			//	m_Direction.y =  1.0f;
+			//if (Uneye::Input::IsKeyPressed(Uneye::Key::D))
+			//	m_Direction.x = -1.0f;
+
+			//GLFWwindow* window = (GLFWwindow*)Uneye::Application::Get().GetWindow().GetNativeWindow();
+
+			//if (glfwGetKey(window, Uneye::Key::W))
+			//	m_Direction.y = -1.0f;
+			//if (glfwGetKey(window, Uneye::Key::A))
+			//	m_Direction.x = 1.0f;
+			//if (glfwGetKey(window, Uneye::Key::S))
+			//	m_Direction.y = 1.0f;
+			//if (glfwGetKey(window, Uneye::Key::D))
+			//	m_Direction.x = -1.0f;
+
+			//m_CameraPosition += m_Direction * m_Speed;
 		}
 
 	private:
@@ -169,6 +206,11 @@ class ExampleLayer : public Uneye::Layer
 
 		std::shared_ptr<Uneye::Shader> m_SquareShader;
 		std::shared_ptr<Uneye::VertexArray> m_SquareVA;
+
+		Uneye::OrthographicCamera m_Camera;
+		glm::vec3 m_CameraPosition{ 0.0f };
+		glm::vec3 m_Direction{ 0.0f };
+		glm::vec3 m_Speed{ 0.025f };
 
 };
 

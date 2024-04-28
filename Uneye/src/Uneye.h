@@ -16,6 +16,8 @@
 #include "Uneye/Renderer/Renderer.h"
 #include "Uneye/Renderer/VertexArray.h"
 #include "Uneye/Renderer/Buffer.h"
+
+#include "Uneye/Renderer/Camera.h"
 // -----------------------------------
 
 // ---Entry Point---------------------

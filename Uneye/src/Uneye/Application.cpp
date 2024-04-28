@@ -6,6 +6,10 @@
 #include "Uneye/Renderer/Renderer.h"
 
 #include "Uneye/Input.h"
+#include "Uneye/Renderer/Camera.h"
+
+
+
 
 
 namespace Uneye {
@@ -16,6 +20,7 @@ namespace Uneye {
 
 	Application::Application()
 	{
+
 		UNEYE_CORE_ASSERT(s_Instance, "Application already exists!");
 		s_Instance = this;
 

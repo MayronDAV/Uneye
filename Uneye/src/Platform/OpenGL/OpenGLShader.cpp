@@ -92,29 +92,97 @@ namespace Uneye
 	{
 		glUseProgram(0);
 	}
-	void OpenGLShader::SetMat4(std::string name, const glm::mat4& value)
+
+
+
+	void OpenGLShader::SetMat4(std::string name, const glm::mat4& value) const
 	{
 		GLint loc = glGetUniformLocation(m_RendererID, name.c_str());
 		glUniformMatrix4fv(loc, 1, GL_FALSE, glm::value_ptr(value));
 	}
-	void OpenGLShader::SetVec4(std::string name, const glm::vec4& value)
+	void OpenGLShader::SetMat3(std::string name, const glm::mat3& value) const
+	{
+		GLint loc = glGetUniformLocation(m_RendererID, name.c_str());
+		glUniformMatrix3fv(loc, 1, GL_FALSE, glm::value_ptr(value));
+	}
+
+
+
+	void OpenGLShader::SetVec4(std::string name, float x, float y, float z, float w) const
+	{
+		int loc = glGetUniformLocation(m_RendererID, name.c_str());
+		glUniform4f(loc, x, y, z, w);
+	}
+	void OpenGLShader::SetVec4(std::string name, const glm::vec4& value) const
 	{
 		GLint loc = glGetUniformLocation(m_RendererID, name.c_str());
 		glUniform4f(loc, value.x, value.y, value.z, value.w);
 	}
-	void OpenGLShader::SetVec4(std::string name, const float value[4])
+	void OpenGLShader::SetVec4(std::string name, const float value[4]) const
 	{
 		GLint loc = glGetUniformLocation(m_RendererID, name.c_str());
 		glUniform4f(loc, value[0], value[1], value[2], value[3]);
 	}
-	void OpenGLShader::SetVec3(std::string name, const glm::vec3& value)
+	void OpenGLShader::SetVec3(std::string name, float x, float y, float z) const
+	{
+		int loc = glGetUniformLocation(m_RendererID, name.c_str());
+		glUniform3f(loc, x, y, z);
+	}
+	void OpenGLShader::SetVec3(std::string name, const glm::vec3& value) const
 	{
 		GLint loc = glGetUniformLocation(m_RendererID, name.c_str());
 		glUniform3f(loc, value.x, value.y, value.z);
 	}
-	void OpenGLShader::SetVec3(std::string name, const float value[3])
+	void OpenGLShader::SetVec3(std::string name, const float value[3]) const
 	{
 		GLint loc = glGetUniformLocation(m_RendererID, name.c_str());
 		glUniform3f(loc, value[0], value[1], value[2]);
 	}
+	void OpenGLShader::SetVec2(const std::string& name, glm::vec2 value) const
+	{
+		int loc = glGetUniformLocation(m_RendererID, name.c_str());
+		glUniform2f(loc, value.x, value.y);
+	}
+
+	void OpenGLShader::SetVec2(const std::string& name, const float value[2]) const
+	{
+		int loc = glGetUniformLocation(m_RendererID, name.c_str());
+		glUniform2f(loc, value[0], value[1]);
+	}	
+
+	void OpenGLShader::SetVec2(const std::string& name, float x, float y) const
+	{
+		int loc = glGetUniformLocation(m_RendererID, name.c_str());
+		glUniform2f(loc, x, y);
+	}
+
+
+
+
+	void OpenGLShader::SetBool(const std::string& name, bool value) const
+	{
+		int loc = glGetUniformLocation(m_RendererID, name.c_str());
+		glUniform1i(loc, value);
+	}
+
+	void OpenGLShader::SetInt(const std::string& name, int value) const
+	{
+		int loc = glGetUniformLocation(m_RendererID, name.c_str());
+		glUniform1i(loc, (int)value);
+	}
+
+	void OpenGLShader::SetFloat(const std::string& name, float value) const
+	{
+		int loc = glGetUniformLocation(m_RendererID, name.c_str());
+		glUniform1f(loc, value);
+	}
+
+	void OpenGLShader::SetUiARB64(const std::string& name, uint64_t value) const
+	{
+		int loc = glGetUniformLocation(m_RendererID, name.c_str());
+		glUniformHandleui64ARB(loc, value);
+	}
+
+
+
 }

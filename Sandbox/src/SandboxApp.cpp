@@ -79,25 +79,13 @@ class ExampleLayer : public Uneye::Layer
 				sizeof(squareIndices) / sizeof(uint32_t)));
 			m_SquareVA->SetIndexBuffer(squareIB);
 
-			Uneye::Application::Get().GetWindow().SetVSync(false);
+			//Uneye::Application::Get().GetWindow().SetVSync(false);
 		}
 
 		void OnUpdate(Uneye::Timestep ts) override
 		{
 			//UNEYE_TRACE("Delta time: {0}s ({1}ms)", ts.GetSeconds(), ts.GetMilliseconds());
-			m_Direction = glm::vec3(0.0f);
-
-			if (Uneye::Input::IsKeyPressed(Uneye::Key::W))
-				m_Direction.y =  1.0f;
-			if (Uneye::Input::IsKeyPressed(Uneye::Key::A))
-				m_Direction.x = -1.0f;
-			if (Uneye::Input::IsKeyPressed(Uneye::Key::S))
-				m_Direction.y = -1.0f;
-			if (Uneye::Input::IsKeyPressed(Uneye::Key::D))
-				m_Direction.x =  1.0f;
-
-			m_CameraPosition += (m_Direction / ((glm::length(m_Direction) != 0) ? 
-				glm::length(m_Direction) : 1.0f)) * m_Speed * ts.GetSeconds();
+			ProcessInput(ts);
 
 			Uneye::RenderCommand::Clear({ 0.1f, 0.1f, 0.13f, 1.0f });
 
@@ -134,6 +122,23 @@ class ExampleLayer : public Uneye::Layer
 				Uneye::Renderer::Submit(m_Shader, m_VertexArray, model);
 			}
 			Uneye::Renderer::EndScene();
+		}
+
+		void ProcessInput(Uneye::Timestep ts)
+		{
+			m_Direction = glm::vec3(0.0f);
+
+			if (Uneye::Input::IsKeyPressed(Uneye::Key::W))
+				m_Direction.y = 1.0f;
+			if (Uneye::Input::IsKeyPressed(Uneye::Key::A))
+				m_Direction.x = -1.0f;
+			if (Uneye::Input::IsKeyPressed(Uneye::Key::S))
+				m_Direction.y = -1.0f;
+			if (Uneye::Input::IsKeyPressed(Uneye::Key::D))
+				m_Direction.x = 1.0f;
+
+			m_CameraPosition += (m_Direction / ((glm::length(m_Direction) != 0) ?
+				glm::length(m_Direction) : 1.0f)) * m_Speed * ts.GetSeconds();
 		}
 
 		virtual void OnImGuiRender() override

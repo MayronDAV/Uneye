@@ -7,6 +7,7 @@
 
 #include "Uneye/Input.h"
 #include "Uneye/Renderer/Camera.h"
+#include <GLFW/glfw3.h>
 
 
 
@@ -64,14 +65,15 @@ namespace Uneye {
 
 	void Application::Run()
 	{
-		auto color = m_ImGuiLayer->GetColorBG();
-
 		while (m_Running)
 		{
-			RenderCommand::Clear({ color[0], color[1], color[2], color[3] });
+			float time = (float)glfwGetTime();
+			Timestep timestep = time - m_LastFrameTime;
+			m_LastFrameTime = time;
+
 
 			for (Layer* layer : m_LayerStack)
-				layer->OnUpdate();
+				layer->OnUpdate(timestep);
 
 			m_ImGuiLayer->Begin();
 			for (Layer* layer : m_LayerStack)

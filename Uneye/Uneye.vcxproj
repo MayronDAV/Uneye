@@ -149,6 +149,7 @@
     <ClInclude Include="src\Uneye.h" />
     <ClInclude Include="src\Uneye\Application.h" />
     <ClInclude Include="src\Uneye\Core.h" />
+    <ClInclude Include="src\Uneye\Core\Timestep.h" />
     <ClInclude Include="src\Uneye\EntryPoint.h" />
     <ClInclude Include="src\Uneye\Events\ApplicationEvent.h" />
     <ClInclude Include="src\Uneye\Events\Event.h" />

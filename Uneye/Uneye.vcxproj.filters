@@ -46,6 +46,9 @@
     <Filter Include="vendor\glm\glm\gtx">
       <UniqueIdentifier>{B3A6A76B-9F8A-68C1-08EB-6214F4ED5243}</UniqueIdentifier>
     </Filter>
+    <Filter Include="src\Uneye\Core">
+      <UniqueIdentifier>{3ce8aafb-4378-4fe4-9821-664fbf07a317}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Platform\OpenGL\OpenGLBuffer.h">
@@ -1223,6 +1226,9 @@
     </ClInclude>
     <ClInclude Include="src\Uneye\Renderer\Camera.h">
       <Filter>src\Uneye\Renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Uneye\Core\Timestep.h">
+      <Filter>src\Uneye\Core</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

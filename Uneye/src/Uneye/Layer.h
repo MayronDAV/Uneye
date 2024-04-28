@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Uneye/Core.h"
+#include "Uneye/Core/Timestep.h"
 #include "Uneye/Events/Event.h"
 
 namespace Uneye {
@@ -13,7 +14,7 @@ namespace Uneye {
 
 			virtual void OnAttach() {}
 			virtual void OnDetach() {}
-			virtual void OnUpdate() {}
+			virtual void OnUpdate(Timestep ts) {}
 			virtual void OnImGuiRender() {}
 			virtual void OnEvent(Event& event) {}
 

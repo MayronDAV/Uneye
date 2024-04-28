@@ -138,20 +138,23 @@ class ExampleLayer : public Uneye::Layer
 			m_SquareVA->SetIndexBuffer(squareIB);
 		}
 
-		void OnUpdate() override
+		void OnUpdate(Uneye::Timestep ts) override
 		{
+			//UNEYE_TRACE("Delta time: {0}s ({1}ms)", ts.GetSeconds(), ts.GetMilliseconds());
 			m_Direction = glm::vec3(0.0f);
 
 			if (Uneye::Input::IsKeyPressed(Uneye::Key::W))
 				m_Direction.y = -1.0f;
 			if (Uneye::Input::IsKeyPressed(Uneye::Key::A))
-				m_Direction.x = 1.0f;
+				m_Direction.x =  1.0f;
 			if (Uneye::Input::IsKeyPressed(Uneye::Key::S))
-				m_Direction.y = 1.0f;
+				m_Direction.y =  1.0f;
 			if (Uneye::Input::IsKeyPressed(Uneye::Key::D))
 				m_Direction.x = -1.0f;
 
-			m_CameraPosition += m_Direction * m_Speed;
+			m_CameraPosition += m_Direction * m_Speed * ts.GetSeconds();
+
+			Uneye::RenderCommand::Clear({ 0.1f, 0.1f, 0.13f, 1.0f });
 
 			//m_Camera.SetRotation(45.0f);
 			m_Camera.SetPosition(m_CameraPosition);
@@ -167,36 +170,10 @@ class ExampleLayer : public Uneye::Layer
 
 		virtual void OnImGuiRender() override
 		{
-			ImGui::Begin("Test");
-			ImGui::Text("Hello World");
-			ImGui::End();
 		}
 
 		void OnEvent(Uneye::Event& event) override
 		{
-			//m_Direction = glm::vec3(0.0f);
-
-			//if (Uneye::Input::IsKeyPressed(Uneye::Key::W))
-			//	m_Direction.y = -1.0f;
-			//if (Uneye::Input::IsKeyPressed(Uneye::Key::A))
-			//	m_Direction.x =  1.0f;
-			//if (Uneye::Input::IsKeyPressed(Uneye::Key::S))
-			//	m_Direction.y =  1.0f;
-			//if (Uneye::Input::IsKeyPressed(Uneye::Key::D))
-			//	m_Direction.x = -1.0f;
-
-			//GLFWwindow* window = (GLFWwindow*)Uneye::Application::Get().GetWindow().GetNativeWindow();
-
-			//if (glfwGetKey(window, Uneye::Key::W))
-			//	m_Direction.y = -1.0f;
-			//if (glfwGetKey(window, Uneye::Key::A))
-			//	m_Direction.x = 1.0f;
-			//if (glfwGetKey(window, Uneye::Key::S))
-			//	m_Direction.y = 1.0f;
-			//if (glfwGetKey(window, Uneye::Key::D))
-			//	m_Direction.x = -1.0f;
-
-			//m_CameraPosition += m_Direction * m_Speed;
 		}
 
 	private:
@@ -210,7 +187,7 @@ class ExampleLayer : public Uneye::Layer
 		Uneye::OrthographicCamera m_Camera;
 		glm::vec3 m_CameraPosition{ 0.0f };
 		glm::vec3 m_Direction{ 0.0f };
-		glm::vec3 m_Speed{ 0.025f };
+		glm::vec3 m_Speed{ 1.0f };
 
 };
 

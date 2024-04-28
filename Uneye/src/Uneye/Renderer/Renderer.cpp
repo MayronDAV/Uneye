@@ -1,6 +1,8 @@
 #include "uypch.h"
 #include "Uneye/Renderer/Renderer.h"
 
+#include "Platform/OpenGL/OpenGLShader.h"
+
 namespace Uneye
 {
 	Renderer::SceneData* Renderer::m_SceneData = new Renderer::SceneData();
@@ -14,13 +16,13 @@ namespace Uneye
 
 	}
 
-	void Renderer::Submit(const std::shared_ptr<Shader>& shader,
-		const std::shared_ptr<VertexArray>& vertexArray,
+	void Renderer::Submit(const Ref<Shader>& shader,
+		const Ref<VertexArray>& vertexArray,
 		const glm::mat4& transform)
 	{
 		shader->Bind();
-		shader->SetMat4("u_ViewProjection", m_SceneData->ViewProjectionMatrix);
-		shader->SetMat4("u_ModelMatrix", transform);
+		std::dynamic_pointer_cast<OpenGLShader>(shader)->SetMat4("u_ViewProjection", m_SceneData->ViewProjectionMatrix);
+		std::dynamic_pointer_cast<OpenGLShader>(shader)->SetMat4("u_ModelMatrix", transform);
 
 		vertexArray->Bind();
 		RenderCommand::DrawIndexed(vertexArray);

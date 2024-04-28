@@ -1,24 +1,20 @@
 #pragma once
 
 #include <string>
-#include <glm/glm.hpp>
+
+
 
 namespace Uneye
 {
 	class Shader
 	{
 		public:
-			Shader(const std::string& vertexSrc, const std::string& fragmentSrc);
-			~Shader();
+			virtual ~Shader() = default;
 
-			void Bind() const;
-			void Unbind() const;
+			virtual void Bind() const = 0;
+			virtual void Unbind() const = 0;
 
-			void SetMat4(std::string name, const glm::mat4& value);
-			void SetVec4(std::string name, const glm::vec4& value);
-			void SetVec3(std::string name, const glm::vec3& value);
+			static Shader* Create(const std::string& vertexPath, const std::string& fragmentPath);
 
-		private:
-			uint32_t m_RendererID = 0;
 	};
 }

@@ -16,6 +16,9 @@
     <Filter Include="src\Uneye">
       <UniqueIdentifier>{A240FCB3-0EAB-B02A-57E9-61D0C3928E7F}</UniqueIdentifier>
     </Filter>
+    <Filter Include="src\Uneye\Core">
+      <UniqueIdentifier>{3A1A0159-26E8-F45E-0F7C-6585FBE8D0C3}</UniqueIdentifier>
+    </Filter>
     <Filter Include="src\Uneye\Events">
       <UniqueIdentifier>{46A2D2A2-329B-F1F4-5BCD-D6794725D100}</UniqueIdentifier>
     </Filter>
@@ -46,15 +49,18 @@
     <Filter Include="vendor\glm\glm\gtx">
       <UniqueIdentifier>{B3A6A76B-9F8A-68C1-08EB-6214F4ED5243}</UniqueIdentifier>
     </Filter>
-    <Filter Include="src\Uneye\Core">
-      <UniqueIdentifier>{3ce8aafb-4378-4fe4-9821-664fbf07a317}</UniqueIdentifier>
-    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Platform\OpenGL\OpenGLBuffer.h">
       <Filter>src\Platform\OpenGL</Filter>
     </ClInclude>
     <ClInclude Include="src\Platform\OpenGL\OpenGLContext.h">
+      <Filter>src\Platform\OpenGL</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Platform\OpenGL\OpenGLRendererAPI.h">
+      <Filter>src\Platform\OpenGL</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Platform\OpenGL\OpenGLVertexArray.h">
       <Filter>src\Platform\OpenGL</Filter>
     </ClInclude>
     <ClInclude Include="src\Platform\Windows\WindowsInput.h">
@@ -71,6 +77,9 @@
     </ClInclude>
     <ClInclude Include="src\Uneye\Core.h">
       <Filter>src\Uneye</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Uneye\Core\Timestep.h">
+      <Filter>src\Uneye\Core</Filter>
     </ClInclude>
     <ClInclude Include="src\Uneye\EntryPoint.h">
       <Filter>src\Uneye</Filter>
@@ -108,13 +117,25 @@
     <ClInclude Include="src\Uneye\Renderer\Buffer.h">
       <Filter>src\Uneye\Renderer</Filter>
     </ClInclude>
+    <ClInclude Include="src\Uneye\Renderer\Camera.h">
+      <Filter>src\Uneye\Renderer</Filter>
+    </ClInclude>
     <ClInclude Include="src\Uneye\Renderer\GraphicsContext.h">
+      <Filter>src\Uneye\Renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Uneye\Renderer\RenderCommand.h">
       <Filter>src\Uneye\Renderer</Filter>
     </ClInclude>
     <ClInclude Include="src\Uneye\Renderer\Renderer.h">
       <Filter>src\Uneye\Renderer</Filter>
     </ClInclude>
+    <ClInclude Include="src\Uneye\Renderer\RendererAPI.h">
+      <Filter>src\Uneye\Renderer</Filter>
+    </ClInclude>
     <ClInclude Include="src\Uneye\Renderer\Shader.h">
+      <Filter>src\Uneye\Renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Uneye\Renderer\VertexArray.h">
       <Filter>src\Uneye\Renderer</Filter>
     </ClInclude>
     <ClInclude Include="src\Uneye\Window.h">
@@ -1209,26 +1230,8 @@
     <ClInclude Include="vendor\glm\glm\vector_relational.hpp">
       <Filter>vendor\glm\glm</Filter>
     </ClInclude>
-    <ClInclude Include="src\Uneye\Renderer\VertexArray.h">
-      <Filter>src\Uneye\Renderer</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Platform\OpenGL\OpenGLVertexArray.h">
+    <ClInclude Include="src\Platform\OpenGL\OpenGLShader.h">
       <Filter>src\Platform\OpenGL</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Uneye\Renderer\RendererAPI.h">
-      <Filter>src\Uneye\Renderer</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Uneye\Renderer\RenderCommand.h">
-      <Filter>src\Uneye\Renderer</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Platform\OpenGL\OpenGLRendererAPI.h">
-      <Filter>src\Platform\OpenGL</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Uneye\Renderer\Camera.h">
-      <Filter>src\Uneye\Renderer</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Uneye\Core\Timestep.h">
-      <Filter>src\Uneye\Core</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -1236,6 +1239,12 @@
       <Filter>src\Platform\OpenGL</Filter>
     </ClCompile>
     <ClCompile Include="src\Platform\OpenGL\OpenGLContext.cpp">
+      <Filter>src\Platform\OpenGL</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Platform\OpenGL\OpenGLRendererAPI.cpp">
+      <Filter>src\Platform\OpenGL</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Platform\OpenGL\OpenGLVertexArray.cpp">
       <Filter>src\Platform\OpenGL</Filter>
     </ClCompile>
     <ClCompile Include="src\Platform\Windows\WindowsInput.cpp">
@@ -1265,32 +1274,29 @@
     <ClCompile Include="src\Uneye\Renderer\Buffer.cpp">
       <Filter>src\Uneye\Renderer</Filter>
     </ClCompile>
-    <ClCompile Include="src\Uneye\Renderer\Renderer.cpp">
-      <Filter>src\Uneye\Renderer</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Uneye\Renderer\Shader.cpp">
-      <Filter>src\Uneye\Renderer</Filter>
-    </ClCompile>
-    <ClCompile Include="src\uypch.cpp">
-      <Filter>src</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Uneye\Renderer\VertexArray.cpp">
-      <Filter>src\Uneye\Renderer</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Platform\OpenGL\OpenGLVertexArray.cpp">
-      <Filter>src\Platform\OpenGL</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Uneye\Renderer\RendererAPI.cpp">
+    <ClCompile Include="src\Uneye\Renderer\Camera.cpp">
       <Filter>src\Uneye\Renderer</Filter>
     </ClCompile>
     <ClCompile Include="src\Uneye\Renderer\RenderCommand.cpp">
       <Filter>src\Uneye\Renderer</Filter>
     </ClCompile>
-    <ClCompile Include="src\Platform\OpenGL\OpenGLRendererAPI.cpp">
-      <Filter>src\Platform\OpenGL</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Uneye\Renderer\Camera.cpp">
+    <ClCompile Include="src\Uneye\Renderer\Renderer.cpp">
       <Filter>src\Uneye\Renderer</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Uneye\Renderer\RendererAPI.cpp">
+      <Filter>src\Uneye\Renderer</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Uneye\Renderer\Shader.cpp">
+      <Filter>src\Uneye\Renderer</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Uneye\Renderer\VertexArray.cpp">
+      <Filter>src\Uneye\Renderer</Filter>
+    </ClCompile>
+    <ClCompile Include="src\uypch.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Platform\OpenGL\OpenGLShader.cpp">
+      <Filter>src\Platform\OpenGL</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

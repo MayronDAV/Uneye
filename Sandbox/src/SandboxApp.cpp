@@ -3,6 +3,7 @@
 #include "imgui/imgui.h"
 
 #include <GLFW/include/GLFW/glfw3.h>
+#include <Platform/OpenGL/OpenGLShader.h>
 
 
 
@@ -18,56 +19,21 @@ class ExampleLayer : public Uneye::Layer
 		{
 			m_Camera = Uneye::OrthographicCamera(-1.6f, 1.6f, -0.9f, 0.9f);
 
-			std::string vertexSrc = R"(
-				#version 330 core
-							
-				layout(location = 0) in vec3 a_Position;
-				layout(location = 1) in vec4 a_Color;
-
-				out vec3 v_pos;
-				out vec4 v_color;
-
-				uniform mat4 u_ViewProjection;
-				uniform mat4 u_ModelMatrix;
-			
-				void main()
-				{
-					v_pos = a_Position;
-					v_color = a_Color;
-					gl_Position = u_ViewProjection * u_ModelMatrix * vec4(a_Position, 1.0f);
-				}
-			)";
-
-			std::string fragmentSrc = R"(
-				#version 330 core
-							
-				out vec4 color;
-
-				in vec3 v_pos;
-				in vec4 v_color;
-
-				void main()
-				{
-					color = vec4(v_pos * 0.5f + 0.5f, 1.0f);
-					color = v_color;
-				}
-			)";
-
-
-			m_Shader.reset(new Uneye::Shader(vertexSrc, fragmentSrc));
+			m_Shader.reset(Uneye::Shader::Create(
+				"../Sandbox/assets/shaders/triangle.vert",
+				"../Sandbox/assets/shaders/triangle.frag"));
 
 			m_VertexArray.reset(Uneye::VertexArray::Create());
 
-			float vertices[3 * 7] = {
-				-0.5f, -0.5f, 0.0f, 0.8f, 0.2f, 0.8f, 1.0f,
-				 0.5f, -0.5f, 0.0f, 0.2f, 0.3f, 0.8f, 1.0f,
-				 0.0f,  0.5f, 0.0f, 0.8f, 0.8f, 0.2f, 1.0f,
+			float vertices[3 * 3] = {
+				-0.5f, -0.5f, 0.0f,
+				 0.5f, -0.5f, 0.0f,
+				 0.0f,  0.5f, 0.0f
 			};
-			std::shared_ptr<Uneye::VertexBuffer> vertexBuffer;
+			Uneye::Ref<Uneye::VertexBuffer> vertexBuffer;
 			vertexBuffer.reset(Uneye::VertexBuffer::Create(vertices, sizeof(vertices)));
 			Uneye::BufferLayout layout = {
-				{ Uneye::ShaderDataType::Float3, "a_Position" },
-				{ Uneye::ShaderDataType::Float4, "a_Color" }
+				{ Uneye::ShaderDataType::Float3, "a_Position" }
 			};
 
 			vertexBuffer->SetLayout(layout);
@@ -77,42 +43,15 @@ class ExampleLayer : public Uneye::Layer
 				0, 1, 2
 			};
 
-			std::shared_ptr<Uneye::IndexBuffer> indexBuffer;
-			indexBuffer.reset(Uneye::IndexBuffer::Create(indices, sizeof(indices) / sizeof(uint32_t)));
+			Uneye::Ref<Uneye::IndexBuffer> indexBuffer;
+			indexBuffer.reset(Uneye::IndexBuffer::Create(indices,
+				sizeof(indices) / sizeof(uint32_t)));
 			m_VertexArray->SetIndexBuffer(indexBuffer);
 
 
-
-			std::string squareVertexSrc = R"(
-				#version 330 core
-							
-				layout(location = 0) in vec3 a_Position;
-
-				out vec3 v_pos;
-			
-				uniform mat4 u_ViewProjection;
-				uniform mat4 u_ModelMatrix;
-
-				void main()
-				{
-					v_pos = a_Position;
-					gl_Position = u_ViewProjection * u_ModelMatrix * vec4(a_Position, 1.0f);
-				}
-			)";
-
-			std::string squareFagmentSrc = R"(
-				#version 330 core
-							
-				out vec4 color;
-
-				in vec3 v_pos;
-
-				void main()
-				{
-					color = vec4(0.8f, 0.2f, 0.3f, 1.0f);
-				}
-			)";
-			m_SquareShader.reset(new Uneye::Shader(squareVertexSrc, squareFagmentSrc));
+			m_SquareShader.reset(Uneye::Shader::Create(
+				"../Sandbox/assets/shaders/square.vert", 
+				"../Sandbox/assets/shaders/square.frag"));
 
 
 			m_SquareVA.reset(Uneye::VertexArray::Create());
@@ -124,7 +63,7 @@ class ExampleLayer : public Uneye::Layer
 				-0.5f,  0.5f, 0.0f
 			};
 
-			std::shared_ptr<Uneye::VertexBuffer> squareVB;
+			Uneye::Ref<Uneye::VertexBuffer> squareVB;
 			squareVB.reset(Uneye::VertexBuffer::Create(squareVertices, sizeof(squareVertices)));
 			squareVB->SetLayout({
 				{ Uneye::ShaderDataType::Float3, "a_Position" },
@@ -135,8 +74,9 @@ class ExampleLayer : public Uneye::Layer
 				0, 1, 2,
 				0, 2, 3,
 			};
-			std::shared_ptr<Uneye::IndexBuffer> squareIB;
-			squareIB.reset(Uneye::IndexBuffer::Create(squareIndices, sizeof(squareIndices) / sizeof(uint32_t)));
+			Uneye::Ref<Uneye::IndexBuffer> squareIB;
+			squareIB.reset(Uneye::IndexBuffer::Create(squareIndices, 
+				sizeof(squareIndices) / sizeof(uint32_t)));
 			m_SquareVA->SetIndexBuffer(squareIB);
 
 			Uneye::Application::Get().GetWindow().SetVSync(false);
@@ -167,19 +107,30 @@ class ExampleLayer : public Uneye::Layer
 			Uneye::Renderer::BeginScene(m_Camera);
 			{
 				static glm::mat4 scale = glm::scale(glm::mat4(1.0f), glm::vec3(0.1f));
-				
+			
+
+				std::dynamic_pointer_cast<Uneye::OpenGLShader>(m_SquareShader)->Bind();
+
 				for (float x = 0.0f; x <= 20.0f; x += 1.0f)
 				{
 					for (float y = 0.0f; y <= 20.0f; y += 1.0f)
 					{
 						glm::mat4 model(1.0f);
 						model = glm::translate(model, glm::vec3(x * 0.11f, y * 0.11f, 0.0f)) * scale;
+						if ((int)x % 2 == 0)
+							std::dynamic_pointer_cast<Uneye::OpenGLShader>(m_SquareShader)->SetVec4("u_Color", m_SquareColor1);
+						else
+							std::dynamic_pointer_cast<Uneye::OpenGLShader>(m_SquareShader)->SetVec4("u_Color", m_SquareColor2);
+
 						Uneye::Renderer::Submit(m_SquareShader, m_SquareVA, model);
+						
 					}
 				}
 
 				glm::mat4 model(1.0f);
 				model = glm::translate(model, m_CameraPosition) * scale;
+				std::dynamic_pointer_cast<Uneye::OpenGLShader>(m_Shader)->Bind();
+				std::dynamic_pointer_cast<Uneye::OpenGLShader>(m_Shader)->SetVec4("u_Color", m_TriangleColor);
 				Uneye::Renderer::Submit(m_Shader, m_VertexArray, model);
 			}
 			Uneye::Renderer::EndScene();
@@ -187,6 +138,12 @@ class ExampleLayer : public Uneye::Layer
 
 		virtual void OnImGuiRender() override
 		{
+			ImGui::Begin("Quads Setup");
+			ImGui::ColorEdit4("SquareColor1", m_SquareColor1);
+			ImGui::ColorEdit4("SquareColor2", m_SquareColor2);
+			ImGui::ColorEdit4("TriangleColor", m_TriangleColor);
+			ImGui::End();
+
 		}
 
 		void OnEvent(Uneye::Event& event) override
@@ -195,17 +152,20 @@ class ExampleLayer : public Uneye::Layer
 
 	private:
 
-		std::shared_ptr<Uneye::Shader> m_Shader;
-		std::shared_ptr<Uneye::VertexArray> m_VertexArray;
+		Uneye::Ref<Uneye::Shader> m_Shader;
+		Uneye::Ref<Uneye::VertexArray> m_VertexArray;
 
-		std::shared_ptr<Uneye::Shader> m_SquareShader;
-		std::shared_ptr<Uneye::VertexArray> m_SquareVA;
+		Uneye::Ref<Uneye::Shader> m_SquareShader;
+		Uneye::Ref<Uneye::VertexArray> m_SquareVA;
 
 		Uneye::OrthographicCamera m_Camera;
 		glm::vec3 m_CameraPosition{ 0.0f };
 		glm::vec3 m_Direction{ 0.0f };
 		glm::vec3 m_Speed{ 0.5f };
 
+		float m_SquareColor1[4]  = { 0.8f, 0.2f, 0.3f, 1.0f };
+		float m_SquareColor2[4]  = { 0.2f, 0.3f, 0.8f, 1.0f };
+		float m_TriangleColor[4] = { 0.5f, 0.0f, 0.0f, 1.0f };
 };
 
 class Sandbox : public Uneye::Application

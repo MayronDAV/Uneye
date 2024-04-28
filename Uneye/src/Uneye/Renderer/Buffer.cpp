@@ -11,12 +11,12 @@ namespace Uneye
 	{
 		switch (Renderer::GetAPI())
 		{
-			case RendererAPI::None:
+		case RendererAPI::API::None:
 			{
 				UNEYE_CORE_ASSERT(true, "RendererAPI::None is currently not support!");
 				return nullptr;
 			}
-			case RendererAPI::OpenGL:
+			case RendererAPI::API::OpenGL:
 			{
 				return new OpenGLVertexBuffer(vertices, size);
 			}
@@ -30,12 +30,12 @@ namespace Uneye
 	{
 		switch (Renderer::GetAPI())
 		{
-		case RendererAPI::None:
+		case RendererAPI::API::None:
 		{
 			UNEYE_CORE_ASSERT(true, "RendererAPI::None is currently not support!");
 			return nullptr;
 		}
-		case RendererAPI::OpenGL:
+		case RendererAPI::API::OpenGL:
 		{
 			return new OpenGLIndexBuffer(indices, size);
 		}

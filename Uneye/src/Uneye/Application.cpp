@@ -3,7 +3,7 @@
 
 #include "Uneye/Log.h"
 
-#include <glad/glad.h>
+#include "Uneye/Renderer/Renderer.h"
 
 #include "Uneye/Input.h"
 
@@ -178,18 +178,17 @@ namespace Uneye {
 
 		while (m_Running)
 		{
-			glClearColor(color[0], color[1], color[2], color[3]);
-			glClear(GL_COLOR_BUFFER_BIT);
+			RenderCommand::Clear({ color[0], color[1], color[2], color[3] });
 
-			m_SquareShader->Bind();
-			m_SquareVA->Bind();
-			glDrawElements(GL_TRIANGLES, m_SquareVA->GetIndexBuffers()->GetCount(), GL_UNSIGNED_INT, nullptr);
+			Renderer::BeginScene();
+			{
+				m_SquareShader->Bind();
+				Renderer::Submit(m_SquareVA);
 
-
-			m_Shader->Bind();
-
-			m_VertexArray->Bind();
-			glDrawElements(GL_TRIANGLES, m_VertexArray->GetIndexBuffers()->GetCount(), GL_UNSIGNED_INT, nullptr);
+				m_Shader->Bind();
+				Renderer::Submit(m_VertexArray);
+			}
+			Renderer::EndScene();
 
 
 			for (Layer* layer : m_LayerStack)

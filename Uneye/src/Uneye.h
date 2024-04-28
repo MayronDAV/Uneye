@@ -11,6 +11,13 @@
 
 #include "Uneye/ImGui/ImGuiLayer.h"
 
+// ---Renderer------------------------
+#include "Uneye/Renderer/Shader.h"
+#include "Uneye/Renderer/Renderer.h"
+#include "Uneye/Renderer/VertexArray.h"
+#include "Uneye/Renderer/Buffer.h"
+// -----------------------------------
+
 // ---Entry Point---------------------
 #include "Uneye/EntryPoint.h"
 // -----------------------------------

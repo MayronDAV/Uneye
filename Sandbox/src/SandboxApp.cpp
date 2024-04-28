@@ -28,12 +28,13 @@ class ExampleLayer : public Uneye::Layer
 				out vec4 v_color;
 
 				uniform mat4 u_ViewProjection;
+				uniform mat4 u_ModelMatrix;
 			
 				void main()
 				{
 					v_pos = a_Position;
 					v_color = a_Color;
-					gl_Position = u_ViewProjection * vec4(a_Position, 1.0f);
+					gl_Position = u_ViewProjection * u_ModelMatrix * vec4(a_Position, 1.0f);
 				}
 			)";
 
@@ -90,11 +91,12 @@ class ExampleLayer : public Uneye::Layer
 				out vec3 v_pos;
 			
 				uniform mat4 u_ViewProjection;
+				uniform mat4 u_ModelMatrix;
 
 				void main()
 				{
 					v_pos = a_Position;
-					gl_Position = u_ViewProjection * vec4(a_Position, 1.0f);
+					gl_Position = u_ViewProjection * u_ModelMatrix * vec4(a_Position, 1.0f);
 				}
 			)";
 
@@ -136,6 +138,8 @@ class ExampleLayer : public Uneye::Layer
 			std::shared_ptr<Uneye::IndexBuffer> squareIB;
 			squareIB.reset(Uneye::IndexBuffer::Create(squareIndices, sizeof(squareIndices) / sizeof(uint32_t)));
 			m_SquareVA->SetIndexBuffer(squareIB);
+
+			Uneye::Application::Get().GetWindow().SetVSync(false);
 		}
 
 		void OnUpdate(Uneye::Timestep ts) override
@@ -144,15 +148,16 @@ class ExampleLayer : public Uneye::Layer
 			m_Direction = glm::vec3(0.0f);
 
 			if (Uneye::Input::IsKeyPressed(Uneye::Key::W))
-				m_Direction.y = -1.0f;
-			if (Uneye::Input::IsKeyPressed(Uneye::Key::A))
-				m_Direction.x =  1.0f;
-			if (Uneye::Input::IsKeyPressed(Uneye::Key::S))
 				m_Direction.y =  1.0f;
-			if (Uneye::Input::IsKeyPressed(Uneye::Key::D))
+			if (Uneye::Input::IsKeyPressed(Uneye::Key::A))
 				m_Direction.x = -1.0f;
+			if (Uneye::Input::IsKeyPressed(Uneye::Key::S))
+				m_Direction.y = -1.0f;
+			if (Uneye::Input::IsKeyPressed(Uneye::Key::D))
+				m_Direction.x =  1.0f;
 
-			m_CameraPosition += m_Direction * m_Speed * ts.GetSeconds();
+			m_CameraPosition += (m_Direction / ((glm::length(m_Direction) != 0) ? 
+				glm::length(m_Direction) : 1.0f)) * m_Speed * ts.GetSeconds();
 
 			Uneye::RenderCommand::Clear({ 0.1f, 0.1f, 0.13f, 1.0f });
 
@@ -161,9 +166,21 @@ class ExampleLayer : public Uneye::Layer
 
 			Uneye::Renderer::BeginScene(m_Camera);
 			{
-				Uneye::Renderer::Submit(m_SquareShader, m_SquareVA);
+				static glm::mat4 scale = glm::scale(glm::mat4(1.0f), glm::vec3(0.1f));
+				
+				for (float x = 0.0f; x <= 20.0f; x += 1.0f)
+				{
+					for (float y = 0.0f; y <= 20.0f; y += 1.0f)
+					{
+						glm::mat4 model(1.0f);
+						model = glm::translate(model, glm::vec3(x * 0.11f, y * 0.11f, 0.0f)) * scale;
+						Uneye::Renderer::Submit(m_SquareShader, m_SquareVA, model);
+					}
+				}
 
-				Uneye::Renderer::Submit(m_Shader, m_VertexArray);
+				glm::mat4 model(1.0f);
+				model = glm::translate(model, m_CameraPosition) * scale;
+				Uneye::Renderer::Submit(m_Shader, m_VertexArray, model);
 			}
 			Uneye::Renderer::EndScene();
 		}
@@ -187,7 +204,7 @@ class ExampleLayer : public Uneye::Layer
 		Uneye::OrthographicCamera m_Camera;
 		glm::vec3 m_CameraPosition{ 0.0f };
 		glm::vec3 m_Direction{ 0.0f };
-		glm::vec3 m_Speed{ 1.0f };
+		glm::vec3 m_Speed{ 0.5f };
 
 };
 

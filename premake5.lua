@@ -22,6 +22,8 @@ IncludeDir["GLFW"] = "Uneye/vendor/GLFW/include"
 IncludeDir["Glad"] = "Uneye/vendor/Glad/include"
 IncludeDir["ImGui"] = "Uneye/vendor/imgui"
 IncludeDir["glm"] = "Uneye/vendor/glm"
+IncludeDir["stb"] = "Uneye/vendor/stb/include"
+IncludeDir["assets"] = "Uneye/assets"
 
 include "Uneye/vendor/GLFW"
 include "Uneye/vendor/Glad"
@@ -44,8 +46,12 @@ project "Uneye"
 	{
 		"%{prj.name}/src/**.h",
 		"%{prj.name}/src/**.cpp",
+		"%{prj.name}/vendor/stb/src/**.c",
+		"%{prj.name}/vendor/stb/include/**.h",
+		"%{prj.name}/vendor/spdlog/include/**.h",
 		"%{prj.name}/vendor/glm/glm/**.hpp",
 		"%{prj.name}/vendor/glm/glm/**.inl",
+		"%{prj.name}/assets/**"
 	}
 
 	defines
@@ -60,7 +66,9 @@ project "Uneye"
 		"%{IncludeDir.GLFW}",
 		"%{IncludeDir.Glad}",
 		"%{IncludeDir.ImGui}",
-		"%{IncludeDir.glm}"
+		"%{IncludeDir.glm}",
+		"%{IncludeDir.stb}",
+		"%{IncludeDir.assets}"
 	}
 
 	links 
@@ -114,6 +122,7 @@ project "Sandbox"
 
 	includedirs
 	{
+		"%{prj.name}/assets",
 		"Uneye/vendor/spdlog/include",
 		"Uneye/src",
 		"Uneye/vendor",

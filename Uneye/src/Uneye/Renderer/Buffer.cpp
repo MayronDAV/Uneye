@@ -7,18 +7,18 @@
 
 namespace Uneye
 {
-	VertexBuffer* VertexBuffer::Create(float* vertices, uint32_t size)
+	Ref<VertexBuffer> VertexBuffer::Create(float* vertices, uint32_t size)
 	{
 		switch (Renderer::GetAPI())
 		{
-		case RendererAPI::API::None:
+			case RendererAPI::API::None:
 			{
 				UNEYE_CORE_ASSERT(true, "RendererAPI::None is currently not support!");
 				return nullptr;
 			}
 			case RendererAPI::API::OpenGL:
 			{
-				return new OpenGLVertexBuffer(vertices, size);
+				return std::make_shared<OpenGLVertexBuffer>(vertices, size);
 			}
 		}
 		
@@ -26,19 +26,19 @@ namespace Uneye
 		return nullptr;
 	}
 
-	IndexBuffer* IndexBuffer::Create(uint32_t* indices, uint32_t size)
+	Ref<IndexBuffer> IndexBuffer::Create(uint32_t* indices, uint32_t size)
 	{
 		switch (Renderer::GetAPI())
 		{
-		case RendererAPI::API::None:
-		{
-			UNEYE_CORE_ASSERT(true, "RendererAPI::None is currently not support!");
-			return nullptr;
-		}
-		case RendererAPI::API::OpenGL:
-		{
-			return new OpenGLIndexBuffer(indices, size);
-		}
+			case RendererAPI::API::None:
+			{
+				UNEYE_CORE_ASSERT(true, "RendererAPI::None is currently not support!");
+				return nullptr;
+			}
+			case RendererAPI::API::OpenGL:
+			{
+				return std::make_shared<OpenGLIndexBuffer>(indices, size);
+			}
 		}
 
 		UNEYE_CORE_ASSERT(true, "Unknown RendererAPI!");

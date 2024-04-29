@@ -8,6 +8,11 @@ namespace Uneye
 	class RenderCommand
 	{
 		public:
+			inline static void Init()
+			{
+				s_RendererAPI->Init();
+			}
+
 			inline static void Clear(const glm::vec4& color)
 			{
 				s_RendererAPI->Clear(color);

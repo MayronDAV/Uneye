@@ -20,10 +20,10 @@ class ExampleLayer : public Uneye::Layer
 			m_Camera = Uneye::OrthographicCamera(-1.6f, 1.6f, -0.9f, 0.9f);
 
 			m_Shader.reset(Uneye::Shader::Create(
-				"../Sandbox/assets/shaders/triangle.vert",
-				"../Sandbox/assets/shaders/triangle.frag"));
+				"assets/shaders/triangle.vert",
+				"assets/shaders/triangle.frag"));
 
-			m_VertexArray.reset(Uneye::VertexArray::Create());
+			m_VertexArray = Uneye::VertexArray::Create();
 
 			float vertices[3 * 3] = {
 				-0.5f, -0.5f, 0.0f,
@@ -31,7 +31,7 @@ class ExampleLayer : public Uneye::Layer
 				 0.0f,  0.5f, 0.0f
 			};
 			Uneye::Ref<Uneye::VertexBuffer> vertexBuffer;
-			vertexBuffer.reset(Uneye::VertexBuffer::Create(vertices, sizeof(vertices)));
+			vertexBuffer = Uneye::VertexBuffer::Create(vertices, sizeof(vertices));
 			Uneye::BufferLayout layout = {
 				{ Uneye::ShaderDataType::Float3, "a_Position" }
 			};
@@ -44,16 +44,15 @@ class ExampleLayer : public Uneye::Layer
 			};
 
 			Uneye::Ref<Uneye::IndexBuffer> indexBuffer;
-			indexBuffer.reset(Uneye::IndexBuffer::Create(indices,
-				sizeof(indices) / sizeof(uint32_t)));
+			indexBuffer = Uneye::IndexBuffer::Create(indices, sizeof(indices) / sizeof(uint32_t));
 			m_VertexArray->SetIndexBuffer(indexBuffer);
 
 			m_SquareShader.reset(Uneye::Shader::Create(
-				"../Sandbox/assets/shaders/square.vert", 
-				"../Sandbox/assets/shaders/square.frag"));
+				"assets/shaders/square.vert", 
+				"assets/shaders/square.frag"));
 
 
-			m_SquareVA.reset(Uneye::VertexArray::Create());
+			m_SquareVA = Uneye::VertexArray::Create();
 
 			float squareVertices[5 * 4] = {
 				-0.5f, -0.5f, 0.0f, 0.0f, 0.0f,
@@ -63,7 +62,7 @@ class ExampleLayer : public Uneye::Layer
 			};
 
 			Uneye::Ref<Uneye::VertexBuffer> squareVB;
-			squareVB.reset(Uneye::VertexBuffer::Create(squareVertices, sizeof(squareVertices)));
+			squareVB = Uneye::VertexBuffer::Create(squareVertices, sizeof(squareVertices));
 			squareVB->SetLayout({
 				{ Uneye::ShaderDataType::Float3, "a_Position" },
 				{ Uneye::ShaderDataType::Float2, "a_TexCoord" }
@@ -75,15 +74,18 @@ class ExampleLayer : public Uneye::Layer
 				0, 2, 3,
 			};
 			Uneye::Ref<Uneye::IndexBuffer> squareIB;
-			squareIB.reset(Uneye::IndexBuffer::Create(squareIndices, 
-				sizeof(squareIndices) / sizeof(uint32_t)));
+			squareIB = Uneye::IndexBuffer::Create(squareIndices, sizeof(squareIndices) / sizeof(uint32_t));
 			m_SquareVA->SetIndexBuffer(squareIB);
 
-			//Uneye::Application::Get().GetWindow().SetVSync(false);
+			Uneye::Application::Get().GetWindow().SetVSync(false);
 
 			m_TextureShader.reset(Uneye::Shader::Create(
-				"../Sandbox/assets/shaders/texture.vert",
-				"../Sandbox/assets/shaders/texture.frag"));
+				"assets/shaders/texture.vert",
+				"assets/shaders/texture.frag"));
+
+			m_TextureContainer = Uneye::Texture2D::Create("assets/textures/container.jpg");
+			m_TextureWall = Uneye::Texture2D::Create("assets/textures/wall.jpg");
+			m_TextureGrass = Uneye::Texture2D::Create("assets/textures/blending_transparent_window.png");
 
 		}
 
@@ -100,35 +102,25 @@ class ExampleLayer : public Uneye::Layer
 			Uneye::Renderer::BeginScene(m_Camera);
 			{
 				static glm::mat4 scale = glm::scale(glm::mat4(1.0f), glm::vec3(0.1f));
-			
 
-				std::dynamic_pointer_cast<Uneye::OpenGLShader>(m_SquareShader)->Bind();
-
+				m_TextureContainer->Bind(0);
 				for (float x = 0.0f; x <= 20.0f; x += 1.0f)
 				{
 					for (float y = 0.0f; y <= 20.0f; y += 1.0f)
 					{
 						glm::mat4 model(1.0f);
 						model = glm::translate(model, glm::vec3(x * 0.11f, y * 0.11f, 0.0f)) * scale;
-						if ((int)x % 2 == 0)
-							std::dynamic_pointer_cast<Uneye::OpenGLShader>(m_SquareShader)->SetVec4(
-								"u_Color", m_SquareColor1);
-						else
-							std::dynamic_pointer_cast<Uneye::OpenGLShader>(m_SquareShader)->SetVec4(
-								"u_Color", m_SquareColor2);
 
-						Uneye::Renderer::Submit(m_SquareShader, m_SquareVA, model);
+						Uneye::Renderer::Submit(m_TextureShader, m_SquareVA, model);
 						
 					}
 				}
 
 				glm::mat4 model(1.0f);
 				model = glm::translate(model, m_CameraPosition) * scale;
-				std::dynamic_pointer_cast<Uneye::OpenGLShader>(m_TextureShader)->Bind();
-				std::dynamic_pointer_cast<Uneye::OpenGLShader>(m_TextureShader)->SetVec4(
-					"u_Color", m_TriangleColor);
-				//Uneye::Renderer::Submit(m_Shader, m_VertexArray, model);
+				m_TextureGrass->Bind(0);
 				Uneye::Renderer::Submit(m_TextureShader, m_SquareVA, model);
+
 			}
 			Uneye::Renderer::EndScene();
 		}
@@ -173,6 +165,10 @@ class ExampleLayer : public Uneye::Layer
 		Uneye::Ref<Uneye::VertexArray> m_SquareVA;
 
 		Uneye::Ref<Uneye::Shader> m_TextureShader;
+
+		Uneye::Ref<Uneye::Texture2D> m_TextureContainer;
+		Uneye::Ref<Uneye::Texture2D> m_TextureWall;
+		Uneye::Ref<Uneye::Texture2D> m_TextureGrass;
 
 		Uneye::OrthographicCamera m_Camera;
 		glm::vec3 m_CameraPosition{ 0.0f };

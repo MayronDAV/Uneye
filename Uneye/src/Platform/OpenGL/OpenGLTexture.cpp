@@ -1,0 +1,83 @@
+#include "uypch.h"
+#include "OpenGLTexture.h"
+
+#include <glad/glad.h>
+
+#define STB_IMAGE_IMPLEMENTATION 
+#include <stb_image.h>
+
+
+
+namespace Uneye
+{
+	OpenGLTexture2D::OpenGLTexture2D(const std::string& path)
+		:m_Path(path)
+	{
+		int width, height, channels;
+		stbi_set_flip_vertically_on_load(1);
+		unsigned char* data = stbi_load(path.c_str(), &width, &height, &channels, 0);
+		UNEYE_CORE_ASSERT(!data, "Failed to load image!");
+		m_Width = width;
+		m_Height = height;
+
+		glGenTextures(1, &m_RendererID);
+		glBindTexture(GL_TEXTURE_2D, m_RendererID);
+
+		GLenum internalFormat = 0, dataFormat = 0;
+		if (channels == 3)
+		{
+			internalFormat = GL_RGB8;
+			dataFormat = GL_RGB;
+		}
+		else if (channels == 4)
+		{
+			internalFormat = GL_RGBA8;
+			dataFormat = GL_RGBA;
+		}
+
+		UNEYE_CORE_ASSERT(!internalFormat & !dataFormat, "Format not supported!");
+
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST_MIPMAP_NEAREST);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+
+		glTexImage2D(GL_TEXTURE_2D, 0, internalFormat, m_Width, m_Height, 0, dataFormat, GL_UNSIGNED_BYTE, data);
+		glGenerateMipmap(GL_TEXTURE_2D);
+
+
+		m_RendererHandle = glGetTextureHandleARB(m_RendererID);
+
+
+		stbi_image_free(data);
+		glBindTexture(GL_TEXTURE_2D, 0);
+
+	}
+
+	OpenGLTexture2D::~OpenGLTexture2D()
+	{
+		glDeleteTextures(1, &m_RendererID);
+	}
+
+	void OpenGLTexture2D::Bind(uint32_t slot)
+	{
+		glBindTexture(GL_TEXTURE_2D, m_RendererID);
+		if (!m_Used)
+		{
+			glMakeTextureHandleResidentARB(m_RendererHandle);
+			m_Used = !m_Used;
+		}
+		
+		glUniformHandleui64ARB(slot, m_RendererHandle);
+	}
+
+	void OpenGLTexture2D::Unbind()
+	{
+		glBindTexture(GL_TEXTURE_2D, 0);
+		if (m_Used)
+		{
+			glMakeTextureHandleNonResidentARB(m_RendererHandle);
+			m_Used = !m_Used;
+		}
+	}
+}

@@ -22,6 +22,8 @@
 #include "Uneye/Renderer/VertexArray.h"
 
 #include "Uneye/Renderer/Camera.h"
+
+#include "Uneye/Renderer/Texture.h"
 // -----------------------------------
 
 // ---Entry Point---------------------

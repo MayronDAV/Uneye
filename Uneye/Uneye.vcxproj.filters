@@ -60,6 +60,9 @@
     <ClInclude Include="src\Platform\OpenGL\OpenGLRendererAPI.h">
       <Filter>src\Platform\OpenGL</Filter>
     </ClInclude>
+    <ClInclude Include="src\Platform\OpenGL\OpenGLShader.h">
+      <Filter>src\Platform\OpenGL</Filter>
+    </ClInclude>
     <ClInclude Include="src\Platform\OpenGL\OpenGLVertexArray.h">
       <Filter>src\Platform\OpenGL</Filter>
     </ClInclude>
@@ -72,17 +75,35 @@
     <ClInclude Include="src\Uneye.h">
       <Filter>src</Filter>
     </ClInclude>
-    <ClInclude Include="src\Uneye\Application.h">
-      <Filter>src\Uneye</Filter>
+    <ClInclude Include="src\Uneye\Core\Application.h">
+      <Filter>src\Uneye\Core</Filter>
     </ClInclude>
-    <ClInclude Include="src\Uneye\Core.h">
-      <Filter>src\Uneye</Filter>
+    <ClInclude Include="src\Uneye\Core\Core.h">
+      <Filter>src\Uneye\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Uneye\Core\EntryPoint.h">
+      <Filter>src\Uneye\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Uneye\Core\Input.h">
+      <Filter>src\Uneye\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Uneye\Core\KeyCodes.h">
+      <Filter>src\Uneye\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Uneye\Core\Layer.h">
+      <Filter>src\Uneye\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Uneye\Core\LayerStack.h">
+      <Filter>src\Uneye\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Uneye\Core\Log.h">
+      <Filter>src\Uneye\Core</Filter>
     </ClInclude>
     <ClInclude Include="src\Uneye\Core\Timestep.h">
       <Filter>src\Uneye\Core</Filter>
     </ClInclude>
-    <ClInclude Include="src\Uneye\EntryPoint.h">
-      <Filter>src\Uneye</Filter>
+    <ClInclude Include="src\Uneye\Core\Window.h">
+      <Filter>src\Uneye\Core</Filter>
     </ClInclude>
     <ClInclude Include="src\Uneye\Events\ApplicationEvent.h">
       <Filter>src\Uneye\Events</Filter>
@@ -98,21 +119,6 @@
     </ClInclude>
     <ClInclude Include="src\Uneye\ImGui\ImGuiLayer.h">
       <Filter>src\Uneye\ImGui</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Uneye\Input.h">
-      <Filter>src\Uneye</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Uneye\KeyCodes.h">
-      <Filter>src\Uneye</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Uneye\Layer.h">
-      <Filter>src\Uneye</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Uneye\LayerStack.h">
-      <Filter>src\Uneye</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Uneye\Log.h">
-      <Filter>src\Uneye</Filter>
     </ClInclude>
     <ClInclude Include="src\Uneye\Renderer\Buffer.h">
       <Filter>src\Uneye\Renderer</Filter>
@@ -135,11 +141,11 @@
     <ClInclude Include="src\Uneye\Renderer\Shader.h">
       <Filter>src\Uneye\Renderer</Filter>
     </ClInclude>
-    <ClInclude Include="src\Uneye\Renderer\VertexArray.h">
+    <ClInclude Include="src\Uneye\Renderer\Texture.h">
       <Filter>src\Uneye\Renderer</Filter>
     </ClInclude>
-    <ClInclude Include="src\Uneye\Window.h">
-      <Filter>src\Uneye</Filter>
+    <ClInclude Include="src\Uneye\Renderer\VertexArray.h">
+      <Filter>src\Uneye\Renderer</Filter>
     </ClInclude>
     <ClInclude Include="src\uypch.h">
       <Filter>src</Filter>
@@ -1230,9 +1236,6 @@
     <ClInclude Include="vendor\glm\glm\vector_relational.hpp">
       <Filter>vendor\glm\glm</Filter>
     </ClInclude>
-    <ClInclude Include="src\Platform\OpenGL\OpenGLShader.h">
-      <Filter>src\Platform\OpenGL</Filter>
-    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Platform\OpenGL\OpenGLBuffer.cpp">
@@ -1244,6 +1247,9 @@
     <ClCompile Include="src\Platform\OpenGL\OpenGLRendererAPI.cpp">
       <Filter>src\Platform\OpenGL</Filter>
     </ClCompile>
+    <ClCompile Include="src\Platform\OpenGL\OpenGLShader.cpp">
+      <Filter>src\Platform\OpenGL</Filter>
+    </ClCompile>
     <ClCompile Include="src\Platform\OpenGL\OpenGLVertexArray.cpp">
       <Filter>src\Platform\OpenGL</Filter>
     </ClCompile>
@@ -1253,23 +1259,23 @@
     <ClCompile Include="src\Platform\Windows\WindowsWindow.cpp">
       <Filter>src\Platform\Windows</Filter>
     </ClCompile>
-    <ClCompile Include="src\Uneye\Application.cpp">
-      <Filter>src\Uneye</Filter>
+    <ClCompile Include="src\Uneye\Core\Application.cpp">
+      <Filter>src\Uneye\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Uneye\Core\Layer.cpp">
+      <Filter>src\Uneye\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Uneye\Core\LayerStack.cpp">
+      <Filter>src\Uneye\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Uneye\Core\Log.cpp">
+      <Filter>src\Uneye\Core</Filter>
     </ClCompile>
     <ClCompile Include="src\Uneye\ImGui\ImGuiBuild.cpp">
       <Filter>src\Uneye\ImGui</Filter>
     </ClCompile>
     <ClCompile Include="src\Uneye\ImGui\ImGuiLayer.cpp">
       <Filter>src\Uneye\ImGui</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Uneye\Layer.cpp">
-      <Filter>src\Uneye</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Uneye\LayerStack.cpp">
-      <Filter>src\Uneye</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Uneye\Log.cpp">
-      <Filter>src\Uneye</Filter>
     </ClCompile>
     <ClCompile Include="src\Uneye\Renderer\Buffer.cpp">
       <Filter>src\Uneye\Renderer</Filter>
@@ -1289,14 +1295,14 @@
     <ClCompile Include="src\Uneye\Renderer\Shader.cpp">
       <Filter>src\Uneye\Renderer</Filter>
     </ClCompile>
+    <ClCompile Include="src\Uneye\Renderer\Texture.cpp">
+      <Filter>src\Uneye\Renderer</Filter>
+    </ClCompile>
     <ClCompile Include="src\Uneye\Renderer\VertexArray.cpp">
       <Filter>src\Uneye\Renderer</Filter>
     </ClCompile>
     <ClCompile Include="src\uypch.cpp">
       <Filter>src</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Platform\OpenGL\OpenGLShader.cpp">
-      <Filter>src\Platform\OpenGL</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

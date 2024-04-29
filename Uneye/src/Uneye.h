@@ -2,14 +2,14 @@
 
 // For use by Uneye applications
 
-#include "Uneye/Application.h"
-#include "Uneye/Layer.h"
-#include "Uneye/Log.h"
+#include "Uneye/Core/Application.h"
+#include "Uneye/Core/Layer.h"
+#include "Uneye/Core/Log.h"
 
 #include "Uneye/Core/Timestep.h"
 
-#include "Uneye/Input.h"
-#include "Uneye/KeyCodes.h"
+#include "Uneye/Core/Input.h"
+#include "Uneye/Core/KeyCodes.h"
 
 #include "Uneye/ImGui/ImGuiLayer.h"
 
@@ -25,5 +25,5 @@
 // -----------------------------------
 
 // ---Entry Point---------------------
-#include "Uneye/EntryPoint.h"
+#include "Uneye/Core/EntryPoint.h"
 // -----------------------------------

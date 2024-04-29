@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Uneye/Window.h"
+#include "Uneye/Core/Window.h"
 
 #include <GLFW/glfw3.h>
 

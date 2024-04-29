@@ -1,7 +1,7 @@
 #include "uypch.h"
 #include "WindowsInput.h"
 
-#include "Uneye/Application.h"
+#include "Uneye/Core/Application.h"
 #include <GLFW/glfw3.h>
 
 namespace Uneye {

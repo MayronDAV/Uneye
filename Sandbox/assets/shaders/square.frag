@@ -2,7 +2,6 @@
 			
 out vec4 color;
 
-in vec3 v_pos;
 uniform vec4 u_Color;
 
 void main()

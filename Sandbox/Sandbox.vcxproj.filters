@@ -12,16 +12,22 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\Uneye\assets\shaders\square.frag">
+    <None Include="assets\shaders\square.frag">
       <Filter>assets\shaders</Filter>
     </None>
-    <None Include="..\Uneye\assets\shaders\triangle.frag">
+    <None Include="assets\shaders\square.vert">
       <Filter>assets\shaders</Filter>
     </None>
-    <None Include="..\Uneye\assets\shaders\square.vert">
+    <None Include="assets\shaders\triangle.frag">
       <Filter>assets\shaders</Filter>
     </None>
-    <None Include="..\Uneye\assets\shaders\triangle.vert">
+    <None Include="assets\shaders\triangle.vert">
+      <Filter>assets\shaders</Filter>
+    </None>
+    <None Include="assets\shaders\texture.vert">
+      <Filter>assets\shaders</Filter>
+    </None>
+    <None Include="assets\shaders\texture.frag">
       <Filter>assets\shaders</Filter>
     </None>
   </ItemGroup>

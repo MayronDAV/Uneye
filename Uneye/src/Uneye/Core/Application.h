@@ -1,9 +1,9 @@
 #pragma once
 
-#include "Uneye/Core.h"
+#include "Uneye/Core/Core.h"
 
-#include "Uneye/Window.h"
-#include "Uneye/LayerStack.h"
+#include "Uneye/Core/Window.h"
+#include "Uneye/Core/LayerStack.h"
 #include "Uneye/Events/Event.h"
 #include "Uneye/Events/ApplicationEvent.h"
 

@@ -1,7 +1,7 @@
 #pragma once
 
 #include "uypch.h"
-#include "Uneye/Core.h"
+#include "Uneye/Core/Core.h"
 
 namespace Uneye {
 

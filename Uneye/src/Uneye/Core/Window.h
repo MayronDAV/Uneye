@@ -2,7 +2,7 @@
 
 #include "uypch.h"
 
-#include "Uneye/Core.h"
+#include "Uneye/Core/Core.h"
 #include "Uneye/Events/Event.h"
 
 namespace Uneye {
@@ -14,8 +14,8 @@ namespace Uneye {
 		unsigned int Height;
 
 		WindowProps(const std::string& title = "Uneye Engine",
-			        unsigned int width = 1920,
-			        unsigned int height = 1080)
+			        unsigned int width = 1360,
+			        unsigned int height = 768)
 			: Title(title), Width(width), Height(height)
 		{
 		}

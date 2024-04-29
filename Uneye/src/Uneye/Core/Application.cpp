@@ -1,11 +1,11 @@
 #include "uypch.h"
-#include "Uneye/Application.h"
+#include "Uneye/Core/Application.h"
 
-#include "Uneye/Log.h"
+#include "Uneye/Core/Log.h"
 
 #include "Uneye/Renderer/Renderer.h"
 
-#include "Uneye/Input.h"
+#include "Uneye/Core/Input.h"
 #include "Uneye/Renderer/Camera.h"
 #include <GLFW/glfw3.h>
 

@@ -12,7 +12,7 @@
 #include <unordered_map>
 #include <unordered_set>
 
-#include "Uneye/Log.h"
+#include "Uneye/Core/Log.h"
 
 #ifdef UNEYE_PLATFORM_WINDOWS
 	#include <Windows.h>

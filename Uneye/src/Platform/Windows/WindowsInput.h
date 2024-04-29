@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Uneye/Input.h"
+#include "Uneye/Core/Input.h"
 
 namespace Uneye {
 

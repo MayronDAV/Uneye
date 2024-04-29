@@ -1,7 +1,7 @@
 #pragma once
 
-#include "Uneye/Core.h"
-#include "Uneye/Layer.h"
+#include "Uneye/Core/Core.h"
+#include "Uneye/Core/Layer.h"
 
 #include <vector>
 

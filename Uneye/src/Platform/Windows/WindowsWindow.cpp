@@ -51,7 +51,7 @@ namespace Uneye {
 		}
 
 		glfwWindowHint(GLFW_SAMPLES, 4);
-		glfwWindowHint(GLFW_MAXIMIZED, GLFW_TRUE);
+		//glfwWindowHint(GLFW_MAXIMIZED, GLFW_TRUE);
 
 		m_Window = glfwCreateWindow((int)props.Width, (int)props.Height, m_Data.Title.c_str(), nullptr, nullptr);
 		UNEYE_CORE_ASSERT(m_Window == nullptr, "An error has ocurred on window create");

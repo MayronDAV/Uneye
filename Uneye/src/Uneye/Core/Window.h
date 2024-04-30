@@ -14,8 +14,8 @@ namespace Uneye {
 		unsigned int Height;
 
 		WindowProps(const std::string& title = "Uneye Engine",
-			        unsigned int width = 1360,
-			        unsigned int height = 768)
+			        unsigned int width = 800,
+			        unsigned int height = 600)
 			: Title(title), Width(width), Height(height)
 		{
 		}

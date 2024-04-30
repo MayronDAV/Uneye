@@ -14,7 +14,7 @@ class ExampleLayer : public Uneye::Layer
 	public:
 		ExampleLayer()
 			: Layer("Example"),
-			m_CameraController(1.67)
+			m_CameraController(800.0f / 600.0f)
 		{
 		}
 

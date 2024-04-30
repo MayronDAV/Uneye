@@ -20,12 +20,23 @@ namespace Uneye
 			void OnUpdate(Timestep ts);
 			void OnEvent(Event& e);
 
-			const glm::vec3& GetPosition() const	{ return m_CameraPosition; }
-			const glm::vec3& GetDirection() const	{ return m_Direction; }
-			const glm::vec3& GetSpeed() const		{ return m_Speed; }
+			const glm::vec3& GetPosition() const		 { return m_CameraPosition; }
+			const glm::vec3& GetDirection() const		 { return m_Direction; }
+			const glm::vec3& GetSpeed() const			 { return m_Speed; }
+			float GetZoomLevel()						 { return m_ZoomLevel; }
+			bool  GetHaveRotation()						 { return m_Rotation; }
+			float GetRotation()							 { return m_CameraRotation; }
+			float GetRotationSpeed()					 { return m_CameraRotationSpeed; }
 
-			OrthographicCamera& GetCamera() { return m_Camera; }
-			const OrthographicCamera& GetCamera() const { return m_Camera; }
+			OrthographicCamera& GetCamera()				 { return m_Camera; }
+			const OrthographicCamera& GetCamera() const  { return m_Camera; }
+
+			void SetZoomLevel(float level)				 { m_ZoomLevel = level; }
+			void SetCameraSpeed(const glm::vec3& speed)	 { m_Speed = speed; }
+			void SetCameraPosition(const glm::vec3& pos) { m_CameraPosition = pos; }
+			void SetHaveRotation(bool rotation)			 { m_Rotation = rotation; }
+			void SetRotation(float rotation)			 { m_CameraRotation = rotation; }
+			void SetRotationSpeed(float speed)			 { m_CameraRotationSpeed = speed; }
 
 		private:
 			bool OnMouseScrolled(MouseScrolledEvent& e);

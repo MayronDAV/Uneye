@@ -12,6 +12,8 @@ namespace Uneye
 			OrthographicCamera() {}
 			OrthographicCamera(float left, float right, float bottom, float top);
 
+			void SetProjection(float left, float right, float bottom, float top);
+
 			void SetPosition(const glm::vec3& position) { m_Position = position; RecalculateMatrix(); }
 			const glm::vec3& GetPosition() const { return m_Position;  }
 
@@ -33,4 +35,5 @@ namespace Uneye
 			glm::vec3 m_Position{ 0.0f };
 			float m_Rotation = 0.0f;
 	};
+
 }

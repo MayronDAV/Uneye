@@ -13,14 +13,13 @@ class ExampleLayer : public Uneye::Layer
 {
 	public:
 		ExampleLayer()
-			: Layer("Example")
+			: Layer("Example"),
+			m_CameraController(1.67)
 		{
 		}
 
 		void OnAttach() override
 		{
-			m_Camera = Uneye::OrthographicCamera(-1.6f, 1.6f, -0.9f, 0.9f);
-
 			m_SquareVA = Uneye::VertexArray::Create();
 
 			float squareVertices[5 * 4] = {
@@ -58,16 +57,12 @@ class ExampleLayer : public Uneye::Layer
 
 		void OnUpdate(Uneye::Timestep ts) override
 		{
-			//UNEYE_TRACE("Delta time: {0}s ({1}ms)", ts.GetSeconds(), ts.GetMilliseconds());
-			ProcessInput(ts);
+			m_CameraController.OnUpdate(ts);
 
 			Uneye::RenderCommand::Clear({ 0.1f, 0.1f, 0.13f, 1.0f });
 
-			//m_Camera.SetRotation(45.0f);
-			m_Camera.SetPosition(m_CameraPosition);
 			auto textureShader = m_ShaderLibrary.Get("texture");
-
-			Uneye::Renderer::BeginScene(m_Camera);
+			Uneye::Renderer::BeginScene(m_CameraController.GetCamera());
 			{
 				static glm::mat4 scale = glm::scale(glm::mat4(1.0f), glm::vec3(0.1f));
 
@@ -85,7 +80,7 @@ class ExampleLayer : public Uneye::Layer
 				}
 
 				glm::mat4 model(1.0f);
-				model = glm::translate(model, m_CameraPosition) * scale;
+				model = glm::translate(model, m_CameraController.GetPosition()) * scale;
 				m_TextureGrass->Bind(0);
 				Uneye::Renderer::Submit(textureShader, m_SquareVA, model);
 
@@ -93,21 +88,9 @@ class ExampleLayer : public Uneye::Layer
 			Uneye::Renderer::EndScene();
 		}
 
-		void ProcessInput(Uneye::Timestep ts)
+		void OnEvent(Uneye::Event& e) override
 		{
-			m_Direction = glm::vec3(0.0f);
-
-			if (Uneye::Input::IsKeyPressed(Uneye::Key::W))
-				m_Direction.y = 1.0f;
-			if (Uneye::Input::IsKeyPressed(Uneye::Key::A))
-				m_Direction.x = -1.0f;
-			if (Uneye::Input::IsKeyPressed(Uneye::Key::S))
-				m_Direction.y = -1.0f;
-			if (Uneye::Input::IsKeyPressed(Uneye::Key::D))
-				m_Direction.x = 1.0f;
-
-			m_CameraPosition += (m_Direction / ((glm::length(m_Direction) != 0) ?
-				glm::length(m_Direction) : 1.0f)) * m_Speed * ts.GetSeconds();
+			m_CameraController.OnEvent(e);
 		}
 
 		virtual void OnImGuiRender() override
@@ -120,9 +103,6 @@ class ExampleLayer : public Uneye::Layer
 
 		}
 
-		void OnEvent(Uneye::Event& event) override
-		{
-		}
 
 	private:
 		Uneye::ShaderLibrary m_ShaderLibrary;
@@ -134,10 +114,7 @@ class ExampleLayer : public Uneye::Layer
 		Uneye::Ref<Uneye::Texture2D> m_TextureWall;
 		Uneye::Ref<Uneye::Texture2D> m_TextureGrass;
 
-		Uneye::OrthographicCamera m_Camera;
-		glm::vec3 m_CameraPosition{ 0.0f };
-		glm::vec3 m_Direction{ 0.0f };
-		glm::vec3 m_Speed{ 0.5f };
+		Uneye::OrthographicCameraController m_CameraController;
 
 		float m_SquareColor1[4]  = { 0.8f, 0.2f, 0.3f, 1.0f };
 		float m_SquareColor2[4]  = { 0.2f, 0.3f, 0.8f, 1.0f };

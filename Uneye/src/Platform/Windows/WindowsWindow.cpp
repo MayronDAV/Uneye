@@ -49,7 +49,8 @@ namespace Uneye {
 			glfwSetErrorCallback(GLFWErrorCallback);
 			s_GLFWInitialized = true;
 		}
-		glfwWindowHint(GLFW_SAMPLES, 8);
+
+		glfwWindowHint(GLFW_SAMPLES, 4);
 		glfwWindowHint(GLFW_MAXIMIZED, GLFW_TRUE);
 
 		m_Window = glfwCreateWindow((int)props.Width, (int)props.Height, m_Data.Title.c_str(), nullptr, nullptr);
@@ -59,8 +60,6 @@ namespace Uneye {
 		m_Context->Init();
 		glfwSetWindowUserPointer(m_Window, &m_Data);
 		SetVSync(true);
-
-		glEnable(GL_MULTISAMPLE);
 
 		// Set GLFW callbacks
 		glfwSetWindowSizeCallback(m_Window, [](GLFWwindow* window, int width, int height)

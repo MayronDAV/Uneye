@@ -149,6 +149,7 @@
     <ClInclude Include="src\Platform\Windows\WindowsInput.h" />
     <ClInclude Include="src\Platform\Windows\WindowsWindow.h" />
     <ClInclude Include="src\Uneye.h" />
+    <ClInclude Include="src\Uneye\CameraController.h" />
     <ClInclude Include="src\Uneye\Core\Application.h" />
     <ClInclude Include="src\Uneye\Core\Core.h" />
     <ClInclude Include="src\Uneye\Core\EntryPoint.h" />
@@ -615,6 +616,7 @@
     <ClCompile Include="src\Platform\OpenGL\OpenGLVertexArray.cpp" />
     <ClCompile Include="src\Platform\Windows\WindowsInput.cpp" />
     <ClCompile Include="src\Platform\Windows\WindowsWindow.cpp" />
+    <ClCompile Include="src\Uneye\CameraController.cpp" />
     <ClCompile Include="src\Uneye\Core\Application.cpp" />
     <ClCompile Include="src\Uneye\Core\Layer.cpp" />
     <ClCompile Include="src\Uneye\Core\LayerStack.cpp" />

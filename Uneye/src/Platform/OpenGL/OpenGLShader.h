@@ -4,16 +4,21 @@
 #include <string>
 #include <glm/glm.hpp>
 
+
+
 namespace Uneye
 {
 	class OpenGLShader : public Shader
 	{
 		public:
-			OpenGLShader(const std::string& vertexPath, const std::string& fragmentPath);
+			OpenGLShader(const std::string& name, const std::string& vertexPath, const std::string& fragmentPath);
+			OpenGLShader(const std::string& shaderPath);
 			virtual ~OpenGLShader();
 
 			virtual void Bind() const override;
 			virtual void Unbind() const override;
+
+			virtual const std::string& GetName() const override { return m_Name; };
 
 			void SetMat4(std::string name, const glm::mat4& value)	const;
 			void SetMat3(std::string name, const glm::mat3& value)	const;
@@ -35,6 +40,12 @@ namespace Uneye
 			void SetUiARB64(const std::string& name, uint64_t value)const;
 
 		private:
+			std::string ReadFile(const std::string& filepath);
+			std::unordered_map<unsigned int, std::string> PreProcess(const std::string& source);
+			void Compile(const std::unordered_map<unsigned int, std::string>& shaderSources);
+
+		private:
 			uint32_t m_RendererID = 0;
+			std::string m_Name;
 	};
 }

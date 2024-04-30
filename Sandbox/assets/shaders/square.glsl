@@ -1,17 +1,27 @@
-#version 450 core
+@type vertex
+#version 330 core
 			
 layout(location = 0) in vec3 a_Position;
-layout(location = 1) in vec2 a_TexCoord;
-
-out vec3 v_Position;
-out vec2 v_TexCoord;
 
 uniform mat4 u_ViewProjection;
 uniform mat4 u_ModelMatrix;
 
 void main()
 {
-	v_Position = a_Position;
-	v_TexCoord = a_TexCoord;
 	gl_Position = u_ViewProjection * u_ModelMatrix * vec4(a_Position, 1.0f);
+}
+
+
+@type fragment
+#version 330 core
+			
+out vec4 color;
+
+uniform vec4 u_Color;
+
+void main()
+{
+	color = vec4(0.8f, 0.2f, 0.3f, 1.0f);
+	color = u_Color;
+
 }

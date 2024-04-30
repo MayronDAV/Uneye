@@ -140,10 +140,13 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="assets\shaders\square.frag" />
+    <None Include="assets\shaders\square.glsl" />
     <None Include="assets\shaders\square.vert" />
     <None Include="assets\shaders\texture.frag" />
+    <None Include="assets\shaders\texture.glsl" />
     <None Include="assets\shaders\texture.vert" />
     <None Include="assets\shaders\triangle.frag" />
+    <None Include="assets\shaders\triangle.glsl" />
     <None Include="assets\shaders\triangle.vert" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

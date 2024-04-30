@@ -30,5 +30,12 @@
     <None Include="assets\shaders\triangle.vert">
       <Filter>assets\shaders</Filter>
     </None>
+    <None Include="assets\shaders\texture.glsl" />
+    <None Include="assets\shaders\square.glsl">
+      <Filter>assets\shaders</Filter>
+    </None>
+    <None Include="assets\shaders\triangle.glsl">
+      <Filter>assets\shaders</Filter>
+    </None>
   </ItemGroup>
 </Project>

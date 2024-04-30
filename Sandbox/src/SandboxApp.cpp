@@ -5,6 +5,8 @@
 #include <GLFW/include/GLFW/glfw3.h>
 #include <Platform/OpenGL/OpenGLShader.h>
 
+#include "Uneye/Renderer/Shader.h"
+
 
 
 class ExampleLayer : public Uneye::Layer
@@ -18,39 +20,6 @@ class ExampleLayer : public Uneye::Layer
 		void OnAttach() override
 		{
 			m_Camera = Uneye::OrthographicCamera(-1.6f, 1.6f, -0.9f, 0.9f);
-
-			m_Shader.reset(Uneye::Shader::Create(
-				"assets/shaders/triangle.vert",
-				"assets/shaders/triangle.frag"));
-
-			m_VertexArray = Uneye::VertexArray::Create();
-
-			float vertices[3 * 3] = {
-				-0.5f, -0.5f, 0.0f,
-				 0.5f, -0.5f, 0.0f,
-				 0.0f,  0.5f, 0.0f
-			};
-			Uneye::Ref<Uneye::VertexBuffer> vertexBuffer;
-			vertexBuffer = Uneye::VertexBuffer::Create(vertices, sizeof(vertices));
-			Uneye::BufferLayout layout = {
-				{ Uneye::ShaderDataType::Float3, "a_Position" }
-			};
-
-			vertexBuffer->SetLayout(layout);
-			m_VertexArray->AddVertexBuffer(vertexBuffer);
-
-			uint32_t indices[3] = {
-				0, 1, 2
-			};
-
-			Uneye::Ref<Uneye::IndexBuffer> indexBuffer;
-			indexBuffer = Uneye::IndexBuffer::Create(indices, sizeof(indices) / sizeof(uint32_t));
-			m_VertexArray->SetIndexBuffer(indexBuffer);
-
-			m_SquareShader.reset(Uneye::Shader::Create(
-				"assets/shaders/square.vert", 
-				"assets/shaders/square.frag"));
-
 
 			m_SquareVA = Uneye::VertexArray::Create();
 
@@ -77,16 +46,14 @@ class ExampleLayer : public Uneye::Layer
 			squareIB = Uneye::IndexBuffer::Create(squareIndices, sizeof(squareIndices) / sizeof(uint32_t));
 			m_SquareVA->SetIndexBuffer(squareIB);
 
-			Uneye::Application::Get().GetWindow().SetVSync(false);
 
-			m_TextureShader.reset(Uneye::Shader::Create(
-				"assets/shaders/texture.vert",
-				"assets/shaders/texture.frag"));
+			auto textureShader = m_ShaderLibrary.Load("assets/shaders/texture.glsl");
 
 			m_TextureContainer = Uneye::Texture2D::Create("assets/textures/container.jpg");
 			m_TextureWall = Uneye::Texture2D::Create("assets/textures/wall.jpg");
 			m_TextureGrass = Uneye::Texture2D::Create("assets/textures/blending_transparent_window.png");
 
+			Uneye::Application::Get().GetWindow().SetVSync(false);
 		}
 
 		void OnUpdate(Uneye::Timestep ts) override
@@ -98,6 +65,7 @@ class ExampleLayer : public Uneye::Layer
 
 			//m_Camera.SetRotation(45.0f);
 			m_Camera.SetPosition(m_CameraPosition);
+			auto textureShader = m_ShaderLibrary.Get("texture");
 
 			Uneye::Renderer::BeginScene(m_Camera);
 			{
@@ -111,7 +79,7 @@ class ExampleLayer : public Uneye::Layer
 						glm::mat4 model(1.0f);
 						model = glm::translate(model, glm::vec3(x * 0.11f, y * 0.11f, 0.0f)) * scale;
 
-						Uneye::Renderer::Submit(m_TextureShader, m_SquareVA, model);
+						Uneye::Renderer::Submit(textureShader, m_SquareVA, model);
 						
 					}
 				}
@@ -119,7 +87,7 @@ class ExampleLayer : public Uneye::Layer
 				glm::mat4 model(1.0f);
 				model = glm::translate(model, m_CameraPosition) * scale;
 				m_TextureGrass->Bind(0);
-				Uneye::Renderer::Submit(m_TextureShader, m_SquareVA, model);
+				Uneye::Renderer::Submit(textureShader, m_SquareVA, model);
 
 			}
 			Uneye::Renderer::EndScene();
@@ -157,14 +125,10 @@ class ExampleLayer : public Uneye::Layer
 		}
 
 	private:
+		Uneye::ShaderLibrary m_ShaderLibrary;
 
-		Uneye::Ref<Uneye::Shader> m_Shader;
 		Uneye::Ref<Uneye::VertexArray> m_VertexArray;
-
-		Uneye::Ref<Uneye::Shader> m_SquareShader;
 		Uneye::Ref<Uneye::VertexArray> m_SquareVA;
-
-		Uneye::Ref<Uneye::Shader> m_TextureShader;
 
 		Uneye::Ref<Uneye::Texture2D> m_TextureContainer;
 		Uneye::Ref<Uneye::Texture2D> m_TextureWall;

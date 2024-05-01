@@ -2,6 +2,7 @@
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
     <ClCompile Include="src\SandboxApp.cpp" />
+    <ClCompile Include="src\Sandbox2D.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="assets">
@@ -12,30 +13,6 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <None Include="assets\shaders\square.frag">
-      <Filter>assets\shaders</Filter>
-    </None>
-    <None Include="assets\shaders\square.vert">
-      <Filter>assets\shaders</Filter>
-    </None>
-    <None Include="assets\shaders\texture.frag">
-      <Filter>assets\shaders</Filter>
-    </None>
-    <None Include="assets\shaders\texture.vert">
-      <Filter>assets\shaders</Filter>
-    </None>
-    <None Include="assets\shaders\triangle.frag">
-      <Filter>assets\shaders</Filter>
-    </None>
-    <None Include="assets\shaders\triangle.vert">
-      <Filter>assets\shaders</Filter>
-    </None>
-    <None Include="assets\shaders\texture.glsl" />
-    <None Include="assets\shaders\square.glsl">
-      <Filter>assets\shaders</Filter>
-    </None>
-    <None Include="assets\shaders\triangle.glsl">
-      <Filter>assets\shaders</Filter>
-    </None>
+    <ClInclude Include="src\Sandbox2D.h" />
   </ItemGroup>
 </Project>

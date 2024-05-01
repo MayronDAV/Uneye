@@ -1,11 +1,10 @@
 #include <Uneye.h>
+#include <Uneye/Core/EntryPoint.h>
 
 #include "imgui/imgui.h"
 
-#include <GLFW/include/GLFW/glfw3.h>
-#include <Platform/OpenGL/OpenGLShader.h>
+#include "Sandbox2D.h"
 
-#include "Uneye/Renderer/Shader.h"
 
 
 
@@ -126,7 +125,8 @@ class Sandbox : public Uneye::Application
 public:
 	Sandbox()
 	{
-		PushLayer(new ExampleLayer());
+		//PushLayer(new ExampleLayer());
+		PushLayer(new Sandbox2D());
 	}
 
 	~Sandbox() = default;

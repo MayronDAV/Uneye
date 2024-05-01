@@ -212,14 +212,94 @@ namespace Uneye
 		glUseProgram(0);
 	}
 
+	int OpenGLShader::GetLocation(const std::string& name) const
+	{
+		return glGetUniformLocation(m_RendererID, name.c_str());
+	}
+
+	void OpenGLShader::SetMat4(std::string name, const glm::mat4& value)
+	{
+		UploadMat4(name, value);
+	}
+
+	void OpenGLShader::SetMat3(std::string name, const glm::mat3& value)
+	{
+		UploadMat3(name, value);
+	}
+
+	void OpenGLShader::SetVec4(std::string name, float x, float y, float z, float w)
+	{
+		UploadVec4(name, x, y, z, w);
+	}
+
+	void OpenGLShader::SetVec4(std::string name, const glm::vec4& value)
+	{
+		UploadVec4(name, value);
+	}
+
+	void OpenGLShader::SetVec4(std::string name, const float value[4])
+	{
+		UploadVec4(name, value);
+	}
+
+	void OpenGLShader::SetVec3(std::string name, float x, float y, float z)
+	{
+		UploadVec3(name, x, y, z);
+	}
+
+	void OpenGLShader::SetVec3(std::string name, const glm::vec3& value)
+	{
+		UploadVec3(name, value);
+	}
+
+	void OpenGLShader::SetVec3(std::string name, const float value[3])
+	{
+		UploadVec3(name, value);
+	}
+
+	void OpenGLShader::SetVec2(const std::string& name, glm::vec2 value)
+	{
+		UploadVec2(name, value);
+	}
+
+	void OpenGLShader::SetVec2(const std::string& name, const float value[2])
+	{
+		UploadVec2(name, value);
+	}
+
+	void OpenGLShader::SetVec2(const std::string& name, float x, float y)
+	{
+		UploadVec2(name, x, y);
+	}
+
+	void OpenGLShader::SetBool(const std::string& name, bool value)
+	{
+		UploadBool(name, value);
+	}
+
+	void OpenGLShader::SetInt(const std::string& name, int value)
+	{
+		UploadInt(name, value);
+	}
+
+	void OpenGLShader::SetFloat(const std::string& name, float value)
+	{
+		UploadFloat(name, value);
+	}
+
+	void OpenGLShader::SetUiARB64(const std::string& name, uint64_t value)
+	{
+		UploadUiARB64(name, value);
+	}
 
 
-	void OpenGLShader::SetMat4(std::string name, const glm::mat4& value) const
+
+	void OpenGLShader::UploadMat4(std::string name, const glm::mat4& value) const
 	{
 		GLint loc = glGetUniformLocation(m_RendererID, name.c_str());
 		glUniformMatrix4fv(loc, 1, GL_FALSE, glm::value_ptr(value));
 	}
-	void OpenGLShader::SetMat3(std::string name, const glm::mat3& value) const
+	void OpenGLShader::UploadMat3(std::string name, const glm::mat3& value) const
 	{
 		GLint loc = glGetUniformLocation(m_RendererID, name.c_str());
 		glUniformMatrix3fv(loc, 1, GL_FALSE, glm::value_ptr(value));
@@ -227,49 +307,49 @@ namespace Uneye
 
 
 
-	void OpenGLShader::SetVec4(std::string name, float x, float y, float z, float w) const
+	void OpenGLShader::UploadVec4(std::string name, float x, float y, float z, float w) const
 	{
 		int loc = glGetUniformLocation(m_RendererID, name.c_str());
 		glUniform4f(loc, x, y, z, w);
 	}
-	void OpenGLShader::SetVec4(std::string name, const glm::vec4& value) const
+	void OpenGLShader::UploadVec4(std::string name, const glm::vec4& value) const
 	{
 		GLint loc = glGetUniformLocation(m_RendererID, name.c_str());
 		glUniform4f(loc, value.x, value.y, value.z, value.w);
 	}
-	void OpenGLShader::SetVec4(std::string name, const float value[4]) const
+	void OpenGLShader::UploadVec4(std::string name, const float value[4]) const
 	{
 		GLint loc = glGetUniformLocation(m_RendererID, name.c_str());
 		glUniform4f(loc, value[0], value[1], value[2], value[3]);
 	}
-	void OpenGLShader::SetVec3(std::string name, float x, float y, float z) const
+	void OpenGLShader::UploadVec3(std::string name, float x, float y, float z) const
 	{
 		int loc = glGetUniformLocation(m_RendererID, name.c_str());
 		glUniform3f(loc, x, y, z);
 	}
-	void OpenGLShader::SetVec3(std::string name, const glm::vec3& value) const
+	void OpenGLShader::UploadVec3(std::string name, const glm::vec3& value) const
 	{
 		GLint loc = glGetUniformLocation(m_RendererID, name.c_str());
 		glUniform3f(loc, value.x, value.y, value.z);
 	}
-	void OpenGLShader::SetVec3(std::string name, const float value[3]) const
+	void OpenGLShader::UploadVec3(std::string name, const float value[3]) const
 	{
 		GLint loc = glGetUniformLocation(m_RendererID, name.c_str());
 		glUniform3f(loc, value[0], value[1], value[2]);
 	}
-	void OpenGLShader::SetVec2(const std::string& name, glm::vec2 value) const
+	void OpenGLShader::UploadVec2(const std::string& name, glm::vec2 value) const
 	{
 		int loc = glGetUniformLocation(m_RendererID, name.c_str());
 		glUniform2f(loc, value.x, value.y);
 	}
 
-	void OpenGLShader::SetVec2(const std::string& name, const float value[2]) const
+	void OpenGLShader::UploadVec2(const std::string& name, const float value[2]) const
 	{
 		int loc = glGetUniformLocation(m_RendererID, name.c_str());
 		glUniform2f(loc, value[0], value[1]);
 	}	
 
-	void OpenGLShader::SetVec2(const std::string& name, float x, float y) const
+	void OpenGLShader::UploadVec2(const std::string& name, float x, float y) const
 	{
 		int loc = glGetUniformLocation(m_RendererID, name.c_str());
 		glUniform2f(loc, x, y);
@@ -278,25 +358,25 @@ namespace Uneye
 
 
 
-	void OpenGLShader::SetBool(const std::string& name, bool value) const
+	void OpenGLShader::UploadBool(const std::string& name, bool value) const
 	{
 		int loc = glGetUniformLocation(m_RendererID, name.c_str());
 		glUniform1i(loc, value);
 	}
 
-	void OpenGLShader::SetInt(const std::string& name, int value) const
+	void OpenGLShader::UploadInt(const std::string& name, int value) const
 	{
 		int loc = glGetUniformLocation(m_RendererID, name.c_str());
 		glUniform1i(loc, (int)value);
 	}
 
-	void OpenGLShader::SetFloat(const std::string& name, float value) const
+	void OpenGLShader::UploadFloat(const std::string& name, float value) const
 	{
 		int loc = glGetUniformLocation(m_RendererID, name.c_str());
 		glUniform1f(loc, value);
 	}
 
-	void OpenGLShader::SetUiARB64(const std::string& name, uint64_t value) const
+	void OpenGLShader::UploadUiARB64(const std::string& name, uint64_t value) const
 	{
 		int loc = glGetUniformLocation(m_RendererID, name.c_str());
 		glUniformHandleui64ARB(loc, value);

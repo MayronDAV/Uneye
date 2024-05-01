@@ -149,7 +149,6 @@
     <ClInclude Include="src\Platform\Windows\WindowsInput.h" />
     <ClInclude Include="src\Platform\Windows\WindowsWindow.h" />
     <ClInclude Include="src\Uneye.h" />
-    <ClInclude Include="src\Uneye\CameraController.h" />
     <ClInclude Include="src\Uneye\Core\Application.h" />
     <ClInclude Include="src\Uneye\Core\Core.h" />
     <ClInclude Include="src\Uneye\Core\EntryPoint.h" />
@@ -167,9 +166,11 @@
     <ClInclude Include="src\Uneye\ImGui\ImGuiLayer.h" />
     <ClInclude Include="src\Uneye\Renderer\Buffer.h" />
     <ClInclude Include="src\Uneye\Renderer\Camera.h" />
+    <ClInclude Include="src\Uneye\Renderer\CameraController.h" />
     <ClInclude Include="src\Uneye\Renderer\GraphicsContext.h" />
     <ClInclude Include="src\Uneye\Renderer\RenderCommand.h" />
     <ClInclude Include="src\Uneye\Renderer\Renderer.h" />
+    <ClInclude Include="src\Uneye\Renderer\Renderer2D.h" />
     <ClInclude Include="src\Uneye\Renderer\RendererAPI.h" />
     <ClInclude Include="src\Uneye\Renderer\Shader.h" />
     <ClInclude Include="src\Uneye\Renderer\Texture.h" />
@@ -616,7 +617,6 @@
     <ClCompile Include="src\Platform\OpenGL\OpenGLVertexArray.cpp" />
     <ClCompile Include="src\Platform\Windows\WindowsInput.cpp" />
     <ClCompile Include="src\Platform\Windows\WindowsWindow.cpp" />
-    <ClCompile Include="src\Uneye\CameraController.cpp" />
     <ClCompile Include="src\Uneye\Core\Application.cpp" />
     <ClCompile Include="src\Uneye\Core\Layer.cpp" />
     <ClCompile Include="src\Uneye\Core\LayerStack.cpp" />
@@ -625,8 +625,10 @@
     <ClCompile Include="src\Uneye\ImGui\ImGuiLayer.cpp" />
     <ClCompile Include="src\Uneye\Renderer\Buffer.cpp" />
     <ClCompile Include="src\Uneye\Renderer\Camera.cpp" />
+    <ClCompile Include="src\Uneye\Renderer\CameraController.cpp" />
     <ClCompile Include="src\Uneye\Renderer\RenderCommand.cpp" />
     <ClCompile Include="src\Uneye\Renderer\Renderer.cpp" />
+    <ClCompile Include="src\Uneye\Renderer\Renderer2D.cpp" />
     <ClCompile Include="src\Uneye\Renderer\RendererAPI.cpp" />
     <ClCompile Include="src\Uneye\Renderer\Shader.cpp" />
     <ClCompile Include="src\Uneye\Renderer\Texture.cpp" />

@@ -26,7 +26,7 @@ class Sandbox2D : public Uneye::Layer
 		Uneye::Ref<Uneye::Shader> m_Shader;
 		Uneye::Ref<Uneye::VertexArray> m_VertexArray;
 		Uneye::Ref<Uneye::Texture2D> m_Texture;
-		
+
 
 		glm::vec4 m_SquareColor{ 0.2f, 0.3f, 0.8f, 1.0f };
 };

@@ -14,6 +14,8 @@ namespace Uneye
 {
 	static GLenum ShaderTypeFromString(const std::string& type)
 	{
+		UNEYE_PROFILE_FUNCTION();
+
 		if (type == "vertex")
 			return GL_VERTEX_SHADER;
 		else if (type == "fragment" || type == "pixel")
@@ -25,12 +27,15 @@ namespace Uneye
 
 	OpenGLShader::OpenGLShader(const std::string& name, const std::string& vertexPath, const std::string& fragmentPath)
 	{
+		UNEYE_PROFILE_FUNCTION();
 
 		std::string vertexShaderSource;
 		std::string fragmentShaderSource;
 		std::ifstream vShaderFile{vertexPath, std::ios::in | std::ios::binary };
 		if (vShaderFile)
 		{
+			UNEYE_PROFILE_SCOPE("Read vertex shader file");
+
 			std::stringstream vShaderStream;
 			vShaderStream << vShaderFile.rdbuf();
 			vShaderFile.close();
@@ -43,6 +48,8 @@ namespace Uneye
 		std::ifstream fShaderFile{ fragmentPath, std::ios::in | std::ios::binary };
 		if (fShaderFile)
 		{
+			UNEYE_PROFILE_SCOPE("Read fragment shader file");
+
 			std::stringstream fShaderStream;
 			fShaderStream << fShaderFile.rdbuf();
 			fShaderFile.close();
@@ -61,6 +68,8 @@ namespace Uneye
 
 	OpenGLShader::OpenGLShader(const std::string& shaderPath)
 	{
+		UNEYE_PROFILE_FUNCTION();
+
 		std::string source = ReadFile(shaderPath);
 		auto shaderSources = PreProcess(source);
 		Compile(shaderSources);
@@ -76,16 +85,22 @@ namespace Uneye
 
 	OpenGLShader::~OpenGLShader()
 	{
+		UNEYE_PROFILE_FUNCTION();
+
 		glDeleteProgram(m_RendererID);
 	}
 
 	std::string OpenGLShader::ReadFile(const std::string& filepath)
 	{
+		UNEYE_PROFILE_FUNCTION();
+
 		std::string result;
 		std::ifstream shaderFile{ filepath, std::ios::in | std::ios::binary };
 
 		if (shaderFile)
 		{
+			UNEYE_PROFILE_SCOPE("Read one shader file");
+
 			shaderFile.seekg(0, std::ios::end);
 			result.resize(shaderFile.tellg());
 			shaderFile.seekg(0, std::ios::beg);
@@ -103,6 +118,8 @@ namespace Uneye
 
 	std::unordered_map<GLenum, std::string> OpenGLShader::PreProcess(const std::string& source)
 	{
+		UNEYE_PROFILE_FUNCTION();
+
 		std::unordered_map<GLenum, std::string> shaderSources;
 
 		const char* typeToken = "@type";
@@ -135,6 +152,8 @@ namespace Uneye
 
 	void OpenGLShader::Compile(const std::unordered_map<GLenum, std::string>& shaderSources)
 	{
+		UNEYE_PROFILE_FUNCTION();
+
 		int success = false;
 		GLuint program = glCreateProgram();
 
@@ -204,11 +223,15 @@ namespace Uneye
 
 	void OpenGLShader::Bind() const
 	{
+		UNEYE_PROFILE_FUNCTION();
+
 		glUseProgram(m_RendererID);
 	}
 
 	void OpenGLShader::Unbind() const
 	{
+		UNEYE_PROFILE_FUNCTION();
+
 		glUseProgram(0);
 	}
 
@@ -219,76 +242,106 @@ namespace Uneye
 
 	void OpenGLShader::SetMat4(std::string name, const glm::mat4& value)
 	{
+		UNEYE_PROFILE_FUNCTION();
+
 		UploadMat4(name, value);
 	}
 
 	void OpenGLShader::SetMat3(std::string name, const glm::mat3& value)
 	{
+		UNEYE_PROFILE_FUNCTION();
+
 		UploadMat3(name, value);
 	}
 
 	void OpenGLShader::SetVec4(std::string name, float x, float y, float z, float w)
 	{
+		UNEYE_PROFILE_FUNCTION();
+
 		UploadVec4(name, x, y, z, w);
 	}
 
 	void OpenGLShader::SetVec4(std::string name, const glm::vec4& value)
 	{
+		UNEYE_PROFILE_FUNCTION();
+
 		UploadVec4(name, value);
 	}
 
 	void OpenGLShader::SetVec4(std::string name, const float value[4])
 	{
+		UNEYE_PROFILE_FUNCTION();
+
 		UploadVec4(name, value);
 	}
 
 	void OpenGLShader::SetVec3(std::string name, float x, float y, float z)
 	{
+		UNEYE_PROFILE_FUNCTION();
+
 		UploadVec3(name, x, y, z);
 	}
 
 	void OpenGLShader::SetVec3(std::string name, const glm::vec3& value)
 	{
+		UNEYE_PROFILE_FUNCTION();
+
 		UploadVec3(name, value);
 	}
 
 	void OpenGLShader::SetVec3(std::string name, const float value[3])
 	{
+		UNEYE_PROFILE_FUNCTION();
+
 		UploadVec3(name, value);
 	}
 
 	void OpenGLShader::SetVec2(const std::string& name, glm::vec2 value)
 	{
+		UNEYE_PROFILE_FUNCTION();
+
 		UploadVec2(name, value);
 	}
 
 	void OpenGLShader::SetVec2(const std::string& name, const float value[2])
 	{
+		UNEYE_PROFILE_FUNCTION();
+
 		UploadVec2(name, value);
 	}
 
 	void OpenGLShader::SetVec2(const std::string& name, float x, float y)
 	{
+		UNEYE_PROFILE_FUNCTION();
+
 		UploadVec2(name, x, y);
 	}
 
 	void OpenGLShader::SetBool(const std::string& name, bool value)
 	{
+		UNEYE_PROFILE_FUNCTION();
+
 		UploadBool(name, value);
 	}
 
 	void OpenGLShader::SetInt(const std::string& name, int value)
 	{
+		UNEYE_PROFILE_FUNCTION();
+
 		UploadInt(name, value);
 	}
 
 	void OpenGLShader::SetFloat(const std::string& name, float value)
 	{
+		UNEYE_PROFILE_FUNCTION();
+
 		UploadFloat(name, value);
 	}
 
 	void OpenGLShader::SetUiARB64(const std::string& name, uint64_t value)
 	{
+		UNEYE_PROFILE_FUNCTION();
+
 		UploadUiARB64(name, value);
 	}
 

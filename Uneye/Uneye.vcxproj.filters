@@ -103,6 +103,9 @@
     <Filter Include="vendor\stb\include">
       <UniqueIdentifier>{FE550769-EA39-C8BE-539A-C2113F9DB240}</UniqueIdentifier>
     </Filter>
+    <Filter Include="src\Uneye\Debug">
+      <UniqueIdentifier>{a5b2dba5-54d3-47e4-a760-b13a7cb9f000}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Platform\OpenGL\OpenGLBuffer.h">
@@ -1505,6 +1508,9 @@
     </ClInclude>
     <ClInclude Include="src\Uneye\Renderer\Renderer2D.h">
       <Filter>src\Uneye\Renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Uneye\Debug\Instrumentor.h">
+      <Filter>src\Uneye\Debug</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

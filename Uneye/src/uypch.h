@@ -14,7 +14,9 @@
 #include <unordered_set>
 
 #include "Uneye/Core/Log.h"
+#include "Uneye/Debug/Instrumentor.h"
 
 #ifdef UNEYE_PLATFORM_WINDOWS
 	#include <Windows.h>
 #endif
+

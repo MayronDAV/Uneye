@@ -159,6 +159,7 @@
     <ClInclude Include="src\Uneye\Core\Log.h" />
     <ClInclude Include="src\Uneye\Core\Timestep.h" />
     <ClInclude Include="src\Uneye\Core\Window.h" />
+    <ClInclude Include="src\Uneye\Debug\Instrumentor.h" />
     <ClInclude Include="src\Uneye\Events\ApplicationEvent.h" />
     <ClInclude Include="src\Uneye\Events\Event.h" />
     <ClInclude Include="src\Uneye\Events\KeyEvent.h" />

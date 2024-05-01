@@ -25,6 +25,8 @@ namespace Uneye {
 
 	void ImGuiLayer::OnAttach()
 	{
+		UNEYE_PROFILE_FUNCTION();
+
 		// Setup Dear ImGui context
 		IMGUI_CHECKVERSION();
 		ImGui::CreateContext();
@@ -33,8 +35,6 @@ namespace Uneye {
 		//io.ConfigFlags |= ImGuiConfigFlags_NavEnableGamepad;      // Enable Gamepad Controls
 		io.ConfigFlags |= ImGuiConfigFlags_DockingEnable;           // Enable Docking
 		io.ConfigFlags |= ImGuiConfigFlags_ViewportsEnable;         // Enable Multi-Viewport / Platform Windows
-		//io.ConfigFlags |= ImGuiConfigFlags_ViewportsNoTaskBarIcons;
-		//io.ConfigFlags |= ImGuiConfigFlags_ViewportsNoMerge;
 		//io.ConfigFlags |= ImGuiConfigFlags_DpiEnableScaleViewports; // Habilita escala de DPI em viewports
 		//io.ConfigFlags |= ImGuiConfigFlags_DpiEnableScaleFonts; // Habilita escala de DPI em fonts
 		//io.ConfigFlags |= ImGuiConfigFlags_DpiEnableScaleViewports; // Habilita escala de DPI em viewports
@@ -65,6 +65,8 @@ namespace Uneye {
 
 	void ImGuiLayer::OnDetach()
 	{
+		UNEYE_PROFILE_FUNCTION();
+
 		ImGui_ImplOpenGL3_Shutdown();
 		ImGui_ImplGlfw_Shutdown();
 		ImGui::DestroyContext();
@@ -72,6 +74,8 @@ namespace Uneye {
 	
 	void ImGuiLayer::Begin()
 	{
+		UNEYE_PROFILE_FUNCTION();
+
 		ImGui_ImplOpenGL3_NewFrame();
 		ImGui_ImplGlfw_NewFrame();
 		ImGui::NewFrame();
@@ -79,6 +83,8 @@ namespace Uneye {
 
 	void ImGuiLayer::End()
 	{
+		UNEYE_PROFILE_FUNCTION();
+
 		ImGuiIO& io = ImGui::GetIO();
 		Application& app = Application::Get();
 		io.DisplaySize = ImVec2((float)app.GetWindow().GetWidth(), (float)app.GetWindow().GetHeight());
@@ -98,8 +104,10 @@ namespace Uneye {
 
 	void ImGuiLayer::OnImGuiRender()
 	{
-		static bool show = true;
-		ImGui::ShowDemoWindow(&show);
+		UNEYE_PROFILE_FUNCTION();
+
+		//static bool show = true;
+		//ImGui::ShowDemoWindow(&show);
 	}
 
 	void ImGuiLayer::OnEvent(Event& event)
@@ -114,6 +122,8 @@ namespace Uneye {
 
 	void ImGuiLayer::SetDeepDarkThemeColors()
 	{
+		UNEYE_PROFILE_FUNCTION();
+
 		ImVec4* colors = ImGui::GetStyle().Colors;
 		colors[ImGuiCol_Text] = ImVec4(1.00f, 1.00f, 1.00f, 1.00f);
 		colors[ImGuiCol_TextDisabled] = ImVec4(0.50f, 0.50f, 0.50f, 1.00f);
@@ -201,6 +211,8 @@ namespace Uneye {
 
 	void ImGuiLayer::SetLightThemeColors()
 	{
+		UNEYE_PROFILE_FUNCTION();
+
 		ImGui::StyleColorsLight();
 		UNEYE_CORE_INFO("has set Light theme for ImGui");
 	}
@@ -212,6 +224,8 @@ namespace Uneye {
 
 	void ImGuiLayer::SetPurpleThemeColors()
 	{
+		UNEYE_PROFILE_FUNCTION();
+
 		auto& colors = ImGui::GetStyle().Colors;
 
 		m_BgColor[0] = 0.1f;
@@ -269,6 +283,8 @@ namespace Uneye {
 
 	void ImGuiLayer::SetDarkThemeColors()
 	{
+		UNEYE_PROFILE_FUNCTION();
+
 		ImGui::StyleColorsDark();
 		UNEYE_CORE_INFO("has set Dark theme for ImGui");
 	}

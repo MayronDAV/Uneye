@@ -1,0 +1,52 @@
+
+{
+"otherData": {},
+"traceEvents":[
+{
+"cat":"function",
+"dur":1,
+"name":"void __cdecl Sandbox2D::OnDetach(void)",
+"ph":"X",
+
+"pid":0,
+
+"tid":648315137,
+"ts":28996811028
+},
+
+{
+"cat":"function",
+"dur":9199,
+"name":"void __cdecl Uneye::ImGuiLayer::OnDetach(void)",
+"ph":"X",
+
+"pid":0,
+
+"tid":648315137,
+"ts":28996811099
+},
+
+{
+"cat":"function",
+"dur":25243,
+"name":"void __cdecl Uneye::WindowsWindow::Shutdown(void)",
+"ph":"X",
+
+"pid":0,
+
+"tid":648315137,
+"ts":28996820413
+},
+
+{
+"cat":"function",
+"dur":35765,
+"name":"__cdecl Uneye::WindowsWindow::~WindowsWindow(void)",
+"ph":"X",
+
+"pid":0,
+
+"tid":648315137,
+"ts":28996820413
+}
+]}

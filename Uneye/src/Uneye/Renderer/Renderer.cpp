@@ -12,6 +12,8 @@ namespace Uneye
 
 	void Renderer::Init()
 	{
+		UNEYE_PROFILE_FUNCTION();
+
 		RenderCommand::Init();
 		Renderer2D::Init();
 	}

@@ -19,6 +19,8 @@ namespace Uneye
 
 	void OrthographicCameraController::OnUpdate(Timestep ts)
 	{
+		UNEYE_PROFILE_FUNCTION();
+
 		m_Direction = glm::vec3(0.0f);
 
 		if (Input::IsKeyPressed(Key::W))
@@ -51,6 +53,8 @@ namespace Uneye
 
 	void OrthographicCameraController::OnEvent(Event& e)
 	{
+		UNEYE_PROFILE_FUNCTION();
+
 		EventDispatcher dispatcher(e);
 		dispatcher.Dispatch<MouseScrolledEvent>(UNEYE_BIND_EVENT_FN(
 			OrthographicCameraController::OnMouseScrolled));
@@ -60,6 +64,8 @@ namespace Uneye
 
 	bool OrthographicCameraController::OnMouseScrolled(MouseScrolledEvent& e)
 	{
+		UNEYE_PROFILE_FUNCTION();
+
 		m_ZoomLevel-= e.GetYOffset() * 0.25f;
 		m_ZoomLevel = std::max(m_ZoomLevel, 0.01f);
 		//m_ZoomLevel = std::min(m_ZoomLevel, 4.0f);
@@ -70,6 +76,8 @@ namespace Uneye
 
 	bool OrthographicCameraController::OWindowResize(WindowResizeEvent& e)
 	{
+		UNEYE_PROFILE_FUNCTION();
+
 		m_AspectRatio = (float)e.GetWidth() / (float)e.GetHeight();
 		m_Camera.SetProjection(-m_AspectRatio * m_ZoomLevel, m_AspectRatio * m_ZoomLevel, -m_ZoomLevel, m_ZoomLevel);
 

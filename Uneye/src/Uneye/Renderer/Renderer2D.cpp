@@ -20,6 +20,8 @@ namespace Uneye
 
 	void Renderer2D::Init()
 	{
+		UNEYE_PROFILE_FUNCTION();
+
 		s_Data = new Renderer2Ddata();
 		s_Data->QuadVertexArray = VertexArray::Create();
 
@@ -56,18 +58,22 @@ namespace Uneye
 
 	void Renderer2D::Shutdown()
 	{
+		UNEYE_PROFILE_FUNCTION();
+
 		delete s_Data;
 	}
 
 	void Renderer2D::BeginScene(const OrthographicCamera& camera)
 	{
+		UNEYE_PROFILE_FUNCTION();
+
 		s_Data->QuadShader->Bind();
 		s_Data->QuadShader->SetMat4("u_ViewProjection", camera.GetViewProjectionMatrix());
 	}
 
 	void Renderer2D::EndScene()
 	{
-
+		UNEYE_PROFILE_FUNCTION();
 	}
 
 	void Renderer2D::DrawQuad(const glm::vec2& position, const glm::vec2& size, 
@@ -79,6 +85,8 @@ namespace Uneye
 	void Renderer2D::DrawQuad(const glm::vec3& position, const glm::vec2& size,
 		const glm::vec4& color)
 	{
+		UNEYE_PROFILE_FUNCTION();
+
 		s_Data->QuadShader->Bind();
 		s_Data->QuadShader->SetVec4("u_Color", color);
 		s_Data->WhiteTexture->Bind();
@@ -101,6 +109,8 @@ namespace Uneye
 	void Renderer2D::DrawQuad(const glm::vec3& position, const glm::vec2& size, 
 		const Ref<Texture2D>& texture, const glm::vec4& color)
 	{
+		UNEYE_PROFILE_FUNCTION();
+
 		s_Data->QuadShader->Bind();
 		s_Data->QuadShader->SetVec4("u_Color", color);
 		texture->Bind(s_Data->QuadShader->GetLocation("u_Texture"));

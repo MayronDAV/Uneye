@@ -8,7 +8,7 @@ void Sandbox2D::OnAttach()
 {
 	UNEYE_PROFILE_FUNCTION();
 
-	Uneye::Application::Get().GetWindow().SetVSync(false);
+	//Uneye::Application::Get().GetWindow().SetVSync(false);
 }
 
 void Sandbox2D::OnDetach()
@@ -43,10 +43,10 @@ void Sandbox2D::OnUpdate(Uneye::Timestep ts)
 				}
 			}
 
-			Uneye::Renderer2D::DrawQuad(
+			Uneye::Renderer2D::DrawRotateQuad(
 				glm::vec3(m_CameraController.GetPosition().x,
 					m_CameraController.GetPosition().y, 0.01f),
-				{ 0.1f, 0.1f },
+				{ 0.1f, 0.1f }, glm::radians(45.0f),
 				Uneye::Texture2D::Create("assets/textures/container.jpg"),
 				m_SquareColor);
 

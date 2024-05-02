@@ -1,5 +1,5 @@
 @type vertex
-#version 450 core
+#version 460 core
 			
 layout(location = 0) in vec3 a_Position;
 layout(location = 1) in vec2 a_TexCoord;
@@ -17,7 +17,7 @@ void main()
 
 
 @type fragment
-#version 450 core
+#version 460 core
 
 #extension GL_ARB_bindless_texture : enable
 			
@@ -31,4 +31,5 @@ layout(binding = 0, bindless_sampler) uniform sampler2D u_Texture;
 void main()
 {
 	color = u_Color * texture(u_Texture, v_TexCoord);
+	//color = u_Color;
 }

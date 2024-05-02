@@ -34,6 +34,8 @@ namespace Uneye {
 		m_ImGuiLayer = new ImGuiLayer();
 		PushOverlay(m_ImGuiLayer);
 
+		m_Window->SetVSync(false);
+
 	}
 
 	Application::~Application()
@@ -86,6 +88,7 @@ namespace Uneye {
 			float time = (float)glfwGetTime();
 			Timestep timestep = time - m_LastFrameTime;
 			m_LastFrameTime = time;
+
 
 			if (!m_Minimized)
 			{

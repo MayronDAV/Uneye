@@ -124,4 +124,50 @@ namespace Uneye
 		RenderCommand::DrawIndexed(s_Data->QuadVertexArray);
 	}
 
+	void Renderer2D::DrawRotateQuad(const glm::vec2& position, const glm::vec2& size, float rotation, const glm::vec4& color)
+	{
+		DrawRotateQuad({ position.x, position.y, 0.0f }, size, rotation, color);
+	}
+
+	void Renderer2D::DrawRotateQuad(const glm::vec3& position, const glm::vec2& size, float rotation, const glm::vec4& color)
+	{
+		UNEYE_PROFILE_FUNCTION();
+
+		s_Data->QuadShader->Bind();
+		s_Data->QuadShader->SetVec4("u_Color", color);
+		s_Data->WhiteTexture->Bind();
+
+		glm::mat4 model(1.0f);
+		model = glm::translate(model, position);
+		model = glm::rotate(model, rotation, glm::vec3(0.0f, 0.0f, 1.0f));
+		model = glm::scale(model, glm::vec3(size, 1.0f));
+		s_Data->QuadShader->SetMat4("u_ModelMatrix", model);
+
+		s_Data->QuadVertexArray->Bind();
+		RenderCommand::DrawIndexed(s_Data->QuadVertexArray);
+	}
+
+	void Renderer2D::DrawRotateQuad(const glm::vec2& position, const glm::vec2& size, float rotation, const Ref<Texture2D>& texture, const glm::vec4& color)
+	{
+		DrawRotateQuad({ position.x, position.y, 0.0f }, size, rotation, texture, color);
+	}
+
+	void Renderer2D::DrawRotateQuad(const glm::vec3& position, const glm::vec2& size, float rotation, const Ref<Texture2D>& texture, const glm::vec4& color)
+	{
+		UNEYE_PROFILE_FUNCTION();
+
+		s_Data->QuadShader->Bind();
+		s_Data->QuadShader->SetVec4("u_Color", color);
+		texture->Bind(s_Data->QuadShader->GetLocation("u_Texture"));
+
+		glm::mat4 model(1.0f);
+		model = glm::translate(model, position);
+		model = glm::rotate(model, rotation, glm::vec3(0.0f, 0.0f, 1.0f));
+		model = glm::scale(model, glm::vec3(size, 1.0f));
+		s_Data->QuadShader->SetMat4("u_ModelMatrix", model);
+
+		s_Data->QuadVertexArray->Bind();
+		RenderCommand::DrawIndexed(s_Data->QuadVertexArray);
+	}
+
 }

@@ -639,39 +639,6 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <None Include="assets\fonts\Antonio\Antonio-Bold.ttf" />
-    <None Include="assets\fonts\Antonio\Antonio-Light.ttf" />
-    <None Include="assets\fonts\Antonio\Antonio-Regular.ttf" />
-    <None Include="assets\fonts\Antonio\OCRAEXT.TTF" />
-    <None Include="assets\fonts\Antonio\SIL Open Font License.txt" />
-    <None Include="assets\fonts\GoAroundTheBooks\GoAroundTheBooks.ttf" />
-    <None Include="assets\fonts\Roboto_Slab\LICENSE.txt" />
-    <None Include="assets\fonts\Roboto_Slab\README.txt" />
-    <None Include="assets\fonts\Roboto_Slab\Roboto_Slab.ttf" />
-    <None Include="assets\fonts\Roboto_Slab\static\RobotoSlab-Black.ttf" />
-    <None Include="assets\fonts\Roboto_Slab\static\RobotoSlab-Bold.ttf" />
-    <None Include="assets\fonts\Roboto_Slab\static\RobotoSlab-ExtraBold.ttf" />
-    <None Include="assets\fonts\Roboto_Slab\static\RobotoSlab-ExtraLight.ttf" />
-    <None Include="assets\fonts\Roboto_Slab\static\RobotoSlab-Light.ttf" />
-    <None Include="assets\fonts\Roboto_Slab\static\RobotoSlab-Medium.ttf" />
-    <None Include="assets\fonts\Roboto_Slab\static\RobotoSlab-Regular.ttf" />
-    <None Include="assets\fonts\Roboto_Slab\static\RobotoSlab-SemiBold.ttf" />
-    <None Include="assets\fonts\Roboto_Slab\static\RobotoSlab-Thin.ttf" />
-    <None Include="assets\fonts\iknowaghost\iknowaghost.ttf" />
-    <None Include="assets\fonts\opensans\LICENSE.txt" />
-    <None Include="assets\fonts\opensans\OpenSans-Bold.ttf" />
-    <None Include="assets\fonts\opensans\OpenSans-BoldItalic.ttf" />
-    <None Include="assets\fonts\opensans\OpenSans-ExtraBold.ttf" />
-    <None Include="assets\fonts\opensans\OpenSans-ExtraBoldItalic.ttf" />
-    <None Include="assets\fonts\opensans\OpenSans-Italic.ttf" />
-    <None Include="assets\fonts\opensans\OpenSans-Light.ttf" />
-    <None Include="assets\fonts\opensans\OpenSans-LightItalic.ttf" />
-    <None Include="assets\fonts\opensans\OpenSans-Regular.ttf" />
-    <None Include="assets\fonts\opensans\OpenSans-SemiBold.ttf" />
-    <None Include="assets\fonts\opensans\OpenSans-SemiBoldItalic.ttf" />
-    <None Include="assets\fonts\tequila\tequila.TTF" />
-  </ItemGroup>
-  <ItemGroup>
     <ProjectReference Include="vendor\GLFW\GLFW.vcxproj">
       <Project>{154B857C-0182-860D-AA6E-6C109684020F}</Project>
     </ProjectReference>

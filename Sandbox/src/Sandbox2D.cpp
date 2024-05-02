@@ -33,22 +33,20 @@ void Sandbox2D::OnUpdate(Uneye::Timestep ts)
 		Uneye::Renderer2D::BeginScene(m_CameraController.GetCamera());
 		{
 
-			static float Mapsize = 5;
+			static float Mapsize = 50;
 			for (float x = 0.0f; x <= Mapsize; x += 1.0f)
 			{
 				for (float y = 0.0f; y <= Mapsize; y += 1.0f)
 				{
-					Uneye::Renderer2D::DrawQuad({ x * 0.11f, y * 0.11f },
+					Uneye::Renderer2D::DrawQuad({ x * 0.11f, y * 0.11f, 0.0f },
 						{ 0.1f, 0.1f }, { 0.8f, 0.3f, 0.2f, 1.0f });
 				}
 			}
 
-			Uneye::Renderer2D::DrawRotateQuad(
+			Uneye::Renderer2D::DrawQuad(
 				glm::vec3(m_CameraController.GetPosition().x,
 					m_CameraController.GetPosition().y, 0.01f),
-				{ 0.1f, 0.1f }, glm::radians(45.0f),
-				Uneye::Texture2D::Create("assets/textures/container.jpg"),
-				m_SquareColor);
+				{ 0.1f, 0.1f }, m_SquareColor);
 
 		}
 		Uneye::Renderer2D::EndScene();

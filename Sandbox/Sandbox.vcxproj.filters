@@ -15,4 +15,8 @@
   <ItemGroup>
     <ClInclude Include="src\Sandbox2D.h" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="assets\shaders\square.frag" />
+    <None Include="assets\shaders\square.vert" />
+  </ItemGroup>
 </Project>

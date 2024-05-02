@@ -1,33 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <Filter Include="assets">
-      <UniqueIdentifier>{583885F2-44DA-AFC8-2D95-C31C19D63619}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="assets\fonts">
-      <UniqueIdentifier>{B114ABAA-9D77-3A4F-46FD-7205323F06D2}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="assets\fonts\Antonio">
-      <UniqueIdentifier>{9807325D-8496-BB26-2DB5-CF211923CCCC}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="assets\fonts\GoAroundTheBooks">
-      <UniqueIdentifier>{3E1A2ABC-AA32-11E6-73DF-A07FDFB6A57F}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="assets\fonts\Roboto_Slab">
-      <UniqueIdentifier>{F6EFF8B8-E214-4839-0B60-2DC9F7E34657}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="assets\fonts\Roboto_Slab\static">
-      <UniqueIdentifier>{8D4D95A5-F930-A4E5-0234-D2216E966A36}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="assets\fonts\iknowaghost">
-      <UniqueIdentifier>{EE14DBE0-DA39-2A61-0385-0FF1EF08297F}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="assets\fonts\opensans">
-      <UniqueIdentifier>{C7D62EEE-3343-EAE8-FC36-824668620C51}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="assets\fonts\tequila">
-      <UniqueIdentifier>{35A0DA9D-212F-6467-CA4D-7862B6BB740D}</UniqueIdentifier>
-    </Filter>
     <Filter Include="src">
       <UniqueIdentifier>{2DAB880B-99B4-887C-2230-9F7C8E38947C}</UniqueIdentifier>
     </Filter>
@@ -45,6 +18,9 @@
     </Filter>
     <Filter Include="src\Uneye\Core">
       <UniqueIdentifier>{3A1A0159-26E8-F45E-0F7C-6585FBE8D0C3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\Uneye\Debug">
+      <UniqueIdentifier>{98BC3079-0448-9E3D-0D59-21327963FA3D}</UniqueIdentifier>
     </Filter>
     <Filter Include="src\Uneye\Events">
       <UniqueIdentifier>{46A2D2A2-329B-F1F4-5BCD-D6794725D100}</UniqueIdentifier>
@@ -102,9 +78,6 @@
     </Filter>
     <Filter Include="vendor\stb\include">
       <UniqueIdentifier>{FE550769-EA39-C8BE-539A-C2113F9DB240}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="src\Uneye\Debug">
-      <UniqueIdentifier>{a5b2dba5-54d3-47e4-a760-b13a7cb9f000}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -165,6 +138,9 @@
     <ClInclude Include="src\Uneye\Core\Window.h">
       <Filter>src\Uneye\Core</Filter>
     </ClInclude>
+    <ClInclude Include="src\Uneye\Debug\Instrumentor.h">
+      <Filter>src\Uneye\Debug</Filter>
+    </ClInclude>
     <ClInclude Include="src\Uneye\Events\ApplicationEvent.h">
       <Filter>src\Uneye\Events</Filter>
     </ClInclude>
@@ -196,6 +172,9 @@
       <Filter>src\Uneye\Renderer</Filter>
     </ClInclude>
     <ClInclude Include="src\Uneye\Renderer\Renderer.h">
+      <Filter>src\Uneye\Renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Uneye\Renderer\Renderer2D.h">
       <Filter>src\Uneye\Renderer</Filter>
     </ClInclude>
     <ClInclude Include="src\Uneye\Renderer\RendererAPI.h">
@@ -1506,12 +1485,6 @@
     <ClInclude Include="vendor\stb\include\stb_voxel_render.h">
       <Filter>vendor\stb\include</Filter>
     </ClInclude>
-    <ClInclude Include="src\Uneye\Renderer\Renderer2D.h">
-      <Filter>src\Uneye\Renderer</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Uneye\Debug\Instrumentor.h">
-      <Filter>src\Uneye\Debug</Filter>
-    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Platform\OpenGL\OpenGLBuffer.cpp">
@@ -1571,6 +1544,9 @@
     <ClCompile Include="src\Uneye\Renderer\Renderer.cpp">
       <Filter>src\Uneye\Renderer</Filter>
     </ClCompile>
+    <ClCompile Include="src\Uneye\Renderer\Renderer2D.cpp">
+      <Filter>src\Uneye\Renderer</Filter>
+    </ClCompile>
     <ClCompile Include="src\Uneye\Renderer\RendererAPI.cpp">
       <Filter>src\Uneye\Renderer</Filter>
     </ClCompile>
@@ -1586,103 +1562,5 @@
     <ClCompile Include="src\uypch.cpp">
       <Filter>src</Filter>
     </ClCompile>
-    <ClCompile Include="src\Uneye\Renderer\Renderer2D.cpp">
-      <Filter>src\Uneye\Renderer</Filter>
-    </ClCompile>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="assets\fonts\Antonio\Antonio-Bold.ttf">
-      <Filter>assets\fonts\Antonio</Filter>
-    </None>
-    <None Include="assets\fonts\Antonio\Antonio-Light.ttf">
-      <Filter>assets\fonts\Antonio</Filter>
-    </None>
-    <None Include="assets\fonts\Antonio\Antonio-Regular.ttf">
-      <Filter>assets\fonts\Antonio</Filter>
-    </None>
-    <None Include="assets\fonts\Antonio\OCRAEXT.TTF">
-      <Filter>assets\fonts\Antonio</Filter>
-    </None>
-    <None Include="assets\fonts\Antonio\SIL Open Font License.txt">
-      <Filter>assets\fonts\Antonio</Filter>
-    </None>
-    <None Include="assets\fonts\GoAroundTheBooks\GoAroundTheBooks.ttf">
-      <Filter>assets\fonts\GoAroundTheBooks</Filter>
-    </None>
-    <None Include="assets\fonts\Roboto_Slab\LICENSE.txt">
-      <Filter>assets\fonts\Roboto_Slab</Filter>
-    </None>
-    <None Include="assets\fonts\Roboto_Slab\README.txt">
-      <Filter>assets\fonts\Roboto_Slab</Filter>
-    </None>
-    <None Include="assets\fonts\Roboto_Slab\Roboto_Slab.ttf">
-      <Filter>assets\fonts\Roboto_Slab</Filter>
-    </None>
-    <None Include="assets\fonts\Roboto_Slab\static\RobotoSlab-Black.ttf">
-      <Filter>assets\fonts\Roboto_Slab\static</Filter>
-    </None>
-    <None Include="assets\fonts\Roboto_Slab\static\RobotoSlab-Bold.ttf">
-      <Filter>assets\fonts\Roboto_Slab\static</Filter>
-    </None>
-    <None Include="assets\fonts\Roboto_Slab\static\RobotoSlab-ExtraBold.ttf">
-      <Filter>assets\fonts\Roboto_Slab\static</Filter>
-    </None>
-    <None Include="assets\fonts\Roboto_Slab\static\RobotoSlab-ExtraLight.ttf">
-      <Filter>assets\fonts\Roboto_Slab\static</Filter>
-    </None>
-    <None Include="assets\fonts\Roboto_Slab\static\RobotoSlab-Light.ttf">
-      <Filter>assets\fonts\Roboto_Slab\static</Filter>
-    </None>
-    <None Include="assets\fonts\Roboto_Slab\static\RobotoSlab-Medium.ttf">
-      <Filter>assets\fonts\Roboto_Slab\static</Filter>
-    </None>
-    <None Include="assets\fonts\Roboto_Slab\static\RobotoSlab-Regular.ttf">
-      <Filter>assets\fonts\Roboto_Slab\static</Filter>
-    </None>
-    <None Include="assets\fonts\Roboto_Slab\static\RobotoSlab-SemiBold.ttf">
-      <Filter>assets\fonts\Roboto_Slab\static</Filter>
-    </None>
-    <None Include="assets\fonts\Roboto_Slab\static\RobotoSlab-Thin.ttf">
-      <Filter>assets\fonts\Roboto_Slab\static</Filter>
-    </None>
-    <None Include="assets\fonts\iknowaghost\iknowaghost.ttf">
-      <Filter>assets\fonts\iknowaghost</Filter>
-    </None>
-    <None Include="assets\fonts\opensans\LICENSE.txt">
-      <Filter>assets\fonts\opensans</Filter>
-    </None>
-    <None Include="assets\fonts\opensans\OpenSans-Bold.ttf">
-      <Filter>assets\fonts\opensans</Filter>
-    </None>
-    <None Include="assets\fonts\opensans\OpenSans-BoldItalic.ttf">
-      <Filter>assets\fonts\opensans</Filter>
-    </None>
-    <None Include="assets\fonts\opensans\OpenSans-ExtraBold.ttf">
-      <Filter>assets\fonts\opensans</Filter>
-    </None>
-    <None Include="assets\fonts\opensans\OpenSans-ExtraBoldItalic.ttf">
-      <Filter>assets\fonts\opensans</Filter>
-    </None>
-    <None Include="assets\fonts\opensans\OpenSans-Italic.ttf">
-      <Filter>assets\fonts\opensans</Filter>
-    </None>
-    <None Include="assets\fonts\opensans\OpenSans-Light.ttf">
-      <Filter>assets\fonts\opensans</Filter>
-    </None>
-    <None Include="assets\fonts\opensans\OpenSans-LightItalic.ttf">
-      <Filter>assets\fonts\opensans</Filter>
-    </None>
-    <None Include="assets\fonts\opensans\OpenSans-Regular.ttf">
-      <Filter>assets\fonts\opensans</Filter>
-    </None>
-    <None Include="assets\fonts\opensans\OpenSans-SemiBold.ttf">
-      <Filter>assets\fonts\opensans</Filter>
-    </None>
-    <None Include="assets\fonts\opensans\OpenSans-SemiBoldItalic.ttf">
-      <Filter>assets\fonts\opensans</Filter>
-    </None>
-    <None Include="assets\fonts\tequila\tequila.TTF">
-      <Filter>assets\fonts\tequila</Filter>
-    </None>
   </ItemGroup>
 </Project>

@@ -35,6 +35,7 @@ namespace Uneye
 
 			virtual void SetBool(const std::string& name, bool value) override;
 			virtual void SetInt(const std::string& name, int value) override;
+			virtual void SetIntArray(const std::string& name, int* values, uint32_t count) override;
 			virtual void SetFloat(const std::string& name, float value) override;
 
 			virtual void SetUiARB64(const std::string& name, uint64_t value) override;
@@ -57,6 +58,7 @@ namespace Uneye
 
             void UploadBool(const std::string& name, bool value)	const;
             void UploadInt(const std::string& name, int value)		const;
+			void UploadIntArray(const std::string& name, int* values, uint32_t count) const;
 			void UploadFloat(const std::string& name, float value)	const;
 
 			void UploadUiARB64(const std::string& name, uint64_t value) const;

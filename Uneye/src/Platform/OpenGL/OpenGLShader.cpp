@@ -331,6 +331,13 @@ namespace Uneye
 		UploadInt(name, value);
 	}
 
+	void OpenGLShader::SetIntArray(const std::string& name, int* values, uint32_t count)
+	{
+		UNEYE_PROFILE_FUNCTION();
+
+		UploadIntArray(name, values, count);
+	}
+
 	void OpenGLShader::SetFloat(const std::string& name, float value)
 	{
 		UNEYE_PROFILE_FUNCTION();
@@ -421,6 +428,12 @@ namespace Uneye
 	{
 		int loc = glGetUniformLocation(m_RendererID, name.c_str());
 		glUniform1i(loc, (int)value);
+	}
+
+	void OpenGLShader::UploadIntArray(const std::string& name, int* values, uint32_t count) const
+	{
+		int loc = glGetUniformLocation(m_RendererID, name.c_str());
+		glUniform1iv(loc, count, values);
 	}
 
 	void OpenGLShader::UploadFloat(const std::string& name, float value) const

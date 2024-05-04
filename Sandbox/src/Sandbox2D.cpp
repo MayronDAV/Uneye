@@ -23,32 +23,32 @@ void Sandbox2D::OnUpdate(Uneye::Timestep ts)
 
 	m_CameraController.OnUpdate(ts);
 
-	{
-		UNEYE_PROFILE_SCOPE("Renderer Prep");
-		Uneye::RenderCommand::Clear({ 0.1f, 0.1f, 0.13f, 1.0f });
-	}
+	Uneye::RenderCommand::Clear({ 0.1f, 0.1f, 0.13f, 1.0f });
 
 	{
 		UNEYE_PROFILE_SCOPE("Renderer Draw");
 		Uneye::Renderer2D::BeginScene(m_CameraController.GetCamera());
+
+
+		float Mapsize = 50;
+		static float rotation = 0.0f;
+		rotation += ts * 50.0f;
+		for (float x = 0.0f; x <= Mapsize; x += 1.0f)
 		{
-
-			static float Mapsize = 50;
-			for (float x = 0.0f; x <= Mapsize; x += 1.0f)
+			for (float y = 0.0f; y <= Mapsize; y += 1.0f)
 			{
-				for (float y = 0.0f; y <= Mapsize; y += 1.0f)
-				{
-					Uneye::Renderer2D::DrawQuad({ x * 0.11f, y * 0.11f, 0.0f },
-						{ 0.1f, 0.1f }, { 0.8f, 0.3f, 0.2f, 1.0f });
-				}
+				Uneye::Renderer2D::DrawRotateQuad({ x * 0.11f, y * 0.11f, 0.01f },
+					{ 0.1f, 0.1f }, rotation, { 0.8f, 0.3f, 0.2f, 1.0f });
 			}
-
-			Uneye::Renderer2D::DrawQuad(
-				glm::vec3(m_CameraController.GetPosition().x,
-					m_CameraController.GetPosition().y, 0.01f),
-				{ 0.1f, 0.1f }, m_SquareColor);
-
 		}
+
+		Uneye::Renderer2D::DrawQuad(
+			glm::vec3(-1.0f, 0.0f, 0.1f),
+			{ 0.1f, 0.1f },
+			m_SquareColor,
+			Uneye::Texture2D::Create("assets/textures/container.jpg")
+		);
+
 		Uneye::Renderer2D::EndScene();
 	}
 }

@@ -11,7 +11,7 @@ namespace Uneye
 	{
 		UNEYE_PROFILE_FUNCTION();
 
-		glEnable(GL_MULTISAMPLE);
+		//glEnable(GL_MULTISAMPLE);
 		glEnable(GL_BLEND);
 		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
@@ -33,5 +33,6 @@ namespace Uneye
 	{
 		uint32_t count = (indexCount == 0) ? vertexArray->GetIndexBuffers()->GetCount() : indexCount;
 		glDrawElements(GL_TRIANGLES, count, GL_UNSIGNED_INT, nullptr);
+		glBindTexture(GL_TEXTURE_2D, 0);
 	}
 }

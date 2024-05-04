@@ -29,9 +29,6 @@ namespace Uneye
 
 		glTextureStorage2D(m_RendererID, 1, m_InternalFormat, m_Width, m_Height);
 
-
-		m_RendererHandle = glGetTextureHandleARB(m_RendererID);
-
 		glBindTexture(GL_TEXTURE_2D, 0);
 	}
 
@@ -82,9 +79,6 @@ namespace Uneye
 		glGenerateMipmap(GL_TEXTURE_2D);
 
 
-		m_RendererHandle = glGetTextureHandleARB(m_RendererID);
-
-
 		stbi_image_free(data);
 		glBindTexture(GL_TEXTURE_2D, 0);
 
@@ -110,14 +104,8 @@ namespace Uneye
 	{
 		UNEYE_PROFILE_FUNCTION();
 
-		glBindTexture(GL_TEXTURE_2D, m_RendererID);
-		if (!m_Used)
-		{
-			glMakeTextureHandleResidentARB(m_RendererHandle);
-			m_Used = !m_Used;
-		}
-		
-		glUniformHandleui64ARB(slot, m_RendererHandle);
+		//glBindTexture(GL_TEXTURE_2D, m_RendererID);
+		glBindTextureUnit(slot, m_RendererID);
 	}
 
 	void OpenGLTexture2D::Unbind()
@@ -125,10 +113,5 @@ namespace Uneye
 		UNEYE_PROFILE_FUNCTION();
 
 		glBindTexture(GL_TEXTURE_2D, 0);
-		if (m_Used)
-		{
-			glMakeTextureHandleNonResidentARB(m_RendererHandle);
-			m_Used = !m_Used;
-		}
 	}
 }

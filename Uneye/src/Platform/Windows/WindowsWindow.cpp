@@ -60,7 +60,7 @@ namespace Uneye {
 			s_GLFWInitialized = true;
 		}
 
-		glfwWindowHint(GLFW_SAMPLES, 4);
+		//glfwWindowHint(GLFW_SAMPLES, 4);
 		//glfwWindowHint(GLFW_MAXIMIZED, GLFW_TRUE);
 		{
 			UNEYE_PROFILE_SCOPE("glfwCreateWindow");
@@ -178,6 +178,9 @@ namespace Uneye {
 
 		UNEYE_CORE_WARN("Window {0} has shutdown", m_Data.Title);
 		glfwDestroyWindow(m_Window);
+
+		m_Window = nullptr;
+		//m_Context = nullptr;
 	}
 
 	void WindowsWindow::OnUpdate()

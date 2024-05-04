@@ -79,7 +79,7 @@
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>_SILENCE_ALL_MS_EXT_DEPRECATION_WARNINGS;_SILENCE_STDEXT_ARR_ITERS_DEPRECATION_WARNING;UNEYE_PLATFORM_WINDOWS;UNEYE_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>assets;..\Uneye\vendor\spdlog\include;..\Uneye\src;..\Uneye\vendor;..\Uneye\vendor\glm;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>src;assets;..\Uneye\vendor\spdlog\include;..\Uneye\src;..\Uneye\vendor;..\Uneye\vendor\glm;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
       <Optimization>Disabled</Optimization>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
@@ -95,7 +95,7 @@
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>_SILENCE_ALL_MS_EXT_DEPRECATION_WARNINGS;_SILENCE_STDEXT_ARR_ITERS_DEPRECATION_WARNING;UNEYE_PLATFORM_WINDOWS;UNEYE_RELEASE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>assets;..\Uneye\vendor\spdlog\include;..\Uneye\src;..\Uneye\vendor;..\Uneye\vendor\glm;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>src;assets;..\Uneye\vendor\spdlog\include;..\Uneye\src;..\Uneye\vendor;..\Uneye\vendor\glm;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <Optimization>Full</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
@@ -115,7 +115,7 @@
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>_SILENCE_ALL_MS_EXT_DEPRECATION_WARNINGS;_SILENCE_STDEXT_ARR_ITERS_DEPRECATION_WARNING;UNEYE_PLATFORM_WINDOWS;UNEYE_DIST;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>assets;..\Uneye\vendor\spdlog\include;..\Uneye\src;..\Uneye\vendor;..\Uneye\vendor\glm;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>src;assets;..\Uneye\vendor\spdlog\include;..\Uneye\src;..\Uneye\vendor;..\Uneye\vendor\glm;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <Optimization>Full</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
@@ -131,11 +131,17 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="src\Sandbox2D.h" />
+    <ClInclude Include="src\ParticleSystem\ParticleSystem.h" />
+    <ClInclude Include="src\ParticleSystem\Random.h" />
+    <ClInclude Include="src\Sandbox2D\Sandbox2D.h" />
+    <ClInclude Include="src\example1\example1.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="src\Sandbox2D.cpp" />
+    <ClCompile Include="src\ParticleSystem\ParticleSystem.cpp" />
+    <ClCompile Include="src\ParticleSystem\Random.cpp" />
+    <ClCompile Include="src\Sandbox2D\Sandbox2D.cpp" />
     <ClCompile Include="src\SandboxApp.cpp" />
+    <ClCompile Include="src\example1\example1.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Uneye\Uneye.vcxproj">

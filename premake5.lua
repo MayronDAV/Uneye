@@ -122,6 +122,7 @@ project "Sandbox"
 
 	includedirs
 	{
+		"%{prj.name}/src",
 		"%{prj.name}/assets",
 		"Uneye/vendor/spdlog/include",
 		"Uneye/src",

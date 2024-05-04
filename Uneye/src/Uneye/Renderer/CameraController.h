@@ -11,6 +11,15 @@
 
 namespace Uneye
 {
+	struct OrthographicCameraBounds
+	{
+		float Left, Right;
+		float Bottom, Top;
+
+		float GetWidth() { return Right - Left; }
+		float GetHeight() { return Top - Bottom; }
+	};
+
 	class OrthographicCameraController
 	{
 		public:
@@ -38,6 +47,7 @@ namespace Uneye
 			void SetRotation(float rotation)			 { m_CameraRotation = rotation; }
 			void SetRotationSpeed(float speed)			 { m_CameraRotationSpeed = speed; }
 
+			const OrthographicCameraBounds& GetBounds() const { return m_Bounds; }
 		private:
 			bool OnMouseScrolled(MouseScrolledEvent& e);
 			bool OWindowResize(WindowResizeEvent& e);
@@ -47,6 +57,7 @@ namespace Uneye
 			float m_ZoomLevel = 1.0f;
 			bool m_Rotation = false;
 
+			OrthographicCameraBounds m_Bounds;
 			OrthographicCamera m_Camera;
 
 			glm::vec3 m_CameraPosition{ 0.0f };

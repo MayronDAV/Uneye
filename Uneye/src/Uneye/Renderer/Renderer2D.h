@@ -1,7 +1,11 @@
 #pragma once
 
-#include "Camera.h"
-#include "Texture.h"
+#include "Uneye/Renderer/Camera.h"
+#include "Uneye/Renderer/Texture.h"
+#include "Uneye/Renderer/SubTexture.h"
+
+
+
 
 namespace Uneye
 {
@@ -21,11 +25,26 @@ namespace Uneye
 			static void DrawQuad(const glm::vec3& position, const glm::vec2& size,
 				const glm::vec4& color = glm::vec4(1.0f), const Ref<Texture2D>& texture = nullptr);
 
+			// Rotation in radians
 			static void DrawRotateQuad(const glm::vec2& position, const glm::vec2& size,
 				float rotation, const glm::vec4& color = glm::vec4(1.0f), const Ref<Texture2D>& texture = nullptr);
+			// Rotation in radians
 			static void DrawRotateQuad(const glm::vec3& position, const glm::vec2& size,
 				float rotation, const glm::vec4& color = glm::vec4(1.0f), const Ref<Texture2D>& texture = nullptr);
 	
+			// Draw quads with subTextures
+			static void DrawQuad(const glm::vec2& position, const glm::vec2& size,
+				const Ref<SubTexture2D>& subtexture = nullptr, const glm::vec4& color = glm::vec4(1.0f));
+			static void DrawQuad(const glm::vec3& position, const glm::vec2& size,
+				const Ref<SubTexture2D>& subtexture = nullptr, const glm::vec4& color = glm::vec4(1.0f));
+
+			// Rotation in radians and subtexture
+			static void DrawRotateQuad(const glm::vec2& position, const glm::vec2& size,
+				float rotation, const Ref<SubTexture2D>& subtexture = nullptr, const glm::vec4& color = glm::vec4(1.0f));
+			static void DrawRotateQuad(const glm::vec3& position, const glm::vec2& size,
+				float rotation, const Ref<SubTexture2D>& subtexture = nullptr, const glm::vec4& color = glm::vec4(1.0f));
+
+
 			// Stats
 			struct Statistics
 			{

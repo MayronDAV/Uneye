@@ -1,22 +1,43 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
+    <Filter Include="ParticleSystem">
+      <UniqueIdentifier>{3E193C67-2AE7-2F6D-137B-A093FFE70BD2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sandbox2D">
+      <UniqueIdentifier>{AA155D3F-1680-11B6-5FBE-C25BCB67EF0A}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="example1">
+      <UniqueIdentifier>{42D830B1-2EA5-8BBC-57BE-796443EAC04A}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="src\ParticleSystem\ParticleSystem.h">
+      <Filter>ParticleSystem</Filter>
+    </ClInclude>
+    <ClInclude Include="src\ParticleSystem\Random.h">
+      <Filter>ParticleSystem</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Sandbox2D\Sandbox2D.h">
+      <Filter>Sandbox2D</Filter>
+    </ClInclude>
+    <ClInclude Include="src\example1\example1.h">
+      <Filter>example1</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="src\ParticleSystem\ParticleSystem.cpp">
+      <Filter>ParticleSystem</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ParticleSystem\Random.cpp">
+      <Filter>ParticleSystem</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Sandbox2D\Sandbox2D.cpp">
+      <Filter>Sandbox2D</Filter>
+    </ClCompile>
     <ClCompile Include="src\SandboxApp.cpp" />
-    <ClCompile Include="src\Sandbox2D.cpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <Filter Include="assets">
-      <UniqueIdentifier>{239023bc-4685-4e88-b0d2-795caa793cd6}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="assets\shaders">
-      <UniqueIdentifier>{a294c98e-2884-4ceb-8be7-3f78f28dd1f2}</UniqueIdentifier>
-    </Filter>
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="src\Sandbox2D.h" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="assets\shaders\square.frag" />
-    <None Include="assets\shaders\square.vert" />
+    <ClCompile Include="src\example1\example1.cpp">
+      <Filter>example1</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

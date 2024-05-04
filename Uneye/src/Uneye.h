@@ -26,4 +26,5 @@
 #include "Uneye/Renderer/CameraController.h"
 
 #include "Uneye/Renderer/Texture.h"
+#include "Uneye/Renderer/SubTexture.h"
 // -----------------------------------

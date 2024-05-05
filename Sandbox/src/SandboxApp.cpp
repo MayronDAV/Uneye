@@ -7,19 +7,17 @@
 #include "example1/example1.h"
 
 
-
-
 class Sandbox : public Uneye::Application
 {
-public:
-	Sandbox()
-	{
-		//PushLayer(new Sandbox2D());
-		PushLayer(new Example1());
-	}
+	public:
+		Sandbox()
+		{
+			PushLayer(new Sandbox2D());
 
-	~Sandbox() = default;
+			//PushLayer(new Example1());
+		}
 
+		~Sandbox() = default;
 };
 
 Uneye::Application* Uneye::CreateApplication()

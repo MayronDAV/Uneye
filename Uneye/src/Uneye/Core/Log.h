@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Uneye/Core/Core.h"
+#include "Uneye/Core/Base.h"
 #include "spdlog/spdlog.h"
 #include "spdlog/fmt/ostr.h"
 

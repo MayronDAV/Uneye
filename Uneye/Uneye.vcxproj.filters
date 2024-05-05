@@ -111,7 +111,7 @@
     <ClInclude Include="src\Uneye\Core\Application.h">
       <Filter>src\Uneye\Core</Filter>
     </ClInclude>
-    <ClInclude Include="src\Uneye\Core\Core.h">
+    <ClInclude Include="src\Uneye\Core\Base.h">
       <Filter>src\Uneye\Core</Filter>
     </ClInclude>
     <ClInclude Include="src\Uneye\Core\EntryPoint.h">

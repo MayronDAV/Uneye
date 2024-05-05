@@ -40,7 +40,7 @@ namespace Uneye
 			OrthographicCamera& GetCamera()				 { return m_Camera; }
 			const OrthographicCamera& GetCamera() const  { return m_Camera; }
 
-			void SetZoomLevel(float level)				 { m_ZoomLevel = level; }
+			void SetZoomLevel(float level)				 { m_ZoomLevel = level; CalculateView(); }
 			void SetCameraSpeed(const glm::vec3& speed)	 { m_Speed = speed; }
 			void SetCameraPosition(const glm::vec3& pos) { m_CameraPosition = pos; }
 			void SetHaveRotation(bool rotation)			 { m_Rotation = rotation; }
@@ -49,6 +49,8 @@ namespace Uneye
 
 			const OrthographicCameraBounds& GetBounds() const { return m_Bounds; }
 		private:
+			void CalculateView();
+
 			bool OnMouseScrolled(MouseScrolledEvent& e);
 			bool OWindowResize(WindowResizeEvent& e);
 

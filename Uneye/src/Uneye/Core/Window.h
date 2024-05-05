@@ -2,7 +2,7 @@
 
 #include "uypch.h"
 
-#include "Uneye/Core/Core.h"
+#include "Uneye/Core/Base.h"
 #include "Uneye/Events/Event.h"
 
 namespace Uneye {

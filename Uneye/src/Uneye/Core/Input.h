@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Uneye/Core/Core.h"
+#include "Uneye/Core/Base.h"
 
 namespace Uneye {
 

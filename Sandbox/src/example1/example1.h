@@ -36,4 +36,6 @@ private:
 
 	ParticleSystem m_ParticleSystem;
 	ParticleProps m_Particle;
+
+	std::unordered_map<char, Uneye::Ref<Uneye::SubTexture2D>> m_Map;
 };

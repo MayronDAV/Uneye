@@ -29,6 +29,8 @@ namespace Uneye
 			void OnUpdate(Timestep ts);
 			void OnEvent(Event& e);
 
+			void OnResize(float width, float height);
+
 			const glm::vec3& GetPosition() const		 { return m_CameraPosition; }
 			const glm::vec3& GetDirection() const		 { return m_Direction; }
 			const glm::vec3& GetSpeed() const			 { return m_Speed; }

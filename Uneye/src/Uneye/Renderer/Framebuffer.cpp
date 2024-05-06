@@ -1,16 +1,17 @@
 #include "uypch.h"
-#include "Uneye/Renderer/VertexArray.h"
+#include "Uneye/Renderer/Framebuffer.h"
 
 #include "Uneye/Renderer/Renderer.h"
-
-#include "Platform/OpenGL/OpenGLVertexArray.h"
+#include "Platform/OpenGL/OpenGLFramebuffer.h"
 #include "Uneye/Core/Base.h"
 
 
 namespace Uneye
 {
-	Ref<VertexArray> VertexArray::Create()
+
+	Ref<Framebuffer> Framebuffer::Create(const FramebufferSpecification& spec)
 	{
+
 		switch (Renderer::GetAPI())
 		{
 			case RendererAPI::API::None:
@@ -20,11 +21,12 @@ namespace Uneye
 			}
 			case RendererAPI::API::OpenGL:
 			{
-				return CreateRef<OpenGLVertexArray>();
+				return CreateRef<OpenGLFramebuffer>(spec);
 			}
 		}
 
 		UNEYE_CORE_ASSERT(true, "Unknown RendererAPI!");
 		return nullptr;
 	}
+
 }

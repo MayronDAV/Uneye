@@ -3,6 +3,7 @@
 
 #include "Renderer.h"
 
+#include "Uneye/Core/Base.h"
 #include "Platform/OpenGL/OpenGLShader.h"
 
 
@@ -23,7 +24,7 @@ namespace Uneye
 			}
 			case RendererAPI::API::OpenGL:
 			{
-				return std::make_shared<OpenGLShader>(name, vertexPath, fragmentPath);
+				return CreateRef<OpenGLShader>(name, vertexPath, fragmentPath);
 			}
 		}
 
@@ -43,7 +44,7 @@ namespace Uneye
 			}
 			case RendererAPI::API::OpenGL:
 			{
-				return std::make_shared<OpenGLShader>(shaderPath);
+				return CreateRef<OpenGLShader>(shaderPath);
 			}
 		}
 

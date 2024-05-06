@@ -87,6 +87,9 @@
     <ClInclude Include="src\Platform\OpenGL\OpenGLContext.h">
       <Filter>src\Platform\OpenGL</Filter>
     </ClInclude>
+    <ClInclude Include="src\Platform\OpenGL\OpenGLFramebuffer.h">
+      <Filter>src\Platform\OpenGL</Filter>
+    </ClInclude>
     <ClInclude Include="src\Platform\OpenGL\OpenGLRendererAPI.h">
       <Filter>src\Platform\OpenGL</Filter>
     </ClInclude>
@@ -165,6 +168,9 @@
     <ClInclude Include="src\Uneye\Renderer\CameraController.h">
       <Filter>src\Uneye\Renderer</Filter>
     </ClInclude>
+    <ClInclude Include="src\Uneye\Renderer\Framebuffer.h">
+      <Filter>src\Uneye\Renderer</Filter>
+    </ClInclude>
     <ClInclude Include="src\Uneye\Renderer\GraphicsContext.h">
       <Filter>src\Uneye\Renderer</Filter>
     </ClInclude>
@@ -181,6 +187,9 @@
       <Filter>src\Uneye\Renderer</Filter>
     </ClInclude>
     <ClInclude Include="src\Uneye\Renderer\Shader.h">
+      <Filter>src\Uneye\Renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Uneye\Renderer\SubTexture.h">
       <Filter>src\Uneye\Renderer</Filter>
     </ClInclude>
     <ClInclude Include="src\Uneye\Renderer\Texture.h">
@@ -1485,13 +1494,15 @@
     <ClInclude Include="vendor\stb\include\stb_voxel_render.h">
       <Filter>vendor\stb\include</Filter>
     </ClInclude>
-    <ClInclude Include="src\Uneye\Renderer\SubTexture.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Platform\OpenGL\OpenGLBuffer.cpp">
       <Filter>src\Platform\OpenGL</Filter>
     </ClCompile>
     <ClCompile Include="src\Platform\OpenGL\OpenGLContext.cpp">
+      <Filter>src\Platform\OpenGL</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Platform\OpenGL\OpenGLFramebuffer.cpp">
       <Filter>src\Platform\OpenGL</Filter>
     </ClCompile>
     <ClCompile Include="src\Platform\OpenGL\OpenGLRendererAPI.cpp">
@@ -1539,6 +1550,9 @@
     <ClCompile Include="src\Uneye\Renderer\CameraController.cpp">
       <Filter>src\Uneye\Renderer</Filter>
     </ClCompile>
+    <ClCompile Include="src\Uneye\Renderer\Framebuffer.cpp">
+      <Filter>src\Uneye\Renderer</Filter>
+    </ClCompile>
     <ClCompile Include="src\Uneye\Renderer\RenderCommand.cpp">
       <Filter>src\Uneye\Renderer</Filter>
     </ClCompile>
@@ -1554,6 +1568,9 @@
     <ClCompile Include="src\Uneye\Renderer\Shader.cpp">
       <Filter>src\Uneye\Renderer</Filter>
     </ClCompile>
+    <ClCompile Include="src\Uneye\Renderer\SubTexture.cpp">
+      <Filter>src\Uneye\Renderer</Filter>
+    </ClCompile>
     <ClCompile Include="src\Uneye\Renderer\Texture.cpp">
       <Filter>src\Uneye\Renderer</Filter>
     </ClCompile>
@@ -1563,6 +1580,5 @@
     <ClCompile Include="src\uypch.cpp">
       <Filter>src</Filter>
     </ClCompile>
-    <ClCompile Include="src\Uneye\Renderer\SubTexture.cpp" />
   </ItemGroup>
 </Project>

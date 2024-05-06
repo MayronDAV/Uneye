@@ -21,7 +21,7 @@ namespace Uneye {
 	class Application
 	{
 		public:
-			Application();
+			Application(const std::string& name = "Uneye App");
 			virtual ~Application();
 
 			void Run();
@@ -30,6 +30,8 @@ namespace Uneye {
 
 			void PushLayer(Layer* layer);
 			void PushOverlay(Layer* layer);
+			
+			void Close() { m_Running = false; }
 
 			inline Window& GetWindow() { return *m_Window; }
 

@@ -20,6 +20,7 @@
 
 #include "Uneye/Renderer/Buffer.h"
 #include "Uneye/Renderer/Shader.h"
+#include "Uneye/Renderer/Framebuffer.h"
 #include "Uneye/Renderer/VertexArray.h"
 
 #include "Uneye/Renderer/Camera.h"

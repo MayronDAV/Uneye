@@ -6,6 +6,7 @@
 #include "Uneye/Events/KeyEvent.h"
 
 #include <glad/glad.h>
+#include "Uneye/Renderer/Texture.h"
 
 #include <random>
 

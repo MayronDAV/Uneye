@@ -19,14 +19,14 @@ namespace Uneye {
 
 	Application* Application::s_Instance = nullptr;
 
-	Application::Application()
+	Application::Application(const std::string& name)
 	{
 		UNEYE_PROFILE_FUNCTION();
 
 		UNEYE_CORE_ASSERT(s_Instance, "Application already exists!");
 		s_Instance = this;
 
-		m_Window = Scope<Window>(Window::Create());
+		m_Window = Scope<Window>(Window::Create(name));
 		m_Window->SetEventCallback(BIND_EVENT_FN(OnEvent));
 
 		Renderer::Init();

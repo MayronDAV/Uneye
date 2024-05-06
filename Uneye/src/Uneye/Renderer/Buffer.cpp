@@ -3,6 +3,7 @@
 
 #include "Uneye/Renderer/Renderer.h"
 #include "Platform/OpenGL/OpenGLBuffer.h"
+#include "Uneye/Core/Base.h"
 
 
 namespace Uneye
@@ -18,7 +19,7 @@ namespace Uneye
 			}
 			case RendererAPI::API::OpenGL:
 			{
-				return std::make_shared<OpenGLVertexBuffer>(size);
+				return CreateRef<OpenGLVertexBuffer>(size);
 			}
 		}
 
@@ -37,7 +38,7 @@ namespace Uneye
 			}
 			case RendererAPI::API::OpenGL:
 			{
-				return std::make_shared<OpenGLVertexBuffer>(vertices, size);
+				return CreateRef<OpenGLVertexBuffer>(vertices, size);
 			}
 		}
 		
@@ -56,7 +57,7 @@ namespace Uneye
 			}
 			case RendererAPI::API::OpenGL:
 			{
-				return std::make_shared<OpenGLIndexBuffer>(indices, count);
+				return CreateRef<OpenGLIndexBuffer>(indices, count);
 			}
 		}
 

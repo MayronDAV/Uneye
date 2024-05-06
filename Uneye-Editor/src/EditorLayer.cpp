@@ -27,8 +27,16 @@ namespace Uneye
 	{
 		UNEYE_PROFILE_FUNCTION();
 
+		if (Uneye::FramebufferSpecification spec = m_Framebuffer->GetSpecification();
+			m_ViewportSize.x > 0.0f && m_ViewportSize.y > 0.0f && // zero sized is invalid
+			(spec.Width != m_ViewportSize.x || spec.Height != m_ViewportSize.y))
+		{
+			m_Framebuffer->Resize((uint32_t)m_ViewportSize.x, (uint32_t)m_ViewportSize.y);
+			m_CameraController.OnResize(m_ViewportSize.x, m_ViewportSize.y);
+		}
 
-		m_CameraController.OnUpdate(ts);
+		if (m_ViewportFocused)
+			m_CameraController.OnUpdate(ts);
 
 		Renderer2D::ResetStats();
 		m_Framebuffer->Bind();
@@ -49,6 +57,23 @@ namespace Uneye
 				}
 			}
 
+			static float rotation = 0.0f;
+			rotation += ts * 50.0f;
+
+			Renderer2D::DrawRotateQuad(
+				{-1.0f, 0.0f, 0.3f},
+				{ 1.0f, 1.0f },
+				glm::radians(rotation),
+				m_SquareColor
+			);
+
+			Renderer2D::DrawRotateQuad(
+				{ -2.5f, 0.0f, 0.3f },
+				{ 0.5f, 1.0f },
+				glm::radians(rotation),
+				Uneye::SubTexture2D::CreateFromTexture(m_Texture, {0, 1}, {128, 128}, {1, 2})
+			);
+
 			Renderer2D::EndScene();
 		}
 		m_Framebuffer->Unbind();
@@ -62,6 +87,8 @@ namespace Uneye
 	void EditorLayer::OnImGuiRender()
 	{
 		UNEYE_PROFILE_FUNCTION();
+
+
 
 		static bool opt_fullscreen = true;
 		static bool opt_padding = false;
@@ -123,16 +150,14 @@ namespace Uneye
 
 		ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2(0, 0));
 		ImGui::Begin("Viewport");
+		
+		//if ()
+		m_ViewportFocused = ImGui::IsWindowFocused();
+		m_ViewportHovered = ImGui::IsWindowHovered();
+		Application::Get().GetImGuiLayer()->BlockEvents(!m_ViewportFocused || !m_ViewportHovered);
+
 		ImVec2 viewportSize = ImGui::GetContentRegionAvail();
-			
-		if (m_ViewportSize != glm::vec2(viewportSize.x, viewportSize.y))
-		{
-			m_ViewportSize = { viewportSize.x, viewportSize.y };
-			m_Framebuffer->Resize((uint32_t)viewportSize.x, (uint32_t)viewportSize.y);
-
-			m_CameraController.OnResize(m_ViewportSize.x, m_ViewportSize.y);
-		}
-
+		m_ViewportSize = { viewportSize.x, viewportSize.y };
 		uint32_t texID = m_Framebuffer->GetColorAttachmentRendererID();
 		ImGui::Image((void*)texID, ImVec2(m_ViewportSize.x, m_ViewportSize.y), ImVec2(0, 1), ImVec2(1, 0));
 		ImGui::End();

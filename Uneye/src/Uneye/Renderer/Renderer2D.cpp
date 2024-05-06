@@ -172,16 +172,12 @@ namespace Uneye
 	{
 		UNEYE_PROFILE_FUNCTION();
 
-		constexpr float x = 2.0f, y = 3.0f;
-		constexpr float sheetWidth = 2560.0f , sheetHeight = 1664.0f;
-		constexpr float spriteWidth = 128.0f, spriteHeight = 128.0f;
-
 		constexpr size_t quadVertexCount = 4;
-		constexpr glm::vec2 QuadTexCoords[quadVertexCount] = {
-			{ (x * spriteWidth) / sheetWidth,		(y * spriteHeight) / sheetHeight },
-			{ ((x + 1) * spriteWidth) / sheetWidth, (y * spriteHeight) / sheetHeight },
-			{ ((x + 1) * spriteWidth) / sheetWidth, ((y + 1) * spriteHeight) / sheetHeight },
-			{ (x * spriteWidth) / sheetWidth,		((y + 1) * spriteHeight) / sheetHeight }
+		constexpr glm::vec2 QuadTexCoords[] = {
+			{0.0f, 0.0f},
+			{1.0f, 0.0f},
+			{1.0f, 1.0f},
+			{0.0f, 1.0f}
 		};
 
 		if (s_Data.QuadIndexCount >= Renderer2Ddata::MaxVertices)
@@ -241,7 +237,7 @@ namespace Uneye
 		UNEYE_PROFILE_FUNCTION();
 
 		constexpr size_t quadVertexCount = 4;
-		constexpr glm::vec2 QuadTexCoords[quadVertexCount] = {
+		constexpr glm::vec2 QuadTexCoords[] = {
 			{0.0f, 0.0f},
 			{1.0f, 0.0f},
 			{1.0f, 1.0f},
@@ -303,7 +299,18 @@ namespace Uneye
 		UNEYE_PROFILE_FUNCTION();
 
 		constexpr size_t quadVertexCount = 4;
-		auto texcoord = subtexture->GetTexCoords();
+		const glm::vec2* texcoord;
+		if (subtexture != nullptr)
+			texcoord = subtexture->GetTexCoords();
+		else
+		{
+			texcoord = new glm::vec2[4]{
+				{0.0f, 0.0f},
+				{1.0f, 0.0f},
+				{1.0f, 1.0f},
+				{0.0f, 1.0f},
+			};
+		}
 
 		if (s_Data.QuadIndexCount >= Renderer2Ddata::MaxVertices)
 			FlushAndReset();
@@ -359,7 +366,18 @@ namespace Uneye
 		UNEYE_PROFILE_FUNCTION();
 
 		constexpr size_t quadVertexCount = 4;
-		auto texcoord = subtexture->GetTexCoords();
+		const glm::vec2* texcoord;
+		if (subtexture != nullptr)
+			texcoord = subtexture->GetTexCoords();
+		else
+		{
+			texcoord = new glm::vec2[4]{
+				{0.0f, 0.0f},
+				{1.0f, 0.0f},
+				{1.0f, 1.0f},
+				{0.0f, 1.0f},
+			};
+		}
 
 		if (s_Data.QuadIndexCount >= Renderer2Ddata::MaxVertices)
 			FlushAndReset();

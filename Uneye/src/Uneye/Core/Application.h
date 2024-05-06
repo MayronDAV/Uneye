@@ -34,6 +34,7 @@ namespace Uneye {
 			void Close() { m_Running = false; }
 
 			inline Window& GetWindow() { return *m_Window; }
+			inline ImGuiLayer* GetImGuiLayer() { return m_ImGuiLayer;  }
 
 			inline static Application& Get() { return *s_Instance; }
 		private:

@@ -115,6 +115,21 @@ namespace Uneye
 		UNEYE_PROFILE_FUNCTION();
 	}
 
+	void Renderer2D::BeginScene(const Camera& camera, const glm::mat4& transform)
+	{
+		UNEYE_PROFILE_FUNCTION();
+
+		glm::mat4 viewProj = camera.GetProjection() * glm::inverse(transform);
+
+		s_Data.QuadShader->Bind();
+		s_Data.QuadShader->SetMat4("u_ViewProjection", viewProj);
+
+		s_Data.QuadIndexCount = 0;
+		s_Data.QuadVertexBufferPtr = s_Data.QuadVertexBufferBase;
+
+		s_Data.TextureSlotIndex = 1;
+	}
+
 	void Renderer2D::BeginScene(const OrthographicCamera& camera)
 	{
 		UNEYE_PROFILE_FUNCTION();
@@ -161,6 +176,9 @@ namespace Uneye
 		s_Data.TextureSlotIndex = 1;
 	}
 
+
+
+
 	void Renderer2D::DrawQuad(const glm::vec2& position, const glm::vec2& size, 
 		const glm::vec4& color, const Ref<Texture2D>& texture)
 	{
@@ -197,9 +215,12 @@ namespace Uneye
 
 			if (textureIndex == 0.0f)
 			{
+				if (s_Data.TextureSlotIndex >= Renderer2Ddata::MaxTextureSlots)
+					FlushAndReset();
+
 				textureIndex = (float)s_Data.TextureSlotIndex;
 				s_Data.TextureSlots[s_Data.TextureSlotIndex] = texture;
-				++s_Data.TextureSlotIndex;
+				s_Data.TextureSlotIndex++;
 			}
 		}
 
@@ -221,6 +242,64 @@ namespace Uneye
 
 		s_Data.Stats.QuadCount++;
 	}
+
+	void Renderer2D::DrawQuad(const glm::mat4& transform, const glm::vec4& color,
+		const Ref<Texture2D>& texture)
+	{
+		UNEYE_PROFILE_FUNCTION();
+
+		constexpr size_t quadVertexCount = 4;
+		constexpr glm::vec2 QuadTexCoords[] = {
+			{0.0f, 0.0f},
+			{1.0f, 0.0f},
+			{1.0f, 1.0f},
+			{0.0f, 1.0f}
+		};
+
+		if (s_Data.QuadIndexCount >= Renderer2Ddata::MaxVertices)
+			FlushAndReset();
+
+		float textureIndex = 0.0f; // White texture
+		if (texture != nullptr)
+		{
+			for (uint32_t i = 1; i < s_Data.TextureSlotIndex; i++)
+			{
+				if (*s_Data.TextureSlots[i].get() == *texture.get())
+				{
+					textureIndex = (float)i;
+					break;
+				}
+			}
+
+			if (textureIndex == 0.0f)
+			{
+				if (s_Data.TextureSlotIndex >= Renderer2Ddata::MaxTextureSlots)
+					FlushAndReset();
+
+				textureIndex = (float)s_Data.TextureSlotIndex;
+				s_Data.TextureSlots[s_Data.TextureSlotIndex] = texture;
+				s_Data.TextureSlotIndex++;
+			}
+		}
+
+		for (int i = 0; i < quadVertexCount; i++)
+		{
+			s_Data.QuadVertexBufferPtr->Position = transform * s_Data.QuadVertexPositions[i];
+			s_Data.QuadVertexBufferPtr->Color = color;
+			s_Data.QuadVertexBufferPtr->TexCoord = QuadTexCoords[i];
+			s_Data.QuadVertexBufferPtr->TexIndex = textureIndex;
+			s_Data.QuadVertexBufferPtr++;
+		}
+
+		s_Data.QuadIndexCount += 6;
+
+
+
+		s_Data.Stats.QuadCount++;
+	}
+
+
+
 
 	void Renderer2D::DrawRotateQuad(const glm::vec2& position,
 		const glm::vec2& size, float rotation,
@@ -261,6 +340,9 @@ namespace Uneye
 
 			if (textureIndex == 0.0f)
 			{
+				if (s_Data.TextureSlotIndex >= Renderer2Ddata::MaxTextureSlots)
+					FlushAndReset();
+
 				textureIndex = (float)s_Data.TextureSlotIndex;
 				s_Data.TextureSlots[s_Data.TextureSlotIndex] = texture;
 				++s_Data.TextureSlotIndex;
@@ -286,6 +368,9 @@ namespace Uneye
 
 		s_Data.Stats.QuadCount++;
 	}
+
+
+
 
 	void Renderer2D::DrawQuad(const glm::vec2& position, const glm::vec2& size,
 		const Ref<SubTexture2D>& subtexture, const glm::vec4& color)
@@ -329,6 +414,9 @@ namespace Uneye
 
 			if (textureIndex == 0.0f)
 			{
+				if (s_Data.TextureSlotIndex >= Renderer2Ddata::MaxTextureSlots)
+					FlushAndReset();
+
 				textureIndex = (float)s_Data.TextureSlotIndex;
 				s_Data.TextureSlots[s_Data.TextureSlotIndex] = subtexture->GetTexture();
 				++s_Data.TextureSlotIndex;
@@ -353,6 +441,71 @@ namespace Uneye
 
 		s_Data.Stats.QuadCount++;
 	}
+
+	void Renderer2D::DrawQuad(const glm::mat4& transform, const Ref<SubTexture2D>& subtexture,
+		const glm::vec4& color)
+	{
+		UNEYE_PROFILE_FUNCTION();
+
+		constexpr size_t quadVertexCount = 4;
+		const glm::vec2* texcoord;
+		if (subtexture != nullptr)
+			texcoord = subtexture->GetTexCoords();
+		else
+		{
+			texcoord = new glm::vec2[4]{
+				{0.0f, 0.0f},
+				{1.0f, 0.0f},
+				{1.0f, 1.0f},
+				{0.0f, 1.0f},
+			};
+		}
+
+		if (s_Data.QuadIndexCount >= Renderer2Ddata::MaxVertices)
+			FlushAndReset();
+
+		float textureIndex = 0.0f; // White texture
+		if (subtexture != nullptr)
+		{
+			for (uint32_t i = 1; i < s_Data.TextureSlotIndex; i++)
+			{
+				if (*s_Data.TextureSlots[i].get() == *subtexture->GetTexture().get())
+				{
+					textureIndex = (float)i;
+					break;
+				}
+			}
+
+			if (textureIndex == 0.0f)
+			{
+				if (s_Data.TextureSlotIndex >= Renderer2Ddata::MaxTextureSlots)
+					FlushAndReset();
+
+				textureIndex = (float)s_Data.TextureSlotIndex;
+				s_Data.TextureSlots[s_Data.TextureSlotIndex] = subtexture->GetTexture();
+				++s_Data.TextureSlotIndex;
+			}
+		}
+
+		for (int i = 0; i < quadVertexCount; i++)
+		{
+			s_Data.QuadVertexBufferPtr->Position = transform * s_Data.QuadVertexPositions[i];
+			s_Data.QuadVertexBufferPtr->Color = color;
+			s_Data.QuadVertexBufferPtr->TexCoord = texcoord[i];
+			s_Data.QuadVertexBufferPtr->TexIndex = textureIndex;
+			s_Data.QuadVertexBufferPtr++;
+		}
+
+		s_Data.QuadIndexCount += 6;
+
+
+
+		s_Data.Stats.QuadCount++;
+	}
+
+
+
+
 
 	void Renderer2D::DrawRotateQuad(const glm::vec2& position, const glm::vec2& size, 
 		float rotation, const Ref<SubTexture2D>& subtexture, const glm::vec4& color)
@@ -396,6 +549,9 @@ namespace Uneye
 
 			if (textureIndex == 0.0f)
 			{
+				if (s_Data.TextureSlotIndex >= Renderer2Ddata::MaxTextureSlots)
+					FlushAndReset();
+
 				textureIndex = (float)s_Data.TextureSlotIndex;
 				s_Data.TextureSlots[s_Data.TextureSlotIndex] = subtexture->GetTexture();
 				++s_Data.TextureSlotIndex;
@@ -421,6 +577,7 @@ namespace Uneye
 
 		s_Data.Stats.QuadCount++;
 	}
+
 
 
 

@@ -30,6 +30,10 @@ namespace Uneye
 		Ref<Texture2D> m_Texture;
 		Uneye::Ref<Uneye::Framebuffer> m_Framebuffer;
 
+		Ref<Scene> m_ActiveScene;
+		Entity m_SquareEntity;
+		Entity m_CameraEntity;
+
 		glm::vec2 m_ViewportSize{0.0f, 0.0f};
 		bool m_ViewportFocused = false;
 		bool m_ViewportHovered = false;

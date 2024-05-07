@@ -16,6 +16,15 @@ namespace Uneye
 		fbspec.Width = 800;
 		fbspec.Height = 600;
 		m_Framebuffer = Uneye::Framebuffer::Create(fbspec);
+
+		m_ActiveScene = CreateRef<Scene>();
+		auto square = m_ActiveScene->CreateEntity("Green Square");
+		square.AddComponent<SpriteComponent>(glm::vec4{ 0.0f, 1.0f, 0.0f, 1.0f });
+
+		m_SquareEntity = square;
+		
+		m_CameraEntity = m_ActiveScene->CreateEntity("Camera Entity");
+		m_CameraEntity.AddComponent<CameraComponent>();
 	}
 
 	void EditorLayer::OnDetach()
@@ -33,6 +42,8 @@ namespace Uneye
 		{
 			m_Framebuffer->Resize((uint32_t)m_ViewportSize.x, (uint32_t)m_ViewportSize.y);
 			m_CameraController.OnResize(m_ViewportSize.x, m_ViewportSize.y);
+
+			m_ActiveScene->OnViewportResize((uint32_t)m_ViewportSize.x, (uint32_t)m_ViewportSize.y);
 		}
 
 		if (m_ViewportFocused)
@@ -40,42 +51,11 @@ namespace Uneye
 
 		Renderer2D::ResetStats();
 		m_Framebuffer->Bind();
+		//RenderCommand::Clear(glm::vec4(0.1f, 0.1f, 0.13f, 1.0f));
 		RenderCommand::Clear(glm::vec4(1.0f));
 
-		{
-			UNEYE_PROFILE_SCOPE("Renderer Draw");
-			Renderer2D::BeginScene(m_CameraController.GetCamera());
+		m_ActiveScene->OnUpdate(ts);
 
-
-			float Mapsize = 10;
-			for (float x = 0.0f; x <= Mapsize; x += 1.0f)
-			{
-				for (float y = 0.0f; y <= Mapsize; y += 1.0f)
-				{
-					Renderer2D::DrawQuad({ x * 0.11f, y * 0.11f, 0.01f },
-						{ 0.1f, 0.1f }, { 0.8f, 0.3f, 0.2f, 1.0f });
-				}
-			}
-
-			static float rotation = 0.0f;
-			rotation += ts * 50.0f;
-
-			Renderer2D::DrawRotateQuad(
-				{-1.0f, 0.0f, 0.3f},
-				{ 1.0f, 1.0f },
-				glm::radians(rotation),
-				m_SquareColor
-			);
-
-			Renderer2D::DrawRotateQuad(
-				{ -2.5f, 0.0f, 0.3f },
-				{ 0.5f, 1.0f },
-				glm::radians(rotation),
-				Uneye::SubTexture2D::CreateFromTexture(m_Texture, {0, 1}, {128, 128}, {1, 2})
-			);
-
-			Renderer2D::EndScene();
-		}
 		m_Framebuffer->Unbind();
 	}
 
@@ -145,7 +125,34 @@ namespace Uneye
 		}
 
 		ImGui::Begin("Setup");
-		ImGui::ColorEdit4("SquareColor", glm::value_ptr(m_SquareColor));
+		if (m_SquareEntity)
+		{
+			auto tag = m_SquareEntity.GetComponent<TagComponent>().Tag;
+			if (ImGui::CollapsingHeader(tag.c_str()))
+			{
+				ImGui::Separator();
+				auto& squareColor = m_SquareEntity.GetComponent<SpriteComponent>().Color;
+				ImGui::ColorEdit4("Color", glm::value_ptr(squareColor));
+				ImGui::Separator();
+			}
+
+			tag = m_CameraEntity.GetComponent<TagComponent>().Tag;
+			if (ImGui::CollapsingHeader(tag.c_str()))
+			{
+				ImGui::Separator();
+				auto& transform = m_CameraEntity.GetComponent<TransformComponent>().Transform[3];
+				ImGui::DragFloat3("Transform", glm::value_ptr(transform));
+				ImGui::Separator();
+
+				auto& camera = m_CameraEntity.GetComponent<CameraComponent>().Camera;
+				float orthoSize = camera.GetOrthographicSize();
+				if( ImGui::DragFloat("Ortho size", &orthoSize) )
+				{
+					camera.SetOrthographicSize(orthoSize);
+				}
+				ImGui::Separator();
+			}
+		}
 		ImGui::End();
 
 		ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2(0, 0));
@@ -174,5 +181,7 @@ namespace Uneye
 		ImGui::End();
 
 		ImGui::End();
+
+		//ImGui::ShowDemoWindow();
 	}
 }

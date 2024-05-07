@@ -13,6 +13,10 @@
 
 #include "Uneye/ImGui/ImGuiLayer.h"
 
+#include "Uneye/Scene/Scene.h"
+#include "Uneye/Scene/Components.h"
+#include "Uneye/Scene/Entity.h"
+
 // ---Renderer------------------------
 #include "Uneye/Renderer/Renderer.h"
 #include "Uneye/Renderer/Renderer2D.h"

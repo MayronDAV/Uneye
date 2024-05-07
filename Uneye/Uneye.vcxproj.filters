@@ -1491,6 +1491,10 @@
     <ClInclude Include="vendor\stb\include\stb_voxel_render.h">
       <Filter>vendor\stb\include</Filter>
     </ClInclude>
+    <ClInclude Include="src\Uneye\Scene\Scene.h" />
+    <ClInclude Include="src\Uneye\Scene\Components.h" />
+    <ClInclude Include="src\Uneye\Scene\Entity.h" />
+    <ClInclude Include="src\Uneye\Scene\SceneCamera.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Platform\OpenGL\OpenGLBuffer.cpp">
@@ -1577,5 +1581,8 @@
     <ClCompile Include="src\uypch.cpp">
       <Filter>src</Filter>
     </ClCompile>
+    <ClCompile Include="src\Uneye\Scene\Scene.cpp" />
+    <ClCompile Include="src\Uneye\Scene\Entity.cpp" />
+    <ClCompile Include="src\Uneye\Scene\SceneCamera.cpp" />
   </ItemGroup>
 </Project>

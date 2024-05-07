@@ -24,6 +24,7 @@ IncludeDir["ImGui"] = "Uneye/vendor/imgui"
 IncludeDir["glm"] = "Uneye/vendor/glm"
 IncludeDir["stb"] = "Uneye/vendor/stb/include"
 IncludeDir["assets"] = "Uneye/assets"
+IncludeDir["entt"] = "Uneye/vendor/entt/include"
 
 include "Uneye/vendor/GLFW"
 include "Uneye/vendor/Glad"
@@ -68,7 +69,8 @@ project "Uneye"
 		"%{IncludeDir.ImGui}",
 		"%{IncludeDir.glm}",
 		"%{IncludeDir.stb}",
-		"%{IncludeDir.assets}"
+		"%{IncludeDir.assets}",
+		"%{IncludeDir.entt}"
 	}
 
 	links 
@@ -127,7 +129,8 @@ project "Uneye-Editor"
 		"Uneye/vendor/spdlog/include",
 		"Uneye/src",
 		"Uneye/vendor",
-		"%{IncludeDir.glm}"
+		"%{IncludeDir.glm}",
+		"%{IncludeDir.entt}"
 	}
 
 	links

@@ -25,6 +25,57 @@ namespace Uneye
 		
 		m_CameraEntity = m_ActiveScene->CreateEntity("Camera Entity");
 		m_CameraEntity.AddComponent<CameraComponent>();
+
+		m_SecondCamera = m_ActiveScene->CreateEntity("Second Camera");
+		m_SecondCamera.AddComponent<CameraComponent>();
+		m_SecondCamera.GetComponent<CameraComponent>().Primary = false;
+
+		class CameraController : public ScriptableEntity
+		{
+			public:
+				void OnCreate()
+				{
+					auto& transform = GetComponent<TransformComponent>().Transform;
+					transform[3][0] = rand() % 10 - 5.0f;
+				}
+
+				void OnDestroy()
+				{
+
+				}
+
+				void OnUpdate(Timestep ts)
+				{
+					//UNEYE_INFO("Timestep: {0}", ts.GetSeconds());
+					auto& transform = GetComponent<TransformComponent>().Transform;
+					m_Direction = glm::vec3(0.0f);
+
+					if (Input::IsKeyPressed(Key::W))
+						m_Direction.y =  1.0f;
+					if (Input::IsKeyPressed(Key::A))
+						m_Direction.x = -1.0f;
+					if (Input::IsKeyPressed(Key::S))
+						m_Direction.y = -1.0f;
+					if (Input::IsKeyPressed(Key::D))
+						m_Direction.x =  1.0f;
+
+					m_Direction = m_Direction / ((glm::length(m_Direction) != 0) ?
+						glm::length(m_Direction) : 1.0f);
+
+					transform[3][0] += m_Direction.x * m_Velocity.x * ts.GetSeconds();
+					transform[3][1] += m_Direction.y * m_Velocity.y * ts.GetSeconds();
+					//transform[3][2] += m_Direction.z * m_Velocity.z * ts.GetSeconds();
+
+				}
+
+			private:
+				glm::vec3 m_Direction{ 0.0f };
+				glm::vec3 m_Velocity{ 10.0f };
+		};
+
+		m_CameraEntity.AddComponent<NativeScriptComponent>().Bind<CameraController>();
+		m_SecondCamera.AddComponent<NativeScriptComponent>().Bind<CameraController>();
+
 	}
 
 	void EditorLayer::OnDetach()
@@ -142,7 +193,6 @@ namespace Uneye
 				ImGui::Separator();
 				auto& transform = m_CameraEntity.GetComponent<TransformComponent>().Transform[3];
 				ImGui::DragFloat3("Transform", glm::value_ptr(transform));
-				ImGui::Separator();
 
 				auto& camera = m_CameraEntity.GetComponent<CameraComponent>().Camera;
 				float orthoSize = camera.GetOrthographicSize();
@@ -150,8 +200,36 @@ namespace Uneye
 				{
 					camera.SetOrthographicSize(orthoSize);
 				}
+
+				if (ImGui::Checkbox("Camera A", &m_PrimaryCamera))
+				{
+					m_CameraEntity.GetComponent<CameraComponent>().Primary = m_PrimaryCamera;
+					m_SecondCamera.GetComponent<CameraComponent>().Primary = !m_PrimaryCamera;
+				}
 				ImGui::Separator();
+
 			}
+
+			if (m_SecondCamera.GetComponent<CameraComponent>().Primary)
+			{
+				tag = m_SecondCamera.GetComponent<TagComponent>().Tag;
+				if (ImGui::CollapsingHeader(tag.c_str()))
+				{
+					ImGui::Separator();
+					auto& transform = m_SecondCamera.GetComponent<TransformComponent>().Transform[3];
+					ImGui::DragFloat3("Transform", glm::value_ptr(transform));
+
+					auto& camera = m_SecondCamera.GetComponent<CameraComponent>().Camera;
+					float orthoSize = camera.GetOrthographicSize();
+					if (ImGui::DragFloat("Ortho size", &orthoSize))
+					{
+						camera.SetOrthographicSize(orthoSize);
+					}
+					ImGui::Separator();
+
+				}
+			}
+
 		}
 		ImGui::End();
 

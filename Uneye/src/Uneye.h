@@ -13,11 +13,14 @@
 
 #include "Uneye/ImGui/ImGuiLayer.h"
 
+// --- Scene ------------------------
 #include "Uneye/Scene/Scene.h"
-#include "Uneye/Scene/Components.h"
 #include "Uneye/Scene/Entity.h"
+#include "Uneye/Scene/ScriptableEntity.h"
+#include "Uneye/Scene/Components.h"
+// -----------------------------------
 
-// ---Renderer------------------------
+// --- Renderer ----------------------
 #include "Uneye/Renderer/Renderer.h"
 #include "Uneye/Renderer/Renderer2D.h"
 #include "Uneye/Renderer/RenderCommand.h"

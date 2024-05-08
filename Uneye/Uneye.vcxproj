@@ -182,6 +182,7 @@
     <ClInclude Include="src\Uneye\Scene\Components.h" />
     <ClInclude Include="src\Uneye\Scene\Entity.h" />
     <ClInclude Include="src\Uneye\Scene\Scene.h" />
+    <ClInclude Include="src\Uneye\Scene\ScriptableEntity.h" />
     <ClInclude Include="src\uypch.h" />
     <ClInclude Include="vendor\glm\glm\common.hpp" />
     <ClInclude Include="vendor\glm\glm\detail\_features.hpp" />

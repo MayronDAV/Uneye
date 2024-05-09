@@ -1,5 +1,6 @@
 #pragma once
 
+#include "Uneye/Core/Log.h"
 #include "Uneye/Scene/Scene.h"
 
 #include <entt/entt.hpp>
@@ -32,7 +33,7 @@ namespace Uneye
 			template<typename T>
 			bool HasComponent()
 			{
-				return m_Scene->m_Registry.any_of<T>(m_EntityHandle);
+				return m_Scene->m_Registry.any<T>(m_EntityHandle);
 			}
 
 			template<typename T>
@@ -43,6 +44,18 @@ namespace Uneye
 			}
 
 			operator bool() const { return m_EntityHandle != entt::null; }
+			operator uint32_t() const { return (uint32_t)m_EntityHandle; }
+
+			bool operator==(const Entity& other) const 
+			{
+				return (m_EntityHandle == other.m_EntityHandle) &&
+					(m_Scene == other.m_Scene);
+			}
+
+			bool operator!=(const Entity& other) const
+			{
+				return !(*this == other);
+			}
 
 		private:
 			entt::entity m_EntityHandle = entt::null;

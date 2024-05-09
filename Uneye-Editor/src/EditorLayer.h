@@ -5,6 +5,10 @@
 #include <glm/glm.hpp>
 #include <glm/gtc/type_ptr.hpp>
 
+#include "Panels/SceneHierarchyPanel.h"
+
+
+
 
 namespace Uneye
 {
@@ -42,5 +46,8 @@ namespace Uneye
 		bool m_ViewportHovered = false;
 
 		glm::vec4 m_SquareColor{ 0.2f, 0.3f, 0.8f, 1.0f };
+
+		// Panels
+		SceneHierarchyPanel m_SceneHierarchyPanel;
 	};
 }

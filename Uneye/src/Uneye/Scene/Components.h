@@ -34,13 +34,13 @@ namespace Uneye
 
 	};
 
-	struct SpriteComponent
+	struct SpriteRendererComponent
 	{
 		glm::vec4 Color{ 1.0f };
 
-		SpriteComponent() = default;
-		SpriteComponent(const SpriteComponent&) = default;
-		SpriteComponent(const glm::vec4& color)
+		SpriteRendererComponent() = default;
+		SpriteRendererComponent(const SpriteRendererComponent&) = default;
+		SpriteRendererComponent(const glm::vec4& color)
 			:Color(color) {}
 	};
 

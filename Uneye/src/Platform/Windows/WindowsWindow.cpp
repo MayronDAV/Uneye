@@ -7,6 +7,7 @@
 
 #include <glad/glad.h>
 #include "Uneye/Renderer/Texture.h"
+#include "Uneye/Renderer/Renderer.h"
 
 #include <random>
 
@@ -63,6 +64,11 @@ namespace Uneye {
 
 		{
 			UNEYE_PROFILE_SCOPE("glfwCreateWindow");
+
+	#ifdef UNEYE_DEBUG
+			if (Renderer::GetAPI() == RendererAPI::API::OpenGL)
+				glfwWindowHint(GLFW_OPENGL_DEBUG_CONTEXT, GLFW_TRUE);
+	#endif
 			m_Window = glfwCreateWindow((int)props.Width, (int)props.Height, m_Data.Title.c_str(), nullptr, nullptr);
 
 		}

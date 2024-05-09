@@ -31,6 +31,9 @@
     <Filter Include="src\Uneye\Renderer">
       <UniqueIdentifier>{885AFF98-743E-C0EE-DD9E-BA41C9A1AA70}</UniqueIdentifier>
     </Filter>
+    <Filter Include="src\Uneye\Scene">
+      <UniqueIdentifier>{3F1F3F7A-ABAA-AC3E-B4BB-2F3320C6083F}</UniqueIdentifier>
+    </Filter>
     <Filter Include="vendor">
       <UniqueIdentifier>{B3738122-9F15-ACF8-88D0-BF4C74113349}</UniqueIdentifier>
     </Filter>
@@ -194,6 +197,21 @@
     </ClInclude>
     <ClInclude Include="src\Uneye\Renderer\VertexArray.h">
       <Filter>src\Uneye\Renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Uneye\Scene\Components.h">
+      <Filter>src\Uneye\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Uneye\Scene\Entity.h">
+      <Filter>src\Uneye\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Uneye\Scene\Scene.h">
+      <Filter>src\Uneye\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Uneye\Scene\SceneCamera.h">
+      <Filter>src\Uneye\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Uneye\Scene\ScriptableEntity.h">
+      <Filter>src\Uneye\Scene</Filter>
     </ClInclude>
     <ClInclude Include="src\uypch.h">
       <Filter>src</Filter>
@@ -1491,11 +1509,6 @@
     <ClInclude Include="vendor\stb\include\stb_voxel_render.h">
       <Filter>vendor\stb\include</Filter>
     </ClInclude>
-    <ClInclude Include="src\Uneye\Scene\Scene.h" />
-    <ClInclude Include="src\Uneye\Scene\Components.h" />
-    <ClInclude Include="src\Uneye\Scene\Entity.h" />
-    <ClInclude Include="src\Uneye\Scene\SceneCamera.h" />
-    <ClInclude Include="src\Uneye\Scene\ScriptableEntity.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Platform\OpenGL\OpenGLBuffer.cpp">
@@ -1579,11 +1592,17 @@
     <ClCompile Include="src\Uneye\Renderer\VertexArray.cpp">
       <Filter>src\Uneye\Renderer</Filter>
     </ClCompile>
+    <ClCompile Include="src\Uneye\Scene\Entity.cpp">
+      <Filter>src\Uneye\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Uneye\Scene\Scene.cpp">
+      <Filter>src\Uneye\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Uneye\Scene\SceneCamera.cpp">
+      <Filter>src\Uneye\Scene</Filter>
+    </ClCompile>
     <ClCompile Include="src\uypch.cpp">
       <Filter>src</Filter>
     </ClCompile>
-    <ClCompile Include="src\Uneye\Scene\Scene.cpp" />
-    <ClCompile Include="src\Uneye\Scene\Entity.cpp" />
-    <ClCompile Include="src\Uneye\Scene\SceneCamera.cpp" />
   </ItemGroup>
 </Project>

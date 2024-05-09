@@ -140,7 +140,6 @@
     </Lib>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="src\Uneye\Scene\SceneCamera.h" />
     <ClInclude Include="src\Platform\OpenGL\OpenGLBuffer.h" />
     <ClInclude Include="src\Platform\OpenGL\OpenGLContext.h" />
     <ClInclude Include="src\Platform\OpenGL\OpenGLFramebuffer.h" />
@@ -182,6 +181,7 @@
     <ClInclude Include="src\Uneye\Scene\Components.h" />
     <ClInclude Include="src\Uneye\Scene\Entity.h" />
     <ClInclude Include="src\Uneye\Scene\Scene.h" />
+    <ClInclude Include="src\Uneye\Scene\SceneCamera.h" />
     <ClInclude Include="src\Uneye\Scene\ScriptableEntity.h" />
     <ClInclude Include="src\uypch.h" />
     <ClInclude Include="vendor\glm\glm\common.hpp" />
@@ -617,7 +617,6 @@
     <ClInclude Include="vendor\stb\include\stb_voxel_render.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="src\Uneye\Scene\SceneCamera.cpp" />
     <ClCompile Include="src\Platform\OpenGL\OpenGLBuffer.cpp" />
     <ClCompile Include="src\Platform\OpenGL\OpenGLContext.cpp" />
     <ClCompile Include="src\Platform\OpenGL\OpenGLFramebuffer.cpp" />
@@ -647,6 +646,7 @@
     <ClCompile Include="src\Uneye\Renderer\VertexArray.cpp" />
     <ClCompile Include="src\Uneye\Scene\Entity.cpp" />
     <ClCompile Include="src\Uneye\Scene\Scene.cpp" />
+    <ClCompile Include="src\Uneye\Scene\SceneCamera.cpp" />
     <ClCompile Include="src\uypch.cpp">
       <PrecompiledHeader>Create</PrecompiledHeader>
     </ClCompile>

@@ -55,32 +55,14 @@
     <Filter Include="vendor\glm\glm\gtx">
       <UniqueIdentifier>{B3A6A76B-9F8A-68C1-08EB-6214F4ED5243}</UniqueIdentifier>
     </Filter>
-    <Filter Include="vendor\spdlog">
-      <UniqueIdentifier>{8BBC5F22-F77C-DB58-C0B7-24D62C372035}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="vendor\spdlog\include">
-      <UniqueIdentifier>{FE3E7AAE-6AAB-35A9-339F-CD069FCA5711}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="vendor\spdlog\include\spdlog">
-      <UniqueIdentifier>{76856FF2-6240-5F9E-0BF8-D7E8F791A92E}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="vendor\spdlog\include\spdlog\details">
-      <UniqueIdentifier>{EB8B59AF-D772-1BA7-80C3-81C46C89940D}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="vendor\spdlog\include\spdlog\fmt">
-      <UniqueIdentifier>{ACD61C01-9827-0843-C18B-F604AD3B9BAC}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="vendor\spdlog\include\spdlog\fmt\bundled">
-      <UniqueIdentifier>{99E1FA97-855E-EEDA-AEDB-EEEE9AB78A6E}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="vendor\spdlog\include\spdlog\sinks">
-      <UniqueIdentifier>{6D3396BC-596F-9926-C281-B11DAEDC4141}</UniqueIdentifier>
-    </Filter>
     <Filter Include="vendor\stb">
       <UniqueIdentifier>{8BD3C5A8-778B-07F6-E092-E051CC69A2E6}</UniqueIdentifier>
     </Filter>
     <Filter Include="vendor\stb\include">
       <UniqueIdentifier>{FE550769-EA39-C8BE-539A-C2113F9DB240}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="vendor\stb\src">
+      <UniqueIdentifier>{225F6677-0E2D-5A7D-F7C0-CAA3E32D36E2}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -118,6 +100,9 @@
       <Filter>src\Uneye\Core</Filter>
     </ClInclude>
     <ClInclude Include="src\Uneye\Core\EntryPoint.h">
+      <Filter>src\Uneye\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Uneye\Core\FontManager.h">
       <Filter>src\Uneye\Core</Filter>
     </ClInclude>
     <ClInclude Include="src\Uneye\Core\Input.h">
@@ -1302,153 +1287,6 @@
     <ClInclude Include="vendor\glm\glm\vector_relational.hpp">
       <Filter>vendor\glm\glm</Filter>
     </ClInclude>
-    <ClInclude Include="vendor\spdlog\include\spdlog\async.h">
-      <Filter>vendor\spdlog\include\spdlog</Filter>
-    </ClInclude>
-    <ClInclude Include="vendor\spdlog\include\spdlog\async_logger.h">
-      <Filter>vendor\spdlog\include\spdlog</Filter>
-    </ClInclude>
-    <ClInclude Include="vendor\spdlog\include\spdlog\common.h">
-      <Filter>vendor\spdlog\include\spdlog</Filter>
-    </ClInclude>
-    <ClInclude Include="vendor\spdlog\include\spdlog\details\async_logger_impl.h">
-      <Filter>vendor\spdlog\include\spdlog\details</Filter>
-    </ClInclude>
-    <ClInclude Include="vendor\spdlog\include\spdlog\details\circular_q.h">
-      <Filter>vendor\spdlog\include\spdlog\details</Filter>
-    </ClInclude>
-    <ClInclude Include="vendor\spdlog\include\spdlog\details\console_globals.h">
-      <Filter>vendor\spdlog\include\spdlog\details</Filter>
-    </ClInclude>
-    <ClInclude Include="vendor\spdlog\include\spdlog\details\file_helper.h">
-      <Filter>vendor\spdlog\include\spdlog\details</Filter>
-    </ClInclude>
-    <ClInclude Include="vendor\spdlog\include\spdlog\details\fmt_helper.h">
-      <Filter>vendor\spdlog\include\spdlog\details</Filter>
-    </ClInclude>
-    <ClInclude Include="vendor\spdlog\include\spdlog\details\log_msg.h">
-      <Filter>vendor\spdlog\include\spdlog\details</Filter>
-    </ClInclude>
-    <ClInclude Include="vendor\spdlog\include\spdlog\details\logger_impl.h">
-      <Filter>vendor\spdlog\include\spdlog\details</Filter>
-    </ClInclude>
-    <ClInclude Include="vendor\spdlog\include\spdlog\details\mpmc_blocking_q.h">
-      <Filter>vendor\spdlog\include\spdlog\details</Filter>
-    </ClInclude>
-    <ClInclude Include="vendor\spdlog\include\spdlog\details\null_mutex.h">
-      <Filter>vendor\spdlog\include\spdlog\details</Filter>
-    </ClInclude>
-    <ClInclude Include="vendor\spdlog\include\spdlog\details\os.h">
-      <Filter>vendor\spdlog\include\spdlog\details</Filter>
-    </ClInclude>
-    <ClInclude Include="vendor\spdlog\include\spdlog\details\pattern_formatter.h">
-      <Filter>vendor\spdlog\include\spdlog\details</Filter>
-    </ClInclude>
-    <ClInclude Include="vendor\spdlog\include\spdlog\details\periodic_worker.h">
-      <Filter>vendor\spdlog\include\spdlog\details</Filter>
-    </ClInclude>
-    <ClInclude Include="vendor\spdlog\include\spdlog\details\registry.h">
-      <Filter>vendor\spdlog\include\spdlog\details</Filter>
-    </ClInclude>
-    <ClInclude Include="vendor\spdlog\include\spdlog\details\thread_pool.h">
-      <Filter>vendor\spdlog\include\spdlog\details</Filter>
-    </ClInclude>
-    <ClInclude Include="vendor\spdlog\include\spdlog\fmt\bin_to_hex.h">
-      <Filter>vendor\spdlog\include\spdlog\fmt</Filter>
-    </ClInclude>
-    <ClInclude Include="vendor\spdlog\include\spdlog\fmt\bundled\colors.h">
-      <Filter>vendor\spdlog\include\spdlog\fmt\bundled</Filter>
-    </ClInclude>
-    <ClInclude Include="vendor\spdlog\include\spdlog\fmt\bundled\core.h">
-      <Filter>vendor\spdlog\include\spdlog\fmt\bundled</Filter>
-    </ClInclude>
-    <ClInclude Include="vendor\spdlog\include\spdlog\fmt\bundled\format-inl.h">
-      <Filter>vendor\spdlog\include\spdlog\fmt\bundled</Filter>
-    </ClInclude>
-    <ClInclude Include="vendor\spdlog\include\spdlog\fmt\bundled\format.h">
-      <Filter>vendor\spdlog\include\spdlog\fmt\bundled</Filter>
-    </ClInclude>
-    <ClInclude Include="vendor\spdlog\include\spdlog\fmt\bundled\ostream.h">
-      <Filter>vendor\spdlog\include\spdlog\fmt\bundled</Filter>
-    </ClInclude>
-    <ClInclude Include="vendor\spdlog\include\spdlog\fmt\bundled\posix.h">
-      <Filter>vendor\spdlog\include\spdlog\fmt\bundled</Filter>
-    </ClInclude>
-    <ClInclude Include="vendor\spdlog\include\spdlog\fmt\bundled\printf.h">
-      <Filter>vendor\spdlog\include\spdlog\fmt\bundled</Filter>
-    </ClInclude>
-    <ClInclude Include="vendor\spdlog\include\spdlog\fmt\bundled\ranges.h">
-      <Filter>vendor\spdlog\include\spdlog\fmt\bundled</Filter>
-    </ClInclude>
-    <ClInclude Include="vendor\spdlog\include\spdlog\fmt\bundled\time.h">
-      <Filter>vendor\spdlog\include\spdlog\fmt\bundled</Filter>
-    </ClInclude>
-    <ClInclude Include="vendor\spdlog\include\spdlog\fmt\fmt.h">
-      <Filter>vendor\spdlog\include\spdlog\fmt</Filter>
-    </ClInclude>
-    <ClInclude Include="vendor\spdlog\include\spdlog\fmt\ostr.h">
-      <Filter>vendor\spdlog\include\spdlog\fmt</Filter>
-    </ClInclude>
-    <ClInclude Include="vendor\spdlog\include\spdlog\formatter.h">
-      <Filter>vendor\spdlog\include\spdlog</Filter>
-    </ClInclude>
-    <ClInclude Include="vendor\spdlog\include\spdlog\logger.h">
-      <Filter>vendor\spdlog\include\spdlog</Filter>
-    </ClInclude>
-    <ClInclude Include="vendor\spdlog\include\spdlog\sinks\android_sink.h">
-      <Filter>vendor\spdlog\include\spdlog\sinks</Filter>
-    </ClInclude>
-    <ClInclude Include="vendor\spdlog\include\spdlog\sinks\ansicolor_sink.h">
-      <Filter>vendor\spdlog\include\spdlog\sinks</Filter>
-    </ClInclude>
-    <ClInclude Include="vendor\spdlog\include\spdlog\sinks\base_sink.h">
-      <Filter>vendor\spdlog\include\spdlog\sinks</Filter>
-    </ClInclude>
-    <ClInclude Include="vendor\spdlog\include\spdlog\sinks\basic_file_sink.h">
-      <Filter>vendor\spdlog\include\spdlog\sinks</Filter>
-    </ClInclude>
-    <ClInclude Include="vendor\spdlog\include\spdlog\sinks\daily_file_sink.h">
-      <Filter>vendor\spdlog\include\spdlog\sinks</Filter>
-    </ClInclude>
-    <ClInclude Include="vendor\spdlog\include\spdlog\sinks\dist_sink.h">
-      <Filter>vendor\spdlog\include\spdlog\sinks</Filter>
-    </ClInclude>
-    <ClInclude Include="vendor\spdlog\include\spdlog\sinks\msvc_sink.h">
-      <Filter>vendor\spdlog\include\spdlog\sinks</Filter>
-    </ClInclude>
-    <ClInclude Include="vendor\spdlog\include\spdlog\sinks\null_sink.h">
-      <Filter>vendor\spdlog\include\spdlog\sinks</Filter>
-    </ClInclude>
-    <ClInclude Include="vendor\spdlog\include\spdlog\sinks\ostream_sink.h">
-      <Filter>vendor\spdlog\include\spdlog\sinks</Filter>
-    </ClInclude>
-    <ClInclude Include="vendor\spdlog\include\spdlog\sinks\rotating_file_sink.h">
-      <Filter>vendor\spdlog\include\spdlog\sinks</Filter>
-    </ClInclude>
-    <ClInclude Include="vendor\spdlog\include\spdlog\sinks\sink.h">
-      <Filter>vendor\spdlog\include\spdlog\sinks</Filter>
-    </ClInclude>
-    <ClInclude Include="vendor\spdlog\include\spdlog\sinks\stdout_color_sinks.h">
-      <Filter>vendor\spdlog\include\spdlog\sinks</Filter>
-    </ClInclude>
-    <ClInclude Include="vendor\spdlog\include\spdlog\sinks\stdout_sinks.h">
-      <Filter>vendor\spdlog\include\spdlog\sinks</Filter>
-    </ClInclude>
-    <ClInclude Include="vendor\spdlog\include\spdlog\sinks\syslog_sink.h">
-      <Filter>vendor\spdlog\include\spdlog\sinks</Filter>
-    </ClInclude>
-    <ClInclude Include="vendor\spdlog\include\spdlog\sinks\wincolor_sink.h">
-      <Filter>vendor\spdlog\include\spdlog\sinks</Filter>
-    </ClInclude>
-    <ClInclude Include="vendor\spdlog\include\spdlog\spdlog.h">
-      <Filter>vendor\spdlog\include\spdlog</Filter>
-    </ClInclude>
-    <ClInclude Include="vendor\spdlog\include\spdlog\tweakme.h">
-      <Filter>vendor\spdlog\include\spdlog</Filter>
-    </ClInclude>
-    <ClInclude Include="vendor\spdlog\include\spdlog\version.h">
-      <Filter>vendor\spdlog\include\spdlog</Filter>
-    </ClInclude>
     <ClInclude Include="vendor\stb\include\stb_c_lexer.h">
       <Filter>vendor\stb\include</Filter>
     </ClInclude>
@@ -1509,7 +1347,6 @@
     <ClInclude Include="vendor\stb\include\stb_voxel_render.h">
       <Filter>vendor\stb\include</Filter>
     </ClInclude>
-    <ClInclude Include="src\Uneye\Core\FontManager.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Platform\OpenGL\OpenGLBuffer.cpp">
@@ -1540,6 +1377,9 @@
       <Filter>src\Platform\Windows</Filter>
     </ClCompile>
     <ClCompile Include="src\Uneye\Core\Application.cpp">
+      <Filter>src\Uneye\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Uneye\Core\FontManager.cpp">
       <Filter>src\Uneye\Core</Filter>
     </ClCompile>
     <ClCompile Include="src\Uneye\Core\Layer.cpp">
@@ -1605,6 +1445,8 @@
     <ClCompile Include="src\uypch.cpp">
       <Filter>src</Filter>
     </ClCompile>
-    <ClCompile Include="src\Uneye\Core\FontManager.cpp" />
+    <ClCompile Include="vendor\stb\src\stb_image.cpp">
+      <Filter>vendor\stb\src</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

@@ -13,9 +13,6 @@
 
 namespace Uneye
 {
-
-
-
 	SceneHierarchyPanel::SceneHierarchyPanel(const Ref<Scene>& context)
 	{
 		SetContext(context);

@@ -76,11 +76,13 @@
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>uypch.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
-      <PreprocessorDefinitions>_SILENCE_ALL_MS_EXT_DEPRECATION_WARNINGS;_SILENCE_STDEXT_ARR_ITERS_DEPRECATION_WARNING;_CRT_SECURE_NO_WARNINGS;UNEYE_PLATFORM_WINDOWS;UNEYE_BUILD_DLL;GLFW_INCLUDE_NONE;UNEYE_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>src;vendor\spdlog\include;vendor\GLFW\include;vendor\Glad\include;vendor\imgui;vendor\glm;vendor\stb\include;assets;vendor\entt\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;_SILENCE_STDEXT_ARR_ITERS_DEPRECATION_WARNING;_SILENCE_ALL_MS_EXT_DEPRECATION_WARNINGS;UNEYE_PLATFORM_WINDOWS;GLFW_INCLUDE_NONE;UNEYE_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>src;vendor\spdlog\include;vendor\GLFW\include;vendor\Glad\include;vendor\imgui;vendor\glm;vendor\stb\include;vendor\entt\include;vendor\yaml-cpp\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
       <Optimization>Disabled</Optimization>
-      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
+      <MinimalRebuild>false</MinimalRebuild>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>
@@ -96,14 +98,15 @@
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>uypch.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
-      <PreprocessorDefinitions>_SILENCE_ALL_MS_EXT_DEPRECATION_WARNINGS;_SILENCE_STDEXT_ARR_ITERS_DEPRECATION_WARNING;_CRT_SECURE_NO_WARNINGS;UNEYE_PLATFORM_WINDOWS;UNEYE_BUILD_DLL;GLFW_INCLUDE_NONE;UNEYE_RELEASE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>src;vendor\spdlog\include;vendor\GLFW\include;vendor\Glad\include;vendor\imgui;vendor\glm;vendor\stb\include;assets;vendor\entt\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;_SILENCE_STDEXT_ARR_ITERS_DEPRECATION_WARNING;_SILENCE_ALL_MS_EXT_DEPRECATION_WARNINGS;UNEYE_PLATFORM_WINDOWS;GLFW_INCLUDE_NONE;UNEYE_RELEASE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>src;vendor\spdlog\include;vendor\GLFW\include;vendor\Glad\include;vendor\imgui;vendor\glm;vendor\stb\include;vendor\entt\include;vendor\yaml-cpp\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <Optimization>Full</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <MinimalRebuild>false</MinimalRebuild>
       <StringPooling>true</StringPooling>
-      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>
@@ -120,14 +123,15 @@
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>uypch.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
-      <PreprocessorDefinitions>_SILENCE_ALL_MS_EXT_DEPRECATION_WARNINGS;_SILENCE_STDEXT_ARR_ITERS_DEPRECATION_WARNING;_CRT_SECURE_NO_WARNINGS;UNEYE_PLATFORM_WINDOWS;UNEYE_BUILD_DLL;GLFW_INCLUDE_NONE;UNEYE_DIST;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>src;vendor\spdlog\include;vendor\GLFW\include;vendor\Glad\include;vendor\imgui;vendor\glm;vendor\stb\include;assets;vendor\entt\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;_SILENCE_STDEXT_ARR_ITERS_DEPRECATION_WARNING;_SILENCE_ALL_MS_EXT_DEPRECATION_WARNINGS;UNEYE_PLATFORM_WINDOWS;GLFW_INCLUDE_NONE;UNEYE_DIST;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>src;vendor\spdlog\include;vendor\GLFW\include;vendor\Glad\include;vendor\imgui;vendor\glm;vendor\stb\include;vendor\entt\include;vendor\yaml-cpp\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <Optimization>Full</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <MinimalRebuild>false</MinimalRebuild>
       <StringPooling>true</StringPooling>
-      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>
@@ -547,55 +551,6 @@
     <ClInclude Include="vendor\glm\glm\vec3.hpp" />
     <ClInclude Include="vendor\glm\glm\vec4.hpp" />
     <ClInclude Include="vendor\glm\glm\vector_relational.hpp" />
-    <ClInclude Include="vendor\spdlog\include\spdlog\async.h" />
-    <ClInclude Include="vendor\spdlog\include\spdlog\async_logger.h" />
-    <ClInclude Include="vendor\spdlog\include\spdlog\common.h" />
-    <ClInclude Include="vendor\spdlog\include\spdlog\details\async_logger_impl.h" />
-    <ClInclude Include="vendor\spdlog\include\spdlog\details\circular_q.h" />
-    <ClInclude Include="vendor\spdlog\include\spdlog\details\console_globals.h" />
-    <ClInclude Include="vendor\spdlog\include\spdlog\details\file_helper.h" />
-    <ClInclude Include="vendor\spdlog\include\spdlog\details\fmt_helper.h" />
-    <ClInclude Include="vendor\spdlog\include\spdlog\details\log_msg.h" />
-    <ClInclude Include="vendor\spdlog\include\spdlog\details\logger_impl.h" />
-    <ClInclude Include="vendor\spdlog\include\spdlog\details\mpmc_blocking_q.h" />
-    <ClInclude Include="vendor\spdlog\include\spdlog\details\null_mutex.h" />
-    <ClInclude Include="vendor\spdlog\include\spdlog\details\os.h" />
-    <ClInclude Include="vendor\spdlog\include\spdlog\details\pattern_formatter.h" />
-    <ClInclude Include="vendor\spdlog\include\spdlog\details\periodic_worker.h" />
-    <ClInclude Include="vendor\spdlog\include\spdlog\details\registry.h" />
-    <ClInclude Include="vendor\spdlog\include\spdlog\details\thread_pool.h" />
-    <ClInclude Include="vendor\spdlog\include\spdlog\fmt\bin_to_hex.h" />
-    <ClInclude Include="vendor\spdlog\include\spdlog\fmt\bundled\colors.h" />
-    <ClInclude Include="vendor\spdlog\include\spdlog\fmt\bundled\core.h" />
-    <ClInclude Include="vendor\spdlog\include\spdlog\fmt\bundled\format-inl.h" />
-    <ClInclude Include="vendor\spdlog\include\spdlog\fmt\bundled\format.h" />
-    <ClInclude Include="vendor\spdlog\include\spdlog\fmt\bundled\ostream.h" />
-    <ClInclude Include="vendor\spdlog\include\spdlog\fmt\bundled\posix.h" />
-    <ClInclude Include="vendor\spdlog\include\spdlog\fmt\bundled\printf.h" />
-    <ClInclude Include="vendor\spdlog\include\spdlog\fmt\bundled\ranges.h" />
-    <ClInclude Include="vendor\spdlog\include\spdlog\fmt\bundled\time.h" />
-    <ClInclude Include="vendor\spdlog\include\spdlog\fmt\fmt.h" />
-    <ClInclude Include="vendor\spdlog\include\spdlog\fmt\ostr.h" />
-    <ClInclude Include="vendor\spdlog\include\spdlog\formatter.h" />
-    <ClInclude Include="vendor\spdlog\include\spdlog\logger.h" />
-    <ClInclude Include="vendor\spdlog\include\spdlog\sinks\android_sink.h" />
-    <ClInclude Include="vendor\spdlog\include\spdlog\sinks\ansicolor_sink.h" />
-    <ClInclude Include="vendor\spdlog\include\spdlog\sinks\base_sink.h" />
-    <ClInclude Include="vendor\spdlog\include\spdlog\sinks\basic_file_sink.h" />
-    <ClInclude Include="vendor\spdlog\include\spdlog\sinks\daily_file_sink.h" />
-    <ClInclude Include="vendor\spdlog\include\spdlog\sinks\dist_sink.h" />
-    <ClInclude Include="vendor\spdlog\include\spdlog\sinks\msvc_sink.h" />
-    <ClInclude Include="vendor\spdlog\include\spdlog\sinks\null_sink.h" />
-    <ClInclude Include="vendor\spdlog\include\spdlog\sinks\ostream_sink.h" />
-    <ClInclude Include="vendor\spdlog\include\spdlog\sinks\rotating_file_sink.h" />
-    <ClInclude Include="vendor\spdlog\include\spdlog\sinks\sink.h" />
-    <ClInclude Include="vendor\spdlog\include\spdlog\sinks\stdout_color_sinks.h" />
-    <ClInclude Include="vendor\spdlog\include\spdlog\sinks\stdout_sinks.h" />
-    <ClInclude Include="vendor\spdlog\include\spdlog\sinks\syslog_sink.h" />
-    <ClInclude Include="vendor\spdlog\include\spdlog\sinks\wincolor_sink.h" />
-    <ClInclude Include="vendor\spdlog\include\spdlog\spdlog.h" />
-    <ClInclude Include="vendor\spdlog\include\spdlog\tweakme.h" />
-    <ClInclude Include="vendor\spdlog\include\spdlog\version.h" />
     <ClInclude Include="vendor\stb\include\stb_c_lexer.h" />
     <ClInclude Include="vendor\stb\include\stb_connected_components.h" />
     <ClInclude Include="vendor\stb\include\stb_divide.h" />
@@ -652,6 +607,7 @@
     <ClCompile Include="src\uypch.cpp">
       <PrecompiledHeader>Create</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="vendor\stb\src\stb_image.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="vendor\GLFW\GLFW.vcxproj">
@@ -662,6 +618,9 @@
     </ProjectReference>
     <ProjectReference Include="vendor\imgui\ImGui.vcxproj">
       <Project>{C0FF640D-2C14-8DBE-F595-301E616989EF}</Project>
+    </ProjectReference>
+    <ProjectReference Include="vendor\yaml-cpp\yaml-cpp.vcxproj">
+      <Project>{88F1A057-74BE-FB62-9DD7-E90A890331F1}</Project>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

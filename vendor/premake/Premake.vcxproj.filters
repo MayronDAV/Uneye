@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="..">
+      <UniqueIdentifier>{61705900-4DFC-870B-B6AA-880BA255880B}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="..\Sandbox">
+      <UniqueIdentifier>{3F7B6B1D-2B33-AD6A-943A-86C68011485B}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="..\Uneye">
+      <UniqueIdentifier>{D61C6138-C2E9-BB43-EB02-AAEBD72EF1D1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="..\Uneye\vendor">
+      <UniqueIdentifier>{732625D0-DFB1-9294-E8C2-158954CDEE94}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="..\Uneye\vendor\GLFW">
+      <UniqueIdentifier>{92E10863-7E70-922C-278F-A62713FDA2D2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="..\Uneye\vendor\Glad">
+      <UniqueIdentifier>{3A6D0963-26FC-922C-CF1A-A727BB88A3D2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="..\Uneye\vendor\imgui">
+      <UniqueIdentifier>{1DFE9EC6-896A-5AC1-525E-F21EBE897C29}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="..\Uneye\vendor\yaml-cpp">
+      <UniqueIdentifier>{857ED56A-71A3-24EB-9AEE-097B86722309}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="..\Uneye-Editor">
+      <UniqueIdentifier>{CA53CFC3-36DF-3C88-3FF0-BF7CABFA9888}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\..\Sandbox\premake5.lua">
+      <Filter>..\Sandbox</Filter>
+    </None>
+    <None Include="..\..\Uneye-Editor\premake5.lua">
+      <Filter>..\Uneye-Editor</Filter>
+    </None>
+    <None Include="..\..\Uneye\premake5.lua">
+      <Filter>..\Uneye</Filter>
+    </None>
+    <None Include="..\..\Uneye\vendor\GLFW\premake5.lua">
+      <Filter>..\Uneye\vendor\GLFW</Filter>
+    </None>
+    <None Include="..\..\Uneye\vendor\Glad\premake5.lua">
+      <Filter>..\Uneye\vendor\Glad</Filter>
+    </None>
+    <None Include="..\..\Uneye\vendor\imgui\premake5.lua">
+      <Filter>..\Uneye\vendor\imgui</Filter>
+    </None>
+    <None Include="..\..\Uneye\vendor\yaml-cpp\premake5.lua">
+      <Filter>..\Uneye\vendor\yaml-cpp</Filter>
+    </None>
+    <None Include="..\..\premake5.lua">
+      <Filter>..</Filter>
+    </None>
+    <None Include="premake5.lua" />
+  </ItemGroup>
+</Project>

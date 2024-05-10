@@ -45,6 +45,7 @@ namespace Uneye {
 
 		float fontSize = 18.0f;// *2.0f;
 		io.Fonts->AddFontFromFileTTF("../Uneye/assets/fonts/Roboto_Slab/static/RobotoSlab-Bold.ttf", fontSize);
+		io.Fonts->AddFontFromFileTTF("../Uneye/assets/fonts/arrow/Arrows-Regular.ttf", fontSize);
 		io.FontDefault = io.Fonts->AddFontFromFileTTF("../Uneye/assets/fonts/Roboto_Slab/static/RobotoSlab-Regular.ttf", fontSize);
 
 		// When viewports are enabled we tweak WindowRounding/WindowBg so platform windows can look identical to regular ones.

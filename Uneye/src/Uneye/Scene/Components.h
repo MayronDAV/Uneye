@@ -1,6 +1,7 @@
 #pragma once
 
 #include <glm/glm.hpp>
+#include <glm/gtc/matrix_transform.hpp>
 
 #include "Uneye/Renderer/Camera.h"
 #include "Uneye/Scene/SceneCamera.h"
@@ -22,15 +23,26 @@ namespace Uneye
 
 	struct TransformComponent
 	{
-		glm::mat4 Transform{ 1.0f };
+		glm::vec3 Translation{ 0.0f };
+		glm::vec3 Rotation{ 0.0f };
+		glm::vec3 Scale{ 1.0f };
 
 		TransformComponent() = default;
 		TransformComponent(const TransformComponent&) = default;
-		TransformComponent(const glm::mat4& transform)
-			:Transform(transform) {}
+		TransformComponent(const glm::vec3& translation)
+			:Translation(translation) {}
 
-		operator glm::mat4& () { return Transform;  }
-		operator const glm::mat4& () const { return Transform; }
+		glm::mat4 GetTransform() const
+		{
+			glm::mat4 transform(1.0f);
+			transform = glm::translate(transform, Translation);
+			transform = glm::rotate(transform, Rotation.x, { 1, 0, 0});
+			transform = glm::rotate(transform, Rotation.y, { 0, 1, 0 });
+			transform = glm::rotate(transform, Rotation.z, { 0, 0, 1 });
+			transform = glm::scale(transform, Scale);
+
+			return transform;
+		}
 
 	};
 

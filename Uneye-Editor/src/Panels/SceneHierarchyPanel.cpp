@@ -1,14 +1,21 @@
 #include "Panels/SceneHierarchyPanel.h"
 
 #include <imgui/imgui.h>
+#include <imgui/imgui_internal.h>
 
 #include "Uneye/Scene/Components.h"
 #include <glm/glm.hpp>
 #include <glm/gtc/type_ptr.hpp>
 
+#include "UI/UI.h"
+#include "Uneye/Renderer/Renderer2D.h"
+
 
 namespace Uneye
 {
+
+
+
 	SceneHierarchyPanel::SceneHierarchyPanel(const Ref<Scene>& context)
 	{
 		SetContext(context);
@@ -35,6 +42,17 @@ namespace Uneye
 		ImGui::Begin("Properties");
 
 		DrawComponents(m_SelectionContext);
+
+		ImGui::End();
+
+		ImGui::Begin("Stats");
+
+		auto stats = Uneye::Renderer2D::GetStats();
+		ImGui::Text("Renderer2D Stats");
+		UI::DrawTextArgs("Draw Calls", " %d", stats.DrawCalls);
+		UI::DrawTextArgs("Quad Count",	" %d", stats.QuadCount);
+		UI::DrawTextArgs("Vertices", " %d", stats.GetTotalVertexCount());
+		UI::DrawTextArgs("Indices", " %d", stats.GetTotalIndexCount());
 
 		ImGui::End();
 	}
@@ -88,7 +106,7 @@ namespace Uneye
 				char buffer[256];
 				memset(buffer, 0, sizeof(buffer));
 				strcpy_s(buffer, sizeof(buffer), tag.c_str());
-				if (ImGui::InputText("Tag", buffer, sizeof(buffer)))
+				if (UI::DrawInputText("Tag", buffer, sizeof(buffer)))
 				{
 					tag = std::string(buffer);
 				}
@@ -96,8 +114,12 @@ namespace Uneye
 
 			DrawComponentUI<TransformComponent>(entt, "Transform", [&]() {
 
-				auto& transform = entt.GetComponent<TransformComponent>().Transform;
-				ImGui::DragFloat3("Position", glm::value_ptr(transform[3]), 0.1f);
+				auto& tc = entt.GetComponent<TransformComponent>();
+				UI::DrawVec3Control("Translation", tc.Translation);
+				glm::vec3 rotation = glm::degrees(tc.Rotation);
+				UI::DrawVec3Control("Rotation", rotation);
+				tc.Rotation = glm::radians(rotation);
+				UI::DrawVec3Control("Scale", tc.Scale, 1.0f);
 
 			});
 			
@@ -106,14 +128,13 @@ namespace Uneye
 				auto& cameraComponent = entt.GetComponent<CameraComponent>();
 				auto& camera = cameraComponent.Camera;
 
-				ImGui::Checkbox("Primary", &cameraComponent.Primary);
+				UI::DrawCheckBox("Primary", &cameraComponent.Primary);
 
 				const char* projectionTypeString[] = { "Perspective", "Orthographic" };
 				const char* currentProjectionTypeString = projectionTypeString[
 					(int)camera.GetProjectionType()];
 
-				if (ImGui::BeginCombo("Projection", currentProjectionTypeString))
-				{
+				UI::DrawCombo("Projection", currentProjectionTypeString, [&]() {
 					for (int i = 0; i < 2; i++)
 					{
 						bool isSelected = currentProjectionTypeString == projectionTypeString[i];
@@ -126,9 +147,8 @@ namespace Uneye
 						if (isSelected)
 							ImGui::SetItemDefaultFocus();
 					}
+				});
 
-					ImGui::EndCombo();
-				}
 
 				if (camera.GetProjectionType() == SceneCamera::ProjectionType::Perspective)
 				{
@@ -137,13 +157,13 @@ namespace Uneye
 					float perspFar = camera.GetPerspectiveFarClip();
 
 
-					if (ImGui::DragFloat("FOV", &perspFOV))
+					if (UI::DrawFloatControl("FOV", perspFOV))
 						camera.SetPerspectiveVerticalFOV(glm::radians(perspFOV));
 
-					if (ImGui::DragFloat("Near", &perspNear))
+					if (UI::DrawFloatControl("Near", perspNear))
 						camera.SetPerspectiveNearClip(perspNear);
 
-					if (ImGui::DragFloat("Far", &perspFar))
+					if (UI::DrawFloatControl("Far", perspFar))
 						camera.SetPerspectiveFarClip(perspFar);
 				}
 
@@ -154,16 +174,16 @@ namespace Uneye
 					float orthoFar = camera.GetOrthographicFarClip();
 
 
-					if (ImGui::DragFloat("Size", &orthoSize))
+					if (UI::DrawFloatControl("Size", orthoSize))
 						camera.SetOrthographicSize(orthoSize);
 
-					if (ImGui::DragFloat("Near", &orthoNear))
+					if (UI::DrawFloatControl("Near", orthoNear))
 						camera.SetOrthographicNearClip(orthoNear);
 
-					if (ImGui::DragFloat("Far", &orthoFar))
+					if (UI::DrawFloatControl("Far", orthoFar))
 						camera.SetOrthographicFarClip(orthoFar);
 
-					ImGui::Checkbox("Fixed Aspect Ratio", &cameraComponent.FixedAspectRatio);
+					UI::DrawCheckBox("Fixed Aspect Ratio", &cameraComponent.FixedAspectRatio);
 				}
 
 			});
@@ -172,7 +192,7 @@ namespace Uneye
 			DrawComponentUI<SpriteRendererComponent>(entt, "Sprite Renderer", [&]() {
 
 				auto& src = entt.GetComponent<SpriteRendererComponent>();
-				ImGui::ColorEdit4("Color", glm::value_ptr(src.Color));
+				UI::DrawColorEdit4("Color", src.Color);
 
 			});
 

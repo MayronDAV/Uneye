@@ -25,7 +25,7 @@ namespace Uneye
 			void DrawComponents(Entity entt);
 
 			template<typename Component, typename Func>
-			void DrawComponentUI(Entity entt, const std::string& name, const Func& func);
+			void DrawComponentUI(Entity entt, const std::string& name, const Func& func, bool settings = false);
 
 		private:
 			Ref<Scene> m_Context;

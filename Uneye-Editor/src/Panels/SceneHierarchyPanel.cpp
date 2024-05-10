@@ -36,14 +36,30 @@ namespace Uneye
 			DrawEntityNode(entity);
 		});
 
+
+		// Right click on blank space
+		if (ImGui::BeginPopupContextWindow(0, 1 | ImGuiPopupFlags_NoOpenOverItems))
+		{
+			if (ImGui::MenuItem("Create Empty Entity"))
+				m_Context->CreateEntity("Empty Entity");
+
+			ImGui::EndPopup();
+		}
+
 		ImGui::End();
 
 
 		ImGui::Begin("Properties");
 
-		DrawComponents(m_SelectionContext);
+		if (m_SelectionContext)
+		{
+			DrawComponents(m_SelectionContext);
+
+		}
 
 		ImGui::End();
+
+
 
 		ImGui::Begin("Stats");
 
@@ -63,6 +79,9 @@ namespace Uneye
 
 		ImGuiTreeNodeFlags flags = ((m_SelectionContext == entt) ? ImGuiTreeNodeFlags_Selected : 0)
 			| ImGuiTreeNodeFlags_OpenOnArrow;
+
+		flags |= ImGuiTreeNodeFlags_SpanAvailWidth;
+
 		bool opened = ImGui::TreeNodeEx((void*)(uint64_t)(uint32_t)entt, flags, tag.c_str());
 
 		if (ImGui::IsItemClicked())
@@ -73,24 +92,77 @@ namespace Uneye
 				m_SelectionContext = entt;
 		}
 
+		// Right click on item
+		bool enttDeleted = false;
+		if (ImGui::BeginPopupContextItem())
+		{
+			if (ImGui::MenuItem("Delete Entity"))
+				enttDeleted = true;
+
+			ImGui::EndPopup();
+		}
+
 		if (opened)
 		{
 			ImGui::TreePop();
 		}
+
+		if (enttDeleted)
+		{
+			if (m_SelectionContext == entt)
+				m_SelectionContext = {};
+			m_Context->DestroyEntity(entt);
+		}
 	}
 
 	template<typename Component, typename Func>
-	inline void SceneHierarchyPanel::DrawComponentUI(Entity entt, const std::string& name, const Func& func)
+	inline void SceneHierarchyPanel::DrawComponentUI(Entity entt, const std::string& name, const Func& func, bool settings)
 	{
+
+		const ImGuiTreeNodeFlags treeNodeFlags = ImGuiTreeNodeFlags_DefaultOpen
+			| ImGuiTreeNodeFlags_AllowItemOverlap | ImGuiTreeNodeFlags_Framed | 
+			ImGuiTreeNodeFlags_SpanAvailWidth | ImGuiTreeNodeFlags_FramePadding;
 		if (entt.HasComponent<Component>())
 		{
-			if (ImGui::TreeNodeEx((void*)typeid(Component).hash_code(),
-				ImGuiTreeNodeFlags_DefaultOpen, name.c_str()))
+			auto& component = entt.GetComponent<Component>();
+			ImVec2 contentRegionAvailable = ImGui::GetContentRegionAvail();
+
+			ImGui::PushStyleVar(ImGuiStyleVar_FramePadding, { 4, 4 });
+			float lineHeight = GImGui->Font->FontSize + GImGui->Style.FramePadding.y * 2.0f;
+			ImGui::Spacing();
+			bool open = ImGui::TreeNodeEx((void*)typeid(Component).hash_code(),
+				treeNodeFlags, name.c_str());
+			ImGui::PopStyleVar();
+
+			bool removeComponent = false;
+			if (settings)
 			{
-				func();
+				
+				ImGui::SameLine(contentRegionAvailable.x - lineHeight * 0.5f);
+				if (ImGui::Button("+", {lineHeight, lineHeight}))
+					ImGui::OpenPopup("ComponentSettings");
+
+				if (ImGui::BeginPopup("ComponentSettings"))
+				{
+					if (ImGui::MenuItem("Remove Component"))
+						removeComponent = true;
+
+					ImGui::EndPopup();
+				}
+				
+			}
+
+			if (open)
+			{
+				func(component);
 
 				ImGui::TreePop();
 			}
+
+
+			if (removeComponent)
+				entt.RemoveComponent<Component>();
+
 		}
 	}
 
@@ -112,9 +184,41 @@ namespace Uneye
 				}
 			}
 
-			DrawComponentUI<TransformComponent>(entt, "Transform", [&]() {
+			if (m_SelectionContext)
+			{
+				ImGui::SameLine();
+				ImGui::PushItemWidth(-1);
 
-				auto& tc = entt.GetComponent<TransformComponent>();
+				if (ImGui::Button("Add Component"))
+					ImGui::OpenPopup("AddComponent");
+
+				if (ImGui::BeginPopup("AddComponent"))
+				{
+					if (!m_SelectionContext.HasComponent<CameraComponent>())
+					{
+						if (ImGui::MenuItem("Camera"))
+						{
+							m_SelectionContext.AddComponent<CameraComponent>();
+							ImGui::CloseCurrentPopup();
+						}
+					}
+
+					if (!m_SelectionContext.HasComponent<SpriteRendererComponent>())
+					{
+						if (ImGui::MenuItem("Sprite Renderer"))
+						{
+							m_SelectionContext.AddComponent<SpriteRendererComponent>();
+							ImGui::CloseCurrentPopup();
+						}
+					}
+
+					ImGui::EndPopup();
+				}
+			}
+
+
+			DrawComponentUI<TransformComponent>(entt, "Transform", [&](auto& tc) {
+
 				UI::DrawVec3Control("Translation", tc.Translation);
 				glm::vec3 rotation = glm::degrees(tc.Rotation);
 				UI::DrawVec3Control("Rotation", rotation);
@@ -123,9 +227,8 @@ namespace Uneye
 
 			});
 			
-			DrawComponentUI<CameraComponent>(entt, "Camera", [&]() {
+			DrawComponentUI<CameraComponent>(entt, "Camera", [&](auto& cameraComponent) {
 
-				auto& cameraComponent = entt.GetComponent<CameraComponent>();
 				auto& camera = cameraComponent.Camera;
 
 				UI::DrawCheckBox("Primary", &cameraComponent.Primary);
@@ -186,15 +289,14 @@ namespace Uneye
 					UI::DrawCheckBox("Fixed Aspect Ratio", &cameraComponent.FixedAspectRatio);
 				}
 
-			});
+			}, true);
 
 
-			DrawComponentUI<SpriteRendererComponent>(entt, "Sprite Renderer", [&]() {
+			DrawComponentUI<SpriteRendererComponent>(entt, "Sprite Renderer", [&](auto& src) {
 
-				auto& src = entt.GetComponent<SpriteRendererComponent>();
 				UI::DrawColorEdit4("Color", src.Color);
 
-			});
+			}, true);
 
 		}
 

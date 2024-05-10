@@ -6,6 +6,10 @@
 #include <imgui/imgui.h>
 #include <imgui/imgui_internal.h>
 
+#include "Uneye/Core/FontManager.h"
+
+
+
 
 namespace Uneye
 {
@@ -27,6 +31,8 @@ namespace Uneye
 		float lineHeight = GImGui->Font->FontSize + GImGui->Style.FramePadding.y * 2.0f;
 		ImVec2 buttonSize = { lineHeight + 3.0f, lineHeight };
 
+
+		ImGui::PushFont(FontManager::GetFont("Bold"));
 		ImGui::PushStyleColor(ImGuiCol_Button, {0.6f, 0.1f, 0.15f, 1});
 		ImGui::PushStyleColor(ImGuiCol_ButtonHovered, { 0.8f, 0.3f, 0.35f, 1 });
 		ImGui::PushStyleColor(ImGuiCol_ButtonActive, { 0.6f, 0.1f, 0.15f, 1 });
@@ -34,12 +40,14 @@ namespace Uneye
 		if (buttonX)
 			values.x = resetValue;
 		ImGui::PopStyleColor(3);
+		ImGui::PopFont();
 
 		ImGui::SameLine();
 		bool dragX = ImGui::DragFloat("##X", &values.x, 0.1f, 0.0f, 0.0f, "%.2f");
 		ImGui::PopItemWidth();
 		ImGui::SameLine();
 
+		ImGui::PushFont(FontManager::GetFont("Bold"));
 		ImGui::PushStyleColor(ImGuiCol_Button, { 0.1f, 0.6f, 0.15f, 1 });
 		ImGui::PushStyleColor(ImGuiCol_ButtonHovered, { 0.3f, 0.8f, 0.35f, 1 });
 		ImGui::PushStyleColor(ImGuiCol_ButtonActive, { 0.1f, 0.6f, 0.15f, 1 });
@@ -47,12 +55,14 @@ namespace Uneye
 		if (buttonY)
 			values.y = resetValue;
 		ImGui::PopStyleColor(3);
+		ImGui::PopFont();
 
 		ImGui::SameLine();
 		bool dragY = ImGui::DragFloat("##Y", &values.y, 0.1f, 0.0f, 0.0f, "%.2f");
 		ImGui::PopItemWidth();
 		ImGui::SameLine();
 
+		ImGui::PushFont(FontManager::GetFont("Bold"));
 		ImGui::PushStyleColor(ImGuiCol_Button, { 0.1f, 0.15f, 0.6f, 1 });
 		ImGui::PushStyleColor(ImGuiCol_ButtonHovered, { 0.3f, 0.35f, 0.8f, 1 });
 		ImGui::PushStyleColor(ImGuiCol_ButtonActive, { 0.1f, 0.15f, 0.6f, 1 });
@@ -60,6 +70,7 @@ namespace Uneye
 		if (buttonZ)
 			values.z = resetValue;
 		ImGui::PopStyleColor(3);
+		ImGui::PopFont();
 
 		ImGui::SameLine();
 		bool dragZ = ImGui::DragFloat("##Z", &values.z, 0.1f, 0.0f, 0.0f, "%.2f");
@@ -120,6 +131,7 @@ namespace Uneye
 
 		return result;
 	}
+
 	bool UI::DrawCheckBox(const std::string& label, bool* value)
 	{
 		ImGui::PushID(label.c_str());
@@ -143,6 +155,7 @@ namespace Uneye
 
 		return result;
 	}
+
 	bool UI::DrawColorEdit4(const std::string& label, glm::vec4& values, float resetValue)
 	{
 		ImGui::PushID(label.c_str());

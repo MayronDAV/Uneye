@@ -10,7 +10,6 @@
 
 namespace Uneye
 {
-
 	struct TagComponent
 	{
 		std::string Tag;
@@ -19,6 +18,7 @@ namespace Uneye
 		TagComponent(const TagComponent&) = default;
 		TagComponent(const std::string& tag)
 			:Tag(tag) {}
+
 	};
 
 	struct TransformComponent
@@ -54,6 +54,7 @@ namespace Uneye
 		SpriteRendererComponent(const SpriteRendererComponent&) = default;
 		SpriteRendererComponent(const glm::vec4& color)
 			:Color(color) {}
+
 	};
 
 	struct CameraComponent
@@ -64,6 +65,8 @@ namespace Uneye
 
 		CameraComponent() = default;
 		CameraComponent(const CameraComponent&) = default;
+
+		CameraComponent GetID() { return *this; }
 	};
 
 	struct NativeScriptComponent

@@ -12,6 +12,11 @@
 #include <GLFW/glfw3.h>
 #include <glad/glad.h>
 
+#include "Uneye/Core/FontManager.h"
+
+
+
+
 namespace Uneye {
 
 	ImGuiLayer::ImGuiLayer()
@@ -44,9 +49,14 @@ namespace Uneye {
 			it->second();
 
 		float fontSize = 18.0f;// *2.0f;
-		io.Fonts->AddFontFromFileTTF("../Uneye/assets/fonts/Roboto_Slab/static/RobotoSlab-Bold.ttf", fontSize);
-		io.Fonts->AddFontFromFileTTF("../Uneye/assets/fonts/arrow/Arrows-Regular.ttf", fontSize);
-		io.FontDefault = io.Fonts->AddFontFromFileTTF("../Uneye/assets/fonts/Roboto_Slab/static/RobotoSlab-Regular.ttf", fontSize);
+		auto font0 = io.Fonts->AddFontFromFileTTF("../Uneye/assets/fonts/Roboto_Slab/static/RobotoSlab-Regular.ttf", fontSize);
+		auto font1 = io.Fonts->AddFontFromFileTTF("../Uneye/assets/fonts/Roboto_Slab/static/RobotoSlab-Bold.ttf", fontSize);
+		auto font2 = io.Fonts->AddFontFromFileTTF("../Uneye/assets/fonts/arrow/Arrows-Regular.ttf", fontSize);
+		FontManager::PushFont("Regular", font0);
+		FontManager::PushFont("Bold", font1);
+		FontManager::PushFont("Arrows", font2);
+		FontManager::SetDefaultFont("Regular");
+
 
 		// When viewports are enabled we tweak WindowRounding/WindowBg so platform windows can look identical to regular ones.
 		ImGuiStyle& style = ImGui::GetStyle();

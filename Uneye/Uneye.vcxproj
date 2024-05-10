@@ -152,6 +152,7 @@
     <ClInclude Include="src\Uneye\Core\Application.h" />
     <ClInclude Include="src\Uneye\Core\Base.h" />
     <ClInclude Include="src\Uneye\Core\EntryPoint.h" />
+    <ClInclude Include="src\Uneye\Core\FontManager.h" />
     <ClInclude Include="src\Uneye\Core\Input.h" />
     <ClInclude Include="src\Uneye\Core\KeyCodes.h" />
     <ClInclude Include="src\Uneye\Core\Layer.h" />
@@ -627,6 +628,7 @@
     <ClCompile Include="src\Platform\Windows\WindowsInput.cpp" />
     <ClCompile Include="src\Platform\Windows\WindowsWindow.cpp" />
     <ClCompile Include="src\Uneye\Core\Application.cpp" />
+    <ClCompile Include="src\Uneye\Core\FontManager.cpp" />
     <ClCompile Include="src\Uneye\Core\Layer.cpp" />
     <ClCompile Include="src\Uneye\Core\LayerStack.cpp" />
     <ClCompile Include="src\Uneye\Core\Log.cpp" />

@@ -269,5 +269,4 @@ namespace Uneye
 
 		return buttonX || buttonY || inputX || inputY;
 	}
-
 }

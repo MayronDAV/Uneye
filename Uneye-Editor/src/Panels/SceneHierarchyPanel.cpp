@@ -10,6 +10,7 @@
 
 #include "UI/UI.h"
 #include "Uneye/Renderer/Renderer2D.h"
+#include "Uneye/Utils/PlatformUtils.h"
 
 
 namespace Uneye
@@ -294,16 +295,20 @@ namespace Uneye
 			DrawComponentUI<MaterialComponent>(entt, "Material", [&](auto& mc) {
 
 				UI::DrawColorEdit4("Color ", mc.Color, 1.0f);
-				// TODO: Add file explorer
-				char buffer[256];
-				memset(buffer, 0, sizeof(buffer));
-				strcpy_s(buffer, sizeof(buffer), mc.TexturePath.c_str());
 
-				if (UI::DrawInputText("Texture Path", buffer, sizeof(buffer)))
-				{
-					mc.TexturePath = std::string(buffer);
+				UI::DrawClickableText("Texture Path", mc.TexturePath, [&]() {
+				
+					std::optional<std::string> filepath = FileDialogs::OpenFile("img files (*.png)|*.jpg|All files (*.*)|*.*");
+					std::string path = mc.TexturePath;
+					if (filepath == std::nullopt)
+						mc.TexturePath = path;
+					else
+						mc.TexturePath = *filepath;
+
 					mc.Texture = Texture2D::Create(mc.TexturePath);
-				}
+
+				});
+					
 
 				UI::DrawCheckBox("Is SubTexture ", &mc.IsSubTexture);
 

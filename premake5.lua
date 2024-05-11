@@ -1,7 +1,7 @@
 include "Dependencies.lua"
 
 workspace "Uneye"
-	architecture "x86_64"
+	architecture "x64"
 	startproject "Uneye-Editor"
 
 	configurations

@@ -75,12 +75,18 @@ namespace Uneye
 		{
 			Renderer2D::BeginScene(mainCamera->GetProjection(), cameraTransform);
 
-			auto group = m_Registry.group<TransformComponent>(entt::get<SpriteRendererComponent>);
-			for (auto entity : group)
+			auto groupM = m_Registry.group<TransformComponent>(entt::get<MaterialComponent>);
+			for (auto entity : groupM)
 			{
-				auto [transform, sprite] = group.get<TransformComponent, SpriteRendererComponent>(entity);
+				auto [transform, material] = groupM.get<TransformComponent, MaterialComponent>(entity);
 
-				Renderer2D::DrawQuad(transform.GetTransform(), sprite.Color);
+				if (material.IsSubTexture)
+					Renderer2D::DrawQuad(transform.GetTransform(), material.SubTexture, material.Color);
+				else
+					Renderer2D::DrawQuad(transform.GetTransform(), material.Color, material.Texture);
+
+				//Renderer2D::DrawQuad(transform.GetTransform(), material.Color, material.Texture);
+				//Renderer2D::DrawQuad(transform.GetTransform(), material.SubTexture, material.Color);
 			}
 
 			Renderer2D::EndScene();
@@ -129,7 +135,7 @@ namespace Uneye
 	}
 
 	template<>
-	void Scene::OnComponentAdded<SpriteRendererComponent>(Entity entity, SpriteRendererComponent& component)
+	void Scene::OnComponentAdded<MaterialComponent>(Entity entity, MaterialComponent& component)
 	{
 	}
 

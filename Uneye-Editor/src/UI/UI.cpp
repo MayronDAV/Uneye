@@ -20,6 +20,8 @@ namespace Uneye
 	{
 		ImGui::PushID(label.c_str());
 
+		ImGui::Spacing();
+
 		ImGui::Columns(2);
 		ImGui::SetColumnWidth(0, m_ColumnWidth);
 		ImGui::Text(label.c_str());
@@ -89,6 +91,8 @@ namespace Uneye
 	{
 		ImGui::PushID(label.c_str());
 
+		ImGui::Spacing();
+
 		ImGui::Columns(2);
 		ImGui::SetColumnWidth(0, m_ColumnWidth);
 		ImGui::Text(label.c_str());
@@ -112,8 +116,10 @@ namespace Uneye
 	{
 		ImGui::PushID(label.c_str());
 
+		ImGui::Spacing();
+
 		ImGui::Columns(2);
-		ImGui::SetColumnWidth(0, m_TextColumnWidth);
+		ImGui::SetColumnWidth(0, m_ColumnWidth);
 		ImGui::Text(label.c_str());
 		ImGui::NextColumn();
 
@@ -135,6 +141,8 @@ namespace Uneye
 	bool UI::DrawCheckBox(const std::string& label, bool* value)
 	{
 		ImGui::PushID(label.c_str());
+
+		ImGui::Spacing();
 
 		ImGui::Columns(2);
 		ImGui::SetColumnWidth(0, m_ColumnWidth);
@@ -160,6 +168,8 @@ namespace Uneye
 	{
 		ImGui::PushID(label.c_str());
 
+		ImGui::Spacing();
+
 		ImGui::Columns(2);
 		ImGui::SetColumnWidth(0, m_ColumnWidth);
 		ImGui::Text(label.c_str());
@@ -183,8 +193,10 @@ namespace Uneye
 	{
 		ImGui::PushID(label.c_str());
 
+		ImGui::Spacing();
+
 		ImGui::Columns(2);
-		ImGui::SetColumnWidth(0, m_TextColumnWidth);
+		ImGui::SetColumnWidth(0, m_ColumnWidth);
 		ImGui::Text(label.c_str());
 		ImGui::NextColumn();
 
@@ -201,6 +213,61 @@ namespace Uneye
 		ImGui::PopStyleVar();
 		ImGui::Columns(1);
 		ImGui::PopID();
+	}
+
+	bool UI::DrawVec2Input(const std::string& label, glm::vec2& values, float resetValue)
+	{
+		ImGui::PushID(label.c_str());
+
+		ImGui::Spacing();
+
+		ImGui::Columns(2);
+		ImGui::SetColumnWidth(0, m_ColumnWidth);
+		ImGui::Text(label.c_str());
+		ImGui::NextColumn();
+
+		ImGui::PushMultiItemsWidths(3, ImGui::CalcItemWidth());
+		ImGui::PushStyleVar(ImGuiStyleVar_ItemSpacing, ImVec2(0, 0));
+
+		float lineHeight = GImGui->Font->FontSize + GImGui->Style.FramePadding.y * 2.0f;
+		ImVec2 buttonSize = { lineHeight + 3.0f, lineHeight };
+
+
+		ImGui::PushFont(FontManager::GetFont("Bold"));
+		ImGui::PushStyleColor(ImGuiCol_Button, { 0.6f, 0.1f, 0.15f, 1 });
+		ImGui::PushStyleColor(ImGuiCol_ButtonHovered, { 0.8f, 0.3f, 0.35f, 1 });
+		ImGui::PushStyleColor(ImGuiCol_ButtonActive, { 0.6f, 0.1f, 0.15f, 1 });
+		bool buttonX = ImGui::Button("X", buttonSize);
+		if (buttonX)
+			values.x = resetValue;
+		ImGui::PopStyleColor(3);
+		ImGui::PopFont();
+
+		ImGui::SameLine();
+		bool inputX = ImGui::InputFloat("##X", &values.x, 0.0f, 0.0f, "%.2f");
+		ImGui::PopItemWidth();
+		ImGui::SameLine();
+
+		ImGui::PushFont(FontManager::GetFont("Bold"));
+		ImGui::PushStyleColor(ImGuiCol_Button, { 0.1f, 0.6f, 0.15f, 1 });
+		ImGui::PushStyleColor(ImGuiCol_ButtonHovered, { 0.3f, 0.8f, 0.35f, 1 });
+		ImGui::PushStyleColor(ImGuiCol_ButtonActive, { 0.1f, 0.6f, 0.15f, 1 });
+		bool buttonY = ImGui::Button("Y", buttonSize);
+		if (buttonY)
+			values.y = resetValue;
+		ImGui::PopStyleColor(3);
+		ImGui::PopFont();
+
+		ImGui::SameLine();
+		bool inputY = ImGui::InputFloat("##Y", &values.y, 0.0f, 0.0f, "%.2f");
+		ImGui::PopItemWidth();
+		
+
+		ImGui::PopStyleVar();
+		ImGui::Columns(1);
+		ImGui::PopID();
+
+		return buttonX || buttonY || inputX || inputY;
 	}
 
 }

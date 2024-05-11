@@ -21,6 +21,7 @@ namespace Uneye
 	void SceneHierarchyPanel::SetContext(const Ref<Scene>& context)
 	{
 		m_Context = context;
+		m_SelectionContext = {};
 	}
 
 	void SceneHierarchyPanel::OnImGuiRender()
@@ -200,11 +201,11 @@ namespace Uneye
 						}
 					}
 
-					if (!m_SelectionContext.HasComponent<SpriteRendererComponent>())
+					if (!m_SelectionContext.HasComponent<MaterialComponent>())
 					{
-						if (ImGui::MenuItem("Sprite Renderer"))
+						if (ImGui::MenuItem("Material"))
 						{
-							m_SelectionContext.AddComponent<SpriteRendererComponent>();
+							m_SelectionContext.AddComponent<MaterialComponent>();
 							ImGui::CloseCurrentPopup();
 						}
 					}
@@ -289,12 +290,32 @@ namespace Uneye
 			}, true);
 
 
-			DrawComponentUI<SpriteRendererComponent>(entt, "Sprite Renderer", [&](auto& src) {
+			DrawComponentUI<MaterialComponent>(entt, "Material", [&](auto& mc) {
 
-				UI::DrawColorEdit4("Color", src.Color);
+				UI::DrawColorEdit4("Color ", mc.Color, 1.0f);
+				// TODO: Add file explorer
+				char buffer[256];
+				memset(buffer, 0, sizeof(buffer));
+				strcpy_s(buffer, sizeof(buffer), mc.TexturePath.c_str());
+
+				if (UI::DrawInputText("Texture Path", buffer, sizeof(buffer)))
+				{
+					mc.TexturePath = std::string(buffer);
+					mc.Texture = Texture2D::Create(mc.TexturePath);
+				}
+
+				UI::DrawCheckBox("Is SubTexture ", &mc.IsSubTexture);
+
+				if (mc.IsSubTexture)
+				{
+					UI::DrawVec2Input("Global Tile Size", mc.TileSize, 1.0f);
+					UI::DrawVec2Input("Tile Coord", mc.Coords);
+					UI::DrawVec2Input("Sprite Multiple Size", mc.SpriteSize, 1.0f);
+
+					mc.SubTexture = SubTexture2D::CreateFromTexture(mc.Texture, mc.Coords, mc.TileSize, mc.SpriteSize);
+				}
 
 			}, true);
-
 		}
 
 	}

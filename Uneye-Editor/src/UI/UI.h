@@ -25,40 +25,42 @@ namespace Uneye
 			static bool DrawColorEdit4(const std::string& label, glm::vec4& values, float resetValue = 0.0f);
 
 			template<typename Func>
-			static void DrawCombo(const std::string& label, const std::string& value, const Func& func);
+			static void DrawCombo(const std::string& label, const std::string& value, const Func& func)
+			{
+				ImGui::PushID(label.c_str());
+
+				ImGui::Spacing();
+
+				ImGui::Columns(2);
+				ImGui::SetColumnWidth(0, m_ColumnWidth);
+				ImGui::Text(label.c_str());
+				ImGui::NextColumn();
+
+				ImGui::PushStyleVar(ImGuiStyleVar_ItemSpacing, ImVec2(0, 0));
+				ImGui::Text("");
+
+				ImGui::SameLine();
+				if (ImGui::BeginCombo("##Combo", value.c_str()))
+				{
+
+					func();
+
+					ImGui::EndCombo();
+				}
+
+
+				ImGui::PopStyleVar();
+				ImGui::Columns(1);
+				ImGui::PopID();
+			}
 
 			static void DrawTextArgs(const std::string& label, const std::string& fmt, ...);
+
+			static bool DrawVec2Input(const std::string& label, glm::vec2& values, float resetValue = 0.0f);
 
 		private:
 			static float m_ColumnWidth;
 			static float m_TextColumnWidth;
 	};
 
-	template<typename Func>
-	inline void UI::DrawCombo(const std::string& label, const std::string& value, const Func& func)
-	{
-		ImGui::PushID(label.c_str());
-
-		ImGui::Columns(2);
-		ImGui::SetColumnWidth(0, m_ColumnWidth);
-		ImGui::Text(label.c_str());
-		ImGui::NextColumn();
-
-		ImGui::PushStyleVar(ImGuiStyleVar_ItemSpacing, ImVec2(0, 0));
-		ImGui::Text("");
-
-		ImGui::SameLine();
-		if (ImGui::BeginCombo("##Combo", value.c_str()))
-		{
-
-			func();
-
-			ImGui::EndCombo();
-		}
-
-
-		ImGui::PopStyleVar();
-		ImGui::Columns(1);
-		ImGui::PopID();
-	}
 }

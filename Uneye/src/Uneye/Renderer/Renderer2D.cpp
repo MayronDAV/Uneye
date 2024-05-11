@@ -147,7 +147,7 @@ namespace Uneye
 	{
 		UNEYE_PROFILE_FUNCTION();
 
-		uint32_t dataSize = (uint8_t*)s_Data.QuadVertexBufferPtr - (uint8_t*)s_Data.QuadVertexBufferBase;
+		uint32_t dataSize = static_cast<uint32_t>((uint8_t*)s_Data.QuadVertexBufferPtr - (uint8_t*)s_Data.QuadVertexBufferBase);
 		s_Data.QuadVertexBuffer->SetData(s_Data.QuadVertexBufferBase, dataSize);
 
 		Flush();
@@ -247,6 +247,8 @@ namespace Uneye
 		const Ref<Texture2D>& texture)
 	{
 		UNEYE_PROFILE_FUNCTION();
+
+		//UNEYE_CORE_TRACE("{0}", s_Data.TextureSlotIndex);
 
 		constexpr size_t quadVertexCount = 4;
 		constexpr glm::vec2 QuadTexCoords[] = {

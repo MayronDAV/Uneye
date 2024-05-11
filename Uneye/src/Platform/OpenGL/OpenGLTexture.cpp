@@ -46,7 +46,7 @@ namespace Uneye
 			data = stbi_load(path.c_str(), &width, &height, &channels, 0);
 		}
 
-		UNEYE_CORE_ASSERT(!data, "Failed to load image!");
+		//UNEYE_CORE_ASSERT(!data, "Failed to load image!");
 		m_Width = width;
 		m_Height = height;
 
@@ -68,7 +68,7 @@ namespace Uneye
 		m_Format = dataFormat;
 
 
-		UNEYE_CORE_ASSERT(!internalFormat & !dataFormat, "Format not supported!");
+		//UNEYE_CORE_ASSERT(!internalFormat & !dataFormat, "Format not supported!");
 
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);

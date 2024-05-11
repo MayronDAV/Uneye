@@ -19,6 +19,7 @@ project "Uneye-Editor"
 		"%{wks.location}/Uneye/vendor/spdlog/include",
 		"%{wks.location}/Uneye/src",
 		"%{wks.location}/Uneye/vendor",
+		"%{wks.location}/Uneye/vendor/imgui/",
 		"%{IncludeDir.entt}",
 		"%{IncludeDir.glm}"
 	}

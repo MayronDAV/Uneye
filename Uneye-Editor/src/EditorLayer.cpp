@@ -2,6 +2,10 @@
 
 #include <imgui/imgui.h>
 
+#include "Uneye/Scene/SceneSerializer.h"
+#include "Uneye/Utils/PlatformUtils.h"
+
+
 namespace Uneye
 {
 	void EditorLayer::OnAttach()
@@ -19,10 +23,10 @@ namespace Uneye
 
 		m_ActiveScene = CreateRef<Scene>();
 
-		auto square = m_ActiveScene->CreateEntity("Color Square");
-		square.AddComponent<SpriteRendererComponent>(glm::vec4{ 0.0f, 1.0f, 0.0f, 1.0f });
-		square.GetComponent<TransformComponent>().Translation = glm::vec3(6, 0, 0);
-		m_SquareEntity = square;
+		//auto square = m_ActiveScene->CreateEntity("Color Square");
+		//square.AddComponent<MaterialComponent>(glm::vec4{ 0.0f, 1.0f, 0.0f, 1.0f });
+		//square.GetComponent<TransformComponent>().Translation = glm::vec3(6, 0, 0);
+		//m_SquareEntity = square;
 
 		int tileWidth = 10, tileHeight = 10;
 		for (int y = 0; y < tileHeight; y++)
@@ -35,7 +39,7 @@ namespace Uneye
 				square.GetComponent<TransformComponent>().Translation = glm::vec3(x * 0.6f, y * 0.6f, 0);
 				square.GetComponent<TransformComponent>().Scale = glm::vec3(0.5f, 0.5f, 1.0f);
 
-				square.AddComponent<SpriteRendererComponent>(glm::vec4{ 0.3f, 0.8f, 0.2f, 1.0f });
+				square.AddComponent<MaterialComponent>(glm::vec4(0.3f, 0.8f, 0.2f, 1.0f));
 			}
 		}
 		
@@ -129,6 +133,9 @@ namespace Uneye
 	void EditorLayer::OnEvent(Event& e)
 	{
 		m_CameraController.OnEvent(e);
+
+		EventDispatcher dispatcher(e);
+		dispatcher.Dispatch<KeyPressedEvent>(UNEYE_BIND_EVENT_FN(EditorLayer::OnKeyPressed));
 	}
 
 	void EditorLayer::OnImGuiRender()
@@ -183,6 +190,15 @@ namespace Uneye
 		{
 			if (ImGui::BeginMenu("File"))
 			{
+				if (ImGui::MenuItem("New", "Ctrl+N"))
+					NewScene();
+
+				if (ImGui::MenuItem("Open...", "Ctrl+O"))
+					OpenScene();
+
+				if (ImGui::MenuItem("Save As...", "Ctrl+Shift+S"))
+					SaveSceneAs();
+
 				if (ImGui::MenuItem("Exit")) { Uneye::Application::Get().Close(); }
 
 				ImGui::EndMenu();
@@ -211,5 +227,68 @@ namespace Uneye
 		ImGui::End();
 
 		//ImGui::ShowDemoWindow();
+	}
+
+	bool EditorLayer::OnKeyPressed(KeyPressedEvent& e)
+	{
+		if (e.GetRepeatCount() > 0)
+			return false;
+
+		bool control = Input::IsKeyPressed(Key::LeftControl) || Input::IsKeyPressed(Key::RightControl);
+		bool shift = Input::IsKeyPressed(Key::LeftShift) || Input::IsKeyPressed(Key::RightShift);
+		switch (e.GetKeyCode())
+		{
+			case Key::N:
+			{
+				if (control)
+					NewScene();
+
+				break;
+			}
+			case Key::O:
+			{
+				if (control)
+					OpenScene();
+
+				break;
+			}
+			case Key::S:
+			{
+				if (control && shift)
+					SaveSceneAs();
+
+				break;
+			}
+		}
+	}
+	void EditorLayer::NewScene()
+	{
+		m_ActiveScene = CreateRef<Scene>();
+		m_ActiveScene->OnViewportResize((uint32_t)m_ViewportSize.x, (uint32_t)m_ViewportSize.y);
+		m_SceneHierarchyPanel.SetContext(m_ActiveScene);
+	}
+
+	void EditorLayer::OpenScene()
+	{
+		std::string filepath = FileDialogs::OpenFile("Uneye Scene (*.uneye)\0*.uneye\0");
+		if (!filepath.empty())
+		{
+			m_ActiveScene = CreateRef<Scene>();
+			m_ActiveScene->OnViewportResize((uint32_t)m_ViewportSize.x, (uint32_t)m_ViewportSize.y);
+			m_SceneHierarchyPanel.SetContext(m_ActiveScene);
+
+			SceneSerializer serializer(m_ActiveScene);
+			serializer.Deserialize(filepath);
+		}
+	}
+
+	void EditorLayer::SaveSceneAs()
+	{
+		std::string filepath = FileDialogs::SaveFile("Uneye Scene (*.uneye)\0*.uneye\0");
+		if (!filepath.empty())
+		{
+			SceneSerializer serializer(m_ActiveScene);
+			serializer.Serialize(filepath);
+		}
 	}
 }

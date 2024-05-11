@@ -16,6 +16,14 @@ workspace "Uneye"
 		"MultiProcessorCompile"
 	}
 
+	defines
+	{
+		"_SILENCE_STDEXT_ARR_ITERS_DEPRECATION_WARNING",
+		"_SILENCE_ALL_MS_EXT_DEPRECATION_WARNINGS"
+	}
+
+
+
 outputdir = "%{cfg.buildcfg}-%{cfg.system}-%{cfg.architecture}"
 
 group "Dependencies"

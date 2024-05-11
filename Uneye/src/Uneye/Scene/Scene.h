@@ -12,6 +12,7 @@ namespace Uneye
 {
 	class Entity;
 	class SceneHierarchyPanel;
+	class SceneSerializer;
 
 	class Scene
 	{
@@ -35,7 +36,7 @@ namespace Uneye
 
 			friend class Entity;
 			friend class SceneHierarchyPanel;
-
+			friend class SceneSerializer;
 	};
 
 

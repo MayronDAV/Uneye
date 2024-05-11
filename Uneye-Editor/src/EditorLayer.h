@@ -14,40 +14,47 @@ namespace Uneye
 {
 	class EditorLayer : public Layer
 	{
-	public:
-		EditorLayer() :Layer("EditorLayer"), m_CameraController(800.0f / 600.0f) {}
-		virtual ~EditorLayer() = default;
+		public:
+			EditorLayer() :Layer("EditorLayer"), m_CameraController(800.0f / 600.0f) {}
+			virtual ~EditorLayer() = default;
 
-		virtual void OnAttach() override;
-		virtual void OnDetach() override;
+			virtual void OnAttach() override;
+			virtual void OnDetach() override;
 
-		virtual void OnUpdate(Timestep ts) override;
-		virtual void OnEvent(Event& e) override;
-		virtual void OnImGuiRender() override;
+			virtual void OnUpdate(Timestep ts) override;
+			virtual void OnEvent(Event& e) override;
+			virtual void OnImGuiRender() override;
 
-	private:
-		Uneye::OrthographicCameraController m_CameraController;
+		private:
+			bool OnKeyPressed(KeyPressedEvent& e);
 
-		// Temp
-		Ref<Shader> m_Shader;
-		Ref<VertexArray> m_VertexArray;
-		Ref<Texture2D> m_Texture;
-		Uneye::Ref<Uneye::Framebuffer> m_Framebuffer;
+			void NewScene();
+			void OpenScene();
+			void SaveSceneAs();
 
-		Ref<Scene> m_ActiveScene;
-		Entity m_SquareEntity;
-		Entity m_CameraEntity;
-		Entity m_SecondCamera;
+		private:
+			Uneye::OrthographicCameraController m_CameraController;
 
-		bool m_PrimaryCamera = true;
+			// Temp
+			Ref<Shader> m_Shader;
+			Ref<VertexArray> m_VertexArray;
+			Ref<Texture2D> m_Texture;
+			Uneye::Ref<Uneye::Framebuffer> m_Framebuffer;
 
-		glm::vec2 m_ViewportSize{0.0f, 0.0f};
-		bool m_ViewportFocused = false;
-		bool m_ViewportHovered = false;
+			Ref<Scene> m_ActiveScene;
+			Entity m_SquareEntity;
+			Entity m_CameraEntity;
+			Entity m_SecondCamera;
 
-		glm::vec4 m_SquareColor{ 0.2f, 0.3f, 0.8f, 1.0f };
+			bool m_PrimaryCamera = true;
 
-		// Panels
-		SceneHierarchyPanel m_SceneHierarchyPanel;
+			glm::vec2 m_ViewportSize{0.0f, 0.0f};
+			bool m_ViewportFocused = false;
+			bool m_ViewportHovered = false;
+
+			glm::vec4 m_SquareColor{ 0.2f, 0.3f, 0.8f, 1.0f };
+
+			// Panels
+			SceneHierarchyPanel m_SceneHierarchyPanel;
 	};
 }

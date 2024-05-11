@@ -41,6 +41,8 @@ namespace Uneye
 
 	void SceneCamera::RecalculateProjection()
 	{
+		UNEYE_PROFILE_FUNCTION();
+
 		if (m_ProjectionType == ProjectionType::Orthographic)
 		{
 			float orthoLeft = -m_OrthographicSize * m_AspectRatio * 0.5f;

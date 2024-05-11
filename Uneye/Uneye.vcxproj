@@ -173,7 +173,6 @@
     <ClInclude Include="src\Uneye\Math\Math.h" />
     <ClInclude Include="src\Uneye\Renderer\Buffer.h" />
     <ClInclude Include="src\Uneye\Renderer\Camera.h" />
-    <ClInclude Include="src\Uneye\Renderer\CameraController.h" />
     <ClInclude Include="src\Uneye\Renderer\EditorCamera.h" />
     <ClInclude Include="src\Uneye\Renderer\Framebuffer.h" />
     <ClInclude Include="src\Uneye\Renderer\GraphicsContext.h" />
@@ -608,8 +607,6 @@
     <ClCompile Include="src\Uneye\ImGui\ImGuiLayer.cpp" />
     <ClCompile Include="src\Uneye\Math\Math.cpp" />
     <ClCompile Include="src\Uneye\Renderer\Buffer.cpp" />
-    <ClCompile Include="src\Uneye\Renderer\Camera.cpp" />
-    <ClCompile Include="src\Uneye\Renderer\CameraController.cpp" />
     <ClCompile Include="src\Uneye\Renderer\EditorCamera.cpp" />
     <ClCompile Include="src\Uneye\Renderer\Framebuffer.cpp" />
     <ClCompile Include="src\Uneye\Renderer\RenderCommand.cpp" />

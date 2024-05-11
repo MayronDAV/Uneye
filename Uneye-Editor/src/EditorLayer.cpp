@@ -17,8 +17,6 @@ namespace Uneye
 		UNEYE_PROFILE_FUNCTION();
 
 		//Application::Get().GetWindow().SetVSync(false);
-		//m_Texture = Texture2D::Create("assets/textures/wall.jpg");
-		m_Texture = Uneye::Texture2D::Create("assets/game/RPGpack_sheet_2X.png");
 
 		Uneye::FramebufferSpecification fbspec;
 		fbspec.Width = 800;
@@ -46,20 +44,17 @@ namespace Uneye
 			(spec.Width != m_ViewportSize.x || spec.Height != m_ViewportSize.y))
 		{
 			m_Framebuffer->Resize((uint32_t)m_ViewportSize.x, (uint32_t)m_ViewportSize.y);
-			m_CameraController.OnResize(m_ViewportSize.x, m_ViewportSize.y);
 
 			m_EditorCamera.SetViewportSize(m_ViewportSize.x, m_ViewportSize.y);
 
 			m_ActiveScene->OnViewportResize((uint32_t)m_ViewportSize.x, (uint32_t)m_ViewportSize.y);
 		}
 
-		if (m_ViewportFocused)
-		{
-			m_CameraController.OnUpdate(ts);
-
-			m_EditorCamera.OnUpdate(ts);
-		}
-
+		//if (m_ViewportFocused)
+		//{
+		//	m_EditorCamera.OnUpdate(ts);
+		//}
+		m_EditorCamera.OnUpdate(ts);
 
 		Renderer2D::ResetStats();
 		m_Framebuffer->Bind();
@@ -73,8 +68,6 @@ namespace Uneye
 
 	void EditorLayer::OnEvent(Event& e)
 	{
-		m_CameraController.OnEvent(e);
-
 		m_EditorCamera.OnEvent(e);
 
 		EventDispatcher dispatcher(e);

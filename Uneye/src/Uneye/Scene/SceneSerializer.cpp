@@ -121,6 +121,8 @@ namespace Uneye
 
 	static void SerializeEntity(YAML::Emitter& out, Entity entity)
 	{
+		UNEYE_PROFILE_FUNCTION();
+
 		out << YAML::BeginMap; // Entity
 		out << YAML::Key << "Entity" << YAML::Value << "12837192831273"; // TODO: Entity ID goes here
 
@@ -198,6 +200,8 @@ namespace Uneye
 
 	void SceneSerializer::Serialize(const std::string& filepath)
 	{
+		UNEYE_PROFILE_FUNCTION();
+
 		YAML::Emitter out;
 		out << YAML::BeginMap;
 		out << YAML::Key << "Scene" << YAML::Value << "Untitled";
@@ -219,11 +223,15 @@ namespace Uneye
 
 	void SceneSerializer::SerializeRuntime(const std::string& filepath)
 	{
+		UNEYE_PROFILE_FUNCTION();
+
 		UNEYE_CORE_ASSERT(true, "Not implemented!");
 	}
 
 	bool SceneSerializer::Deserialize(const std::string& filepath)
 	{
+		UNEYE_PROFILE_FUNCTION();
+
 		YAML::Node data = YAML::LoadFile(filepath);
 
 		if (!data["Scene"])
@@ -301,6 +309,8 @@ namespace Uneye
 
 	bool SceneSerializer::DeserializeRuntime(const std::string& filepath)
 	{
+		UNEYE_PROFILE_FUNCTION();
+
 		UNEYE_CORE_ASSERT(true, "Not implemented!");
 		return false;
 	}

@@ -145,19 +145,6 @@ namespace Uneye
 		s_Data.TextureSlotIndex = 1;
 	}
 
-	void Renderer2D::BeginScene(const OrthographicCamera& camera)
-	{
-		UNEYE_PROFILE_FUNCTION();
-
-		s_Data.QuadShader->Bind();
-		s_Data.QuadShader->SetMat4("u_ViewProjection", camera.GetViewProjectionMatrix());
-	
-		s_Data.QuadIndexCount = 0;
-		s_Data.QuadVertexBufferPtr = s_Data.QuadVertexBufferBase;
-
-		s_Data.TextureSlotIndex = 1;
-	}
-
 	void Renderer2D::EndScene()
 	{
 		UNEYE_PROFILE_FUNCTION();

@@ -11,11 +11,15 @@ namespace Uneye
 	OpenGLFramebuffer::OpenGLFramebuffer(const FramebufferSpecification& spec)
 		:m_Specification(spec)
 	{
+		UNEYE_PROFILE_FUNCTION();
+
 		Invalidate();
 	}
 
 	OpenGLFramebuffer::~OpenGLFramebuffer()
 	{
+		UNEYE_PROFILE_FUNCTION();
+
 		glDeleteFramebuffers(1, &m_RendererID);
 		glDeleteTextures(1, &m_ColorAttachment);
 		glDeleteTextures(1, &m_DepthAttachment);
@@ -23,6 +27,8 @@ namespace Uneye
 
 	void OpenGLFramebuffer::Invalidate()
 	{
+		UNEYE_PROFILE_FUNCTION();
+
 		if (m_RendererID)
 		{
 			glDeleteFramebuffers(1, &m_RendererID);
@@ -62,17 +68,23 @@ namespace Uneye
 
 	void OpenGLFramebuffer::Bind()
 	{
+		UNEYE_PROFILE_FUNCTION();
+
 		glBindFramebuffer(GL_FRAMEBUFFER, m_RendererID);
 		glViewport(0, 0, m_Specification.Width, m_Specification.Height);
 	}
 
 	void OpenGLFramebuffer::Unbind()
 	{
+		UNEYE_PROFILE_FUNCTION();
+
 		glBindFramebuffer(GL_FRAMEBUFFER, 0);
 	}
 
 	void OpenGLFramebuffer::Resize(uint32_t width, uint32_t height)
 	{
+		UNEYE_PROFILE_FUNCTION();
+
 		if (width <= 0 || height <= 0 ||
 			width > s_MaxFramebufferSize || height > s_MaxFramebufferSize)
 		{

@@ -23,10 +23,19 @@ namespace Uneye
 		RenderCommand::SetViewport(0, 0, width, height);
 	}
 
-	void Renderer::BeginScene(OrthographicCamera& camera)
+	void Renderer::BeginScene(EditorCamera& camera)
 	{
-		m_SceneData->ViewProjectionMatrix = camera.GetViewProjectionMatrix();
+		UNEYE_PROFILE_FUNCTION();
+
+		m_SceneData->ViewProjectionMatrix = camera.GetViewProjection();
 	}
+	void Renderer::BeginScene(const Camera& camera, const glm::mat4& transform)
+	{
+		UNEYE_PROFILE_FUNCTION();
+
+		m_SceneData->ViewProjectionMatrix = camera.GetProjection() * glm::inverse(transform);
+	}
+
 	void Renderer::EndScene()
 	{
 
@@ -36,6 +45,8 @@ namespace Uneye
 		const Ref<VertexArray>& vertexArray,
 		const glm::mat4& transform)
 	{
+		UNEYE_PROFILE_FUNCTION();
+
 		shader->Bind();
 		std::dynamic_pointer_cast<OpenGLShader>(shader)->SetMat4("u_ViewProjection", m_SceneData->ViewProjectionMatrix);
 		std::dynamic_pointer_cast<OpenGLShader>(shader)->SetMat4("u_ModelMatrix", transform);

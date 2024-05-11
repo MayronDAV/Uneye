@@ -1,8 +1,11 @@
 #pragma once
 
-#include "RenderCommand.h"
-#include "Camera.h"
-#include "Shader.h"
+#include "Uneye/Renderer/RenderCommand.h"
+#include "Uneye/Renderer/Camera.h"
+#include "Uneye/Renderer/Shader.h"
+
+#include "Uneye/Renderer/EditorCamera.h"
+
 
 
 namespace Uneye
@@ -13,7 +16,8 @@ namespace Uneye
 			static void Init();
 			static void OnWindowResize(uint32_t width, uint32_t height);
 
-			static void BeginScene(OrthographicCamera& camera);
+			static void BeginScene(EditorCamera& camera);
+			static void BeginScene(const Camera& camera, const glm::mat4& transform);
 			static void EndScene();
 
 			static void Submit(const Ref<Shader>& shader, 

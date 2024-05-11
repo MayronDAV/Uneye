@@ -53,12 +53,16 @@ namespace Uneye
 
 	void OpenGLRendererAPI::Clear(const glm::vec4& color) const
 	{
+		UNEYE_PROFILE_FUNCTION();
+
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 		glClearColor(color.r, color.g, color.b, color.a);
 	}
 
 	void OpenGLRendererAPI::DrawIndexed(const Ref<VertexArray>& vertexArray, uint32_t indexCount)
 	{
+		UNEYE_PROFILE_FUNCTION();
+
 		uint32_t count = (indexCount == 0) ? vertexArray->GetIndexBuffers()->GetCount() : indexCount;
 		glDrawElements(GL_TRIANGLES, count, GL_UNSIGNED_INT, nullptr);
 		glBindTexture(GL_TEXTURE_2D, 0);

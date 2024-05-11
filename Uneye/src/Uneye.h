@@ -31,7 +31,6 @@
 #include "Uneye/Renderer/VertexArray.h"
 
 #include "Uneye/Renderer/Camera.h"
-#include "Uneye/Renderer/CameraController.h"
 
 #include "Uneye/Renderer/Texture.h"
 #include "Uneye/Renderer/SubTexture.h"

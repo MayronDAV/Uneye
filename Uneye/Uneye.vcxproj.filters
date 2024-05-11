@@ -159,9 +159,6 @@
     <ClInclude Include="src\Uneye\Renderer\Camera.h">
       <Filter>src\Uneye\Renderer</Filter>
     </ClInclude>
-    <ClInclude Include="src\Uneye\Renderer\CameraController.h">
-      <Filter>src\Uneye\Renderer</Filter>
-    </ClInclude>
     <ClInclude Include="src\Uneye\Renderer\Framebuffer.h">
       <Filter>src\Uneye\Renderer</Filter>
     </ClInclude>
@@ -1454,12 +1451,6 @@
       <Filter>src\Uneye\ImGui</Filter>
     </ClCompile>
     <ClCompile Include="src\Uneye\Renderer\Buffer.cpp">
-      <Filter>src\Uneye\Renderer</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Uneye\Renderer\Camera.cpp">
-      <Filter>src\Uneye\Renderer</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Uneye\Renderer\CameraController.cpp">
       <Filter>src\Uneye\Renderer</Filter>
     </ClCompile>
     <ClCompile Include="src\Uneye\Renderer\Framebuffer.cpp">

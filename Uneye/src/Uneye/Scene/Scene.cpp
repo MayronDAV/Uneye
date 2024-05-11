@@ -36,6 +36,8 @@ namespace Uneye
 
 	void Scene::OnUpdateEditor(Timestep ts, EditorCamera& camera)
 	{
+		UNEYE_PROFILE_FUNCTION();
+
 		Renderer2D::BeginScene(camera);
 
 		auto groupM = m_Registry.group<TransformComponent>(entt::get<MaterialComponent>);
@@ -54,6 +56,8 @@ namespace Uneye
 
 	void Scene::OnUpdateRuntime(Timestep ts)
 	{
+		UNEYE_PROFILE_FUNCTION();
+
 		// Update Script
 		{
 			m_Registry.view<NativeScriptComponent>().each([=](auto entity, auto& nsc) 
@@ -112,6 +116,8 @@ namespace Uneye
 
 	void Scene::OnViewportResize(uint32_t width, uint32_t height)
 	{
+		UNEYE_PROFILE_FUNCTION();
+
 		m_ViewportWidth = width;
 		m_ViewportHeight = height;
 

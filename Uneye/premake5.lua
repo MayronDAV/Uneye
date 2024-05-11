@@ -19,6 +19,9 @@ project "Uneye"
 		"vendor/stb/include/**.h",
 		"vendor/glm/glm/**.hpp",
 		"vendor/glm/glm/**.inl",
+
+		"vendor/ImGuizmo/**.h",
+		"vendor/ImGuizmo/**.cpp"
 	}
 
 	defines
@@ -37,6 +40,7 @@ project "Uneye"
 		"%{IncludeDir.stb}",
 		"%{IncludeDir.entt}",
 		"%{IncludeDir.yaml_cpp}",
+		"%{IncludeDir.ImGuizmo}"
 	}
 
 	links 
@@ -47,6 +51,9 @@ project "Uneye"
 		"yaml-cpp",
 		"opengl32.lib"
 	}
+
+	filter "files:vendor/ImGuizmo/**.cpp"
+		flags { "NoPCH" }
 
 	filter "system:windows"
 		systemversion "latest"

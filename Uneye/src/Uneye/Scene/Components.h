@@ -2,6 +2,8 @@
 
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
+#define GLM_ENABLE_EXPERIMENTAL
+#include <glm/gtx/quaternion.hpp>
 
 #include "Uneye/Renderer/Camera.h"
 #include "Uneye/Scene/SceneCamera.h"
@@ -37,14 +39,10 @@ namespace Uneye
 
 		glm::mat4 GetTransform() const
 		{
-			glm::mat4 transform(1.0f);
-			transform = glm::translate(transform, Translation);
-			transform = glm::rotate(transform, Rotation.x, { 1, 0, 0});
-			transform = glm::rotate(transform, Rotation.y, { 0, 1, 0 });
-			transform = glm::rotate(transform, Rotation.z, { 0, 0, 1 });
-			transform = glm::scale(transform, Scale);
+			glm::mat4 rotation = glm::toMat4(glm::quat(Rotation));
 
-			return transform;
+			return glm::translate(glm::mat4(1.0f), Translation) *
+				rotation * glm::scale(glm::mat4(1.0f), Scale);
 		}
 
 	};

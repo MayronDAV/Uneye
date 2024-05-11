@@ -5,7 +5,7 @@
 	path = Uneye/vendor/GLFW
 	url = https://github.com/TheCherno/glfw
 [submodule "Uneye/vendor/imgui"]
-	path = Hazel/vendor/imgui
+	path = Uneye/vendor/imgui
 	url = https://github.com/TheCherno/imgui
 [submodule "Uneye/vendor/glm"]
 	path = Uneye/vendor/glm
@@ -13,3 +13,6 @@
 [submodule "Uneye/vendor/stb"]
 	path = Uneye/vendor/stb
 	url = https://github.com/nothings/stb
+[submodule "Uneye/vendor/ImGuizmo"]
+	path = Uneye/vendor/ImGuizmo
+	url = https://github.com/thecherno/ImGuizmo

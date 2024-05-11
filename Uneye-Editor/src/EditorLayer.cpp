@@ -5,6 +5,10 @@
 #include "Uneye/Scene/SceneSerializer.h"
 #include "Uneye/Utils/PlatformUtils.h"
 
+#include <ImGuizmo.h>
+#include "Uneye/Math/Math.h"
+
+
 
 namespace Uneye
 {
@@ -23,77 +27,7 @@ namespace Uneye
 
 		m_ActiveScene = CreateRef<Scene>();
 
-		//auto square = m_ActiveScene->CreateEntity("Color Square");
-		//square.AddComponent<MaterialComponent>(glm::vec4{ 0.0f, 1.0f, 0.0f, 1.0f });
-		//square.GetComponent<TransformComponent>().Translation = glm::vec3(6, 0, 0);
-		//m_SquareEntity = square;
-
-		int tileWidth = 10, tileHeight = 10;
-		for (int y = 0; y < tileHeight; y++)
-		{
-			for (int x = 0; x < tileWidth; x++)
-			{
-				auto& square = m_ActiveScene->CreateEntity(
-					"Tile Square " + std::to_string(x + (y * tileWidth)));
-
-				square.GetComponent<TransformComponent>().Translation = glm::vec3(x * 0.6f, y * 0.6f, 0);
-				square.GetComponent<TransformComponent>().Scale = glm::vec3(0.5f, 0.5f, 1.0f);
-
-				square.AddComponent<MaterialComponent>(glm::vec4(0.3f, 0.8f, 0.2f, 1.0f));
-			}
-		}
-		
-		m_CameraEntity = m_ActiveScene->CreateEntity("Camera A");
-		m_CameraEntity.AddComponent<CameraComponent>();
-
-		m_SecondCamera = m_ActiveScene->CreateEntity("Camera B");
-		m_SecondCamera.AddComponent<CameraComponent>();
-		m_SecondCamera.GetComponent<CameraComponent>().Primary = false;
-
-		class CameraController : public ScriptableEntity
-		{
-			public:
-				void OnCreate()
-				{
-					auto& translation = GetComponent<TransformComponent>().Translation;
-					translation.x = rand() % 10 - 5.0f;
-				}
-
-				void OnDestroy()
-				{
-
-				}
-
-				void OnUpdate(Timestep ts)
-				{
-					//UNEYE_INFO("Timestep: {0}", ts.GetSeconds());
-					auto& translation = GetComponent<TransformComponent>().Translation;
-					m_Direction = glm::vec3(0.0f);
-
-					if (Input::IsKeyPressed(Key::W))
-						m_Direction.y =  1.0f;
-					if (Input::IsKeyPressed(Key::A))
-						m_Direction.x = -1.0f;
-					if (Input::IsKeyPressed(Key::S))
-						m_Direction.y = -1.0f;
-					if (Input::IsKeyPressed(Key::D))
-						m_Direction.x =  1.0f;
-
-					m_Direction = m_Direction / ((glm::length(m_Direction) != 0) ?
-						glm::length(m_Direction) : 1.0f);
-
-					translation += m_Direction * m_Velocity * ts.GetSeconds();
-
-				}
-
-			private:
-				glm::vec3 m_Direction{ 0.0f };
-				glm::vec3 m_Velocity{ 10.0f };
-		};
-
-		m_CameraEntity.AddComponent<NativeScriptComponent>().Bind<CameraController>();
-		m_SecondCamera.AddComponent<NativeScriptComponent>().Bind<CameraController>();
-
+		m_EditorCamera = EditorCamera(45.0f, 1.677, 0.1f, 1000.0f);
 
 		m_SceneHierarchyPanel.SetContext(m_ActiveScene);
 	}
@@ -114,18 +48,25 @@ namespace Uneye
 			m_Framebuffer->Resize((uint32_t)m_ViewportSize.x, (uint32_t)m_ViewportSize.y);
 			m_CameraController.OnResize(m_ViewportSize.x, m_ViewportSize.y);
 
+			m_EditorCamera.SetViewportSize(m_ViewportSize.x, m_ViewportSize.y);
+
 			m_ActiveScene->OnViewportResize((uint32_t)m_ViewportSize.x, (uint32_t)m_ViewportSize.y);
 		}
 
 		if (m_ViewportFocused)
+		{
 			m_CameraController.OnUpdate(ts);
+
+			m_EditorCamera.OnUpdate(ts);
+		}
+
 
 		Renderer2D::ResetStats();
 		m_Framebuffer->Bind();
 		//RenderCommand::Clear(glm::vec4(0.1f, 0.1f, 0.13f, 1.0f));
 		RenderCommand::Clear(glm::vec4(1.0f));
 
-		m_ActiveScene->OnUpdate(ts);
+		m_ActiveScene->OnUpdateEditor(ts, m_EditorCamera);
 
 		m_Framebuffer->Unbind();
 	}
@@ -133,6 +74,8 @@ namespace Uneye
 	void EditorLayer::OnEvent(Event& e)
 	{
 		m_CameraController.OnEvent(e);
+
+		m_EditorCamera.OnEvent(e);
 
 		EventDispatcher dispatcher(e);
 		dispatcher.Dispatch<KeyPressedEvent>(UNEYE_BIND_EVENT_FN(EditorLayer::OnKeyPressed));
@@ -212,15 +155,71 @@ namespace Uneye
 		ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2(0, 0));
 		ImGui::Begin("Viewport");
 		
-		//if ()
 		m_ViewportFocused = ImGui::IsWindowFocused();
 		m_ViewportHovered = ImGui::IsWindowHovered();
-		Application::Get().GetImGuiLayer()->BlockEvents(!m_ViewportFocused || !m_ViewportHovered);
+		Application::Get().GetImGuiLayer()->BlockEvents(!m_ViewportFocused && !m_ViewportHovered);
 
 		ImVec2 viewportSize = ImGui::GetContentRegionAvail();
 		m_ViewportSize = { viewportSize.x, viewportSize.y };
 		uint32_t texID = m_Framebuffer->GetColorAttachmentRendererID();
 		ImGui::Image((void*)texID, ImVec2(m_ViewportSize.x, m_ViewportSize.y), ImVec2(0, 1), ImVec2(1, 0));
+		
+
+		// Gizmos
+		Entity selectedEntity = m_SceneHierarchyPanel.GetSelectedEntity();
+		if (selectedEntity && m_GuizmoType != -1)
+		{
+			ImGuizmo::SetOrthographic(false);
+			ImGuizmo::SetDrawlist();
+			float windowWidth = (float)ImGui::GetWindowWidth();
+			float windowHeight = (float)ImGui::GetWindowHeight();
+			ImGuizmo::SetRect(ImGui::GetWindowPos().x, ImGui::GetWindowPos().y,
+				windowWidth, windowHeight);
+
+			// Runtime Camera from entt
+			//auto cameraEntity = m_ActiveScene->GetPrimaryCameraEntity();
+			//const auto& camera = cameraEntity.GetComponent<CameraComponent>().Camera;
+			//const glm::mat4& cameraProjection = camera.GetProjection();
+			//glm::mat4 cameraView = glm::inverse(cameraEntity.GetComponent<TransformComponent>().GetTransform());
+
+			//Editor Camera
+			const glm::mat4& cameraProjection = m_EditorCamera.GetProjection();
+			glm::mat4 cameraView = m_EditorCamera.GetViewMatrix();
+
+
+			// Entity
+			auto& tc = selectedEntity.GetComponent<TransformComponent>();
+			glm::mat4 transform = tc.GetTransform();
+
+			// Snapping
+			bool snap = Input::IsKeyPressed(Key::LeftControl);
+			float snapValue = 0.5f; // Snap for translation and scale
+			// Snap for rotation
+			if (m_GuizmoType == ImGuizmo::OPERATION::ROTATE)
+				snapValue = 45.0f;
+
+			float snapValues[3] = { snapValue, snapValue, snapValue };
+
+			ImGuizmo::Manipulate(glm::value_ptr(cameraView), glm::value_ptr(cameraProjection),
+				(ImGuizmo::OPERATION)m_GuizmoType, ImGuizmo::LOCAL, glm::value_ptr(transform),
+				nullptr, snap ? snapValues : nullptr);
+
+
+			if (ImGuizmo::IsUsing())
+			{
+				glm::vec3 translation(0.0f), rotation(0.0f), scale(1.0f);
+				Math::DecomposeTransform(transform, translation, rotation, scale);
+
+				glm::vec3 deltaRotation = rotation - tc.Rotation;
+				tc.Translation = translation;
+				tc.Rotation += deltaRotation;
+				tc.Scale = scale;
+
+			}
+
+		}
+		
+		
 		ImGui::End();
 		ImGui::PopStyleVar();
 
@@ -257,6 +256,32 @@ namespace Uneye
 				if (control && shift)
 					SaveSceneAs();
 
+				break;
+			}
+
+			// Guizmo
+			case Key::Q:
+			{
+				if (!ImGuizmo::IsUsing())
+					m_GuizmoType = -1;
+				break;
+			}
+			case Key::T:
+			{
+				if (!ImGuizmo::IsUsing())
+					m_GuizmoType = ImGuizmo::OPERATION::TRANSLATE;
+				break;
+			}
+			case Key::R:
+			{
+				if (!ImGuizmo::IsUsing())
+					m_GuizmoType = ImGuizmo::OPERATION::ROTATE;
+				break;
+			}
+			case Key::E:
+			{
+				if (!ImGuizmo::IsUsing())
+					m_GuizmoType = ImGuizmo::OPERATION::SCALE;
 				break;
 			}
 		}

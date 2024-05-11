@@ -1,10 +1,11 @@
 #include "uypch.h"
 #include "ImGuiLayer.h"
 
-#include "imgui.h"
-#include "imgui_internal.h"
-#include "backends/imgui_impl_glfw.h"
-#include "backends/imgui_impl_opengl3.h"
+#define IMGUI_DEFINE_MATH_OPERATORS
+#include <imgui.h>
+#include <imgui_internal.h>
+#include <backends/imgui_impl_glfw.h>
+#include <backends/imgui_impl_opengl3.h>
 
 #include "Uneye/Core/Application.h"
 
@@ -14,6 +15,7 @@
 
 #include "Uneye/Core/FontManager.h"
 
+#include <ImGuizmo.h>
 
 
 
@@ -90,6 +92,7 @@ namespace Uneye {
 		ImGui_ImplOpenGL3_NewFrame();
 		ImGui_ImplGlfw_NewFrame();
 		ImGui::NewFrame();
+		ImGuizmo::BeginFrame();
 	}
 
 	void ImGuiLayer::End()

@@ -20,6 +20,8 @@ namespace Uneye
 			
 			void OnImGuiRender();
 
+			Entity GetSelectedEntity() const { return m_SelectionContext; }
+
 		private:
 			void DrawEntityNode(Entity entt);
 			void DrawComponents(Entity entt);

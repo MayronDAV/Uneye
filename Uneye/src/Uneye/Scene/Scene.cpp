@@ -34,7 +34,25 @@ namespace Uneye
 		m_Registry.destroy(entity);
 	}
 
-	void Scene::OnUpdate(Timestep ts)
+	void Scene::OnUpdateEditor(Timestep ts, EditorCamera& camera)
+	{
+		Renderer2D::BeginScene(camera);
+
+		auto groupM = m_Registry.group<TransformComponent>(entt::get<MaterialComponent>);
+		for (auto entity : groupM)
+		{
+			auto [transform, material] = groupM.get<TransformComponent, MaterialComponent>(entity);
+
+			if (material.IsSubTexture)
+				Renderer2D::DrawQuad(transform.GetTransform(), material.SubTexture, material.Color);
+			else
+				Renderer2D::DrawQuad(transform.GetTransform(), material.Color, material.Texture);
+		}
+
+		Renderer2D::EndScene();
+	}
+
+	void Scene::OnUpdateRuntime(Timestep ts)
 	{
 		// Update Script
 		{
@@ -85,8 +103,6 @@ namespace Uneye
 				else
 					Renderer2D::DrawQuad(transform.GetTransform(), material.Color, material.Texture);
 
-				//Renderer2D::DrawQuad(transform.GetTransform(), material.Color, material.Texture);
-				//Renderer2D::DrawQuad(transform.GetTransform(), material.SubTexture, material.Color);
 			}
 
 			Renderer2D::EndScene();
@@ -109,6 +125,19 @@ namespace Uneye
 				cameraComponent.Camera.SetViewportSize(width, height);
 			}
 		}
+	}
+
+	Entity Scene::GetPrimaryCameraEntity()
+	{
+		auto view = m_Registry.view<CameraComponent>();
+		for (auto entt : view)
+		{
+			const auto& camera = view.get<CameraComponent>(entt);
+			if (camera.Primary)
+				return Entity{ entt, this };
+		}
+
+		return Entity();
 	}
 
 	template<typename T>

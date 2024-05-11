@@ -1,6 +1,7 @@
 # Directories
 .vs/
 /bin/
+!/vendor/premake/bin/
 /bin-int/
 
 # Files

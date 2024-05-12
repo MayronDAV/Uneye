@@ -64,7 +64,7 @@ namespace Uneye
 			static void ResetStats();
 
 		private:
-
+			static void StartBatch();
 			static void FlushAndReset();
 	
 	};

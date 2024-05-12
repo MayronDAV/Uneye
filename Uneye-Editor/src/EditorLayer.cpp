@@ -19,11 +19,24 @@ namespace Uneye
 		//Application::Get().GetWindow().SetVSync(false);
 
 		Uneye::FramebufferSpecification fbspec;
+		fbspec.Attachments = { FramebufferTextureFormat::RGBA8, FramebufferTextureFormat::RED_INTEGER, FramebufferTextureFormat::Depth };
 		fbspec.Width = 800;
 		fbspec.Height = 600;
 		m_Framebuffer = Uneye::Framebuffer::Create(fbspec);
 
 		m_ActiveScene = CreateRef<Scene>();
+
+		for (int y = 0; y < 5; y++)
+		{
+			for (int x = 0; x < 5; x++)
+			{
+				auto entt = m_ActiveScene->CreateEntity("Tile square " + std::to_string(x + y * 5));
+				entt.GetComponent<TransformComponent>().Translation = glm::vec3(x * 0.6f, y * 0.6f, 0.0f);
+				entt.GetComponent<TransformComponent>().Scale = glm::vec3(0.5f, 0.5f, 1.0f);
+				entt.AddComponent<MaterialComponent>(glm::vec4(1.0f), "assets/textures/blending_transparent_window.png");
+			}
+		}
+
 
 		m_EditorCamera = EditorCamera(45.0f, 1.677, 0.1f, 1000.0f);
 
@@ -59,7 +72,7 @@ namespace Uneye
 		Renderer2D::ResetStats();
 		m_Framebuffer->Bind();
 		//RenderCommand::Clear(glm::vec4(0.1f, 0.1f, 0.13f, 1.0f));
-		RenderCommand::Clear(glm::vec4(1.0f));
+		RenderCommand::Clear(glm::vec4(0.1f, 0.1f, 0.1f, 1.0f));
 
 		m_ActiveScene->OnUpdateEditor(ts, m_EditorCamera);
 

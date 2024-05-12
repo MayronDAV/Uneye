@@ -16,6 +16,7 @@ namespace Uneye
 
 			const glm::mat4& GetProjection() const { return m_Projection; }
 
+
 			// TODO:
 			// SetPerspective(...)
 

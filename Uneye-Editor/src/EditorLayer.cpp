@@ -85,8 +85,6 @@ namespace Uneye
 		//RenderCommand::Clear(glm::vec4(0.1f, 0.1f, 0.13f, 1.0f));
 		RenderCommand::Clear(glm::vec4(0.1f, 0.1f, 0.1f, 1.0f));
 
-		m_Framebuffer->ClearAttachment(1, -1);
-
 		m_ActiveScene->OnUpdateEditor(ts, m_EditorCamera);
 
 		auto [mx, my] = ImGui::GetMousePos();
@@ -104,6 +102,8 @@ namespace Uneye
 			int pixelData = m_Framebuffer->ReadPixel(1, mouseX, mouseY);
 			m_HoveredEntity = pixelData == -1 ? Entity() : Entity((entt::entity)pixelData, m_ActiveScene.get());
 		}
+
+
 
 
 		m_Framebuffer->Unbind();

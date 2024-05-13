@@ -91,11 +91,6 @@ namespace Uneye
 			case FramebufferTextureFormat::RED_INTEGER: return GL_RED_INTEGER;
 			}
 
-			UNEYE_CORE_ASSERT(true, "");
-			return 0;
-		}
-	}
-
 	OpenGLFramebuffer::OpenGLFramebuffer(const FramebufferSpecification& spec)
 		:m_Specification(spec)
 	{

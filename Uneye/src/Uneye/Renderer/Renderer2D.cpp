@@ -109,8 +109,8 @@ namespace Uneye
 		}
 
 		s_Data.QuadShader = Shader::Create("assets/shaders/square.glsl");
-		//s_Data.QuadShader->Bind();
-		//s_Data.QuadShader->SetIntArray("u_Textures", samplers, s_Data.MaxTextureSlots);
+		s_Data.QuadShader->Bind();
+		s_Data.QuadShader->SetIntArray("u_Textures", samplers, s_Data.MaxTextureSlots);
 
 		memset(s_Data.TextureSlots.data(), 0, s_Data.TextureSlots.size() * sizeof(uint32_t));
 	

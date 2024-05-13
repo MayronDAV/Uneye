@@ -73,6 +73,11 @@ namespace Uneye
 		ImGui::End();
 	}
 
+	void SceneHierarchyPanel::SetSelectedEntity(Entity entity)
+	{
+		m_SelectionContext = entity;
+	}
+
 	void SceneHierarchyPanel::DrawEntityNode(Entity entt)
 	{
 		auto& tag = entt.GetComponent<TagComponent>().Tag;
@@ -297,15 +302,30 @@ namespace Uneye
 				UI::DrawColorEdit4("Color ", mc.Color, 1.0f);
 
 				UI::DrawClickableText("Texture Path", mc.TexturePath, [&]() {
-				
-					std::optional<std::string> filepath = FileDialogs::OpenFile("img files (*.png)|*.jpg|All files (*.*)|*.*");
-					std::string path = mc.TexturePath;
-					if (filepath == std::nullopt)
-						mc.TexturePath = path;
-					else
-						mc.TexturePath = *filepath;
 
-					mc.Texture = Texture2D::Create(mc.TexturePath);
+						mc.TexturePath = " ";
+						mc.Texture = nullptr;
+						mc.IsSubTexture = false;
+						mc.SubTexture = nullptr;
+
+				}, [&]() {
+				
+					std::string filepath = FileDialogs::OpenFile("img files (*.png)|*.jpg|All files (*.*)|*.*");
+					std::string path = mc.TexturePath;
+					if (filepath.empty())
+					{
+						mc.TexturePath = path;
+					}
+					else
+						mc.TexturePath = filepath;
+
+					if (mc.TexturePath == "" || mc.TexturePath == " " || mc.TexturePath == std::string())
+					{
+						mc.Texture = nullptr;
+						mc.IsSubTexture = false;
+					}
+					else
+						mc.Texture = Texture2D::Create(mc.TexturePath);
 
 				});
 					

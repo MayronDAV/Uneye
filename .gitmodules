@@ -16,3 +16,6 @@
 [submodule "Uneye/vendor/ImGuizmo"]
 	path = Uneye/vendor/ImGuizmo
 	url = https://github.com/thecherno/ImGuizmo
+[submodule "Uneye/vendor/shaderc"]
+	path = Uneye/vendor/shaderc
+	url = https://github.com/google/shaderc.git

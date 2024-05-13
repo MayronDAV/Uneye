@@ -13,26 +13,6 @@ namespace Uneye
 	// Shader ////////////////////////////////////////////////////////////
 	//////////////////////////////////////////////////////////////////////
 
-	Ref<Shader> Shader::Create(const std::string& name, const std::string& vertexPath, const std::string& fragmentPath)
-	{
-		switch (Renderer::GetAPI())
-		{
-			case RendererAPI::API::None:
-			{
-				UNEYE_CORE_ASSERT(true, "RendererAPI::None is currently not support!");
-				return nullptr;
-			}
-			case RendererAPI::API::OpenGL:
-			{
-				return CreateRef<OpenGLShader>(name, vertexPath, fragmentPath);
-			}
-		}
-
-		UNEYE_CORE_ASSERT(true, "Unknown RendererAPI!");
-		return nullptr;
-	}
-
-
 	Ref<Shader> Shader::Create(const std::string& shaderPath)
 	{
 		switch (Renderer::GetAPI())

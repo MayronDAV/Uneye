@@ -41,10 +41,6 @@ namespace Uneye
 
 			virtual const std::string& GetName() const = 0;
 
-
-			// Create a shader with vertex and fragment shader in different files
-			static Ref<Shader> Create(const std::string& name, const std::string& vertexPath, const std::string& fragmentPath);
-			// Create a shader with vertex and fragment shader in one file
 			static Ref<Shader> Create(const std::string& shaderPath);
 
 	};

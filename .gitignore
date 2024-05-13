@@ -3,6 +3,10 @@
 /bin/
 !/vendor/premake/bin/
 /bin-int/
+Uneye/vendor/VulkanSDK
+Uneye-Editor/assets/cache
+scripts/__pycache__
 
 # Files
 *.user
+

@@ -28,6 +28,7 @@ namespace Uneye
 
 	private:
 		bool OnKeyPressed(KeyPressedEvent& e);
+		bool OnMouseButtonPressed(MouseButtonPressedEvent& e);
 
 		void NewScene();
 		void OpenScene();
@@ -37,6 +38,8 @@ namespace Uneye
 		// Temp
 		Ref<Shader> m_Shader;
 		Ref<VertexArray> m_VertexArray;
+
+		Entity m_HoveredEntity;
 
 		Uneye::Ref<Uneye::Framebuffer> m_Framebuffer;
 

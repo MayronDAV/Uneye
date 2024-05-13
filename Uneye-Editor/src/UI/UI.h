@@ -2,7 +2,7 @@
 
 #include <string>
 #include <glm/glm.hpp>
-
+#include "Uneye/Core/FontManager.h"
 
 
 namespace Uneye
@@ -58,8 +58,8 @@ namespace Uneye
 
 			static bool DrawVec2Input(const std::string& label, glm::vec2& values, float resetValue = 0.0f);
 
-			template<typename Func>
-			static void DrawClickableText(const std::string& label, std::string& value, const Func& onClick)
+			template<typename Func1, typename Func2>
+			static void DrawClickableText(const std::string& label, std::string& value, const Func1& onResetButton, const Func2& onClick)
 			{
 				ImGui::PushID(label.c_str());
 
@@ -79,12 +79,21 @@ namespace Uneye
 				ImVec2 textPos = ImGui::GetCursorScreenPos();
 				ImVec2 textEndPos = ImVec2(textPos.x + textSize.x, textPos.y + textSize.y);
 
+				//ImGui::PushFont(FontManager::GetFont("Arrows"));
+				if (ImGui::Button("X", { lineHeight, lineHeight } ))
+				{
+					onResetButton();
+				}
+				//ImGui::PopFont();
+
+				ImGui::SameLine();
+
 				if (ImGui::Button("##button", { textSize.x + 20.0f, lineHeight }))
 				{
 					onClick();
 				}
 
-				ImGui::SetCursorScreenPos(ImVec2(textPos.x + (textSize.x - ImGui::CalcTextSize(value.c_str()).x) * 0.5f + 10.0f, textPos.y));
+				ImGui::SetCursorScreenPos(ImVec2(textPos.x + (textSize.x - ImGui::CalcTextSize(value.c_str()).x) * 0.5f + 10.0f + lineHeight, textPos.y));
 				ImGui::TextUnformatted(value.c_str());
 
 				//if (ImGui::IsItemClicked()) {

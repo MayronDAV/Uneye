@@ -83,7 +83,7 @@ namespace Uneye
 			return false;
 		}
 
-		static GLenum HazelFBTextureFormatToGL(FramebufferTextureFormat format)
+		static GLenum UneyeFBTextureFormatToGL(FramebufferTextureFormat format)
 		{
 			switch (format)
 			{
@@ -262,7 +262,7 @@ namespace Uneye
 
 		auto& spec = m_ColorAttachmentSpecs[attachmentIndex];
 		glClearTexImage(m_ColorAttachments[attachmentIndex], 0,
-			Utils::HazelFBTextureFormatToGL(spec.TextureFormat), GL_INT, &value);
+			Utils::UneyeFBTextureFormatToGL(spec.TextureFormat), GL_INT, &value);
 	}
 
 }

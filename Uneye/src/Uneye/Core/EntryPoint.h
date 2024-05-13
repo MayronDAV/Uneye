@@ -1,8 +1,11 @@
 #pragma once
 
+#include "Uneye/Core/Base.h"
+#include "Uneye/Core/Application.h"
+
 #ifdef UNEYE_PLATFORM_WINDOWS
 
-extern Uneye::Application* Uneye::CreateApplication();
+extern Uneye::Application* Uneye::CreateApplication(ApplicationCommandLineArgs args);
 
 int main(int argc, char** argv)
 {
@@ -10,7 +13,7 @@ int main(int argc, char** argv)
 	UNEYE_CORE_INFO("Initialized Application!");
 
 	UNEYE_PROFILE_BEGIN_SESSION("Startup", "UneyeStartup.json");
-	auto app = Uneye::CreateApplication();
+	auto app = Uneye::CreateApplication({ argc, argv });
 	UNEYE_PROFILE_END_SESSION();
 
 	UNEYE_PROFILE_BEGIN_SESSION("Runtime", "UneyeRuntime.json");

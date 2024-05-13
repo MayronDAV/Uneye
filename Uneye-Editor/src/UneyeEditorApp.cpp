@@ -9,8 +9,8 @@ namespace Uneye
 	class UneyeEditor : public Application
 	{
 	public:
-		UneyeEditor()
-			:Application("Uneye Editor")
+		UneyeEditor(ApplicationCommandLineArgs args)
+			: Application("Uneye-Editor", args)
 		{
 			PushLayer(new EditorLayer());
 		}
@@ -18,8 +18,8 @@ namespace Uneye
 		~UneyeEditor() = default;
 	};
 
-	Application* CreateApplication()
+	Application* CreateApplication(ApplicationCommandLineArgs args)
 	{
-		return new UneyeEditor();
+		return new UneyeEditor(args);
 	}
 }

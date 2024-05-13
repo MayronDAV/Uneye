@@ -8,11 +8,12 @@
 
 namespace Uneye
 {
+
+
 	class OpenGLShader : public Shader
 	{
 		public:
-			OpenGLShader(const std::string& name, const std::string& vertexPath, const std::string& fragmentPath);
-			OpenGLShader(const std::string& shaderPath);
+			OpenGLShader(const std::string& filePath);
 			virtual ~OpenGLShader();
 
 			virtual void Bind() const override;
@@ -68,10 +69,20 @@ namespace Uneye
 		private:
 			std::string ReadFile(const std::string& filepath);
 			std::unordered_map<unsigned int, std::string> PreProcess(const std::string& source);
-			void Compile(const std::unordered_map<unsigned int, std::string>& shaderSources);
+
+			void CompileOrGetVulkanBinaries(const std::unordered_map<unsigned int, std::string>& shaderSources);
+			void CompileOrGetOpenGLBinaries();
+			void CreateProgram();
+			void Reflect(unsigned int stage, const std::vector<uint32_t>& shaderData);
 
 		private:
 			uint32_t m_RendererID = 0;
+			std::string m_FilePath;
 			std::string m_Name;
+
+			std::unordered_map<unsigned int, std::vector<uint32_t>> m_VulkanSPIRV;
+			std::unordered_map<unsigned int, std::vector<uint32_t>> m_OpenGLSPIRV;
+
+			std::unordered_map<unsigned int, std::string> m_OpenGLSourceCode;
 	};
 }

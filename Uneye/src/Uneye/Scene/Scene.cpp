@@ -45,10 +45,8 @@ namespace Uneye
 		{
 			auto [transform, material] = groupM.get<TransformComponent, MaterialComponent>(entity);
 
-			if (material.IsSubTexture)
-				Renderer2D::DrawQuad(transform.GetTransform(), material.SubTexture, material.Color);
-			else
-				Renderer2D::DrawQuad(transform.GetTransform(), material.Color, material.Texture);
+
+			Renderer2D::DrawSprite(transform.GetTransform(), material, (int)entity);
 		}
 
 		Renderer2D::EndScene();
@@ -102,11 +100,7 @@ namespace Uneye
 			{
 				auto [transform, material] = groupM.get<TransformComponent, MaterialComponent>(entity);
 
-				if (material.IsSubTexture)
-					Renderer2D::DrawQuad(transform.GetTransform(), material.SubTexture, material.Color);
-				else
-					Renderer2D::DrawQuad(transform.GetTransform(), material.Color, material.Texture);
-
+				Renderer2D::DrawSprite(transform.GetTransform(), material, (int)entity);
 			}
 
 			Renderer2D::EndScene();

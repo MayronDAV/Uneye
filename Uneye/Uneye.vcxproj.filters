@@ -28,6 +28,9 @@
     <Filter Include="src\Uneye\ImGui">
       <UniqueIdentifier>{4C278F79-B8B2-FC3D-C1C3-7F322DCE583E}</UniqueIdentifier>
     </Filter>
+    <Filter Include="src\Uneye\Math">
+      <UniqueIdentifier>{BB5A0659-A728-FA5E-90BC-6A857C29D6C3}</UniqueIdentifier>
+    </Filter>
     <Filter Include="src\Uneye\Renderer">
       <UniqueIdentifier>{885AFF98-743E-C0EE-DD9E-BA41C9A1AA70}</UniqueIdentifier>
     </Filter>
@@ -93,6 +96,9 @@
     <ClInclude Include="src\Platform\OpenGL\OpenGLTexture.h">
       <Filter>src\Platform\OpenGL</Filter>
     </ClInclude>
+    <ClInclude Include="src\Platform\OpenGL\OpenGLUniformBuffer.h">
+      <Filter>src\Platform\OpenGL</Filter>
+    </ClInclude>
     <ClInclude Include="src\Platform\OpenGL\OpenGLVertexArray.h">
       <Filter>src\Platform\OpenGL</Filter>
     </ClInclude>
@@ -129,6 +135,9 @@
     <ClInclude Include="src\Uneye\Core\Log.h">
       <Filter>src\Uneye\Core</Filter>
     </ClInclude>
+    <ClInclude Include="src\Uneye\Core\Timer.h">
+      <Filter>src\Uneye\Core</Filter>
+    </ClInclude>
     <ClInclude Include="src\Uneye\Core\Timestep.h">
       <Filter>src\Uneye\Core</Filter>
     </ClInclude>
@@ -153,10 +162,16 @@
     <ClInclude Include="src\Uneye\ImGui\ImGuiLayer.h">
       <Filter>src\Uneye\ImGui</Filter>
     </ClInclude>
+    <ClInclude Include="src\Uneye\Math\Math.h">
+      <Filter>src\Uneye\Math</Filter>
+    </ClInclude>
     <ClInclude Include="src\Uneye\Renderer\Buffer.h">
       <Filter>src\Uneye\Renderer</Filter>
     </ClInclude>
     <ClInclude Include="src\Uneye\Renderer\Camera.h">
+      <Filter>src\Uneye\Renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Uneye\Renderer\EditorCamera.h">
       <Filter>src\Uneye\Renderer</Filter>
     </ClInclude>
     <ClInclude Include="src\Uneye\Renderer\Framebuffer.h">
@@ -184,6 +199,9 @@
       <Filter>src\Uneye\Renderer</Filter>
     </ClInclude>
     <ClInclude Include="src\Uneye\Renderer\Texture.h">
+      <Filter>src\Uneye\Renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Uneye\Renderer\UniformBuffer.h">
       <Filter>src\Uneye\Renderer</Filter>
     </ClInclude>
     <ClInclude Include="src\Uneye\Renderer\VertexArray.h">
@@ -1395,8 +1413,6 @@
     <ClInclude Include="vendor\stb\include\stb_voxel_render.h">
       <Filter>vendor\stb\include</Filter>
     </ClInclude>
-    <ClInclude Include="src\Uneye\Math\Math.h" />
-    <ClInclude Include="src\Uneye\Renderer\EditorCamera.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Platform\OpenGL\OpenGLBuffer.cpp">
@@ -1415,6 +1431,9 @@
       <Filter>src\Platform\OpenGL</Filter>
     </ClCompile>
     <ClCompile Include="src\Platform\OpenGL\OpenGLTexture.cpp">
+      <Filter>src\Platform\OpenGL</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Platform\OpenGL\OpenGLUniformBuffer.cpp">
       <Filter>src\Platform\OpenGL</Filter>
     </ClCompile>
     <ClCompile Include="src\Platform\OpenGL\OpenGLVertexArray.cpp">
@@ -1450,7 +1469,13 @@
     <ClCompile Include="src\Uneye\ImGui\ImGuiLayer.cpp">
       <Filter>src\Uneye\ImGui</Filter>
     </ClCompile>
+    <ClCompile Include="src\Uneye\Math\Math.cpp">
+      <Filter>src\Uneye\Math</Filter>
+    </ClCompile>
     <ClCompile Include="src\Uneye\Renderer\Buffer.cpp">
+      <Filter>src\Uneye\Renderer</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Uneye\Renderer\EditorCamera.cpp">
       <Filter>src\Uneye\Renderer</Filter>
     </ClCompile>
     <ClCompile Include="src\Uneye\Renderer\Framebuffer.cpp">
@@ -1475,6 +1500,9 @@
       <Filter>src\Uneye\Renderer</Filter>
     </ClCompile>
     <ClCompile Include="src\Uneye\Renderer\Texture.cpp">
+      <Filter>src\Uneye\Renderer</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Uneye\Renderer\UniformBuffer.cpp">
       <Filter>src\Uneye\Renderer</Filter>
     </ClCompile>
     <ClCompile Include="src\Uneye\Renderer\VertexArray.cpp">
@@ -1522,7 +1550,5 @@
     <ClCompile Include="vendor\stb\src\stb_image.cpp">
       <Filter>vendor\stb\src</Filter>
     </ClCompile>
-    <ClCompile Include="src\Uneye\Math\Math.cpp" />
-    <ClCompile Include="src\Uneye\Renderer\EditorCamera.cpp" />
   </ItemGroup>
 </Project>

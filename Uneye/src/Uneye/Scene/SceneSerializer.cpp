@@ -292,6 +292,11 @@ namespace Uneye
 					auto& mc = deserializedEntity.AddComponent<MaterialComponent>();
 					mc.Color = materialComponent["Color"].as<glm::vec4>();
 					mc.TexturePath = materialComponent["TexturePath"].as<std::string>();
+					if (mc.TexturePath == "" || mc.TexturePath == " " || mc.TexturePath.empty())
+						mc.Texture = nullptr;
+					else
+						mc.Texture = Texture2D::Create(mc.TexturePath);
+
 					mc.IsSubTexture = materialComponent["IsSubTexture"].as<bool>();
 
 					if (mc.IsSubTexture)

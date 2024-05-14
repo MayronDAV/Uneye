@@ -54,9 +54,15 @@ namespace Uneye
 			return nullptr;
 		}
 
+		static void CreateDirectoryIfNeeded(const std::string& path)
+		{
+			if (!std::filesystem::exists(path))
+				std::filesystem::create_directories(path);
+		}
+
 		static const char* GetCacheDirectory()
 		{
-			// TODO: make sure the assets directory is valid
+			CreateDirectoryIfNeeded("assets");
 			return "assets/cache/shader/opengl";
 		}
 

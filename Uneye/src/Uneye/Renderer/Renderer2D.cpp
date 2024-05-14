@@ -18,8 +18,8 @@ namespace Uneye
 		glm::vec4 Color;
 		glm::vec2 TexCoord;
 		float TexIndex;
-		// TODO: texhandleID
 
+		// Maybe editor only
 		int EntityID;
 	};
 
@@ -29,7 +29,7 @@ namespace Uneye
 		static const uint32_t MaxQuads = 5000;
 		static const uint32_t MaxVertices = MaxQuads * 4;
 		static const uint32_t MaxIndices = MaxQuads * 6;
-		static const uint32_t MaxTextureSlots = 32; // TODO: Bindless texture or Rendercaps
+		static const uint32_t MaxTextureSlots = 32;
 
 		Ref<VertexArray> QuadVertexArray;
 		Ref<VertexBuffer> QuadVertexBuffer;
@@ -52,8 +52,8 @@ namespace Uneye
 		{
 			glm::mat4 ViewProjection;
 		};
-		CameraData CameraBuffer;
-		Ref<UniformBuffer> CameraUniformBuffer;
+		CameraData CameraBuffer{ glm::mat4(1.0f) };
+		Ref<UniformBuffer> CameraUniformBuffer = nullptr;
 	};
 	static Renderer2Ddata s_Data;
 
@@ -109,8 +109,6 @@ namespace Uneye
 		}
 
 		s_Data.QuadShader = Shader::Create("assets/shaders/square.glsl");
-		s_Data.QuadShader->Bind();
-		s_Data.QuadShader->SetIntArray("u_Textures", samplers, s_Data.MaxTextureSlots);
 
 		memset(s_Data.TextureSlots.data(), 0, s_Data.TextureSlots.size() * sizeof(uint32_t));
 	
@@ -128,6 +126,7 @@ namespace Uneye
 	void Renderer2D::Shutdown()
 	{
 		UNEYE_PROFILE_FUNCTION();
+
 	}
 
 	void Renderer2D::StartBatch()
@@ -164,9 +163,6 @@ namespace Uneye
 	{
 		UNEYE_PROFILE_FUNCTION();
 
-		uint32_t dataSize = static_cast<uint32_t>((uint8_t*)s_Data.QuadVertexBufferPtr - (uint8_t*)s_Data.QuadVertexBufferBase);
-		s_Data.QuadVertexBuffer->SetData(s_Data.QuadVertexBufferBase, dataSize);
-
 		Flush();
 	}
 
@@ -174,10 +170,14 @@ namespace Uneye
 	{
 		UNEYE_PROFILE_FUNCTION();
 
+		if (s_Data.QuadIndexCount == 0)
+			return; // Nothing to draw
+
+		uint32_t dataSize = (uint32_t)((uint8_t*)s_Data.QuadVertexBufferPtr - (uint8_t*)s_Data.QuadVertexBufferBase);
+		s_Data.QuadVertexBuffer->SetData(s_Data.QuadVertexBufferBase, dataSize);
+
 		for (uint32_t i = 0; i < s_Data.TextureSlotIndex; i++)
-		{
 			s_Data.TextureSlots[i]->Bind(i);
-		}
 
 		s_Data.QuadShader->Bind();
 		RenderCommand::DrawIndexed(s_Data.QuadVertexArray, s_Data.QuadIndexCount);
@@ -262,8 +262,6 @@ namespace Uneye
 		const Ref<Texture2D>& texture, int entityID)
 	{
 		UNEYE_PROFILE_FUNCTION();
-
-		//UNEYE_CORE_TRACE("{0}", s_Data.TextureSlotIndex);
 
 		constexpr size_t quadVertexCount = 4;
 		constexpr glm::vec2 QuadTexCoords[] = {

@@ -23,7 +23,6 @@ namespace Uneye
 		static void BindTexture(bool multisampled, uint32_t id)
 		{
 			glBindTexture(TextureTarget(multisampled), id);
-			//glBindTexture(GL_TEXTURE_2D_MULTISAMPLE, id);
 		}
 
 		static void AttachColorTexture(uint32_t id, int samples, GLenum internalFormat, GLenum format,
@@ -90,6 +89,11 @@ namespace Uneye
 			case FramebufferTextureFormat::RGBA8:       return GL_RGBA8;
 			case FramebufferTextureFormat::RED_INTEGER: return GL_RED_INTEGER;
 			}
+
+			UNEYE_CORE_ASSERT(true, "");
+			return 0;
+		}
+	}
 
 	OpenGLFramebuffer::OpenGLFramebuffer(const FramebufferSpecification& spec)
 		:m_Specification(spec)

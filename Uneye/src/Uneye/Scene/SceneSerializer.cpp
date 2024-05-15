@@ -292,6 +292,16 @@ namespace Uneye
 					auto& mc = deserializedEntity.AddComponent<MaterialComponent>();
 					mc.Color = materialComponent["Color"].as<glm::vec4>();
 					mc.TexturePath = materialComponent["TexturePath"].as<std::string>();
+					if (mc.TexturePath == "" || mc.TexturePath == " " || mc.TexturePath == std::string())
+					{
+						mc.Texture = nullptr;
+						mc.IsSubTexture = false;
+					}
+					else
+					{
+						mc.Texture = Texture2D::Create(mc.TexturePath);
+					}
+
 					mc.IsSubTexture = materialComponent["IsSubTexture"].as<bool>();
 
 					if (mc.IsSubTexture)
@@ -299,6 +309,9 @@ namespace Uneye
 						mc.TileSize = materialComponent["TileSize"].as<glm::vec2>();
 						mc.Coords = materialComponent["Coords"].as<glm::vec2>();
 						mc.SpriteSize = materialComponent["SpriteSize"].as<glm::vec2>();
+
+						mc.SubTexture = SubTexture2D::CreateFromTexture(mc.Texture, mc.Coords,
+							mc.TileSize, mc.SpriteSize);
 					}
 				}
 			}

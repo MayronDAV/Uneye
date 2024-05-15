@@ -7,10 +7,14 @@
 #include <glm/glm.hpp>
 
 #include "Uneye/Scene/Entity.h"
+#include <chrono>
+#include "Uneye/Core/Timer.h"
 
 
 namespace Uneye
 {
+
+
 	Scene::Scene()
 	{
 	}
@@ -38,6 +42,15 @@ namespace Uneye
 	{
 		UNEYE_PROFILE_FUNCTION();
 
+		float currentTime = Time::GetTime();
+		if (currentTime - m_LastTime >= 1.0f)
+		{
+			m_FPS = m_FPSCounter / (currentTime - m_LastTime);
+			m_LastTime = currentTime;
+			m_FPSCounter = 0;
+		}
+		Timer timer;
+
 		Renderer2D::BeginScene(camera);
 
 		auto groupM = m_Registry.group<TransformComponent>(entt::get<MaterialComponent>);
@@ -50,6 +63,8 @@ namespace Uneye
 		}
 
 		Renderer2D::EndScene();
+
+		m_FPSCounter++;
 	}
 
 	void Scene::OnUpdateRuntime(Timestep ts)

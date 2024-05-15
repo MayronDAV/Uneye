@@ -18,7 +18,7 @@ class ParticleSystem
 		ParticleSystem(uint32_t maxParticles = 99999);
 
 		void OnUpdate(Uneye::Timestep ts);
-		void OnRender(Uneye::OrthographicCamera& camera);
+		void OnRender(Uneye::EditorCamera& camera);
 
 		void Emit(const ParticleProps& particleProps);
 	private:

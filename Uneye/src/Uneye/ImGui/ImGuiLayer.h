@@ -44,7 +44,6 @@ namespace Uneye {
 			float* GetColorBG();
 
 		private:
-			float m_Time = 0.0f;
 			float m_BgColor[4] = {1.0f, 1.0f, 1.0f, 1.0f};
 
 

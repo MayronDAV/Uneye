@@ -10,7 +10,7 @@
 class Sandbox : public Uneye::Application
 {
 	public:
-		Sandbox()
+		Sandbox(Uneye::ApplicationCommandLineArgs args)
 		{
 			PushLayer(new Sandbox2D());
 
@@ -20,7 +20,7 @@ class Sandbox : public Uneye::Application
 		~Sandbox() = default;
 };
 
-Uneye::Application* Uneye::CreateApplication()
+Uneye::Application* Uneye::CreateApplication(Uneye::ApplicationCommandLineArgs args)
 {
-	return new Sandbox();
+	return new Sandbox(args);
 }

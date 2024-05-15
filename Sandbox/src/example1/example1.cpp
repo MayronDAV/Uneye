@@ -39,17 +39,7 @@ void Example1::OnAttach()
 
 	Uneye::Application::Get().GetWindow().SetVSync(false);
 
-	m_Particle.ColorBegin = { 254 / 255.0f, 212 / 255.0f, 123 / 255.0f, 1.0f };
-	m_Particle.ColorEnd = { 254 / 255.0f, 109 / 255.0f, 41 / 255.0f, 1.0f };
-	m_Particle.SizeBegin = 0.5f, m_Particle.SizeVariation = 0.3f, m_Particle.SizeEnd = 0.0f;
-	m_Particle.LifeTime = 1.0f;
-	m_Particle.Velocity = { 0.0f, 0.0f };
-	m_Particle.VelocityVariation = { 3.0f, 1.0f };
-	m_Particle.Position = { 0.0f, 0.0f };
-
 	m_SpriteSheet = Uneye::Texture2D::Create("assets/game/RPGpack_sheet_2X.png");
-
-	m_CameraController.SetZoomLevel(5.0f);
 
 	m_Map['0'] = Uneye::SubTexture2D::CreateFromTexture(m_SpriteSheet, { 11, 11 }, { 128, 128 });
 	m_Map['1'] = Uneye::SubTexture2D::CreateFromTexture(m_SpriteSheet, { 6, 11 }, { 128, 128 });
@@ -66,7 +56,7 @@ void Example1::OnUpdate(Uneye::Timestep ts)
 	UNEYE_PROFILE_FUNCTION();
 
 
-	m_CameraController.OnUpdate(ts);
+	m_EditorCamera.OnUpdate(ts);
 
 	Uneye::Renderer2D::ResetStats();
 
@@ -75,27 +65,8 @@ void Example1::OnUpdate(Uneye::Timestep ts)
 	{
 		UNEYE_PROFILE_SCOPE("Renderer Draw");
 
-		if (Uneye::Input::IsMouseButtonPressed(Uneye::Mouse::Button_Left))
-		{
-			auto [x, y] = Uneye::Input::GetMousePosition();
-			auto width = Uneye::Application::Get().GetWindow().GetWidth();
-			auto height = Uneye::Application::Get().GetWindow().GetHeight();
 
-			auto bounds = m_CameraController.GetBounds();
-			auto pos = m_CameraController.GetCamera().GetPosition();
-			x = (x / width) * bounds.GetWidth() - bounds.GetWidth() * 0.5f;
-			y = bounds.GetHeight() * 0.5f - (y / height) * bounds.GetHeight();
-			m_Particle.Position = { x + pos.x, y + pos.y };
-			for (int i = 0; i < 5; i++)
-				m_ParticleSystem.Emit(m_Particle);
-
-		}
-
-		m_ParticleSystem.OnUpdate(ts);
-		m_ParticleSystem.OnRender(m_CameraController.GetCamera());
-
-
-		Uneye::Renderer2D::BeginScene(m_CameraController.GetCamera());
+		Uneye::Renderer2D::BeginScene(m_EditorCamera);
 
 		for (int y = 0; y < s_MapHeight; y++)
 		{
@@ -127,7 +98,7 @@ void Example1::OnUpdate(Uneye::Timestep ts)
 
 void Example1::OnEvent(Uneye::Event& e)
 {
-	m_CameraController.OnEvent(e);
+	m_EditorCamera.OnEvent(e);
 }
 
 void Example1::OnImGuiRender()

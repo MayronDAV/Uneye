@@ -82,8 +82,8 @@ namespace Uneye
 
 		Renderer2D::ResetStats();
 		m_Framebuffer->Bind();
-		RenderCommand::Clear(glm::vec4(0.1f, 0.1f, 0.13f, 1.0f));
-		//RenderCommand::Clear(glm::vec4(0.1f, 0.1f, 0.1f, 1.0f));
+		//RenderCommand::Clear(glm::vec4(1.0f));
+		RenderCommand::Clear(glm::vec4(0.1f, 0.1f, 0.1f, 1.0f));
 
 		m_Framebuffer->ClearAttachment(1, -1);
 
@@ -187,6 +187,7 @@ namespace Uneye
 		}
 
 		m_SceneHierarchyPanel.OnImGuiRender();
+		m_ContentBrowserPanel.OnImGuiRender();
 
 		ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2(0, 0));
 		ImGui::Begin("Viewport");
@@ -239,7 +240,7 @@ namespace Uneye
 
 			float snapValues[3] = { snapValue, snapValue, snapValue };
 
-			ImGuizmo::Manipulate(glm::value_ptr(cameraView), glm::value_ptr(cameraProjection),
+			ImGuizmo::Manipulate(glm::value_ptr(cameraView), glm::value_ptr(cameraProjection), 
 				(ImGuizmo::OPERATION)m_GuizmoType, ImGuizmo::LOCAL, glm::value_ptr(transform),
 				nullptr, snap ? snapValues : nullptr);
 

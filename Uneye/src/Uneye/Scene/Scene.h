@@ -6,6 +6,7 @@
 #include "Uneye/Core/Timestep.h"
 
 #include "Uneye/Renderer/EditorCamera.h"
+#include "Uneye/Utils/PlatformUtils.h"
 
 
 
@@ -30,6 +31,8 @@ namespace Uneye
 
 			Entity GetPrimaryCameraEntity();
 
+			float GetFPS() { return m_FPS; }
+
 		private:
 			template<typename T>
 			void OnComponentAdded(Entity entity, T& component);
@@ -37,6 +40,10 @@ namespace Uneye
 		private:
 			entt::registry m_Registry;
 			uint32_t m_ViewportWidth = 0, m_ViewportHeight = 0;
+
+			float m_LastTime = Time::GetTime();
+			float m_FPSCounter = 0;
+			float m_FPS = 0;
 
 			friend class Entity;
 			friend class SceneHierarchyPanel;

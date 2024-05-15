@@ -34,7 +34,7 @@ void ParticleSystem::OnUpdate(Uneye::Timestep ts)
 	}
 }
 
-void ParticleSystem::OnRender(Uneye::OrthographicCamera& camera)
+void ParticleSystem::OnRender(Uneye::EditorCamera& camera)
 {
 	Uneye::Renderer2D::BeginScene(camera);
 	for (auto& particle : m_ParticlePool)

@@ -5,13 +5,12 @@
 #include <glm/glm.hpp>
 #include <glm/gtc/type_ptr.hpp>
 
-#include "ParticleSystem/ParticleSystem.h"
 
 
 class Example1 : public Uneye::Layer
 {
 public:
-	Example1() :Layer("Sandbox2D"), m_CameraController(800.0f / 600.0f) {}
+	Example1() :Layer("Sandbox2D"), m_EditorCamera(90.0f, 800.0f / 600.0f, 0.01f, 1000.0f) {}
 	virtual ~Example1() = default;
 
 	virtual void OnAttach() override;
@@ -22,7 +21,7 @@ public:
 	virtual void OnImGuiRender() override;
 
 private:
-	Uneye::OrthographicCameraController m_CameraController;
+	Uneye::EditorCamera m_EditorCamera;
 
 	// Temp
 	Uneye::Ref<Uneye::Shader> m_Shader;
@@ -33,9 +32,6 @@ private:
 
 
 	glm::vec4 m_SquareColor{ 0.2f, 0.3f, 0.8f, 1.0f };
-
-	ParticleSystem m_ParticleSystem;
-	ParticleProps m_Particle;
 
 	std::unordered_map<char, Uneye::Ref<Uneye::SubTexture2D>> m_Map;
 };

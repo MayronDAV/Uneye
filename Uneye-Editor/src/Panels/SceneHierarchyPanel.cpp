@@ -63,6 +63,8 @@ namespace Uneye
 
 		ImGui::Begin("Stats");
 
+		UI::DrawTextArgs("FPS on editor ", " %.3f", m_Context->GetFPS());
+		ImGui::Spacing();
 		auto stats = Uneye::Renderer2D::GetStats();
 		ImGui::Text("Renderer2D Stats");
 		UI::DrawTextArgs("Draw Calls", " %d", stats.DrawCalls);

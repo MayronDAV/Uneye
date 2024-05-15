@@ -12,6 +12,10 @@ void Sandbox2D::OnAttach()
 	m_Texture = Uneye::Texture2D::Create("assets/textures/wall.jpg");
 
 	Uneye::FramebufferSpecification fbspec;
+	fbspec.Attachments = {
+		Uneye::FramebufferTextureFormat::RGBA8,
+		Uneye::FramebufferTextureFormat::Depth
+	};
 	fbspec.Width = 800;
 	fbspec.Height = 600;
 	m_Framebuffer = Uneye::Framebuffer::Create(fbspec);
@@ -26,8 +30,7 @@ void Sandbox2D::OnUpdate(Uneye::Timestep ts)
 {
 	UNEYE_PROFILE_FUNCTION();
 
-
-	m_CameraController.OnUpdate(ts);
+	m_EditorCamera.OnUpdate(ts);
 
 	Uneye::Renderer2D::ResetStats();
 	m_Framebuffer->Bind();
@@ -35,7 +38,7 @@ void Sandbox2D::OnUpdate(Uneye::Timestep ts)
 
 	{
 		UNEYE_PROFILE_SCOPE("Renderer Draw");
-		Uneye::Renderer2D::BeginScene(m_CameraController.GetCamera());
+		Uneye::Renderer2D::BeginScene(m_EditorCamera);
 
 
 		float Mapsize = 10;
@@ -57,7 +60,7 @@ void Sandbox2D::OnUpdate(Uneye::Timestep ts)
 
 		Uneye::Renderer2D::EndScene();
 
-		Uneye::Renderer2D::BeginScene(m_CameraController.GetCamera());
+		Uneye::Renderer2D::BeginScene(m_EditorCamera);
 
 		for (float x = 0.0f; x <= Mapsize; x += 1.0f)
 		{
@@ -83,7 +86,7 @@ void Sandbox2D::OnUpdate(Uneye::Timestep ts)
 
 void Sandbox2D::OnEvent(Uneye::Event& e)
 {
-	m_CameraController.OnEvent(e);
+	m_EditorCamera.OnEvent(e);
 }
 
 void Sandbox2D::OnImGuiRender()

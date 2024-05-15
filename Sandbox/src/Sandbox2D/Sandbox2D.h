@@ -9,7 +9,7 @@
 class Sandbox2D : public Uneye::Layer
 {
 	public:
-		Sandbox2D() :Layer("Sandbox2D"), m_CameraController(800.0f / 600.0f) {}
+		Sandbox2D() :Layer("Sandbox2D"), m_EditorCamera(90.0f, 1.677, 0.001f, 1000.0f) {}
 		virtual ~Sandbox2D() = default;
 
 		virtual void OnAttach() override;
@@ -20,7 +20,7 @@ class Sandbox2D : public Uneye::Layer
 		virtual void OnImGuiRender() override;
 
 	private:
-		Uneye::OrthographicCameraController m_CameraController;
+		Uneye::EditorCamera m_EditorCamera;
 
 		// Temp
 		Uneye::Ref<Uneye::Shader> m_Shader;

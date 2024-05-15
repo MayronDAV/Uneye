@@ -96,9 +96,50 @@ namespace Uneye
 				ImGui::SetCursorScreenPos(ImVec2(textPos.x + (textSize.x - ImGui::CalcTextSize(value.c_str()).x) * 0.5f + 10.0f + lineHeight, textPos.y));
 				ImGui::TextUnformatted(value.c_str());
 
-				//if (ImGui::IsItemClicked()) {
-				//	onClick();
-				//}
+				ImGui::PopStyleVar();
+				ImGui::Columns(1);
+				ImGui::PopID();
+			}
+
+			template<typename Func1, typename Func2, typename Func3>
+			static void DrawClickableText(const std::string& label, std::string& value, const Func1& onResetButton, const Func2& onClick, const Func3& other)
+			{
+				ImGui::PushID(label.c_str());
+
+				ImGui::Spacing();
+
+				ImGui::Columns(2);
+				ImGui::SetColumnWidth(0, m_ColumnWidth);
+				ImGui::Text(label.c_str());
+				ImGui::NextColumn();
+
+				ImGui::PushMultiItemsWidths(3, ImGui::CalcItemWidth());
+				ImGui::PushStyleVar(ImGuiStyleVar_ItemSpacing, ImVec2(0, 0));
+
+				float lineHeight = GImGui->Font->FontSize + GImGui->Style.FramePadding.y * 2.0f;
+
+				ImVec2 textSize = ImGui::CalcTextSize(value.c_str());
+				ImVec2 textPos = ImGui::GetCursorScreenPos();
+				ImVec2 textEndPos = ImVec2(textPos.x + textSize.x, textPos.y + textSize.y);
+
+				//ImGui::PushFont(FontManager::GetFont("Arrows"));
+				if (ImGui::Button("X", { lineHeight, lineHeight }))
+				{
+					onResetButton();
+				}
+				//ImGui::PopFont();
+
+				ImGui::SameLine();
+
+				if (ImGui::Button("##button", { textSize.x + 20.0f, lineHeight }))
+				{
+					onClick();
+				}
+
+				ImGui::SetCursorScreenPos(ImVec2(textPos.x + (textSize.x - ImGui::CalcTextSize(value.c_str()).x) * 0.5f + 10.0f + lineHeight, textPos.y));
+				ImGui::TextUnformatted(value.c_str());
+				
+				other();
 
 				ImGui::PopStyleVar();
 				ImGui::Columns(1);

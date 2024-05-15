@@ -92,8 +92,6 @@ namespace Uneye
 	void ContentBrowserPanel::OnImGuiRender()
 	{
 
-		ImGui::ShowDemoWindow();
-
 		static float splitterWidth = 8.0f;
 		static float leftPanelWidth = 150.0f;
 
@@ -180,7 +178,7 @@ namespace Uneye
 					}
 
 					ImGui::PushStyleColor(ImGuiCol_Button, { 0, 0, 0, 0 });
-					ImGui::PushStyleColor(ImGuiCol_ButtonHovered, { 0.3f, 0.3f, 0.35f,0.5f });
+					ImGui::PushStyleColor(ImGuiCol_ButtonHovered, { 0.3f, 0.3f, 0.35f, 0.5f });
 					ImGui::PushStyleColor(ImGuiCol_ButtonActive, { 0.3f, 0.3f, 0.35f, 0.5f });
 					if (ImGui::Button(segment.filename().string().c_str()))
 					{
@@ -260,8 +258,6 @@ namespace Uneye
 
 						ImGui::PushID(filenameString.c_str());
 						ImGui::PushStyleColor(ImGuiCol_Button, { 0, 0, 0, 0 });
-						ImGui::PushStyleColor(ImGuiCol_ButtonHovered, { 0.3f, 0.3f, 0.35f, 1 });
-						ImGui::PushStyleColor(ImGuiCol_ButtonActive, { 0.3f, 0.3f, 0.35f, 1.0f });
 						ImGui::ImageButton((ImTextureID)icon->GetRendererID(), { thumbnailSize, thumbnailSize }, { 0, 1 }, { 1, 0 });
 
 						if (ImGui::BeginDragDropSource())
@@ -271,7 +267,7 @@ namespace Uneye
 							ImGui::EndDragDropSource();
 						}
 						
-						ImGui::PopStyleColor(3);
+						ImGui::PopStyleColor();
 
 						if (ImGui::IsItemHovered() && ImGui::IsMouseDoubleClicked(ImGuiMouseButton_Left))
 						{
@@ -306,6 +302,14 @@ namespace Uneye
 							{
 								// Handle file opening logic here
 							}
+						}
+
+						if (ImGui::BeginDragDropSource())
+						{
+							auto relativePath = std::filesystem::relative(result, g_AssetPath);
+							const wchar_t* itemPath = relativePath.c_str();
+							ImGui::SetDragDropPayload("CONTENT_BROWSER_ITEM", itemPath, (wcslen(itemPath) + 1) * sizeof(wchar_t));
+							ImGui::EndDragDropSource();
 						}
 					}
 

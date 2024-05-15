@@ -12,9 +12,14 @@
 #include "Uneye/Renderer/Renderer2D.h"
 #include "Uneye/Utils/PlatformUtils.h"
 
+#include <filesystem>
+
+
 
 namespace Uneye
 {
+	extern const std::filesystem::path g_AssetPath;
+
 	SceneHierarchyPanel::SceneHierarchyPanel(const Ref<Scene>& context)
 	{
 		SetContext(context);
@@ -303,7 +308,8 @@ namespace Uneye
 
 				UI::DrawColorEdit4("Color ", mc.Color, 1.0f);
 
-				UI::DrawClickableText("Texture Path", mc.TexturePath, [&]() {
+				std::string filename = std::filesystem::path(mc.TexturePath).filename().string();
+				UI::DrawClickableText("Texture Path", filename, [&]() {
 
 						mc.TexturePath = " ";
 						mc.Texture = nullptr;
@@ -315,9 +321,7 @@ namespace Uneye
 					std::string filepath = FileDialogs::OpenFile("img files (*.png)|*.jpg|All files (*.*)|*.*");
 					std::string path = mc.TexturePath;
 					if (filepath.empty())
-					{
 						mc.TexturePath = path;
-					}
 					else
 						mc.TexturePath = filepath;
 
@@ -326,12 +330,27 @@ namespace Uneye
 						mc.Texture = nullptr;
 						mc.IsSubTexture = false;
 					}
-					else
+					else	
 						mc.Texture = Texture2D::Create(mc.TexturePath);
+
+					filename = std::filesystem::path(mc.TexturePath).filename().string();
+
+				}, [&]() {
+					if (ImGui::BeginDragDropTarget())
+					{
+						if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("CONTENT_BROWSER_ITEM"))
+						{
+							const wchar_t* path = (const wchar_t*)payload->Data;
+							std::filesystem::path texturePath = std::filesystem::path(g_AssetPath) / path;
+							mc.TexturePath = texturePath.string();
+							filename = std::filesystem::path(mc.TexturePath).filename().string();
+							mc.Texture = Texture2D::Create(texturePath.string());
+						}
+						ImGui::EndDragDropTarget();
+					}
 
 				});
 					
-
 				UI::DrawCheckBox("Is SubTexture ", &mc.IsSubTexture);
 
 				if (mc.IsSubTexture)
@@ -340,7 +359,10 @@ namespace Uneye
 					UI::DrawVec2Input("Tile Coord", mc.Coords);
 					UI::DrawVec2Input("Sprite Multiple Size", mc.SpriteSize, 1.0f);
 
-					mc.SubTexture = SubTexture2D::CreateFromTexture(mc.Texture, mc.Coords, mc.TileSize, mc.SpriteSize);
+					if (!(mc.TexturePath == "" || mc.TexturePath == " " || mc.TexturePath == std::string()))
+						mc.SubTexture = SubTexture2D::CreateFromTexture(mc.Texture, mc.Coords, mc.TileSize, mc.SpriteSize);
+					else
+						mc.SubTexture = nullptr;
 				}
 
 			}, true);

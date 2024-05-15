@@ -10,6 +10,7 @@
 
 
 
+
 namespace Uneye
 {
 	extern const std::filesystem::path g_AssetPath;
@@ -19,6 +20,9 @@ namespace Uneye
 		UNEYE_PROFILE_FUNCTION();
 
 		//Application::Get().GetWindow().SetVSync(false);
+
+		m_IconPlay = Texture2D::Create("Resources/Icons/PlayButton.png");
+		m_IconStop = Texture2D::Create("Resources/Icons/StopButton.png");
 
 		Uneye::FramebufferSpecification fbspec;
 		fbspec.Attachments = {
@@ -30,18 +34,9 @@ namespace Uneye
 		fbspec.Height = 600;
 		m_Framebuffer = Uneye::Framebuffer::Create(fbspec);
 
-		m_ActiveScene = CreateRef<Scene>();
 
-		for (int y = 0; y < 5; y++)
-		{
-			for (int x = 0; x < 5; x++)
-			{
-				auto entt = m_ActiveScene->CreateEntity("Tile square " + std::to_string(x + y * 5));
-				entt.GetComponent<TransformComponent>().Translation = glm::vec3(x * 0.6f, y * 0.6f, 0.0f);
-				entt.GetComponent<TransformComponent>().Scale = glm::vec3(0.5f, 0.5f, 1.0f);
-				entt.AddComponent<MaterialComponent>(glm::vec4(1.0f), "assets/textures/blending_transparent_window.png");
-			}
-		}
+
+		m_ActiveScene = CreateRef<Scene>();
 
 		auto commandLineArgs = Application::Get().GetCommandLineArgs();
 		if (commandLineArgs.Count > 1)
@@ -76,12 +71,6 @@ namespace Uneye
 			m_ActiveScene->OnViewportResize((uint32_t)m_ViewportSize.x, (uint32_t)m_ViewportSize.y);
 		}
 
-		//if (m_ViewportFocused)
-		//{
-		//	m_EditorCamera.OnUpdate(ts);
-		//}
-		m_EditorCamera.OnUpdate(ts);
-
 		Renderer2D::ResetStats();
 		m_Framebuffer->Bind();
 		//RenderCommand::Clear(glm::vec4(1.0f));
@@ -89,7 +78,22 @@ namespace Uneye
 
 		m_Framebuffer->ClearAttachment(1, -1);
 
-		m_ActiveScene->OnUpdateEditor(ts, m_EditorCamera);
+		switch (m_SceneState)
+		{
+		case SceneState::Edit:
+		{
+
+			m_EditorCamera.OnUpdate(ts);
+
+			m_ActiveScene->OnUpdateEditor(ts, m_EditorCamera);
+			break;
+		}
+		case SceneState::Play:
+		{
+			m_ActiveScene->OnUpdateRuntime(ts);
+			break;
+		}
+		}
 
 		auto [mx, my] = ImGui::GetMousePos();
 		mx -= m_ViewportBounds[0].x;
@@ -275,9 +279,38 @@ namespace Uneye
 		ImGui::End();
 		ImGui::PopStyleVar();
 
+		UI_Toolbar();
+
 		ImGui::End();
 
-		//ImGui::ShowDemoWindow();
+	}
+
+	void EditorLayer::UI_Toolbar()
+	{
+		ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2(0, 2));
+		ImGui::PushStyleVar(ImGuiStyleVar_ItemInnerSpacing, ImVec2(0, 0));
+		ImGui::PushStyleColor(ImGuiCol_Button, ImVec4(0, 0, 0, 0));
+		auto& colors = ImGui::GetStyle().Colors;
+		const auto& buttonHovered = colors[ImGuiCol_ButtonHovered];
+		ImGui::PushStyleColor(ImGuiCol_ButtonHovered, ImVec4(buttonHovered.x, buttonHovered.y, buttonHovered.z, 0.5f));
+		const auto& buttonActive = colors[ImGuiCol_ButtonActive];
+		ImGui::PushStyleColor(ImGuiCol_ButtonActive, ImVec4(buttonActive.x, buttonActive.y, buttonActive.z, 0.5f));
+
+		ImGui::Begin("##toolbar", nullptr, ImGuiWindowFlags_NoDecoration | ImGuiWindowFlags_NoScrollbar | ImGuiWindowFlags_NoScrollWithMouse);
+
+		float size = ImGui::GetWindowHeight() - 4.0f;
+		Ref<Texture2D> icon = m_SceneState == SceneState::Edit ? m_IconPlay : m_IconStop;
+		ImGui::SetCursorPosX((ImGui::GetWindowContentRegionMax().x * 0.5f) - (size * 0.5f));
+		if (ImGui::ImageButton((ImTextureID)icon->GetRendererID(), ImVec2(size, size), ImVec2(0, 0), ImVec2(1, 1), 0))
+		{
+			if (m_SceneState == SceneState::Edit)
+				OnScenePlay();
+			else if (m_SceneState == SceneState::Play)
+				OnSceneStop();
+		}
+		ImGui::PopStyleVar(2);
+		ImGui::PopStyleColor(3);
+		ImGui::End();
 	}
 
 	bool EditorLayer::OnKeyPressed(KeyPressedEvent& e)
@@ -338,6 +371,7 @@ namespace Uneye
 			}
 		}
 	}
+
 	bool EditorLayer::OnMouseButtonPressed(MouseButtonPressedEvent& e)
 	{
 		if (e.GetMouseButton() == Mouse::Button_Left)
@@ -386,4 +420,16 @@ namespace Uneye
 			serializer.Serialize(filepath);
 		}
 	}
+
+	void EditorLayer::OnScenePlay()
+	{
+		m_SceneState = SceneState::Play;
+	}
+
+	void EditorLayer::OnSceneStop()
+	{
+		m_SceneState = SceneState::Edit;
+
+	}
+
 }

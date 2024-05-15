@@ -12,7 +12,7 @@ namespace Uneye
 	{
 		static GLenum TextureTarget(bool multisampled)
 		{
-			return multisampled ? GL_TEXTURE_2D_MULTISAMPLE : GL_TEXTURE_2D;
+			return (multisampled ? GL_TEXTURE_2D_MULTISAMPLE : GL_TEXTURE_2D);
 		}
 
 		static void CreateTextures(bool multisampled, uint32_t* outID, uint32_t count)
@@ -31,7 +31,7 @@ namespace Uneye
 			bool multisampled = samples > 1;
 			if (multisampled)
 			{
-				glTexImage2DMultisample(GL_TEXTURE_2D_MULTISAMPLE, samples, internalFormat, width, height, GL_FALSE);
+				glTexImage2DMultisample(GL_TEXTURE_2D_MULTISAMPLE, samples, internalFormat, width, height, GL_TRUE);
 			}
 			else
 			{
@@ -45,6 +45,7 @@ namespace Uneye
 
 			glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0 + index, 
 				TextureTarget(multisampled), id, 0);
+
 		}
 
 		static void AttachDepthTexture(uint32_t id, int samples, GLenum format,
@@ -53,7 +54,7 @@ namespace Uneye
 			bool multisampled = samples > 1;
 			if (multisampled)
 			{
-				glTexImage2DMultisample(GL_TEXTURE_2D_MULTISAMPLE, samples, format, width, height, GL_FALSE);
+				glTexImage2DMultisample(GL_TEXTURE_2D_MULTISAMPLE, samples, format, width, height, GL_TRUE);
 			}
 			else
 			{
@@ -64,10 +65,12 @@ namespace Uneye
 				glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_R, GL_CLAMP_TO_EDGE);
 				glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
 				glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+
 			}
 
 			glFramebufferTexture2D(GL_FRAMEBUFFER, attachmentType,
 				TextureTarget(multisampled), id, 0);
+
 		}
 
 
@@ -157,6 +160,7 @@ namespace Uneye
 					{
 						Utils::AttachColorTexture(m_ColorAttachments[i], m_Specification.Samples,
 							GL_RGBA8, GL_RGBA, m_Specification.Width, m_Specification.Height, i);
+
 						break;
 					}
 					case FramebufferTextureFormat::RED_INTEGER:
@@ -166,6 +170,8 @@ namespace Uneye
 						break;
 					}
 				}
+
+				Utils::BindTexture(multisample, 0);
 			}
 		}
 
@@ -184,6 +190,7 @@ namespace Uneye
 					break;
 				}
 			}
+			Utils::BindTexture(multisample, 0);
 		}
 
 		if (m_ColorAttachments.size() > 1)
@@ -203,6 +210,8 @@ namespace Uneye
 			// Only depth-buffer
 			glDrawBuffer(GL_NONE);
 		}
+
+
 
 
 		UNEYE_CORE_ASSERT(

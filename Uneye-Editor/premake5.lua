@@ -42,6 +42,7 @@ project "Uneye-Editor"
 		runtime "Debug"
 		symbols "on"
 
+
 	filter "configurations:Release"
 		defines "UNEYE_RELEASE"
 		runtime "Release"

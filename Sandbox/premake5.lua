@@ -40,7 +40,7 @@ project "Sandbox"
 			defines "UNEYE_DEBUG"
 			runtime "Debug"
 			symbols "on"
-	
+
 		filter "configurations:Release"
 			defines "UNEYE_RELEASE"
 			runtime "Release"

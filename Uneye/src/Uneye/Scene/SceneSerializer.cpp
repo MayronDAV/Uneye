@@ -86,6 +86,7 @@ namespace YAML {
 		}
 	};
 
+
 }
 
 
@@ -93,6 +94,7 @@ namespace YAML {
 
 namespace Uneye
 {
+
 	YAML::Emitter& operator<<(YAML::Emitter& out, const glm::vec2& v)
 	{
 		out << YAML::Flow;
@@ -123,8 +125,10 @@ namespace Uneye
 	{
 		UNEYE_PROFILE_FUNCTION();
 
+		UNEYE_CORE_ASSERT(!entity.HasComponent<IDComponent>(), "All entity must to have a UUID!");
+
 		out << YAML::BeginMap; // Entity
-		out << YAML::Key << "Entity" << YAML::Value << "12837192831273"; // TODO: Entity ID goes here
+		out << YAML::Key << "Entity" << YAML::Value << entity.GetUUID(); // TODO: Entity ID goes here
 
 		if (entity.HasComponent<TagComponent>())
 		{
@@ -175,24 +179,53 @@ namespace Uneye
 			out << YAML::EndMap; // CameraComponent
 		}
 
-		if (entity.HasComponent<MaterialComponent>())
+		if (entity.HasComponent<SpriteComponent>())
 		{
-			out << YAML::Key << "MaterialComponent";
-			out << YAML::BeginMap; // MaterialComponent
+			out << YAML::Key << "SpriteComponent";
+			out << YAML::BeginMap; // SpriteComponent
 
-			auto& materialComponent = entity.GetComponent<MaterialComponent>();
-			out << YAML::Key << "Color" << YAML::Value << materialComponent.Color;
-			out << YAML::Key << "TexturePath" << YAML::Value << materialComponent.TexturePath;
-			out << YAML::Key << "IsSubTexture" << YAML::Value << materialComponent.IsSubTexture;
+			auto& spriteComponent = entity.GetComponent<SpriteComponent>();
+			out << YAML::Key << "Color" << YAML::Value << spriteComponent.Color;
+			out << YAML::Key << "TexturePath" << YAML::Value << spriteComponent.TexturePath;
+			out << YAML::Key << "IsSubTexture" << YAML::Value << spriteComponent.IsSubTexture;
 
-			if (materialComponent.IsSubTexture)
+			if (spriteComponent.IsSubTexture)
 			{
-				out << YAML::Key << "TileSize" << YAML::Value << materialComponent.TileSize;
-				out << YAML::Key << "Coords" << YAML::Value << materialComponent.Coords;
-				out << YAML::Key << "SpriteSize" << YAML::Value << materialComponent.SpriteSize;
+				out << YAML::Key << "TileSize" << YAML::Value << spriteComponent.TileSize;
+				out << YAML::Key << "Coords" << YAML::Value << spriteComponent.Coords;
+				out << YAML::Key << "SpriteSize" << YAML::Value << spriteComponent.SpriteSize;
 			}
 
-			out << YAML::EndMap; // MaterialComponent
+			out << YAML::EndMap; // SpriteComponent
+		}
+
+		if (entity.HasComponent<Rigidbody2DComponent>())
+		{
+			out << YAML::Key << "Rigidbody2DComponent";
+			out << YAML::BeginMap; // Rigidbody2DComponent
+
+			auto& rb2d = entity.GetComponent<Rigidbody2DComponent>();
+			out << YAML::Key << "Type" << YAML::Value << (int)rb2d.Type;
+			out << YAML::Key << "FixedRotation" << YAML::Value << rb2d.FixedRotation;
+
+			out << YAML::EndMap; // Rigidbody2DComponent
+		}
+
+		if (entity.HasComponent<BoxCollider2DComponent>())
+		{
+			out << YAML::Key << "BoxCollider2DComponent";
+			out << YAML::BeginMap; // BoxCollider2DComponent
+
+			auto& bc2d = entity.GetComponent<BoxCollider2DComponent>();
+			out << YAML::Key << "Offset" << YAML::Value << bc2d.Offset;
+			out << YAML::Key << "Size" << YAML::Value << bc2d.Size;
+
+			out << YAML::Key << "Density" << YAML::Value << bc2d.Density;
+			out << YAML::Key << "Friction" << YAML::Value << bc2d.Friction;
+			out << YAML::Key << "Restitution" << YAML::Value << bc2d.Restitution;
+			out << YAML::Key << "RestitutionThreshold" << YAML::Value << bc2d.RestitutionThreshold;
+
+			out << YAML::EndMap; // BoxCollider2DComponent
 		}
 
 		out << YAML::EndMap; // Entity
@@ -254,7 +287,7 @@ namespace Uneye
 
 				UNEYE_CORE_TRACE("Deserialized entity with ID = {0}, name = {1}", uuid, name);
 
-				Entity deserializedEntity = m_Scene->CreateEntity(name);
+				Entity deserializedEntity = m_Scene->CreateEntityWithUUID(uuid, name);
 
 				auto transformComponent = entity["TransformComponent"];
 				if (transformComponent)
@@ -286,12 +319,12 @@ namespace Uneye
 					cc.FixedAspectRatio = cameraComponent["FixedAspectRatio"].as<bool>();
 				}
 
-				auto materialComponent = entity["MaterialComponent"];
-				if (materialComponent)
+				auto spriteComponent = entity["SpriteComponent"];
+				if (spriteComponent)
 				{
-					auto& mc = deserializedEntity.AddComponent<MaterialComponent>();
-					mc.Color = materialComponent["Color"].as<glm::vec4>();
-					mc.TexturePath = materialComponent["TexturePath"].as<std::string>();
+					auto& mc = deserializedEntity.AddComponent<SpriteComponent>();
+					mc.Color = spriteComponent["Color"].as<glm::vec4>();
+					mc.TexturePath = spriteComponent["TexturePath"].as<std::string>();
 					if (mc.TexturePath == "" || mc.TexturePath == " " || mc.TexturePath == std::string())
 					{
 						mc.Texture = nullptr;
@@ -302,17 +335,39 @@ namespace Uneye
 						mc.Texture = Texture2D::Create(mc.TexturePath);
 					}
 
-					mc.IsSubTexture = materialComponent["IsSubTexture"].as<bool>();
+					mc.IsSubTexture = spriteComponent["IsSubTexture"].as<bool>();
 
 					if (mc.IsSubTexture)
 					{
-						mc.TileSize = materialComponent["TileSize"].as<glm::vec2>();
-						mc.Coords = materialComponent["Coords"].as<glm::vec2>();
-						mc.SpriteSize = materialComponent["SpriteSize"].as<glm::vec2>();
+						mc.TileSize = spriteComponent["TileSize"].as<glm::vec2>();
+						mc.Coords = spriteComponent["Coords"].as<glm::vec2>();
+						mc.SpriteSize = spriteComponent["SpriteSize"].as<glm::vec2>();
 
 						mc.SubTexture = SubTexture2D::CreateFromTexture(mc.Texture, mc.Coords,
 							mc.TileSize, mc.SpriteSize);
 					}
+				}
+
+				auto rb2dcomponent = entity["Rigidbody2DComponent"];
+				if (rb2dcomponent)
+				{
+					auto& rb2d = deserializedEntity.AddComponent<Rigidbody2DComponent>();
+					rb2d.Type = (Rigidbody2DComponent::BodyType)rb2dcomponent["Type"].as<int>();
+					rb2d.FixedRotation = rb2dcomponent["FixedRotation"].as<bool>();
+				}
+
+				auto bc2dcomponent = entity["BoxCollider2DComponent"];
+				if (bc2dcomponent)
+				{
+					auto& bc2d = deserializedEntity.AddComponent<BoxCollider2DComponent>();
+					bc2d.Offset = bc2dcomponent["Offset"].as<glm::vec2>();
+					bc2d.Size = bc2dcomponent["Size"].as<glm::vec2>();
+
+					bc2d.Density = bc2dcomponent["Density"].as<float>();
+					bc2d.Friction = bc2dcomponent["Friction"].as<float>();
+					bc2d.Restitution = bc2dcomponent["Restitution"].as<float>();
+					bc2d.RestitutionThreshold = bc2dcomponent["RestitutionThreshold"].as<float>();
+
 				}
 			}
 		}

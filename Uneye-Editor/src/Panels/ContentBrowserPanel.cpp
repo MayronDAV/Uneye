@@ -41,7 +41,7 @@ namespace Uneye
 		m_FileIcon = Texture2D::Create("Resources/Icons/ContentBrowser/FileIcon.png");
 	}
 
-	static void ShowDirectoryTree(const fs::path& path)
+	void ContentBrowserPanel::ShowDirectoryTree(const fs::path& path)
 	{
 		if (fs::exists(path) && fs::is_directory(path))
 		{
@@ -95,7 +95,7 @@ namespace Uneye
 		static float splitterWidth = 8.0f;
 		static float leftPanelWidth = 150.0f;
 
-		ImGui::Begin("File Browser");
+		ImGui::Begin("Content Browser");
 		{
 			ImGui::PushStyleVar(ImGuiStyleVar_ItemSpacing, ImVec2(0, 0));
 

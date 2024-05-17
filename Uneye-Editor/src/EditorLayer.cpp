@@ -205,7 +205,7 @@ namespace Uneye
 		
 		m_ViewportHovered = ImGui::IsWindowHovered();
 		Application::Get().GetImGuiLayer()->BlockEvents(!m_ViewportFocused && !m_ViewportHovered);
-		Application::Get().GetImGuiLayer()->BlockEvents(ImGui::IsAnyItemHovered() || ImGui::IsAnyItemFocused() || ImGui::IsAnyItemActive());
+		//Application::Get().GetImGuiLayer()->BlockEvents(ImGui::IsAnyItemHovered() || ImGui::IsAnyItemFocused() || ImGui::IsAnyItemActive());
 
 		ImVec2 viewportSize = ImGui::GetContentRegionAvail();
 		m_ViewportSize = { viewportSize.x, viewportSize.y };
@@ -341,6 +341,25 @@ namespace Uneye
 				if (control && shift)
 					SaveSceneAs();
 
+				if (control)
+					SaveScene();
+
+				break;
+			}
+
+			// Scene Commands
+			case Key::D:
+			{
+				if (control)
+					OnDuplicateEntity();
+
+				break;
+			}
+
+			case Key::Delete:
+			{
+				OnDestroyEntity();
+
 				break;
 			}
 
@@ -387,6 +406,8 @@ namespace Uneye
 		m_ActiveScene = CreateRef<Scene>();
 		m_ActiveScene->OnViewportResize((uint32_t)m_ViewportSize.x, (uint32_t)m_ViewportSize.y);
 		m_SceneHierarchyPanel.SetContext(m_ActiveScene);
+
+		m_EditScenePath = std::filesystem::path();
 	}
 
 	void EditorLayer::OpenScene()
@@ -400,15 +421,36 @@ namespace Uneye
 
 	void EditorLayer::OpenScene(const std::filesystem::path& path)
 	{
-		if (path.has_extension() && path.extension() == ".uneye")
-		{
-			m_ActiveScene = CreateRef<Scene>();
-			m_ActiveScene->OnViewportResize((uint32_t)m_ViewportSize.x, (uint32_t)m_ViewportSize.y);
-			m_SceneHierarchyPanel.SetContext(m_ActiveScene);
+		if (m_SceneState != SceneState::Edit)
+			OnSceneStop();
 
-			SceneSerializer serializer(m_ActiveScene);
-			serializer.Deserialize(path.string());
+		if (path.extension() == ".uneye")
+		{
+			Ref<Scene> newScene = CreateRef<Scene>();
+			SceneSerializer serializer(newScene);
+			if (serializer.Deserialize(path.string()))
+			{
+				m_EditorScene = newScene;
+				m_EditorScene->OnViewportResize((uint32_t)m_ViewportSize.x, (uint32_t)m_ViewportSize.y);
+				m_SceneHierarchyPanel.SetContext(m_EditorScene);
+
+				m_ActiveScene = m_EditorScene;
+				m_EditScenePath = path;
+			}
 		}
+		else
+		{
+			UNEYE_WARN("Could not load {0} - not a scene file", path.filename().string());
+			return;
+		}
+	}
+
+	void EditorLayer::SaveScene()
+	{
+		if (!m_EditScenePath.empty())
+			SerializeScene(m_ActiveScene, m_EditScenePath);
+		else
+			SaveSceneAs();
 	}
 
 	void EditorLayer::SaveSceneAs()
@@ -416,20 +458,59 @@ namespace Uneye
 		std::string filepath = FileDialogs::SaveFile("Uneye Scene (*.uneye)\0*.uneye\0");
 		if (!filepath.empty())
 		{
-			SceneSerializer serializer(m_ActiveScene);
-			serializer.Serialize(filepath);
+			SerializeScene(m_ActiveScene, filepath);
+
+			m_EditScenePath = filepath;
 		}
+	}
+
+	void EditorLayer::SerializeScene(Ref<Scene> scene, const std::filesystem::path& path)
+	{
+		SceneSerializer serializer(scene);
+		serializer.Serialize(path.string());
 	}
 
 	void EditorLayer::OnScenePlay()
 	{
 		m_SceneState = SceneState::Play;
+
+		m_ActiveScene = Scene::Copy(m_EditorScene);
+		m_ActiveScene->OnRuntimeStart();
+
+		m_SceneHierarchyPanel.SetContext(m_ActiveScene);
 	}
 
 	void EditorLayer::OnSceneStop()
 	{
 		m_SceneState = SceneState::Edit;
 
+		m_ActiveScene = m_EditorScene;
+		m_ActiveScene->OnRuntimeStop();
+
+		m_SceneHierarchyPanel.SetContext(m_ActiveScene);
+	}
+
+	void EditorLayer::OnDuplicateEntity()
+	{
+		if (m_SceneState != SceneState::Edit)
+			return;
+
+		Entity selectedEntt = m_SceneHierarchyPanel.GetSelectedEntity();
+		if (selectedEntt)
+			m_EditorScene->DuplicateEntity(selectedEntt);
+	}
+
+	void EditorLayer::OnDestroyEntity()
+	{
+		if (m_SceneState != SceneState::Edit)
+			return;
+
+		Entity selectedEntt = m_SceneHierarchyPanel.GetSelectedEntity();
+		if (selectedEntt)
+		{
+			m_SceneHierarchyPanel.SetSelectedEntity({});
+			m_EditorScene->DestroyEntity(selectedEntt);
+		}
 	}
 
 }

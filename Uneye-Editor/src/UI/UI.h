@@ -14,7 +14,9 @@ namespace Uneye
 			static void SetTextColumnWidth(float w) { m_TextColumnWidth = w; }
 
 
-			static bool DrawVec3Control(const std::string& label, glm::vec3& values, float resetValue = 0.0f);
+			static bool DrawFloat3Control(const std::string& label, glm::vec3& values, float resetValue = 0.0f);
+
+			static bool DrawFloat2Control(const std::string& label, glm::vec2& values, float resetValue = 0.0f);
 
 			static bool DrawFloatControl(const std::string& label, float& value, float resetValue = 0.0f);
 
@@ -56,7 +58,7 @@ namespace Uneye
 
 			static void DrawTextArgs(const std::string& label, const std::string& fmt, ...);
 
-			static bool DrawVec2Input(const std::string& label, glm::vec2& values, float resetValue = 0.0f);
+			static bool DrawFloat2Input(const std::string& label, glm::vec2& values, float resetValue = 0.0f);
 
 			template<typename Func1, typename Func2>
 			static void DrawClickableText(const std::string& label, std::string& value, const Func1& onResetButton, const Func2& onClick)

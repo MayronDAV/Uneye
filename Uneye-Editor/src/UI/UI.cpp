@@ -16,7 +16,7 @@ namespace Uneye
 	float UI::m_ColumnWidth = 135.0f;
 	float UI::m_TextColumnWidth = UI::m_ColumnWidth + 20.0f;
 
-	bool UI::DrawVec3Control(const std::string& label, glm::vec3& values, float resetValue)
+	bool UI::DrawFloat3Control(const std::string& label, glm::vec3& values, float resetValue)
 	{
 		ImGui::PushID(label.c_str());
 
@@ -84,6 +84,62 @@ namespace Uneye
 		ImGui::PopID();
 
 		return buttonX || buttonY || buttonZ || dragX || dragY || dragZ;
+	}
+
+	bool UI::DrawFloat2Control(const std::string& label, glm::vec2& values, float resetValue)
+	{
+		ImGui::PushID(label.c_str());
+
+		ImGui::Spacing();
+
+		ImGui::Columns(2);
+		ImGui::SetColumnWidth(0, m_ColumnWidth);
+		ImGui::Text(label.c_str());
+		ImGui::NextColumn();
+
+		ImGui::PushMultiItemsWidths(3, ImGui::CalcItemWidth());
+		ImGui::PushStyleVar(ImGuiStyleVar_ItemSpacing, ImVec2(0, 0));
+
+		float lineHeight = GImGui->Font->FontSize + GImGui->Style.FramePadding.y * 2.0f;
+		ImVec2 buttonSize = { lineHeight + 3.0f, lineHeight };
+
+
+		ImGui::PushFont(FontManager::GetFont("Bold"));
+		ImGui::PushStyleColor(ImGuiCol_Button, { 0.6f, 0.1f, 0.15f, 1 });
+		ImGui::PushStyleColor(ImGuiCol_ButtonHovered, { 0.8f, 0.3f, 0.35f, 1 });
+		ImGui::PushStyleColor(ImGuiCol_ButtonActive, { 0.6f, 0.1f, 0.15f, 1 });
+		bool buttonX = ImGui::Button("X", buttonSize);
+		if (buttonX)
+			values.x = resetValue;
+		ImGui::PopStyleColor(3);
+		ImGui::PopFont();
+
+		ImGui::SameLine();
+		bool dragX = ImGui::DragFloat("##X", &values.x, 0.1f, 0.0f, 0.0f, "%.2f");
+		ImGui::PopItemWidth();
+		ImGui::SameLine();
+
+		ImGui::PushFont(FontManager::GetFont("Bold"));
+		ImGui::PushStyleColor(ImGuiCol_Button, { 0.1f, 0.6f, 0.15f, 1 });
+		ImGui::PushStyleColor(ImGuiCol_ButtonHovered, { 0.3f, 0.8f, 0.35f, 1 });
+		ImGui::PushStyleColor(ImGuiCol_ButtonActive, { 0.1f, 0.6f, 0.15f, 1 });
+		bool buttonY = ImGui::Button("Y", buttonSize);
+		if (buttonY)
+			values.y = resetValue;
+		ImGui::PopStyleColor(3);
+		ImGui::PopFont();
+
+		ImGui::SameLine();
+		bool dragY = ImGui::DragFloat("##Y", &values.y, 0.1f, 0.0f, 0.0f, "%.2f");
+		ImGui::PopItemWidth();
+		ImGui::SameLine();
+
+
+		ImGui::PopStyleVar();
+		ImGui::Columns(1);
+		ImGui::PopID();
+
+		return buttonX || buttonY || dragX || dragY;
 	}
 
 
@@ -215,7 +271,7 @@ namespace Uneye
 		ImGui::PopID();
 	}
 
-	bool UI::DrawVec2Input(const std::string& label, glm::vec2& values, float resetValue)
+	bool UI::DrawFloat2Input(const std::string& label, glm::vec2& values, float resetValue)
 	{
 		ImGui::PushID(label.c_str());
 
@@ -230,33 +286,33 @@ namespace Uneye
 		ImGui::PushStyleVar(ImGuiStyleVar_ItemSpacing, ImVec2(0, 0));
 
 		float lineHeight = GImGui->Font->FontSize + GImGui->Style.FramePadding.y * 2.0f;
-		ImVec2 buttonSize = { lineHeight + 3.0f, lineHeight };
+		ImVec2 buttonSize = { lineHeight / 2.0f, lineHeight };
 
 
-		ImGui::PushFont(FontManager::GetFont("Bold"));
+		//ImGui::PushFont(FontManager::GetFont("Bold"));
 		ImGui::PushStyleColor(ImGuiCol_Button, { 0.6f, 0.1f, 0.15f, 1 });
 		ImGui::PushStyleColor(ImGuiCol_ButtonHovered, { 0.8f, 0.3f, 0.35f, 1 });
 		ImGui::PushStyleColor(ImGuiCol_ButtonActive, { 0.6f, 0.1f, 0.15f, 1 });
-		bool buttonX = ImGui::Button("X", buttonSize);
+		bool buttonX = ImGui::Button("##Xb", buttonSize);
 		if (buttonX)
 			values.x = resetValue;
 		ImGui::PopStyleColor(3);
-		ImGui::PopFont();
+		//ImGui::PopFont();
 
 		ImGui::SameLine();
 		bool inputX = ImGui::InputFloat("##X", &values.x, 0.0f, 0.0f, "%.2f");
 		ImGui::PopItemWidth();
 		ImGui::SameLine();
 
-		ImGui::PushFont(FontManager::GetFont("Bold"));
+		//ImGui::PushFont(FontManager::GetFont("Bold"));
 		ImGui::PushStyleColor(ImGuiCol_Button, { 0.1f, 0.6f, 0.15f, 1 });
 		ImGui::PushStyleColor(ImGuiCol_ButtonHovered, { 0.3f, 0.8f, 0.35f, 1 });
 		ImGui::PushStyleColor(ImGuiCol_ButtonActive, { 0.1f, 0.6f, 0.15f, 1 });
-		bool buttonY = ImGui::Button("Y", buttonSize);
+		bool buttonY = ImGui::Button("##Yb", buttonSize);
 		if (buttonY)
 			values.y = resetValue;
 		ImGui::PopStyleColor(3);
-		ImGui::PopFont();
+		//ImGui::PopFont();
 
 		ImGui::SameLine();
 		bool inputY = ImGui::InputFloat("##Y", &values.y, 0.0f, 0.0f, "%.2f");

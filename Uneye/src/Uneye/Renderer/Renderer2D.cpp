@@ -595,7 +595,7 @@ namespace Uneye
 		s_Data.Stats.QuadCount++;
 	}
 
-	void Renderer2D::DrawSprite(const glm::mat4& transform, MaterialComponent& mc, int entityID)
+	void Renderer2D::DrawSprite(const glm::mat4& transform, SpriteComponent& mc, int entityID)
 	{
 		if (mc.IsSubTexture)
 			DrawQuad(transform, mc.SubTexture, mc.Color, entityID);

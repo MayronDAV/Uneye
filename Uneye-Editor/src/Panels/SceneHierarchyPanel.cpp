@@ -35,20 +35,23 @@ namespace Uneye
 	{
 		ImGui::Begin("Scene Hierarchy");
 
-		m_Context->m_Registry.each([&](auto entt)
+		if (m_Context)
 		{
-			Entity entity{ entt, m_Context.get() };
-			DrawEntityNode(entity);
-		});
+			m_Context->m_Registry.each([&](auto entt)
+			{
+				Entity entity{ entt, m_Context.get() };
+				DrawEntityNode(entity);
+			});
 
+			// Right click on blank space
+			if (ImGui::BeginPopupContextWindow(0, 1 | ImGuiPopupFlags_NoOpenOverItems))
+			{
+				if (ImGui::MenuItem("Create Empty Entity"))
+					m_Context->CreateEntity("Empty Entity");
 
-		// Right click on blank space
-		if (ImGui::BeginPopupContextWindow(0, 1 | ImGuiPopupFlags_NoOpenOverItems))
-		{
-			if (ImGui::MenuItem("Create Empty Entity"))
-				m_Context->CreateEntity("Empty Entity");
+				ImGui::EndPopup();
+			}
 
-			ImGui::EndPopup();
 		}
 
 		ImGui::End();
@@ -182,6 +185,14 @@ namespace Uneye
 	{
 		if (entt)
 		{
+			if (entt.HasComponent<IDComponent>())
+			{
+				auto& id = entt.GetComponent<IDComponent>().ID;
+
+
+				UI::DrawTextArgs("ID", " %llu", id);
+			}
+
 			if (entt.HasComponent<TagComponent>())
 			{
 				auto& tag = entt.GetComponent<TagComponent>().Tag;
@@ -215,11 +226,29 @@ namespace Uneye
 						}
 					}
 
-					if (!m_SelectionContext.HasComponent<MaterialComponent>())
+					if (!m_SelectionContext.HasComponent<SpriteComponent>())
 					{
-						if (ImGui::MenuItem("Material"))
+						if (ImGui::MenuItem("Sprite"))
 						{
-							m_SelectionContext.AddComponent<MaterialComponent>();
+							m_SelectionContext.AddComponent<SpriteComponent>();
+							ImGui::CloseCurrentPopup();
+						}
+					}
+
+					if (!m_SelectionContext.HasComponent<Rigidbody2DComponent>())
+					{
+						if (ImGui::MenuItem("Rigidbody 2D"))
+						{
+							m_SelectionContext.AddComponent<Rigidbody2DComponent>();
+							ImGui::CloseCurrentPopup();
+						}
+					}
+
+					if (!m_SelectionContext.HasComponent<BoxCollider2DComponent>())
+					{
+						if (ImGui::MenuItem("BoxCollider 2D"))
+						{
+							m_SelectionContext.AddComponent<BoxCollider2DComponent>();
 							ImGui::CloseCurrentPopup();
 						}
 					}
@@ -231,11 +260,11 @@ namespace Uneye
 
 			DrawComponentUI<TransformComponent>(entt, "Transform", [&](auto& tc) {
 
-				UI::DrawVec3Control("Translation", tc.Translation);
+				UI::DrawFloat3Control("Translation", tc.Translation);
 				glm::vec3 rotation = glm::degrees(tc.Rotation);
-				UI::DrawVec3Control("Rotation", rotation);
+				UI::DrawFloat3Control("Rotation", rotation);
 				tc.Rotation = glm::radians(rotation);
-				UI::DrawVec3Control("Scale", tc.Scale, 1.0f);
+				UI::DrawFloat3Control("Scale", tc.Scale, 1.0f);
 
 			});
 			
@@ -304,7 +333,7 @@ namespace Uneye
 			}, true);
 
 
-			DrawComponentUI<MaterialComponent>(entt, "Material", [&](auto& mc) {
+			DrawComponentUI<SpriteComponent>(entt, "Sprite", [&](auto& mc) {
 
 				UI::DrawColorEdit4("Color ", mc.Color, 1.0f);
 
@@ -355,9 +384,9 @@ namespace Uneye
 
 				if (mc.IsSubTexture)
 				{
-					UI::DrawVec2Input("Global Tile Size", mc.TileSize, 1.0f);
-					UI::DrawVec2Input("Tile Coord", mc.Coords);
-					UI::DrawVec2Input("Sprite Multiple Size", mc.SpriteSize, 1.0f);
+					UI::DrawFloat2Input("Global Tile Size", mc.TileSize, 1.0f);
+					UI::DrawFloat2Input("Tile Coord", mc.Coords);
+					UI::DrawFloat2Input("Sprite Multiple Size", mc.SpriteSize, 1.0f);
 
 					if (!(mc.TexturePath == "" || mc.TexturePath == " " || mc.TexturePath == std::string()))
 						mc.SubTexture = SubTexture2D::CreateFromTexture(mc.Texture, mc.Coords, mc.TileSize, mc.SpriteSize);
@@ -366,6 +395,50 @@ namespace Uneye
 				}
 
 			}, true);
+
+
+			DrawComponentUI<BoxCollider2DComponent>(entt, "BoxCollider 2D", [&](auto& bc2d) {
+
+				//UI::DrawFloatControl("OffsetX", bc2d.Offset.x);
+				//UI::DrawFloatControl("OffsetY", bc2d.Offset.y);
+				//UI::DrawFloatControl("SizeX", bc2d.Size.x);
+				//UI::DrawFloatControl("SizeY", bc2d.Size.y);
+
+				UI::DrawFloat2Control("Size", bc2d.Size);
+				UI::DrawFloat2Control("Offset", bc2d.Offset);
+
+				UI::DrawFloatControl("Density", bc2d.Density);
+				UI::DrawFloatControl("Friction", bc2d.Friction);
+				UI::DrawFloatControl("Restitution", bc2d.Restitution);
+				UI::DrawFloatControl("RestitutionThreshold", bc2d.RestitutionThreshold);
+
+			}, true);
+
+
+			DrawComponentUI<Rigidbody2DComponent>(entt, "Rigidbody 2D", [&](auto& rb2d) {
+
+				const char* rigidbodyTypeString[] = { "Static", "Dynamic" };
+				const char* currentrigidbodyTypeString = rigidbodyTypeString[
+					(int)rb2d.Type];
+
+				UI::DrawCombo("Type", currentrigidbodyTypeString, [&]() {
+					for (int i = 0; i < 2; i++)
+					{
+						bool isSelected = currentrigidbodyTypeString == rigidbodyTypeString[i];
+						if (ImGui::Selectable(rigidbodyTypeString[i], isSelected))
+						{
+							currentrigidbodyTypeString = rigidbodyTypeString[i];
+							rb2d.Type = (Rigidbody2DComponent::BodyType)i;
+						}
+
+						if (isSelected)
+							ImGui::SetItemDefaultFocus();
+					}
+					});
+
+				UI::DrawCheckBox("FixedRotation", &rb2d.FixedRotation);
+
+				}, true);
 		}
 
 	}

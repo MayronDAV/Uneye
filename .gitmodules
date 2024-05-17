@@ -19,3 +19,6 @@
 [submodule "Uneye/vendor/shaderc"]
 	path = Uneye/vendor/shaderc
 	url = https://github.com/google/shaderc.git
+[submodule "Uneye/vendor/Box2D"]
+	path = Uneye/vendor/Box2D
+	url = https://github.com/TheCherno/box2d.git

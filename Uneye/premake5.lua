@@ -37,6 +37,7 @@ project "Uneye"
 		"%{IncludeDir.Glad}",
 		"%{IncludeDir.ImGui}",
 		"%{IncludeDir.glm}",
+		"%{IncludeDir.Box2D}",
 		"%{IncludeDir.stb}",
 		"%{IncludeDir.entt}",
 		"%{IncludeDir.yaml_cpp}",
@@ -49,6 +50,7 @@ project "Uneye"
 		"GLFW",
 		"Glad",
 		"ImGui",
+		"Box2D",
 		"yaml-cpp",
 		"opengl32.lib"
 	}

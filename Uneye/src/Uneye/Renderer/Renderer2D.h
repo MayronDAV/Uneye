@@ -52,7 +52,7 @@ namespace Uneye
 			static void DrawRotateQuad(const glm::vec3& position, const glm::vec2& size,
 				float rotation, const Ref<SubTexture2D>& subtexture = nullptr, const glm::vec4& color = glm::vec4(1.0f));
 
-			static void DrawSprite(const glm::mat4& transform, MaterialComponent& mc, int entityID);
+			static void DrawSprite(const glm::mat4& transform, SpriteComponent& mc, int entityID);
 
 			// Stats
 			struct Statistics

@@ -1,20 +1,33 @@
 #pragma once
 
+#include "Uneye/Renderer/Camera.h"
+#include "Uneye/Scene/SceneCamera.h"
+
+#include "Uneye/Renderer/Texture.h"
+#include "Uneye/Renderer/SubTexture.h"
+#include "Uneye/Core/UUID.h"
+
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 #define GLM_ENABLE_EXPERIMENTAL
 #include <glm/gtx/quaternion.hpp>
 
-#include "Uneye/Renderer/Camera.h"
-#include "Uneye/Scene/SceneCamera.h"
-#include "Uneye/Scene/ScriptableEntity.h"
 
-#include "Uneye/Renderer/Texture.h"
-#include "Uneye/Renderer/SubTexture.h"
 
 
 namespace Uneye
 {
+	struct IDComponent
+	{
+		UUID ID;
+
+		IDComponent() = default;
+		IDComponent(const IDComponent&) = default;
+		IDComponent(const UUID& id)
+			:ID(id) {}
+
+	};
+
 	struct TagComponent
 	{
 		std::string Tag;
@@ -47,7 +60,7 @@ namespace Uneye
 
 	};
 
-	struct MaterialComponent
+	struct SpriteComponent
 	{
 		glm::vec4 Color = { 1, 1, 1, 1 };
 		std::string TexturePath = "assets/textures/checkerboard.png";
@@ -58,12 +71,12 @@ namespace Uneye
 		glm::vec2 Coords = { 0, 0 }; // Coords dentro da textura
 		glm::vec2 SpriteSize = { 1, 1 }; // Mudar o nome
 
-		MaterialComponent() = default;
-		MaterialComponent(const MaterialComponent&) = default;
-		MaterialComponent(const glm::vec4& color, const std::string& texturepath = "assets/textures/checkerboard.png")
+		SpriteComponent() = default;
+		SpriteComponent(const SpriteComponent&) = default;
+		SpriteComponent(const glm::vec4& color, const std::string& texturepath = "assets/textures/checkerboard.png")
 			:Color(color), TexturePath(texturepath), Texture(Texture2D::Create(TexturePath)), IsSubTexture(false) {}
 
-		MaterialComponent(const glm::vec4& color, const std::string& texturepath, glm::vec2 tileSize,
+		SpriteComponent(const glm::vec4& color, const std::string& texturepath, glm::vec2 tileSize,
 			glm::vec2 coords = glm::vec2(0, 0), glm::vec2 spriteSize = glm::vec2(1, 1))
 			:Color(color), TileSize(tileSize), Coords(coords), SpriteSize(spriteSize), IsSubTexture(true),
 			TexturePath(texturepath), Texture(Texture2D::Create(TexturePath)), SubTexture(SubTexture2D::CreateFromTexture(Texture, coords, tileSize, spriteSize)) {}
@@ -80,6 +93,7 @@ namespace Uneye
 		CameraComponent(const CameraComponent&) = default;
 	};
 
+	class ScriptableEntity;
 	struct NativeScriptComponent
 	{
 		ScriptableEntity* Instance = nullptr;
@@ -98,5 +112,39 @@ namespace Uneye
 	};
 
 
+
+
+	// Box2D
+	struct Rigidbody2DComponent
+	{
+		enum class BodyType { Static = 0, Dynamic, Kinematic };
+
+		BodyType Type = BodyType::Static;
+		bool FixedRotation = false;
+
+		// Storage for runtime
+		void* RuntimeBody = nullptr;
+
+		Rigidbody2DComponent() = default;
+		Rigidbody2DComponent(const Rigidbody2DComponent&) = default;
+	};
+
+	struct BoxCollider2DComponent
+	{
+		glm::vec2 Offset = { 0.0f, 0.0f };
+		glm::vec2 Size = { 0.5f, 0.5f };
+
+		// TODO: move into physics material in the future
+		float Density = 1.0f;
+		float Friction = 0.5f;
+		float Restitution = 0.0f;
+		float RestitutionThreshold = 0.5f;
+
+		// Storage for runtime
+		void* RuntimeFixture = nullptr;
+
+		BoxCollider2DComponent() = default;
+		BoxCollider2DComponent(const BoxCollider2DComponent&) = default;
+	};
 
 }

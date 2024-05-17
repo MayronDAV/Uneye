@@ -31,6 +31,7 @@ group "Dependencies"
 	include "Uneye/vendor/GLFW"
 	include "Uneye/vendor/Glad"
 	include "Uneye/vendor/imgui"
+	include "Uneye/vendor/Box2D"
 	include "Uneye/vendor/yaml-cpp"
 group ""
 

@@ -13,6 +13,9 @@
     <Filter Include="..\Uneye\vendor">
       <UniqueIdentifier>{732625D0-DFB1-9294-E8C2-158954CDEE94}</UniqueIdentifier>
     </Filter>
+    <Filter Include="..\Uneye\vendor\Box2D">
+      <UniqueIdentifier>{C19ADEC3-2D07-9ABE-F6FA-311C6226BC26}</UniqueIdentifier>
+    </Filter>
     <Filter Include="..\Uneye\vendor\GLFW">
       <UniqueIdentifier>{92E10863-7E70-922C-278F-A62713FDA2D2}</UniqueIdentifier>
     </Filter>
@@ -38,6 +41,9 @@
     </None>
     <None Include="..\..\Uneye\premake5.lua">
       <Filter>..\Uneye</Filter>
+    </None>
+    <None Include="..\..\Uneye\vendor\Box2D\premake5.lua">
+      <Filter>..\Uneye\vendor\Box2D</Filter>
     </None>
     <None Include="..\..\Uneye\vendor\GLFW\premake5.lua">
       <Filter>..\Uneye\vendor\GLFW</Filter>

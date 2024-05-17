@@ -1,14 +1,17 @@
 #pragma once
 
-#include <string>
-#include <entt/entt.hpp>
-
 #include "Uneye/Core/Timestep.h"
-
+#include "Uneye/Core/UUID.h"
 #include "Uneye/Renderer/EditorCamera.h"
 #include "Uneye/Utils/PlatformUtils.h"
 
+#include <string>
+#include <entt/entt.hpp>
 
+
+
+
+class b2World;
 
 namespace Uneye
 {
@@ -22,12 +25,20 @@ namespace Uneye
 			Scene();
 			~Scene();
 			
+			static Ref<Scene> Copy(Ref<Scene> other);
+
 			Entity CreateEntity(const std::string& name = std::string());
+			Entity CreateEntityWithUUID(UUID uuid, const std::string& name = std::string());
 			void DestroyEntity(Entity entity);
+
+			void OnRuntimeStart();
+			void OnRuntimeStop();
 
 			void OnUpdateEditor(Timestep ts, EditorCamera& camera);
 			void OnUpdateRuntime(Timestep ts);
 			void OnViewportResize(uint32_t width, uint32_t height);
+
+			void DuplicateEntity(Entity entt);
 
 			Entity GetPrimaryCameraEntity();
 
@@ -44,6 +55,8 @@ namespace Uneye
 			float m_LastTime = Time::GetTime();
 			float m_FPSCounter = 0;
 			float m_FPS = 0;
+
+			b2World* m_PhysicsWorld = nullptr;
 
 			friend class Entity;
 			friend class SceneHierarchyPanel;

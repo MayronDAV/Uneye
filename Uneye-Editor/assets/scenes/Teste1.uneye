@@ -1,1127 +1,6 @@
 Scene: Untitled
 Entities:
-  - Entity: 12837192831273
-    TagComponent:
-      Tag: Tile Square 0
-    TransformComponent:
-      Translation: [0, 0, 0]
-      Rotation: [0, 0, 0]
-      Scale: [0.5, 0.5, 1]
-    MaterialComponent:
-      Color: [0.300000012, 0.800000012, 0.200000003, 1]
-      TexturePath: assets/textures/checkerboard.png
-      IsSubTexture: false
-  - Entity: 12837192831273
-    TagComponent:
-      Tag: Tile Square 1
-    TransformComponent:
-      Translation: [0.600000024, 0, 0]
-      Rotation: [0, 0, 0]
-      Scale: [0.5, 0.5, 1]
-    MaterialComponent:
-      Color: [0.300000012, 0.800000012, 0.200000003, 1]
-      TexturePath: assets/textures/checkerboard.png
-      IsSubTexture: false
-  - Entity: 12837192831273
-    TagComponent:
-      Tag: Tile Square 2
-    TransformComponent:
-      Translation: [1.20000005, 0, 0]
-      Rotation: [0, 0, 0]
-      Scale: [0.5, 0.5, 1]
-    MaterialComponent:
-      Color: [0.300000012, 0.800000012, 0.200000003, 1]
-      TexturePath: assets/textures/checkerboard.png
-      IsSubTexture: false
-  - Entity: 12837192831273
-    TagComponent:
-      Tag: Tile Square 3
-    TransformComponent:
-      Translation: [1.80000007, 0, 0]
-      Rotation: [0, 0, 0]
-      Scale: [0.5, 0.5, 1]
-    MaterialComponent:
-      Color: [0.300000012, 0.800000012, 0.200000003, 1]
-      TexturePath: assets/textures/checkerboard.png
-      IsSubTexture: false
-  - Entity: 12837192831273
-    TagComponent:
-      Tag: Tile Square 4
-    TransformComponent:
-      Translation: [2.4000001, 0, 0]
-      Rotation: [0, 0, 0]
-      Scale: [0.5, 0.5, 1]
-    MaterialComponent:
-      Color: [0.300000012, 0.800000012, 0.200000003, 1]
-      TexturePath: assets/textures/checkerboard.png
-      IsSubTexture: false
-  - Entity: 12837192831273
-    TagComponent:
-      Tag: Tile Square 5
-    TransformComponent:
-      Translation: [3, 0, 0]
-      Rotation: [0, 0, 0]
-      Scale: [0.5, 0.5, 1]
-    MaterialComponent:
-      Color: [0.300000012, 0.800000012, 0.200000003, 1]
-      TexturePath: assets/textures/checkerboard.png
-      IsSubTexture: false
-  - Entity: 12837192831273
-    TagComponent:
-      Tag: Tile Square 6
-    TransformComponent:
-      Translation: [3.60000014, 0, 0]
-      Rotation: [0, 0, 0]
-      Scale: [0.5, 0.5, 1]
-    MaterialComponent:
-      Color: [0.300000012, 0.800000012, 0.200000003, 1]
-      TexturePath: assets/textures/checkerboard.png
-      IsSubTexture: false
-  - Entity: 12837192831273
-    TagComponent:
-      Tag: Tile Square 7
-    TransformComponent:
-      Translation: [4.20000029, 0, 0]
-      Rotation: [0, 0, 0]
-      Scale: [0.5, 0.5, 1]
-    MaterialComponent:
-      Color: [0.300000012, 0.800000012, 0.200000003, 1]
-      TexturePath: assets/textures/checkerboard.png
-      IsSubTexture: false
-  - Entity: 12837192831273
-    TagComponent:
-      Tag: Tile Square 8
-    TransformComponent:
-      Translation: [4.80000019, 0, 0]
-      Rotation: [0, 0, 0]
-      Scale: [0.5, 0.5, 1]
-    MaterialComponent:
-      Color: [0.300000012, 0.800000012, 0.200000003, 1]
-      TexturePath: assets/textures/checkerboard.png
-      IsSubTexture: false
-  - Entity: 12837192831273
-    TagComponent:
-      Tag: Tile Square 9
-    TransformComponent:
-      Translation: [5.4000001, 0, 0]
-      Rotation: [0, 0, 0]
-      Scale: [0.5, 0.5, 1]
-    MaterialComponent:
-      Color: [0.300000012, 0.800000012, 0.200000003, 1]
-      TexturePath: assets/textures/checkerboard.png
-      IsSubTexture: false
-  - Entity: 12837192831273
-    TagComponent:
-      Tag: Tile Square 10
-    TransformComponent:
-      Translation: [0, 0.600000024, 0]
-      Rotation: [0, 0, 0]
-      Scale: [0.5, 0.5, 1]
-    MaterialComponent:
-      Color: [0.300000012, 0.800000012, 0.200000003, 1]
-      TexturePath: assets/textures/checkerboard.png
-      IsSubTexture: false
-  - Entity: 12837192831273
-    TagComponent:
-      Tag: Tile Square 11
-    TransformComponent:
-      Translation: [0.600000024, 0.600000024, 0]
-      Rotation: [0, 0, 0]
-      Scale: [0.5, 0.5, 1]
-    MaterialComponent:
-      Color: [0.300000012, 0.800000012, 0.200000003, 1]
-      TexturePath: assets/textures/checkerboard.png
-      IsSubTexture: false
-  - Entity: 12837192831273
-    TagComponent:
-      Tag: Tile Square 12
-    TransformComponent:
-      Translation: [1.20000005, 0.600000024, 0]
-      Rotation: [0, 0, 0]
-      Scale: [0.5, 0.5, 1]
-    MaterialComponent:
-      Color: [0.300000012, 0.800000012, 0.200000003, 1]
-      TexturePath: assets/textures/checkerboard.png
-      IsSubTexture: false
-  - Entity: 12837192831273
-    TagComponent:
-      Tag: Tile Square 13
-    TransformComponent:
-      Translation: [1.80000007, 0.600000024, 0]
-      Rotation: [0, 0, 0]
-      Scale: [0.5, 0.5, 1]
-    MaterialComponent:
-      Color: [0.300000012, 0.800000012, 0.200000003, 1]
-      TexturePath: assets/textures/checkerboard.png
-      IsSubTexture: false
-  - Entity: 12837192831273
-    TagComponent:
-      Tag: Tile Square 14
-    TransformComponent:
-      Translation: [2.4000001, 0.600000024, 0]
-      Rotation: [0, 0, 0]
-      Scale: [0.5, 0.5, 1]
-    MaterialComponent:
-      Color: [0.300000012, 0.800000012, 0.200000003, 1]
-      TexturePath: assets/textures/checkerboard.png
-      IsSubTexture: false
-  - Entity: 12837192831273
-    TagComponent:
-      Tag: Tile Square 15
-    TransformComponent:
-      Translation: [3, 0.600000024, 0]
-      Rotation: [0, 0, 0]
-      Scale: [0.5, 0.5, 1]
-    MaterialComponent:
-      Color: [0.300000012, 0.800000012, 0.200000003, 1]
-      TexturePath: assets/textures/checkerboard.png
-      IsSubTexture: false
-  - Entity: 12837192831273
-    TagComponent:
-      Tag: Tile Square 16
-    TransformComponent:
-      Translation: [3.60000014, 0.600000024, 0]
-      Rotation: [0, 0, 0]
-      Scale: [0.5, 0.5, 1]
-    MaterialComponent:
-      Color: [0.300000012, 0.800000012, 0.200000003, 1]
-      TexturePath: assets/textures/checkerboard.png
-      IsSubTexture: false
-  - Entity: 12837192831273
-    TagComponent:
-      Tag: Tile Square 17
-    TransformComponent:
-      Translation: [4.20000029, 0.600000024, 0]
-      Rotation: [0, 0, 0]
-      Scale: [0.5, 0.5, 1]
-    MaterialComponent:
-      Color: [0.300000012, 0.800000012, 0.200000003, 1]
-      TexturePath: assets/textures/checkerboard.png
-      IsSubTexture: false
-  - Entity: 12837192831273
-    TagComponent:
-      Tag: Tile Square 18
-    TransformComponent:
-      Translation: [4.80000019, 0.600000024, 0]
-      Rotation: [0, 0, 0]
-      Scale: [0.5, 0.5, 1]
-    MaterialComponent:
-      Color: [0.300000012, 0.800000012, 0.200000003, 1]
-      TexturePath: assets/textures/checkerboard.png
-      IsSubTexture: false
-  - Entity: 12837192831273
-    TagComponent:
-      Tag: Tile Square 19
-    TransformComponent:
-      Translation: [5.4000001, 0.600000024, 0]
-      Rotation: [0, 0, 0]
-      Scale: [0.5, 0.5, 1]
-    MaterialComponent:
-      Color: [0.300000012, 0.800000012, 0.200000003, 1]
-      TexturePath: assets/textures/checkerboard.png
-      IsSubTexture: false
-  - Entity: 12837192831273
-    TagComponent:
-      Tag: Tile Square 20
-    TransformComponent:
-      Translation: [0, 1.20000005, 0]
-      Rotation: [0, 0, 0]
-      Scale: [0.5, 0.5, 1]
-    MaterialComponent:
-      Color: [0.300000012, 0.800000012, 0.200000003, 1]
-      TexturePath: assets/textures/checkerboard.png
-      IsSubTexture: false
-  - Entity: 12837192831273
-    TagComponent:
-      Tag: Tile Square 21
-    TransformComponent:
-      Translation: [0.600000024, 1.20000005, 0]
-      Rotation: [0, 0, 0]
-      Scale: [0.5, 0.5, 1]
-    MaterialComponent:
-      Color: [0.300000012, 0.800000012, 0.200000003, 1]
-      TexturePath: assets/textures/checkerboard.png
-      IsSubTexture: false
-  - Entity: 12837192831273
-    TagComponent:
-      Tag: Tile Square 22
-    TransformComponent:
-      Translation: [1.20000005, 1.20000005, 0]
-      Rotation: [0, 0, 0]
-      Scale: [0.5, 0.5, 1]
-    MaterialComponent:
-      Color: [0.300000012, 0.800000012, 0.200000003, 1]
-      TexturePath: assets/textures/checkerboard.png
-      IsSubTexture: false
-  - Entity: 12837192831273
-    TagComponent:
-      Tag: Tile Square 23
-    TransformComponent:
-      Translation: [1.80000007, 1.20000005, 0]
-      Rotation: [0, 0, 0]
-      Scale: [0.5, 0.5, 1]
-    MaterialComponent:
-      Color: [0.300000012, 0.800000012, 0.200000003, 1]
-      TexturePath: assets/textures/checkerboard.png
-      IsSubTexture: false
-  - Entity: 12837192831273
-    TagComponent:
-      Tag: Tile Square 24
-    TransformComponent:
-      Translation: [2.4000001, 1.20000005, 0]
-      Rotation: [0, 0, 0]
-      Scale: [0.5, 0.5, 1]
-    MaterialComponent:
-      Color: [0.300000012, 0.800000012, 0.200000003, 1]
-      TexturePath: assets/textures/checkerboard.png
-      IsSubTexture: false
-  - Entity: 12837192831273
-    TagComponent:
-      Tag: Tile Square 25
-    TransformComponent:
-      Translation: [3, 1.20000005, 0]
-      Rotation: [0, 0, 0]
-      Scale: [0.5, 0.5, 1]
-    MaterialComponent:
-      Color: [0.300000012, 0.800000012, 0.200000003, 1]
-      TexturePath: assets/textures/checkerboard.png
-      IsSubTexture: false
-  - Entity: 12837192831273
-    TagComponent:
-      Tag: Tile Square 26
-    TransformComponent:
-      Translation: [3.60000014, 1.20000005, 0]
-      Rotation: [0, 0, 0]
-      Scale: [0.5, 0.5, 1]
-    MaterialComponent:
-      Color: [0.300000012, 0.800000012, 0.200000003, 1]
-      TexturePath: assets/textures/checkerboard.png
-      IsSubTexture: false
-  - Entity: 12837192831273
-    TagComponent:
-      Tag: Tile Square 27
-    TransformComponent:
-      Translation: [4.20000029, 1.20000005, 0]
-      Rotation: [0, 0, 0]
-      Scale: [0.5, 0.5, 1]
-    MaterialComponent:
-      Color: [0.300000012, 0.800000012, 0.200000003, 1]
-      TexturePath: assets/textures/checkerboard.png
-      IsSubTexture: false
-  - Entity: 12837192831273
-    TagComponent:
-      Tag: Tile Square 28
-    TransformComponent:
-      Translation: [4.80000019, 1.20000005, 0]
-      Rotation: [0, 0, 0]
-      Scale: [0.5, 0.5, 1]
-    MaterialComponent:
-      Color: [0.300000012, 0.800000012, 0.200000003, 1]
-      TexturePath: assets/textures/checkerboard.png
-      IsSubTexture: false
-  - Entity: 12837192831273
-    TagComponent:
-      Tag: Tile Square 29
-    TransformComponent:
-      Translation: [5.4000001, 1.20000005, 0]
-      Rotation: [0, 0, 0]
-      Scale: [0.5, 0.5, 1]
-    MaterialComponent:
-      Color: [0.300000012, 0.800000012, 0.200000003, 1]
-      TexturePath: assets/textures/checkerboard.png
-      IsSubTexture: false
-  - Entity: 12837192831273
-    TagComponent:
-      Tag: Tile Square 30
-    TransformComponent:
-      Translation: [0, 1.80000007, 0]
-      Rotation: [0, 0, 0]
-      Scale: [0.5, 0.5, 1]
-    MaterialComponent:
-      Color: [0.300000012, 0.800000012, 0.200000003, 1]
-      TexturePath: assets/textures/checkerboard.png
-      IsSubTexture: false
-  - Entity: 12837192831273
-    TagComponent:
-      Tag: Tile Square 31
-    TransformComponent:
-      Translation: [0.600000024, 1.80000007, 0]
-      Rotation: [0, 0, 0]
-      Scale: [0.5, 0.5, 1]
-    MaterialComponent:
-      Color: [0.300000012, 0.800000012, 0.200000003, 1]
-      TexturePath: assets/textures/checkerboard.png
-      IsSubTexture: false
-  - Entity: 12837192831273
-    TagComponent:
-      Tag: Tile Square 32
-    TransformComponent:
-      Translation: [1.20000005, 1.80000007, 0]
-      Rotation: [0, 0, 0]
-      Scale: [0.5, 0.5, 1]
-    MaterialComponent:
-      Color: [0.300000012, 0.800000012, 0.200000003, 1]
-      TexturePath: assets/textures/checkerboard.png
-      IsSubTexture: false
-  - Entity: 12837192831273
-    TagComponent:
-      Tag: Tile Square 33
-    TransformComponent:
-      Translation: [1.80000007, 1.80000007, 0]
-      Rotation: [0, 0, 0]
-      Scale: [0.5, 0.5, 1]
-    MaterialComponent:
-      Color: [0.300000012, 0.800000012, 0.200000003, 1]
-      TexturePath: assets/textures/checkerboard.png
-      IsSubTexture: false
-  - Entity: 12837192831273
-    TagComponent:
-      Tag: Tile Square 34
-    TransformComponent:
-      Translation: [2.4000001, 1.80000007, 0]
-      Rotation: [0, 0, 0]
-      Scale: [0.5, 0.5, 1]
-    MaterialComponent:
-      Color: [0.300000012, 0.800000012, 0.200000003, 1]
-      TexturePath: assets/textures/checkerboard.png
-      IsSubTexture: false
-  - Entity: 12837192831273
-    TagComponent:
-      Tag: Tile Square 35
-    TransformComponent:
-      Translation: [3, 1.80000007, 0]
-      Rotation: [0, 0, 0]
-      Scale: [0.5, 0.5, 1]
-    MaterialComponent:
-      Color: [0.300000012, 0.800000012, 0.200000003, 1]
-      TexturePath: assets/textures/checkerboard.png
-      IsSubTexture: false
-  - Entity: 12837192831273
-    TagComponent:
-      Tag: Tile Square 36
-    TransformComponent:
-      Translation: [3.60000014, 1.80000007, 0]
-      Rotation: [0, 0, 0]
-      Scale: [0.5, 0.5, 1]
-    MaterialComponent:
-      Color: [0.300000012, 0.800000012, 0.200000003, 1]
-      TexturePath: assets/textures/checkerboard.png
-      IsSubTexture: false
-  - Entity: 12837192831273
-    TagComponent:
-      Tag: Tile Square 37
-    TransformComponent:
-      Translation: [4.20000029, 1.80000007, 0]
-      Rotation: [0, 0, 0]
-      Scale: [0.5, 0.5, 1]
-    MaterialComponent:
-      Color: [0.300000012, 0.800000012, 0.200000003, 1]
-      TexturePath: assets/textures/checkerboard.png
-      IsSubTexture: false
-  - Entity: 12837192831273
-    TagComponent:
-      Tag: Tile Square 38
-    TransformComponent:
-      Translation: [4.80000019, 1.80000007, 0]
-      Rotation: [0, 0, 0]
-      Scale: [0.5, 0.5, 1]
-    MaterialComponent:
-      Color: [0.300000012, 0.800000012, 0.200000003, 1]
-      TexturePath: assets/textures/checkerboard.png
-      IsSubTexture: false
-  - Entity: 12837192831273
-    TagComponent:
-      Tag: Tile Square 39
-    TransformComponent:
-      Translation: [5.4000001, 1.80000007, 0]
-      Rotation: [0, 0, 0]
-      Scale: [0.5, 0.5, 1]
-    MaterialComponent:
-      Color: [0.300000012, 0.800000012, 0.200000003, 1]
-      TexturePath: assets/textures/checkerboard.png
-      IsSubTexture: false
-  - Entity: 12837192831273
-    TagComponent:
-      Tag: Tile Square 40
-    TransformComponent:
-      Translation: [0, 2.4000001, 0]
-      Rotation: [0, 0, 0]
-      Scale: [0.5, 0.5, 1]
-    MaterialComponent:
-      Color: [0.300000012, 0.800000012, 0.200000003, 1]
-      TexturePath: assets/textures/checkerboard.png
-      IsSubTexture: false
-  - Entity: 12837192831273
-    TagComponent:
-      Tag: Tile Square 41
-    TransformComponent:
-      Translation: [0.600000024, 2.4000001, 0]
-      Rotation: [0, 0, 0]
-      Scale: [0.5, 0.5, 1]
-    MaterialComponent:
-      Color: [0.300000012, 0.800000012, 0.200000003, 1]
-      TexturePath: assets/textures/checkerboard.png
-      IsSubTexture: false
-  - Entity: 12837192831273
-    TagComponent:
-      Tag: Tile Square 42
-    TransformComponent:
-      Translation: [1.20000005, 2.4000001, 0]
-      Rotation: [0, 0, 0]
-      Scale: [0.5, 0.5, 1]
-    MaterialComponent:
-      Color: [0.300000012, 0.800000012, 0.200000003, 1]
-      TexturePath: assets/textures/checkerboard.png
-      IsSubTexture: false
-  - Entity: 12837192831273
-    TagComponent:
-      Tag: Tile Square 43
-    TransformComponent:
-      Translation: [1.80000007, 2.4000001, 0]
-      Rotation: [0, 0, 0]
-      Scale: [0.5, 0.5, 1]
-    MaterialComponent:
-      Color: [0.300000012, 0.800000012, 0.200000003, 1]
-      TexturePath: assets/textures/checkerboard.png
-      IsSubTexture: false
-  - Entity: 12837192831273
-    TagComponent:
-      Tag: Tile Square 44
-    TransformComponent:
-      Translation: [2.4000001, 2.4000001, 0]
-      Rotation: [0, 0, 0]
-      Scale: [0.5, 0.5, 1]
-    MaterialComponent:
-      Color: [0.300000012, 0.800000012, 0.200000003, 1]
-      TexturePath: assets/textures/checkerboard.png
-      IsSubTexture: false
-  - Entity: 12837192831273
-    TagComponent:
-      Tag: Tile Square 45
-    TransformComponent:
-      Translation: [3, 2.4000001, 0]
-      Rotation: [0, 0, 0]
-      Scale: [0.5, 0.5, 1]
-    MaterialComponent:
-      Color: [0.300000012, 0.800000012, 0.200000003, 1]
-      TexturePath: assets/textures/checkerboard.png
-      IsSubTexture: false
-  - Entity: 12837192831273
-    TagComponent:
-      Tag: Tile Square 46
-    TransformComponent:
-      Translation: [3.60000014, 2.4000001, 0]
-      Rotation: [0, 0, 0]
-      Scale: [0.5, 0.5, 1]
-    MaterialComponent:
-      Color: [0.300000012, 0.800000012, 0.200000003, 1]
-      TexturePath: assets/textures/checkerboard.png
-      IsSubTexture: false
-  - Entity: 12837192831273
-    TagComponent:
-      Tag: Tile Square 47
-    TransformComponent:
-      Translation: [4.20000029, 2.4000001, 0]
-      Rotation: [0, 0, 0]
-      Scale: [0.5, 0.5, 1]
-    MaterialComponent:
-      Color: [0.300000012, 0.800000012, 0.200000003, 1]
-      TexturePath: assets/textures/checkerboard.png
-      IsSubTexture: false
-  - Entity: 12837192831273
-    TagComponent:
-      Tag: Tile Square 48
-    TransformComponent:
-      Translation: [4.80000019, 2.4000001, 0]
-      Rotation: [0, 0, 0]
-      Scale: [0.5, 0.5, 1]
-    MaterialComponent:
-      Color: [0.300000012, 0.800000012, 0.200000003, 1]
-      TexturePath: assets/textures/checkerboard.png
-      IsSubTexture: false
-  - Entity: 12837192831273
-    TagComponent:
-      Tag: Tile Square 49
-    TransformComponent:
-      Translation: [5.4000001, 2.4000001, 0]
-      Rotation: [0, 0, 0]
-      Scale: [0.5, 0.5, 1]
-    MaterialComponent:
-      Color: [0.300000012, 0.800000012, 0.200000003, 1]
-      TexturePath: assets/textures/checkerboard.png
-      IsSubTexture: false
-  - Entity: 12837192831273
-    TagComponent:
-      Tag: Tile Square 50
-    TransformComponent:
-      Translation: [0, 3, 0]
-      Rotation: [0, 0, 0]
-      Scale: [0.5, 0.5, 1]
-    MaterialComponent:
-      Color: [0.300000012, 0.800000012, 0.200000003, 1]
-      TexturePath: assets/textures/checkerboard.png
-      IsSubTexture: false
-  - Entity: 12837192831273
-    TagComponent:
-      Tag: Tile Square 51
-    TransformComponent:
-      Translation: [0.600000024, 3, 0]
-      Rotation: [0, 0, 0]
-      Scale: [0.5, 0.5, 1]
-    MaterialComponent:
-      Color: [0.300000012, 0.800000012, 0.200000003, 1]
-      TexturePath: assets/textures/checkerboard.png
-      IsSubTexture: false
-  - Entity: 12837192831273
-    TagComponent:
-      Tag: Tile Square 52
-    TransformComponent:
-      Translation: [1.20000005, 3, 0]
-      Rotation: [0, 0, 0]
-      Scale: [0.5, 0.5, 1]
-    MaterialComponent:
-      Color: [0.300000012, 0.800000012, 0.200000003, 1]
-      TexturePath: assets/textures/checkerboard.png
-      IsSubTexture: false
-  - Entity: 12837192831273
-    TagComponent:
-      Tag: Tile Square 53
-    TransformComponent:
-      Translation: [1.80000007, 3, 0]
-      Rotation: [0, 0, 0]
-      Scale: [0.5, 0.5, 1]
-    MaterialComponent:
-      Color: [0.300000012, 0.800000012, 0.200000003, 1]
-      TexturePath: assets/textures/checkerboard.png
-      IsSubTexture: false
-  - Entity: 12837192831273
-    TagComponent:
-      Tag: Tile Square 54
-    TransformComponent:
-      Translation: [2.4000001, 3, 0]
-      Rotation: [0, 0, 0]
-      Scale: [0.5, 0.5, 1]
-    MaterialComponent:
-      Color: [0.300000012, 0.800000012, 0.200000003, 1]
-      TexturePath: assets/textures/checkerboard.png
-      IsSubTexture: false
-  - Entity: 12837192831273
-    TagComponent:
-      Tag: Tile Square 55
-    TransformComponent:
-      Translation: [3, 3, 0]
-      Rotation: [0, 0, 0]
-      Scale: [0.5, 0.5, 1]
-    MaterialComponent:
-      Color: [0.300000012, 0.800000012, 0.200000003, 1]
-      TexturePath: assets/textures/checkerboard.png
-      IsSubTexture: false
-  - Entity: 12837192831273
-    TagComponent:
-      Tag: Tile Square 56
-    TransformComponent:
-      Translation: [3.60000014, 3, 0]
-      Rotation: [0, 0, 0]
-      Scale: [0.5, 0.5, 1]
-    MaterialComponent:
-      Color: [0.300000012, 0.800000012, 0.200000003, 1]
-      TexturePath: assets/textures/checkerboard.png
-      IsSubTexture: false
-  - Entity: 12837192831273
-    TagComponent:
-      Tag: Tile Square 57
-    TransformComponent:
-      Translation: [4.20000029, 3, 0]
-      Rotation: [0, 0, 0]
-      Scale: [0.5, 0.5, 1]
-    MaterialComponent:
-      Color: [0.300000012, 0.800000012, 0.200000003, 1]
-      TexturePath: assets/textures/checkerboard.png
-      IsSubTexture: false
-  - Entity: 12837192831273
-    TagComponent:
-      Tag: Tile Square 58
-    TransformComponent:
-      Translation: [4.80000019, 3, 0]
-      Rotation: [0, 0, 0]
-      Scale: [0.5, 0.5, 1]
-    MaterialComponent:
-      Color: [0.300000012, 0.800000012, 0.200000003, 1]
-      TexturePath: assets/textures/checkerboard.png
-      IsSubTexture: false
-  - Entity: 12837192831273
-    TagComponent:
-      Tag: Tile Square 59
-    TransformComponent:
-      Translation: [5.4000001, 3, 0]
-      Rotation: [0, 0, 0]
-      Scale: [0.5, 0.5, 1]
-    MaterialComponent:
-      Color: [0.300000012, 0.800000012, 0.200000003, 1]
-      TexturePath: assets/textures/checkerboard.png
-      IsSubTexture: false
-  - Entity: 12837192831273
-    TagComponent:
-      Tag: Tile Square 60
-    TransformComponent:
-      Translation: [0, 3.60000014, 0]
-      Rotation: [0, 0, 0]
-      Scale: [0.5, 0.5, 1]
-    MaterialComponent:
-      Color: [0.300000012, 0.800000012, 0.200000003, 1]
-      TexturePath: assets/textures/checkerboard.png
-      IsSubTexture: false
-  - Entity: 12837192831273
-    TagComponent:
-      Tag: Tile Square 61
-    TransformComponent:
-      Translation: [0.600000024, 3.60000014, 0]
-      Rotation: [0, 0, 0]
-      Scale: [0.5, 0.5, 1]
-    MaterialComponent:
-      Color: [0.300000012, 0.800000012, 0.200000003, 1]
-      TexturePath: assets/textures/checkerboard.png
-      IsSubTexture: false
-  - Entity: 12837192831273
-    TagComponent:
-      Tag: Tile Square 62
-    TransformComponent:
-      Translation: [1.20000005, 3.60000014, 0]
-      Rotation: [0, 0, 0]
-      Scale: [0.5, 0.5, 1]
-    MaterialComponent:
-      Color: [0.300000012, 0.800000012, 0.200000003, 1]
-      TexturePath: assets/textures/checkerboard.png
-      IsSubTexture: false
-  - Entity: 12837192831273
-    TagComponent:
-      Tag: Tile Square 63
-    TransformComponent:
-      Translation: [1.80000007, 3.60000014, 0]
-      Rotation: [0, 0, 0]
-      Scale: [0.5, 0.5, 1]
-    MaterialComponent:
-      Color: [0.300000012, 0.800000012, 0.200000003, 1]
-      TexturePath: assets/textures/checkerboard.png
-      IsSubTexture: false
-  - Entity: 12837192831273
-    TagComponent:
-      Tag: Tile Square 64
-    TransformComponent:
-      Translation: [2.4000001, 3.60000014, 0]
-      Rotation: [0, 0, 0]
-      Scale: [0.5, 0.5, 1]
-    MaterialComponent:
-      Color: [0.300000012, 0.800000012, 0.200000003, 1]
-      TexturePath: assets/textures/checkerboard.png
-      IsSubTexture: false
-  - Entity: 12837192831273
-    TagComponent:
-      Tag: Tile Square 65
-    TransformComponent:
-      Translation: [3, 3.60000014, 0]
-      Rotation: [0, 0, 0]
-      Scale: [0.5, 0.5, 1]
-    MaterialComponent:
-      Color: [0.300000012, 0.800000012, 0.200000003, 1]
-      TexturePath: assets/textures/checkerboard.png
-      IsSubTexture: false
-  - Entity: 12837192831273
-    TagComponent:
-      Tag: Tile Square 66
-    TransformComponent:
-      Translation: [3.60000014, 3.60000014, 0]
-      Rotation: [0, 0, 0]
-      Scale: [0.5, 0.5, 1]
-    MaterialComponent:
-      Color: [0.300000012, 0.800000012, 0.200000003, 1]
-      TexturePath: assets/textures/checkerboard.png
-      IsSubTexture: false
-  - Entity: 12837192831273
-    TagComponent:
-      Tag: Tile Square 67
-    TransformComponent:
-      Translation: [4.20000029, 3.60000014, 0]
-      Rotation: [0, 0, 0]
-      Scale: [0.5, 0.5, 1]
-    MaterialComponent:
-      Color: [0.300000012, 0.800000012, 0.200000003, 1]
-      TexturePath: assets/textures/checkerboard.png
-      IsSubTexture: false
-  - Entity: 12837192831273
-    TagComponent:
-      Tag: Tile Square 68
-    TransformComponent:
-      Translation: [4.80000019, 3.60000014, 0]
-      Rotation: [0, 0, 0]
-      Scale: [0.5, 0.5, 1]
-    MaterialComponent:
-      Color: [0.300000012, 0.800000012, 0.200000003, 1]
-      TexturePath: assets/textures/checkerboard.png
-      IsSubTexture: false
-  - Entity: 12837192831273
-    TagComponent:
-      Tag: Tile Square 69
-    TransformComponent:
-      Translation: [5.4000001, 3.60000014, 0]
-      Rotation: [0, 0, 0]
-      Scale: [0.5, 0.5, 1]
-    MaterialComponent:
-      Color: [0.300000012, 0.800000012, 0.200000003, 1]
-      TexturePath: assets/textures/checkerboard.png
-      IsSubTexture: false
-  - Entity: 12837192831273
-    TagComponent:
-      Tag: Tile Square 70
-    TransformComponent:
-      Translation: [0, 4.20000029, 0]
-      Rotation: [0, 0, 0]
-      Scale: [0.5, 0.5, 1]
-    MaterialComponent:
-      Color: [0.300000012, 0.800000012, 0.200000003, 1]
-      TexturePath: assets/textures/checkerboard.png
-      IsSubTexture: false
-  - Entity: 12837192831273
-    TagComponent:
-      Tag: Tile Square 71
-    TransformComponent:
-      Translation: [0.600000024, 4.20000029, 0]
-      Rotation: [0, 0, 0]
-      Scale: [0.5, 0.5, 1]
-    MaterialComponent:
-      Color: [0.300000012, 0.800000012, 0.200000003, 1]
-      TexturePath: assets/textures/checkerboard.png
-      IsSubTexture: false
-  - Entity: 12837192831273
-    TagComponent:
-      Tag: Tile Square 72
-    TransformComponent:
-      Translation: [1.20000005, 4.20000029, 0]
-      Rotation: [0, 0, 0]
-      Scale: [0.5, 0.5, 1]
-    MaterialComponent:
-      Color: [0.300000012, 0.800000012, 0.200000003, 1]
-      TexturePath: assets/textures/checkerboard.png
-      IsSubTexture: false
-  - Entity: 12837192831273
-    TagComponent:
-      Tag: Tile Square 73
-    TransformComponent:
-      Translation: [1.80000007, 4.20000029, 0]
-      Rotation: [0, 0, 0]
-      Scale: [0.5, 0.5, 1]
-    MaterialComponent:
-      Color: [0.300000012, 0.800000012, 0.200000003, 1]
-      TexturePath: assets/textures/checkerboard.png
-      IsSubTexture: false
-  - Entity: 12837192831273
-    TagComponent:
-      Tag: Tile Square 74
-    TransformComponent:
-      Translation: [2.4000001, 4.20000029, 0]
-      Rotation: [0, 0, 0]
-      Scale: [0.5, 0.5, 1]
-    MaterialComponent:
-      Color: [0.300000012, 0.800000012, 0.200000003, 1]
-      TexturePath: assets/textures/checkerboard.png
-      IsSubTexture: false
-  - Entity: 12837192831273
-    TagComponent:
-      Tag: Tile Square 75
-    TransformComponent:
-      Translation: [3, 4.20000029, 0]
-      Rotation: [0, 0, 0]
-      Scale: [0.5, 0.5, 1]
-    MaterialComponent:
-      Color: [0.300000012, 0.800000012, 0.200000003, 1]
-      TexturePath: assets/textures/checkerboard.png
-      IsSubTexture: false
-  - Entity: 12837192831273
-    TagComponent:
-      Tag: Tile Square 76
-    TransformComponent:
-      Translation: [3.60000014, 4.20000029, 0]
-      Rotation: [0, 0, 0]
-      Scale: [0.5, 0.5, 1]
-    MaterialComponent:
-      Color: [0.300000012, 0.800000012, 0.200000003, 1]
-      TexturePath: assets/textures/checkerboard.png
-      IsSubTexture: false
-  - Entity: 12837192831273
-    TagComponent:
-      Tag: Tile Square 77
-    TransformComponent:
-      Translation: [4.20000029, 4.20000029, 0]
-      Rotation: [0, 0, 0]
-      Scale: [0.5, 0.5, 1]
-    MaterialComponent:
-      Color: [0.300000012, 0.800000012, 0.200000003, 1]
-      TexturePath: assets/textures/checkerboard.png
-      IsSubTexture: false
-  - Entity: 12837192831273
-    TagComponent:
-      Tag: Tile Square 78
-    TransformComponent:
-      Translation: [4.80000019, 4.20000029, 0]
-      Rotation: [0, 0, 0]
-      Scale: [0.5, 0.5, 1]
-    MaterialComponent:
-      Color: [0.300000012, 0.800000012, 0.200000003, 1]
-      TexturePath: assets/textures/checkerboard.png
-      IsSubTexture: false
-  - Entity: 12837192831273
-    TagComponent:
-      Tag: Tile Square 79
-    TransformComponent:
-      Translation: [5.4000001, 4.20000029, 0]
-      Rotation: [0, 0, 0]
-      Scale: [0.5, 0.5, 1]
-    MaterialComponent:
-      Color: [0.300000012, 0.800000012, 0.200000003, 1]
-      TexturePath: assets/textures/checkerboard.png
-      IsSubTexture: false
-  - Entity: 12837192831273
-    TagComponent:
-      Tag: Tile Square 80
-    TransformComponent:
-      Translation: [0, 4.80000019, 0]
-      Rotation: [0, 0, 0]
-      Scale: [0.5, 0.5, 1]
-    MaterialComponent:
-      Color: [0.300000012, 0.800000012, 0.200000003, 1]
-      TexturePath: assets/textures/checkerboard.png
-      IsSubTexture: false
-  - Entity: 12837192831273
-    TagComponent:
-      Tag: Tile Square 81
-    TransformComponent:
-      Translation: [0.600000024, 4.80000019, 0]
-      Rotation: [0, 0, 0]
-      Scale: [0.5, 0.5, 1]
-    MaterialComponent:
-      Color: [0.300000012, 0.800000012, 0.200000003, 1]
-      TexturePath: assets/textures/checkerboard.png
-      IsSubTexture: false
-  - Entity: 12837192831273
-    TagComponent:
-      Tag: Tile Square 82
-    TransformComponent:
-      Translation: [1.20000005, 4.80000019, 0]
-      Rotation: [0, 0, 0]
-      Scale: [0.5, 0.5, 1]
-    MaterialComponent:
-      Color: [0.300000012, 0.800000012, 0.200000003, 1]
-      TexturePath: assets/textures/checkerboard.png
-      IsSubTexture: false
-  - Entity: 12837192831273
-    TagComponent:
-      Tag: Tile Square 83
-    TransformComponent:
-      Translation: [1.80000007, 4.80000019, 0]
-      Rotation: [0, 0, 0]
-      Scale: [0.5, 0.5, 1]
-    MaterialComponent:
-      Color: [0.300000012, 0.800000012, 0.200000003, 1]
-      TexturePath: assets/textures/checkerboard.png
-      IsSubTexture: false
-  - Entity: 12837192831273
-    TagComponent:
-      Tag: Tile Square 84
-    TransformComponent:
-      Translation: [2.4000001, 4.80000019, 0]
-      Rotation: [0, 0, 0]
-      Scale: [0.5, 0.5, 1]
-    MaterialComponent:
-      Color: [0.300000012, 0.800000012, 0.200000003, 1]
-      TexturePath: assets/textures/checkerboard.png
-      IsSubTexture: false
-  - Entity: 12837192831273
-    TagComponent:
-      Tag: Tile Square 85
-    TransformComponent:
-      Translation: [3, 4.80000019, 0]
-      Rotation: [0, 0, 0]
-      Scale: [0.5, 0.5, 1]
-    MaterialComponent:
-      Color: [0.300000012, 0.800000012, 0.200000003, 1]
-      TexturePath: assets/textures/checkerboard.png
-      IsSubTexture: false
-  - Entity: 12837192831273
-    TagComponent:
-      Tag: Tile Square 86
-    TransformComponent:
-      Translation: [3.60000014, 4.80000019, 0]
-      Rotation: [0, 0, 0]
-      Scale: [0.5, 0.5, 1]
-    MaterialComponent:
-      Color: [0.300000012, 0.800000012, 0.200000003, 1]
-      TexturePath: assets/textures/checkerboard.png
-      IsSubTexture: false
-  - Entity: 12837192831273
-    TagComponent:
-      Tag: Tile Square 87
-    TransformComponent:
-      Translation: [4.20000029, 4.80000019, 0]
-      Rotation: [0, 0, 0]
-      Scale: [0.5, 0.5, 1]
-    MaterialComponent:
-      Color: [0.300000012, 0.800000012, 0.200000003, 1]
-      TexturePath: assets/textures/checkerboard.png
-      IsSubTexture: false
-  - Entity: 12837192831273
-    TagComponent:
-      Tag: Tile Square 88
-    TransformComponent:
-      Translation: [4.80000019, 4.80000019, 0]
-      Rotation: [0, 0, 0]
-      Scale: [0.5, 0.5, 1]
-    MaterialComponent:
-      Color: [0.300000012, 0.800000012, 0.200000003, 1]
-      TexturePath: assets/textures/checkerboard.png
-      IsSubTexture: false
-  - Entity: 12837192831273
-    TagComponent:
-      Tag: Tile Square 89
-    TransformComponent:
-      Translation: [5.4000001, 4.80000019, 0]
-      Rotation: [0, 0, 0]
-      Scale: [0.5, 0.5, 1]
-    MaterialComponent:
-      Color: [0.300000012, 0.800000012, 0.200000003, 1]
-      TexturePath: assets/textures/checkerboard.png
-      IsSubTexture: false
-  - Entity: 12837192831273
-    TagComponent:
-      Tag: Tile Square 90
-    TransformComponent:
-      Translation: [0, 5.4000001, 0]
-      Rotation: [0, 0, 0]
-      Scale: [0.5, 0.5, 1]
-    MaterialComponent:
-      Color: [0.300000012, 0.800000012, 0.200000003, 1]
-      TexturePath: assets/textures/checkerboard.png
-      IsSubTexture: false
-  - Entity: 12837192831273
-    TagComponent:
-      Tag: Tile Square 91
-    TransformComponent:
-      Translation: [0.600000024, 5.4000001, 0]
-      Rotation: [0, 0, 0]
-      Scale: [0.5, 0.5, 1]
-    MaterialComponent:
-      Color: [0.300000012, 0.800000012, 0.200000003, 1]
-      TexturePath: assets/textures/checkerboard.png
-      IsSubTexture: false
-  - Entity: 12837192831273
-    TagComponent:
-      Tag: Tile Square 92
-    TransformComponent:
-      Translation: [1.20000005, 5.4000001, 0]
-      Rotation: [0, 0, 0]
-      Scale: [0.5, 0.5, 1]
-    MaterialComponent:
-      Color: [0.300000012, 0.800000012, 0.200000003, 1]
-      TexturePath: assets/textures/checkerboard.png
-      IsSubTexture: false
-  - Entity: 12837192831273
-    TagComponent:
-      Tag: Tile Square 93
-    TransformComponent:
-      Translation: [1.80000007, 5.4000001, 0]
-      Rotation: [0, 0, 0]
-      Scale: [0.5, 0.5, 1]
-    MaterialComponent:
-      Color: [0.300000012, 0.800000012, 0.200000003, 1]
-      TexturePath: assets/textures/checkerboard.png
-      IsSubTexture: false
-  - Entity: 12837192831273
-    TagComponent:
-      Tag: Tile Square 94
-    TransformComponent:
-      Translation: [2.4000001, 5.4000001, 0]
-      Rotation: [0, 0, 0]
-      Scale: [0.5, 0.5, 1]
-    MaterialComponent:
-      Color: [0.300000012, 0.800000012, 0.200000003, 1]
-      TexturePath: assets/textures/checkerboard.png
-      IsSubTexture: false
-  - Entity: 12837192831273
-    TagComponent:
-      Tag: Tile Square 95
-    TransformComponent:
-      Translation: [3, 5.4000001, 0]
-      Rotation: [0, 0, 0]
-      Scale: [0.5, 0.5, 1]
-    MaterialComponent:
-      Color: [0.300000012, 0.800000012, 0.200000003, 1]
-      TexturePath: assets/textures/checkerboard.png
-      IsSubTexture: false
-  - Entity: 12837192831273
-    TagComponent:
-      Tag: Tile Square 96
-    TransformComponent:
-      Translation: [3.60000014, 5.4000001, 0]
-      Rotation: [0, 0, 0]
-      Scale: [0.5, 0.5, 1]
-    MaterialComponent:
-      Color: [0.300000012, 0.800000012, 0.200000003, 1]
-      TexturePath: assets/textures/checkerboard.png
-      IsSubTexture: false
-  - Entity: 12837192831273
-    TagComponent:
-      Tag: Tile Square 97
-    TransformComponent:
-      Translation: [4.20000029, 5.4000001, 0]
-      Rotation: [0, 0, 0]
-      Scale: [0.5, 0.5, 1]
-    MaterialComponent:
-      Color: [0.300000012, 0.800000012, 0.200000003, 1]
-      TexturePath: assets/textures/checkerboard.png
-      IsSubTexture: false
-  - Entity: 12837192831273
-    TagComponent:
-      Tag: Tile Square 98
-    TransformComponent:
-      Translation: [4.80000019, 5.4000001, 0]
-      Rotation: [0, 0, 0]
-      Scale: [0.5, 0.5, 1]
-    MaterialComponent:
-      Color: [0.300000012, 0.800000012, 0.200000003, 1]
-      TexturePath: assets/textures/checkerboard.png
-      IsSubTexture: false
-  - Entity: 12837192831273
-    TagComponent:
-      Tag: Tile Square 99
-    TransformComponent:
-      Translation: [5.4000001, 5.69999981, 0]
-      Rotation: [0, 0, 0]
-      Scale: [0.5, 1, 1]
-    MaterialComponent:
-      Color: [1, 1, 1, 1]
-      TexturePath: C:\dev\Uneye\Uneye-Editor\assets\game\RPGpack_sheet_2X.png
-      IsSubTexture: true
-      TileSize: [128, 128]
-      Coords: [0, 1]
-      SpriteSize: [1, 2]
-  - Entity: 12837192831273
-    TagComponent:
-      Tag: Camera A
-    TransformComponent:
-      Translation: [4.970716, 5.44264364, 0]
-      Rotation: [0, 0, 0]
-      Scale: [1, 1, 1]
-    CameraComponent:
-      Camera:
-        ProjectionType: 1
-        PerspectiveFOV: 0.785398185
-        PerspectiveNear: 0.00999999978
-        PerspectiveFar: 1000
-        OrthographicSize: 1.79999995
-        OrthographicNear: -1
-        OrthographicFar: 1
-      Primary: true
-      FixedAspectRatio: false
-  - Entity: 12837192831273
+  - Entity: 10676361683481173254
     TagComponent:
       Tag: Camera B
     TransformComponent:
@@ -1139,3 +18,1124 @@ Entities:
         OrthographicFar: 1
       Primary: false
       FixedAspectRatio: false
+  - Entity: 8225085150687854376
+    TagComponent:
+      Tag: Camera A
+    TransformComponent:
+      Translation: [4.970716, 5.44264364, 0]
+      Rotation: [0, 0, 0]
+      Scale: [1, 1, 1]
+    CameraComponent:
+      Camera:
+        ProjectionType: 1
+        PerspectiveFOV: 0.785398185
+        PerspectiveNear: 0.00999999978
+        PerspectiveFar: 1000
+        OrthographicSize: 1.79999995
+        OrthographicNear: -1
+        OrthographicFar: 1
+      Primary: true
+      FixedAspectRatio: false
+  - Entity: 10578394720997214328
+    TagComponent:
+      Tag: Tile Square 99
+    TransformComponent:
+      Translation: [5.4000001, 5.69999981, 0]
+      Rotation: [0, 0, 0]
+      Scale: [0.5, 1, 1]
+    SpriteComponent:
+      Color: [1, 1, 1, 1]
+      TexturePath: C:\dev\Uneye\Uneye-Editor\assets\game\RPGpack_sheet_2X.png
+      IsSubTexture: true
+      TileSize: [128, 128]
+      Coords: [0, 1]
+      SpriteSize: [1, 2]
+  - Entity: 16388846592897230516
+    TagComponent:
+      Tag: Tile Square 98
+    TransformComponent:
+      Translation: [4.80000019, 5.4000001, 0]
+      Rotation: [0, 0, 0]
+      Scale: [0.5, 0.5, 1]
+    SpriteComponent:
+      Color: [0.300000012, 0.800000012, 0.200000003, 1]
+      TexturePath: assets/textures/checkerboard.png
+      IsSubTexture: false
+  - Entity: 2899446735516430700
+    TagComponent:
+      Tag: Tile Square 97
+    TransformComponent:
+      Translation: [4.20000029, 5.4000001, 0]
+      Rotation: [0, 0, 0]
+      Scale: [0.5, 0.5, 1]
+    SpriteComponent:
+      Color: [0.300000012, 0.800000012, 0.200000003, 1]
+      TexturePath: assets/textures/checkerboard.png
+      IsSubTexture: false
+  - Entity: 14748064064087922610
+    TagComponent:
+      Tag: Tile Square 96
+    TransformComponent:
+      Translation: [3.60000014, 5.4000001, 0]
+      Rotation: [0, 0, 0]
+      Scale: [0.5, 0.5, 1]
+    SpriteComponent:
+      Color: [0.300000012, 0.800000012, 0.200000003, 1]
+      TexturePath: assets/textures/checkerboard.png
+      IsSubTexture: false
+  - Entity: 5572619456035346678
+    TagComponent:
+      Tag: Tile Square 95
+    TransformComponent:
+      Translation: [3, 5.4000001, 0]
+      Rotation: [0, 0, 0]
+      Scale: [0.5, 0.5, 1]
+    SpriteComponent:
+      Color: [0.300000012, 0.800000012, 0.200000003, 1]
+      TexturePath: assets/textures/checkerboard.png
+      IsSubTexture: false
+  - Entity: 12356427959623187744
+    TagComponent:
+      Tag: Tile Square 94
+    TransformComponent:
+      Translation: [2.4000001, 5.4000001, 0]
+      Rotation: [0, 0, 0]
+      Scale: [0.5, 0.5, 1]
+    SpriteComponent:
+      Color: [0.300000012, 0.800000012, 0.200000003, 1]
+      TexturePath: assets/textures/checkerboard.png
+      IsSubTexture: false
+  - Entity: 2688770364935318878
+    TagComponent:
+      Tag: Tile Square 93
+    TransformComponent:
+      Translation: [1.80000007, 5.4000001, 0]
+      Rotation: [0, 0, 0]
+      Scale: [0.5, 0.5, 1]
+    SpriteComponent:
+      Color: [0.300000012, 0.800000012, 0.200000003, 1]
+      TexturePath: assets/textures/checkerboard.png
+      IsSubTexture: false
+  - Entity: 6698396157719185317
+    TagComponent:
+      Tag: Tile Square 92
+    TransformComponent:
+      Translation: [1.20000005, 5.4000001, 0]
+      Rotation: [0, 0, 0]
+      Scale: [0.5, 0.5, 1]
+    SpriteComponent:
+      Color: [0.300000012, 0.800000012, 0.200000003, 1]
+      TexturePath: assets/textures/checkerboard.png
+      IsSubTexture: false
+  - Entity: 11473057786271050727
+    TagComponent:
+      Tag: Tile Square 91
+    TransformComponent:
+      Translation: [0.600000024, 5.4000001, 0]
+      Rotation: [0, 0, 0]
+      Scale: [0.5, 0.5, 1]
+    SpriteComponent:
+      Color: [0.300000012, 0.800000012, 0.200000003, 1]
+      TexturePath: assets/textures/checkerboard.png
+      IsSubTexture: false
+  - Entity: 1533727614460833087
+    TagComponent:
+      Tag: Tile Square 90
+    TransformComponent:
+      Translation: [0, 5.4000001, 0]
+      Rotation: [0, 0, 0]
+      Scale: [0.5, 0.5, 1]
+    SpriteComponent:
+      Color: [0.300000012, 0.800000012, 0.200000003, 1]
+      TexturePath: assets/textures/checkerboard.png
+      IsSubTexture: false
+  - Entity: 17203641984050848078
+    TagComponent:
+      Tag: Tile Square 89
+    TransformComponent:
+      Translation: [5.4000001, 4.80000019, 0]
+      Rotation: [0, 0, 0]
+      Scale: [0.5, 0.5, 1]
+    SpriteComponent:
+      Color: [0.300000012, 0.800000012, 0.200000003, 1]
+      TexturePath: assets/textures/checkerboard.png
+      IsSubTexture: false
+  - Entity: 15896240477019856811
+    TagComponent:
+      Tag: Tile Square 88
+    TransformComponent:
+      Translation: [4.80000019, 4.80000019, 0]
+      Rotation: [0, 0, 0]
+      Scale: [0.5, 0.5, 1]
+    SpriteComponent:
+      Color: [0.300000012, 0.800000012, 0.200000003, 1]
+      TexturePath: assets/textures/checkerboard.png
+      IsSubTexture: false
+  - Entity: 10034479783905245703
+    TagComponent:
+      Tag: Tile Square 87
+    TransformComponent:
+      Translation: [4.20000029, 4.80000019, 0]
+      Rotation: [0, 0, 0]
+      Scale: [0.5, 0.5, 1]
+    SpriteComponent:
+      Color: [0.300000012, 0.800000012, 0.200000003, 1]
+      TexturePath: assets/textures/checkerboard.png
+      IsSubTexture: false
+  - Entity: 11963783065585090602
+    TagComponent:
+      Tag: Tile Square 86
+    TransformComponent:
+      Translation: [3.60000014, 4.80000019, 0]
+      Rotation: [0, 0, 0]
+      Scale: [0.5, 0.5, 1]
+    SpriteComponent:
+      Color: [0.300000012, 0.800000012, 0.200000003, 1]
+      TexturePath: assets/textures/checkerboard.png
+      IsSubTexture: false
+  - Entity: 3537055597044706164
+    TagComponent:
+      Tag: Tile Square 85
+    TransformComponent:
+      Translation: [3, 4.80000019, 0]
+      Rotation: [0, 0, 0]
+      Scale: [0.5, 0.5, 1]
+    SpriteComponent:
+      Color: [0.300000012, 0.800000012, 0.200000003, 1]
+      TexturePath: assets/textures/checkerboard.png
+      IsSubTexture: false
+  - Entity: 13743899120831992427
+    TagComponent:
+      Tag: Tile Square 84
+    TransformComponent:
+      Translation: [2.4000001, 4.80000019, 0]
+      Rotation: [0, 0, 0]
+      Scale: [0.5, 0.5, 1]
+    SpriteComponent:
+      Color: [0.300000012, 0.800000012, 0.200000003, 1]
+      TexturePath: assets/textures/checkerboard.png
+      IsSubTexture: false
+  - Entity: 5946140579740499429
+    TagComponent:
+      Tag: Tile Square 83
+    TransformComponent:
+      Translation: [1.80000007, 4.80000019, 0]
+      Rotation: [0, 0, 0]
+      Scale: [0.5, 0.5, 1]
+    SpriteComponent:
+      Color: [0.300000012, 0.800000012, 0.200000003, 1]
+      TexturePath: assets/textures/checkerboard.png
+      IsSubTexture: false
+  - Entity: 16209780980877905288
+    TagComponent:
+      Tag: Tile Square 82
+    TransformComponent:
+      Translation: [1.20000005, 4.80000019, 0]
+      Rotation: [0, 0, 0]
+      Scale: [0.5, 0.5, 1]
+    SpriteComponent:
+      Color: [0.300000012, 0.800000012, 0.200000003, 1]
+      TexturePath: assets/textures/checkerboard.png
+      IsSubTexture: false
+  - Entity: 8991241537979500860
+    TagComponent:
+      Tag: Tile Square 81
+    TransformComponent:
+      Translation: [0.600000024, 4.80000019, 0]
+      Rotation: [0, 0, 0]
+      Scale: [0.5, 0.5, 1]
+    SpriteComponent:
+      Color: [0.300000012, 0.800000012, 0.200000003, 1]
+      TexturePath: assets/textures/checkerboard.png
+      IsSubTexture: false
+  - Entity: 15480881827173311473
+    TagComponent:
+      Tag: Tile Square 80
+    TransformComponent:
+      Translation: [0, 4.80000019, 0]
+      Rotation: [0, 0, 0]
+      Scale: [0.5, 0.5, 1]
+    SpriteComponent:
+      Color: [0.300000012, 0.800000012, 0.200000003, 1]
+      TexturePath: assets/textures/checkerboard.png
+      IsSubTexture: false
+  - Entity: 2157807225896114225
+    TagComponent:
+      Tag: Tile Square 79
+    TransformComponent:
+      Translation: [5.4000001, 4.20000029, 0]
+      Rotation: [0, 0, 0]
+      Scale: [0.5, 0.5, 1]
+    SpriteComponent:
+      Color: [0.300000012, 0.800000012, 0.200000003, 1]
+      TexturePath: assets/textures/checkerboard.png
+      IsSubTexture: false
+  - Entity: 7444577486101504672
+    TagComponent:
+      Tag: Tile Square 78
+    TransformComponent:
+      Translation: [4.80000019, 4.20000029, 0]
+      Rotation: [0, 0, 0]
+      Scale: [0.5, 0.5, 1]
+    SpriteComponent:
+      Color: [0.300000012, 0.800000012, 0.200000003, 1]
+      TexturePath: assets/textures/checkerboard.png
+      IsSubTexture: false
+  - Entity: 12906906797628557817
+    TagComponent:
+      Tag: Tile Square 77
+    TransformComponent:
+      Translation: [4.20000029, 4.20000029, 0]
+      Rotation: [0, 0, 0]
+      Scale: [0.5, 0.5, 1]
+    SpriteComponent:
+      Color: [0.300000012, 0.800000012, 0.200000003, 1]
+      TexturePath: assets/textures/checkerboard.png
+      IsSubTexture: false
+  - Entity: 5158377790491552480
+    TagComponent:
+      Tag: Tile Square 76
+    TransformComponent:
+      Translation: [3.60000014, 4.20000029, 0]
+      Rotation: [0, 0, 0]
+      Scale: [0.5, 0.5, 1]
+    SpriteComponent:
+      Color: [0.300000012, 0.800000012, 0.200000003, 1]
+      TexturePath: assets/textures/checkerboard.png
+      IsSubTexture: false
+  - Entity: 3691410515684179748
+    TagComponent:
+      Tag: Tile Square 75
+    TransformComponent:
+      Translation: [3, 4.20000029, 0]
+      Rotation: [0, 0, 0]
+      Scale: [0.5, 0.5, 1]
+    SpriteComponent:
+      Color: [0.300000012, 0.800000012, 0.200000003, 1]
+      TexturePath: assets/textures/checkerboard.png
+      IsSubTexture: false
+  - Entity: 2122906201389537004
+    TagComponent:
+      Tag: Tile Square 74
+    TransformComponent:
+      Translation: [2.4000001, 4.20000029, 0]
+      Rotation: [0, 0, 0]
+      Scale: [0.5, 0.5, 1]
+    SpriteComponent:
+      Color: [0.300000012, 0.800000012, 0.200000003, 1]
+      TexturePath: assets/textures/checkerboard.png
+      IsSubTexture: false
+  - Entity: 11958987296517517531
+    TagComponent:
+      Tag: Tile Square 73
+    TransformComponent:
+      Translation: [1.80000007, 4.20000029, 0]
+      Rotation: [0, 0, 0]
+      Scale: [0.5, 0.5, 1]
+    SpriteComponent:
+      Color: [0.300000012, 0.800000012, 0.200000003, 1]
+      TexturePath: assets/textures/checkerboard.png
+      IsSubTexture: false
+  - Entity: 14511935509735923289
+    TagComponent:
+      Tag: Tile Square 72
+    TransformComponent:
+      Translation: [1.20000005, 4.20000029, 0]
+      Rotation: [0, 0, 0]
+      Scale: [0.5, 0.5, 1]
+    SpriteComponent:
+      Color: [0.300000012, 0.800000012, 0.200000003, 1]
+      TexturePath: assets/textures/checkerboard.png
+      IsSubTexture: false
+  - Entity: 3014221707759370551
+    TagComponent:
+      Tag: Tile Square 71
+    TransformComponent:
+      Translation: [0.600000024, 4.20000029, 0]
+      Rotation: [0, 0, 0]
+      Scale: [0.5, 0.5, 1]
+    SpriteComponent:
+      Color: [0.300000012, 0.800000012, 0.200000003, 1]
+      TexturePath: assets/textures/checkerboard.png
+      IsSubTexture: false
+  - Entity: 14903139408110511287
+    TagComponent:
+      Tag: Tile Square 70
+    TransformComponent:
+      Translation: [0, 4.20000029, 0]
+      Rotation: [0, 0, 0]
+      Scale: [0.5, 0.5, 1]
+    SpriteComponent:
+      Color: [0.300000012, 0.800000012, 0.200000003, 1]
+      TexturePath: assets/textures/checkerboard.png
+      IsSubTexture: false
+  - Entity: 6240318252250905475
+    TagComponent:
+      Tag: Tile Square 69
+    TransformComponent:
+      Translation: [5.4000001, 3.60000014, 0]
+      Rotation: [0, 0, 0]
+      Scale: [0.5, 0.5, 1]
+    SpriteComponent:
+      Color: [0.300000012, 0.800000012, 0.200000003, 1]
+      TexturePath: assets/textures/checkerboard.png
+      IsSubTexture: false
+  - Entity: 5945171994570882003
+    TagComponent:
+      Tag: Tile Square 68
+    TransformComponent:
+      Translation: [4.80000019, 3.60000014, 0]
+      Rotation: [0, 0, 0]
+      Scale: [0.5, 0.5, 1]
+    SpriteComponent:
+      Color: [0.300000012, 0.800000012, 0.200000003, 1]
+      TexturePath: assets/textures/checkerboard.png
+      IsSubTexture: false
+  - Entity: 6092398296663808961
+    TagComponent:
+      Tag: Tile Square 67
+    TransformComponent:
+      Translation: [4.20000029, 3.60000014, 0]
+      Rotation: [0, 0, 0]
+      Scale: [0.5, 0.5, 1]
+    SpriteComponent:
+      Color: [0.300000012, 0.800000012, 0.200000003, 1]
+      TexturePath: assets/textures/checkerboard.png
+      IsSubTexture: false
+  - Entity: 9510590672897573415
+    TagComponent:
+      Tag: Tile Square 66
+    TransformComponent:
+      Translation: [3.60000014, 3.60000014, 0]
+      Rotation: [0, 0, 0]
+      Scale: [0.5, 0.5, 1]
+    SpriteComponent:
+      Color: [0.300000012, 0.800000012, 0.200000003, 1]
+      TexturePath: assets/textures/checkerboard.png
+      IsSubTexture: false
+  - Entity: 8635400174649172792
+    TagComponent:
+      Tag: Tile Square 65
+    TransformComponent:
+      Translation: [3, 3.60000014, 0]
+      Rotation: [0, 0, 0]
+      Scale: [0.5, 0.5, 1]
+    SpriteComponent:
+      Color: [0.300000012, 0.800000012, 0.200000003, 1]
+      TexturePath: assets/textures/checkerboard.png
+      IsSubTexture: false
+  - Entity: 5635658862867048027
+    TagComponent:
+      Tag: Tile Square 64
+    TransformComponent:
+      Translation: [2.4000001, 3.60000014, 0]
+      Rotation: [0, 0, 0]
+      Scale: [0.5, 0.5, 1]
+    SpriteComponent:
+      Color: [0.300000012, 0.800000012, 0.200000003, 1]
+      TexturePath: assets/textures/checkerboard.png
+      IsSubTexture: false
+  - Entity: 17229353159912367288
+    TagComponent:
+      Tag: Tile Square 63
+    TransformComponent:
+      Translation: [1.80000007, 3.60000014, 0]
+      Rotation: [0, 0, 0]
+      Scale: [0.5, 0.5, 1]
+    SpriteComponent:
+      Color: [0.300000012, 0.800000012, 0.200000003, 1]
+      TexturePath: assets/textures/checkerboard.png
+      IsSubTexture: false
+  - Entity: 18404978727466535474
+    TagComponent:
+      Tag: Tile Square 62
+    TransformComponent:
+      Translation: [1.20000005, 3.60000014, 0]
+      Rotation: [0, 0, 0]
+      Scale: [0.5, 0.5, 1]
+    SpriteComponent:
+      Color: [0.300000012, 0.800000012, 0.200000003, 1]
+      TexturePath: assets/textures/checkerboard.png
+      IsSubTexture: false
+  - Entity: 4621247086617862726
+    TagComponent:
+      Tag: Tile Square 61
+    TransformComponent:
+      Translation: [0.600000024, 3.60000014, 0]
+      Rotation: [0, 0, 0]
+      Scale: [0.5, 0.5, 1]
+    SpriteComponent:
+      Color: [0.300000012, 0.800000012, 0.200000003, 1]
+      TexturePath: assets/textures/checkerboard.png
+      IsSubTexture: false
+  - Entity: 1453398319504423679
+    TagComponent:
+      Tag: Tile Square 60
+    TransformComponent:
+      Translation: [0, 3.60000014, 0]
+      Rotation: [0, 0, 0]
+      Scale: [0.5, 0.5, 1]
+    SpriteComponent:
+      Color: [0.300000012, 0.800000012, 0.200000003, 1]
+      TexturePath: assets/textures/checkerboard.png
+      IsSubTexture: false
+  - Entity: 3595163011145395765
+    TagComponent:
+      Tag: Tile Square 59
+    TransformComponent:
+      Translation: [5.4000001, 3, 0]
+      Rotation: [0, 0, 0]
+      Scale: [0.5, 0.5, 1]
+    SpriteComponent:
+      Color: [0.300000012, 0.800000012, 0.200000003, 1]
+      TexturePath: assets/textures/checkerboard.png
+      IsSubTexture: false
+  - Entity: 1260590065090002403
+    TagComponent:
+      Tag: Tile Square 58
+    TransformComponent:
+      Translation: [4.80000019, 3, 0]
+      Rotation: [0, 0, 0]
+      Scale: [0.5, 0.5, 1]
+    SpriteComponent:
+      Color: [0.300000012, 0.800000012, 0.200000003, 1]
+      TexturePath: assets/textures/checkerboard.png
+      IsSubTexture: false
+  - Entity: 10106265672821622029
+    TagComponent:
+      Tag: Tile Square 57
+    TransformComponent:
+      Translation: [4.20000029, 3, 0]
+      Rotation: [0, 0, 0]
+      Scale: [0.5, 0.5, 1]
+    SpriteComponent:
+      Color: [0.300000012, 0.800000012, 0.200000003, 1]
+      TexturePath: assets/textures/checkerboard.png
+      IsSubTexture: false
+  - Entity: 2868287637880409511
+    TagComponent:
+      Tag: Tile Square 56
+    TransformComponent:
+      Translation: [3.60000014, 3, 0]
+      Rotation: [0, 0, 0]
+      Scale: [0.5, 0.5, 1]
+    SpriteComponent:
+      Color: [0.300000012, 0.800000012, 0.200000003, 1]
+      TexturePath: assets/textures/checkerboard.png
+      IsSubTexture: false
+  - Entity: 6996482297411178496
+    TagComponent:
+      Tag: Tile Square 55
+    TransformComponent:
+      Translation: [3, 3, 0]
+      Rotation: [0, 0, 0]
+      Scale: [0.5, 0.5, 1]
+    SpriteComponent:
+      Color: [0.300000012, 0.800000012, 0.200000003, 1]
+      TexturePath: assets/textures/checkerboard.png
+      IsSubTexture: false
+  - Entity: 10315510563977284844
+    TagComponent:
+      Tag: Tile Square 54
+    TransformComponent:
+      Translation: [2.4000001, 3, 0]
+      Rotation: [0, 0, 0]
+      Scale: [0.5, 0.5, 1]
+    SpriteComponent:
+      Color: [0.300000012, 0.800000012, 0.200000003, 1]
+      TexturePath: assets/textures/checkerboard.png
+      IsSubTexture: false
+  - Entity: 6559415480324653606
+    TagComponent:
+      Tag: Tile Square 53
+    TransformComponent:
+      Translation: [1.80000007, 3, 0]
+      Rotation: [0, 0, 0]
+      Scale: [0.5, 0.5, 1]
+    SpriteComponent:
+      Color: [0.300000012, 0.800000012, 0.200000003, 1]
+      TexturePath: assets/textures/checkerboard.png
+      IsSubTexture: false
+  - Entity: 13075159747901886090
+    TagComponent:
+      Tag: Tile Square 52
+    TransformComponent:
+      Translation: [1.20000005, 3, 0]
+      Rotation: [0, 0, 0]
+      Scale: [0.5, 0.5, 1]
+    SpriteComponent:
+      Color: [0.300000012, 0.800000012, 0.200000003, 1]
+      TexturePath: assets/textures/checkerboard.png
+      IsSubTexture: false
+  - Entity: 14331056354718821374
+    TagComponent:
+      Tag: Tile Square 51
+    TransformComponent:
+      Translation: [0.600000024, 3, 0]
+      Rotation: [0, 0, 0]
+      Scale: [0.5, 0.5, 1]
+    SpriteComponent:
+      Color: [0.300000012, 0.800000012, 0.200000003, 1]
+      TexturePath: assets/textures/checkerboard.png
+      IsSubTexture: false
+  - Entity: 15618932435127134710
+    TagComponent:
+      Tag: Tile Square 50
+    TransformComponent:
+      Translation: [0, 3, 0]
+      Rotation: [0, 0, 0]
+      Scale: [0.5, 0.5, 1]
+    SpriteComponent:
+      Color: [0.300000012, 0.800000012, 0.200000003, 1]
+      TexturePath: assets/textures/checkerboard.png
+      IsSubTexture: false
+  - Entity: 15982023079793933135
+    TagComponent:
+      Tag: Tile Square 49
+    TransformComponent:
+      Translation: [5.4000001, 2.4000001, 0]
+      Rotation: [0, 0, 0]
+      Scale: [0.5, 0.5, 1]
+    SpriteComponent:
+      Color: [0.300000012, 0.800000012, 0.200000003, 1]
+      TexturePath: assets/textures/checkerboard.png
+      IsSubTexture: false
+  - Entity: 7173038686871849800
+    TagComponent:
+      Tag: Tile Square 48
+    TransformComponent:
+      Translation: [4.80000019, 2.4000001, 0]
+      Rotation: [0, 0, 0]
+      Scale: [0.5, 0.5, 1]
+    SpriteComponent:
+      Color: [0.300000012, 0.800000012, 0.200000003, 1]
+      TexturePath: assets/textures/checkerboard.png
+      IsSubTexture: false
+  - Entity: 8252964389560532739
+    TagComponent:
+      Tag: Tile Square 47
+    TransformComponent:
+      Translation: [4.20000029, 2.4000001, 0]
+      Rotation: [0, 0, 0]
+      Scale: [0.5, 0.5, 1]
+    SpriteComponent:
+      Color: [0.300000012, 0.800000012, 0.200000003, 1]
+      TexturePath: assets/textures/checkerboard.png
+      IsSubTexture: false
+  - Entity: 13836296876998522338
+    TagComponent:
+      Tag: Tile Square 46
+    TransformComponent:
+      Translation: [3.60000014, 2.4000001, 0]
+      Rotation: [0, 0, 0]
+      Scale: [0.5, 0.5, 1]
+    SpriteComponent:
+      Color: [0.300000012, 0.800000012, 0.200000003, 1]
+      TexturePath: assets/textures/checkerboard.png
+      IsSubTexture: false
+  - Entity: 15690189295841205166
+    TagComponent:
+      Tag: Tile Square 45
+    TransformComponent:
+      Translation: [3, 2.4000001, 0]
+      Rotation: [0, 0, 0]
+      Scale: [0.5, 0.5, 1]
+    SpriteComponent:
+      Color: [0.300000012, 0.800000012, 0.200000003, 1]
+      TexturePath: assets/textures/checkerboard.png
+      IsSubTexture: false
+  - Entity: 16497896626435013177
+    TagComponent:
+      Tag: Tile Square 44
+    TransformComponent:
+      Translation: [2.4000001, 2.4000001, 0]
+      Rotation: [0, 0, 0]
+      Scale: [0.5, 0.5, 1]
+    SpriteComponent:
+      Color: [0.300000012, 0.800000012, 0.200000003, 1]
+      TexturePath: assets/textures/checkerboard.png
+      IsSubTexture: false
+  - Entity: 18171634351706833845
+    TagComponent:
+      Tag: Tile Square 43
+    TransformComponent:
+      Translation: [1.80000007, 2.4000001, 0]
+      Rotation: [0, 0, 0]
+      Scale: [0.5, 0.5, 1]
+    SpriteComponent:
+      Color: [0.300000012, 0.800000012, 0.200000003, 1]
+      TexturePath: assets/textures/checkerboard.png
+      IsSubTexture: false
+  - Entity: 15483193988041849568
+    TagComponent:
+      Tag: Tile Square 42
+    TransformComponent:
+      Translation: [1.20000005, 2.4000001, 0]
+      Rotation: [0, 0, 0]
+      Scale: [0.5, 0.5, 1]
+    SpriteComponent:
+      Color: [0.300000012, 0.800000012, 0.200000003, 1]
+      TexturePath: assets/textures/checkerboard.png
+      IsSubTexture: false
+  - Entity: 3879597338090460955
+    TagComponent:
+      Tag: Tile Square 41
+    TransformComponent:
+      Translation: [0.600000024, 2.4000001, 0]
+      Rotation: [0, 0, 0]
+      Scale: [0.5, 0.5, 1]
+    SpriteComponent:
+      Color: [0.300000012, 0.800000012, 0.200000003, 1]
+      TexturePath: assets/textures/checkerboard.png
+      IsSubTexture: false
+  - Entity: 2843439952199734135
+    TagComponent:
+      Tag: Tile Square 40
+    TransformComponent:
+      Translation: [0, 2.4000001, 0]
+      Rotation: [0, 0, 0]
+      Scale: [0.5, 0.5, 1]
+    SpriteComponent:
+      Color: [0.300000012, 0.800000012, 0.200000003, 1]
+      TexturePath: assets/textures/checkerboard.png
+      IsSubTexture: false
+  - Entity: 14976593028087473115
+    TagComponent:
+      Tag: Tile Square 39
+    TransformComponent:
+      Translation: [5.4000001, 1.80000007, 0]
+      Rotation: [0, 0, 0]
+      Scale: [0.5, 0.5, 1]
+    SpriteComponent:
+      Color: [0.300000012, 0.800000012, 0.200000003, 1]
+      TexturePath: assets/textures/checkerboard.png
+      IsSubTexture: false
+  - Entity: 1651895690193043077
+    TagComponent:
+      Tag: Tile Square 38
+    TransformComponent:
+      Translation: [4.80000019, 1.80000007, 0]
+      Rotation: [0, 0, 0]
+      Scale: [0.5, 0.5, 1]
+    SpriteComponent:
+      Color: [0.300000012, 0.800000012, 0.200000003, 1]
+      TexturePath: assets/textures/checkerboard.png
+      IsSubTexture: false
+  - Entity: 7286431262939561680
+    TagComponent:
+      Tag: Tile Square 37
+    TransformComponent:
+      Translation: [4.20000029, 1.80000007, 0]
+      Rotation: [0, 0, 0]
+      Scale: [0.5, 0.5, 1]
+    SpriteComponent:
+      Color: [0.300000012, 0.800000012, 0.200000003, 1]
+      TexturePath: assets/textures/checkerboard.png
+      IsSubTexture: false
+  - Entity: 4202617046241840804
+    TagComponent:
+      Tag: Tile Square 36
+    TransformComponent:
+      Translation: [3.60000014, 1.80000007, 0]
+      Rotation: [0, 0, 0]
+      Scale: [0.5, 0.5, 1]
+    SpriteComponent:
+      Color: [0.300000012, 0.800000012, 0.200000003, 1]
+      TexturePath: assets/textures/checkerboard.png
+      IsSubTexture: false
+  - Entity: 17862158680336323998
+    TagComponent:
+      Tag: Tile Square 35
+    TransformComponent:
+      Translation: [3, 1.80000007, 0]
+      Rotation: [0, 0, 0]
+      Scale: [0.5, 0.5, 1]
+    SpriteComponent:
+      Color: [0.300000012, 0.800000012, 0.200000003, 1]
+      TexturePath: assets/textures/checkerboard.png
+      IsSubTexture: false
+  - Entity: 2724964778991335375
+    TagComponent:
+      Tag: Tile Square 34
+    TransformComponent:
+      Translation: [2.4000001, 1.80000007, 0]
+      Rotation: [0, 0, 0]
+      Scale: [0.5, 0.5, 1]
+    SpriteComponent:
+      Color: [0.300000012, 0.800000012, 0.200000003, 1]
+      TexturePath: assets/textures/checkerboard.png
+      IsSubTexture: false
+  - Entity: 13037218342733848557
+    TagComponent:
+      Tag: Tile Square 33
+    TransformComponent:
+      Translation: [1.80000007, 1.80000007, 0]
+      Rotation: [0, 0, 0]
+      Scale: [0.5, 0.5, 1]
+    SpriteComponent:
+      Color: [0.300000012, 0.800000012, 0.200000003, 1]
+      TexturePath: assets/textures/checkerboard.png
+      IsSubTexture: false
+  - Entity: 3257555449795123882
+    TagComponent:
+      Tag: Tile Square 32
+    TransformComponent:
+      Translation: [1.20000005, 1.80000007, 0]
+      Rotation: [0, 0, 0]
+      Scale: [0.5, 0.5, 1]
+    SpriteComponent:
+      Color: [0.300000012, 0.800000012, 0.200000003, 1]
+      TexturePath: assets/textures/checkerboard.png
+      IsSubTexture: false
+  - Entity: 17843586960868536465
+    TagComponent:
+      Tag: Tile Square 31
+    TransformComponent:
+      Translation: [0.600000024, 1.80000007, 0]
+      Rotation: [0, 0, 0]
+      Scale: [0.5, 0.5, 1]
+    SpriteComponent:
+      Color: [0.300000012, 0.800000012, 0.200000003, 1]
+      TexturePath: assets/textures/checkerboard.png
+      IsSubTexture: false
+  - Entity: 12988058419899531810
+    TagComponent:
+      Tag: Tile Square 30
+    TransformComponent:
+      Translation: [0, 1.80000007, 0]
+      Rotation: [0, 0, 0]
+      Scale: [0.5, 0.5, 1]
+    SpriteComponent:
+      Color: [0.300000012, 0.800000012, 0.200000003, 1]
+      TexturePath: assets/textures/checkerboard.png
+      IsSubTexture: false
+  - Entity: 1085832615619981308
+    TagComponent:
+      Tag: Tile Square 29
+    TransformComponent:
+      Translation: [5.4000001, 1.20000005, 0]
+      Rotation: [0, 0, 0]
+      Scale: [0.5, 0.5, 1]
+    SpriteComponent:
+      Color: [0.300000012, 0.800000012, 0.200000003, 1]
+      TexturePath: assets/textures/checkerboard.png
+      IsSubTexture: false
+  - Entity: 8242797743728358405
+    TagComponent:
+      Tag: Tile Square 28
+    TransformComponent:
+      Translation: [4.80000019, 1.20000005, 0]
+      Rotation: [0, 0, 0]
+      Scale: [0.5, 0.5, 1]
+    SpriteComponent:
+      Color: [0.300000012, 0.800000012, 0.200000003, 1]
+      TexturePath: assets/textures/checkerboard.png
+      IsSubTexture: false
+  - Entity: 1026818155951083346
+    TagComponent:
+      Tag: Tile Square 27
+    TransformComponent:
+      Translation: [4.20000029, 1.20000005, 0]
+      Rotation: [0, 0, 0]
+      Scale: [0.5, 0.5, 1]
+    SpriteComponent:
+      Color: [0.300000012, 0.800000012, 0.200000003, 1]
+      TexturePath: assets/textures/checkerboard.png
+      IsSubTexture: false
+  - Entity: 16434654484603458216
+    TagComponent:
+      Tag: Tile Square 26
+    TransformComponent:
+      Translation: [3.60000014, 1.20000005, 0]
+      Rotation: [0, 0, 0]
+      Scale: [0.5, 0.5, 1]
+    SpriteComponent:
+      Color: [0.300000012, 0.800000012, 0.200000003, 1]
+      TexturePath: assets/textures/checkerboard.png
+      IsSubTexture: false
+  - Entity: 4995979692669093735
+    TagComponent:
+      Tag: Tile Square 25
+    TransformComponent:
+      Translation: [3, 1.20000005, 0]
+      Rotation: [0, 0, 0]
+      Scale: [0.5, 0.5, 1]
+    SpriteComponent:
+      Color: [0.300000012, 0.800000012, 0.200000003, 1]
+      TexturePath: assets/textures/checkerboard.png
+      IsSubTexture: false
+  - Entity: 9011841751856930881
+    TagComponent:
+      Tag: Tile Square 24
+    TransformComponent:
+      Translation: [2.4000001, 1.20000005, 0]
+      Rotation: [0, 0, 0]
+      Scale: [0.5, 0.5, 1]
+    SpriteComponent:
+      Color: [0.300000012, 0.800000012, 0.200000003, 1]
+      TexturePath: assets/textures/checkerboard.png
+      IsSubTexture: false
+  - Entity: 2337908497011953510
+    TagComponent:
+      Tag: Tile Square 23
+    TransformComponent:
+      Translation: [1.80000007, 1.20000005, 0]
+      Rotation: [0, 0, 0]
+      Scale: [0.5, 0.5, 1]
+    SpriteComponent:
+      Color: [0.300000012, 0.800000012, 0.200000003, 1]
+      TexturePath: assets/textures/checkerboard.png
+      IsSubTexture: false
+  - Entity: 13315505473289532982
+    TagComponent:
+      Tag: Tile Square 22
+    TransformComponent:
+      Translation: [1.20000005, 1.20000005, 0]
+      Rotation: [0, 0, 0]
+      Scale: [0.5, 0.5, 1]
+    SpriteComponent:
+      Color: [0.300000012, 0.800000012, 0.200000003, 1]
+      TexturePath: assets/textures/checkerboard.png
+      IsSubTexture: false
+  - Entity: 10079987874150014024
+    TagComponent:
+      Tag: Tile Square 21
+    TransformComponent:
+      Translation: [0.600000024, 1.20000005, 0]
+      Rotation: [0, 0, 0]
+      Scale: [0.5, 0.5, 1]
+    SpriteComponent:
+      Color: [0.300000012, 0.800000012, 0.200000003, 1]
+      TexturePath: assets/textures/checkerboard.png
+      IsSubTexture: false
+  - Entity: 13701140954290376106
+    TagComponent:
+      Tag: Tile Square 20
+    TransformComponent:
+      Translation: [0, 1.20000005, 0]
+      Rotation: [0, 0, 0]
+      Scale: [0.5, 0.5, 1]
+    SpriteComponent:
+      Color: [0.300000012, 0.800000012, 0.200000003, 1]
+      TexturePath: assets/textures/checkerboard.png
+      IsSubTexture: false
+  - Entity: 16401940374563621744
+    TagComponent:
+      Tag: Tile Square 19
+    TransformComponent:
+      Translation: [5.4000001, 0.600000024, 0]
+      Rotation: [0, 0, 0]
+      Scale: [0.5, 0.5, 1]
+    SpriteComponent:
+      Color: [0.300000012, 0.800000012, 0.200000003, 1]
+      TexturePath: assets/textures/checkerboard.png
+      IsSubTexture: false
+  - Entity: 4750725187612717275
+    TagComponent:
+      Tag: Tile Square 18
+    TransformComponent:
+      Translation: [4.80000019, 0.600000024, 0]
+      Rotation: [0, 0, 0]
+      Scale: [0.5, 0.5, 1]
+    SpriteComponent:
+      Color: [0.300000012, 0.800000012, 0.200000003, 1]
+      TexturePath: assets/textures/checkerboard.png
+      IsSubTexture: false
+  - Entity: 10276140637211487395
+    TagComponent:
+      Tag: Tile Square 17
+    TransformComponent:
+      Translation: [4.20000029, 0.600000024, 0]
+      Rotation: [0, 0, 0]
+      Scale: [0.5, 0.5, 1]
+    SpriteComponent:
+      Color: [0.300000012, 0.800000012, 0.200000003, 1]
+      TexturePath: assets/textures/checkerboard.png
+      IsSubTexture: false
+  - Entity: 9392270120311121945
+    TagComponent:
+      Tag: Tile Square 16
+    TransformComponent:
+      Translation: [3.60000014, 0.600000024, 0]
+      Rotation: [0, 0, 0]
+      Scale: [0.5, 0.5, 1]
+    SpriteComponent:
+      Color: [0.300000012, 0.800000012, 0.200000003, 1]
+      TexturePath: assets/textures/checkerboard.png
+      IsSubTexture: false
+  - Entity: 1902647619909453560
+    TagComponent:
+      Tag: Tile Square 15
+    TransformComponent:
+      Translation: [3, 0.600000024, 0]
+      Rotation: [0, 0, 0]
+      Scale: [0.5, 0.5, 1]
+    SpriteComponent:
+      Color: [0.300000012, 0.800000012, 0.200000003, 1]
+      TexturePath: assets/textures/checkerboard.png
+      IsSubTexture: false
+  - Entity: 12964119809955907414
+    TagComponent:
+      Tag: Tile Square 14
+    TransformComponent:
+      Translation: [2.4000001, 0.600000024, 0]
+      Rotation: [0, 0, 0]
+      Scale: [0.5, 0.5, 1]
+    SpriteComponent:
+      Color: [0.300000012, 0.800000012, 0.200000003, 1]
+      TexturePath: assets/textures/checkerboard.png
+      IsSubTexture: false
+  - Entity: 16479938206517720252
+    TagComponent:
+      Tag: Tile Square 13
+    TransformComponent:
+      Translation: [1.80000007, 0.600000024, 0]
+      Rotation: [0, 0, 0]
+      Scale: [0.5, 0.5, 1]
+    SpriteComponent:
+      Color: [0.300000012, 0.800000012, 0.200000003, 1]
+      TexturePath: assets/textures/checkerboard.png
+      IsSubTexture: false
+  - Entity: 8784057545937469024
+    TagComponent:
+      Tag: Tile Square 12
+    TransformComponent:
+      Translation: [1.20000005, 0.600000024, 0]
+      Rotation: [0, 0, 0]
+      Scale: [0.5, 0.5, 1]
+    SpriteComponent:
+      Color: [0.300000012, 0.800000012, 0.200000003, 1]
+      TexturePath: assets/textures/checkerboard.png
+      IsSubTexture: false
+  - Entity: 8509781140500965278
+    TagComponent:
+      Tag: Tile Square 11
+    TransformComponent:
+      Translation: [0.600000024, 0.600000024, 0]
+      Rotation: [0, 0, 0]
+      Scale: [0.5, 0.5, 1]
+    SpriteComponent:
+      Color: [0.300000012, 0.800000012, 0.200000003, 1]
+      TexturePath: assets/textures/checkerboard.png
+      IsSubTexture: false
+  - Entity: 2492805742142976393
+    TagComponent:
+      Tag: Tile Square 10
+    TransformComponent:
+      Translation: [0, 0.600000024, 0]
+      Rotation: [0, 0, 0]
+      Scale: [0.5, 0.5, 1]
+    SpriteComponent:
+      Color: [0.300000012, 0.800000012, 0.200000003, 1]
+      TexturePath: assets/textures/checkerboard.png
+      IsSubTexture: false
+  - Entity: 6660760959476768193
+    TagComponent:
+      Tag: Tile Square 9
+    TransformComponent:
+      Translation: [5.4000001, 0, 0]
+      Rotation: [0, 0, 0]
+      Scale: [0.5, 0.5, 1]
+    SpriteComponent:
+      Color: [0.300000012, 0.800000012, 0.200000003, 1]
+      TexturePath: assets/textures/checkerboard.png
+      IsSubTexture: false
+  - Entity: 17913056499578532703
+    TagComponent:
+      Tag: Tile Square 8
+    TransformComponent:
+      Translation: [4.80000019, 0, 0]
+      Rotation: [0, 0, 0]
+      Scale: [0.5, 0.5, 1]
+    SpriteComponent:
+      Color: [0.300000012, 0.800000012, 0.200000003, 1]
+      TexturePath: assets/textures/checkerboard.png
+      IsSubTexture: false
+  - Entity: 11463556826613981770
+    TagComponent:
+      Tag: Tile Square 7
+    TransformComponent:
+      Translation: [4.20000029, 0, 0]
+      Rotation: [0, 0, 0]
+      Scale: [0.5, 0.5, 1]
+    SpriteComponent:
+      Color: [0.300000012, 0.800000012, 0.200000003, 1]
+      TexturePath: assets/textures/checkerboard.png
+      IsSubTexture: false
+  - Entity: 14880807311102656831
+    TagComponent:
+      Tag: Tile Square 6
+    TransformComponent:
+      Translation: [3.60000014, 0, 0]
+      Rotation: [0, 0, 0]
+      Scale: [0.5, 0.5, 1]
+    SpriteComponent:
+      Color: [0.300000012, 0.800000012, 0.200000003, 1]
+      TexturePath: assets/textures/checkerboard.png
+      IsSubTexture: false
+  - Entity: 1988794322532798134
+    TagComponent:
+      Tag: Tile Square 5
+    TransformComponent:
+      Translation: [3, 0, 0]
+      Rotation: [0, 0, 0]
+      Scale: [0.5, 0.5, 1]
+    SpriteComponent:
+      Color: [0.300000012, 0.800000012, 0.200000003, 1]
+      TexturePath: assets/textures/checkerboard.png
+      IsSubTexture: false
+  - Entity: 4233308001912909262
+    TagComponent:
+      Tag: Tile Square 4
+    TransformComponent:
+      Translation: [2.4000001, 0, 0]
+      Rotation: [0, 0, 0]
+      Scale: [0.5, 0.5, 1]
+    SpriteComponent:
+      Color: [0.300000012, 0.800000012, 0.200000003, 1]
+      TexturePath: assets/textures/checkerboard.png
+      IsSubTexture: false
+  - Entity: 888815688091818171
+    TagComponent:
+      Tag: Tile Square 3
+    TransformComponent:
+      Translation: [1.80000007, 0, 0]
+      Rotation: [0, 0, 0]
+      Scale: [0.5, 0.5, 1]
+    SpriteComponent:
+      Color: [0.300000012, 0.800000012, 0.200000003, 1]
+      TexturePath: assets/textures/checkerboard.png
+      IsSubTexture: false
+  - Entity: 1894140653759634974
+    TagComponent:
+      Tag: Tile Square 2
+    TransformComponent:
+      Translation: [1.20000005, 0, 0]
+      Rotation: [0, 0, 0]
+      Scale: [0.5, 0.5, 1]
+    SpriteComponent:
+      Color: [0.300000012, 0.800000012, 0.200000003, 1]
+      TexturePath: assets/textures/checkerboard.png
+      IsSubTexture: false
+  - Entity: 17665449323232097852
+    TagComponent:
+      Tag: Tile Square 1
+    TransformComponent:
+      Translation: [0.600000024, 0, 0]
+      Rotation: [0, 0, 0]
+      Scale: [0.5, 0.5, 1]
+    SpriteComponent:
+      Color: [0.300000012, 0.800000012, 0.200000003, 1]
+      TexturePath: assets/textures/checkerboard.png
+      IsSubTexture: false
+  - Entity: 5007047642913104999
+    TagComponent:
+      Tag: Tile Square 0
+    TransformComponent:
+      Translation: [0, 0, 0]
+      Rotation: [0, 0, 0]
+      Scale: [0.5, 0.5, 1]
+    SpriteComponent:
+      Color: [0.300000012, 0.800000012, 0.200000003, 1]
+      TexturePath: assets/textures/checkerboard.png
+      IsSubTexture: false

@@ -18,7 +18,8 @@ namespace Uneye
 
 			static bool DrawFloat2Control(const std::string& label, glm::vec2& values, float resetValue = 0.0f);
 
-			static bool DrawFloatControl(const std::string& label, float& value, float resetValue = 0.0f);
+			static bool DrawFloatControl(const std::string& label, float& value, float resetValue = 0.0f,
+				float v_min = 0.0f, float v_max = 0.0f, float v_speed = 0.0f);
 
 			static bool DrawInputText(const std::string& label, char* buffer, size_t buffer_size);
 

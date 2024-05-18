@@ -199,6 +199,19 @@ namespace Uneye
 			out << YAML::EndMap; // SpriteComponent
 		}
 
+		if (entity.HasComponent<CircleComponent>())
+		{
+			out << YAML::Key << "CircleComponent";
+			out << YAML::BeginMap; // CircleComponent
+
+			auto& circleComponent = entity.GetComponent<CircleComponent>();
+			out << YAML::Key << "Color" << YAML::Value << circleComponent.Color;
+			out << YAML::Key << "Thickness" << YAML::Value << circleComponent.Thickness;
+			out << YAML::Key << "Fade" << YAML::Value << circleComponent.Fade;
+
+			out << YAML::EndMap; // CircleComponent
+		}
+
 		if (entity.HasComponent<Rigidbody2DComponent>())
 		{
 			out << YAML::Key << "Rigidbody2DComponent";
@@ -346,6 +359,15 @@ namespace Uneye
 						mc.SubTexture = SubTexture2D::CreateFromTexture(mc.Texture, mc.Coords,
 							mc.TileSize, mc.SpriteSize);
 					}
+				}
+
+				auto circleComponent = entity["CircleComponent"];
+				if (circleComponent)
+				{
+					auto& cc = deserializedEntity.AddComponent<CircleComponent>();
+					cc.Color = circleComponent["Color"].as<glm::vec4>();
+					cc.Thickness = circleComponent["Thickness"].as<float>();
+					cc.Fade = circleComponent["Fade"].as<float>();
 				}
 
 				auto rb2dcomponent = entity["Rigidbody2DComponent"];

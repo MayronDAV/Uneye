@@ -1,3 +1,5 @@
+// Quad Texture Shader
+
 @type vertex
 #version 450 core
 			
@@ -18,10 +20,10 @@ struct VertexOutput
 {
 	vec4 Color;
 	vec2 TexCoord;
-	flat float TexIndex;
 };
 
 layout (location = 0) out VertexOutput Output;
+layout (location = 3) out flat float v_TexIndex;
 layout (location = 4) out flat int v_EntityID;
 
 
@@ -29,7 +31,7 @@ void main()
 {
 	Output.Color = a_Color;
 	Output.TexCoord = a_TexCoord;
-	Output.TexIndex = a_TexIndex;
+	v_TexIndex = a_TexIndex;
 	v_EntityID = a_EntityID;
 
 	gl_Position = u_ViewProjection * vec4(a_Position, 1.0f);
@@ -40,26 +42,27 @@ void main()
 #version 450 core
 
 
-layout(location = 0) out vec4 color;
-layout(location = 1) out int color2;
+layout(location = 0) out vec4 o_Color;
+layout(location = 1) out int o_EntityID;
 
 struct VertexOutput
 {
 	vec4 Color;
 	vec2 TexCoord;
-	float TexIndex;
 };
 
 layout (location = 0) in VertexOutput Input;
+layout (location = 3) in flat float v_TexIndex;
 layout (location = 4) in flat int v_EntityID;
 
 layout (binding = 0) uniform sampler2D u_Textures[32];
+
 
 void main()
 {
 	vec4 texColor = Input.Color;
 
-	switch(int(Input.TexIndex))
+	switch(int(v_TexIndex))
 	{
 		case  0: texColor *= texture(u_Textures[ 0], Input.TexCoord); break;
 		case  1: texColor *= texture(u_Textures[ 1], Input.TexCoord); break;
@@ -94,7 +97,8 @@ void main()
 		case 30: texColor *= texture(u_Textures[30], Input.TexCoord); break;
 		case 31: texColor *= texture(u_Textures[31], Input.TexCoord); break;
 	}
-	color = texColor;
 
-	color2 = v_EntityID;
+	o_Color = texColor;
+
+	o_EntityID = v_EntityID;
 }

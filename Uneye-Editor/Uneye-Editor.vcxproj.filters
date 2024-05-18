@@ -33,4 +33,7 @@
     </ClCompile>
     <ClCompile Include="src\UneyeEditorApp.cpp" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="assets\shaders\Renderer2D_Circle.glsl" />
+  </ItemGroup>
 </Project>

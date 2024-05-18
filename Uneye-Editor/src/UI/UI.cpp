@@ -143,7 +143,7 @@ namespace Uneye
 	}
 
 
-	bool UI::DrawFloatControl(const std::string& label, float& value, float resetValue)
+	bool UI::DrawFloatControl(const std::string& label, float& value, float resetValue, float v_min, float v_max, float v_speed)
 	{
 		ImGui::PushID(label.c_str());
 
@@ -158,7 +158,7 @@ namespace Uneye
 		ImGui::Text("");
 
 		ImGui::SameLine();
-		bool result = ImGui::DragFloat("##X", &value, 0.1f, 0.0f, 0.0f, "%.2f");
+		bool result = ImGui::DragFloat("##X", &value, v_speed, v_min, v_max, "%.2f");
 		ImGui::PopStyleVar();
 
 

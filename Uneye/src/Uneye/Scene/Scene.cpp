@@ -98,6 +98,7 @@ namespace Uneye
 		CopyComponent<TransformComponent>(dstSceneRegistry, srcSceneRegistry, enttMap);
 		CopyComponent<CameraComponent>(dstSceneRegistry, srcSceneRegistry, enttMap);
 		CopyComponent<SpriteComponent>(dstSceneRegistry, srcSceneRegistry, enttMap);
+		CopyComponent<CircleComponent>(dstSceneRegistry, srcSceneRegistry, enttMap);
 		CopyComponent<NativeScriptComponent>(dstSceneRegistry, srcSceneRegistry, enttMap);
 		CopyComponent<Rigidbody2DComponent>(dstSceneRegistry, srcSceneRegistry, enttMap);
 		CopyComponent<BoxCollider2DComponent>(dstSceneRegistry, srcSceneRegistry, enttMap);
@@ -186,14 +187,35 @@ namespace Uneye
 
 		Renderer2D::BeginScene(camera);
 
-		auto groupM = m_Registry.group<TransformComponent>(entt::get<SpriteComponent>);
-		for (auto entity : groupM)
+		// Draw Sprite
 		{
-			auto [transform, sprite] = groupM.get<TransformComponent, SpriteComponent>(entity);
+			auto group = m_Registry.group<TransformComponent>(entt::get<SpriteComponent>);
+			for (auto entity : group)
+			{
+				auto [transform, sprite] = group.get<TransformComponent, SpriteComponent>(entity);
 
 
-			Renderer2D::DrawSprite(transform.GetTransform(), sprite, (int)entity);
+				Renderer2D::DrawSprite(transform.GetTransform(), sprite, (int)entity);
+				Renderer2D::DrawRect(transform.GetTransform(), glm::vec4(1, 0, 1, 1));
+			}
 		}
+
+		// Draw Circle
+		{
+			auto view = m_Registry.view<TransformComponent, CircleComponent>();
+			for (auto entity : view)
+			{
+				auto [transform, circle] = view.get<TransformComponent, CircleComponent>(entity);
+
+
+				Renderer2D::DrawCircle(transform.GetTransform(), circle.Color, circle.Thickness, circle.Fade, (int)entity);
+			}
+		}
+
+		//Renderer2D::DrawLine(glm::vec3(0), glm::vec3(5.0f), glm::vec4(1, 0, 1, 1));
+
+		//Renderer2D::DrawRect(glm::vec3(2.0f, 0, 0), glm::vec2(1.0f));
+		//Renderer2D::DrawRect(glm::vec3(4.0f, 0, 0), glm::vec2(1.0f));
 
 		Renderer2D::EndScene();
 
@@ -268,13 +290,30 @@ namespace Uneye
 		{
 			Renderer2D::BeginScene(mainCamera->GetProjection(), cameraTransform);
 
-			auto groupM = m_Registry.group<TransformComponent>(entt::get<SpriteComponent>);
-			for (auto entity : groupM)
+			// Draw Sprite
 			{
-				auto [transform, sprite] = groupM.get<TransformComponent, SpriteComponent>(entity);
+				auto group = m_Registry.group<TransformComponent>(entt::get<SpriteComponent>);
+				for (auto entity : group)
+				{
+					auto [transform, sprite] = group.get<TransformComponent, SpriteComponent>(entity);
 
-				Renderer2D::DrawSprite(transform.GetTransform(), sprite, (int)entity);
+
+					Renderer2D::DrawSprite(transform.GetTransform(), sprite, (int)entity);
+				}
 			}
+
+			// Draw Circle
+			{
+				auto view = m_Registry.view<TransformComponent, CircleComponent>();
+				for (auto entity : view)
+				{
+					auto [transform, circle] = view.get<TransformComponent, CircleComponent>(entity);
+
+
+					Renderer2D::DrawCircle(transform.GetTransform(), circle.Color, circle.Thickness, circle.Fade, (int)entity);
+				}
+			}
+
 
 			Renderer2D::EndScene();
 		}
@@ -307,6 +346,7 @@ namespace Uneye
 		CopyComponentIfExists<TransformComponent>(newEntity, entt);
 		CopyComponentIfExists<CameraComponent>(newEntity, entt);
 		CopyComponentIfExists<SpriteComponent>(newEntity, entt);
+		CopyComponentIfExists<CircleComponent>(newEntity, entt);
 		CopyComponentIfExists<NativeScriptComponent>(newEntity, entt);
 		CopyComponentIfExists<Rigidbody2DComponent>(newEntity, entt);
 		CopyComponentIfExists<BoxCollider2DComponent>(newEntity, entt);
@@ -362,6 +402,11 @@ namespace Uneye
 	}
 
 	template<>
+	void Scene::OnComponentAdded<CircleComponent>(Entity entity, CircleComponent& component)
+	{
+	}
+
+	template<>
 	void Scene::OnComponentAdded<NativeScriptComponent>(Entity entity, NativeScriptComponent& component)
 	{
 	}
@@ -375,6 +420,5 @@ namespace Uneye
 	void Scene::OnComponentAdded<BoxCollider2DComponent>(Entity entity, BoxCollider2DComponent& component)
 	{
 	}
-
 
 }

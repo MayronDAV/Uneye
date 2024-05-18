@@ -4,7 +4,7 @@ Entities:
     TagComponent:
       Tag: Ground
     TransformComponent:
-      Translation: [6.12446308, 0.33744216, 0]
+      Translation: [6.12446308, 0.33744216, -0.0500000007]
       Rotation: [0, 0, 0.674925804]
       Scale: [4.8888154, 1.04999936, 1.04999995]
     SpriteComponent:
@@ -123,3 +123,14 @@ Entities:
       Friction: 0.5
       Restitution: 0
       RestitutionThreshold: 0.5
+  - Entity: 11638638948879070348
+    TagComponent:
+      Tag: Circle
+    TransformComponent:
+      Translation: [5.01507902, 0.186532184, -0.100000001]
+      Rotation: [0, 0, 0]
+      Scale: [10, 10, 1]
+    CircleComponent:
+      Color: [0.98841697, 0.560993433, 0.560993433, 1]
+      Thickness: 1
+      Fade: 1

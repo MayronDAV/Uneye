@@ -83,6 +83,18 @@ namespace Uneye
 
 	};
 
+	struct CircleComponent
+	{
+		// Circle Stuff
+		glm::vec4 Color{ 1, 1, 1, 1 };
+		//float Radius = 0.5f;
+		float Thickness = 1.0f;
+		float Fade = 0.005f;
+
+		CircleComponent() = default;
+		CircleComponent(const CircleComponent&) = default;
+	};
+
 	struct CameraComponent
 	{
 		SceneCamera Camera;

@@ -253,6 +253,15 @@ namespace Uneye
 						}
 					}
 
+					if (!m_SelectionContext.HasComponent<CircleComponent>())
+					{
+						if (ImGui::MenuItem("Circle"))
+						{
+							m_SelectionContext.AddComponent<CircleComponent>();
+							ImGui::CloseCurrentPopup();
+						}
+					}
+
 					ImGui::EndPopup();
 				}
 			}
@@ -409,8 +418,8 @@ namespace Uneye
 
 				UI::DrawFloatControl("Density", bc2d.Density);
 				UI::DrawFloatControl("Friction", bc2d.Friction);
-				UI::DrawFloatControl("Restitution", bc2d.Restitution);
-				UI::DrawFloatControl("RestitutionThreshold", bc2d.RestitutionThreshold);
+				UI::DrawFloatControl("Restitution", bc2d.Restitution, 0.0f, 0.0f, 1.0f);
+				UI::DrawFloatControl("RestitutionThreshold", bc2d.RestitutionThreshold, 0.0f, 0.0f, 1.0f);
 
 			}, true);
 
@@ -438,7 +447,17 @@ namespace Uneye
 
 				UI::DrawCheckBox("FixedRotation", &rb2d.FixedRotation);
 
-				}, true);
+			}, true);
+
+			DrawComponentUI<CircleComponent>(entt, "Circle", [&](auto& cc) {
+
+				UI::DrawColorEdit4("Color ", cc.Color, 1.0f);
+
+				//UI::DrawFloatControl("Radius", cc.Radius);
+				UI::DrawFloatControl("Thickness", cc.Thickness, 0.025f, 0.1f, 1.0f);
+				UI::DrawFloatControl("Fade", cc.Fade, 0.00025f, 0.00f, 1.0f);
+
+			}, true);
 		}
 
 	}

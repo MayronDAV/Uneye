@@ -16,6 +16,7 @@
 #include "box2d/b2_body.h"
 #include "box2d/b2_fixture.h"
 #include "box2d/b2_polygon_shape.h"
+#include "box2d/b2_circle_shape.h"
 
 
 namespace Uneye
@@ -102,6 +103,7 @@ namespace Uneye
 		CopyComponent<NativeScriptComponent>(dstSceneRegistry, srcSceneRegistry, enttMap);
 		CopyComponent<Rigidbody2DComponent>(dstSceneRegistry, srcSceneRegistry, enttMap);
 		CopyComponent<BoxCollider2DComponent>(dstSceneRegistry, srcSceneRegistry, enttMap);
+		CopyComponent<CircleCollider2DComponent>(dstSceneRegistry, srcSceneRegistry, enttMap);
 	
 		return newScene;
 	}
@@ -129,48 +131,22 @@ namespace Uneye
 
 	void Scene::OnRuntimeStart()
 	{
-		m_PhysicsWorld = new b2World({0.0f, -9.8f});
-		//m_PhysicsWorld->CreateBody();
-		auto view = m_Registry.view<Rigidbody2DComponent>();
-		for (auto entt : view)
-		{
-			Entity entity = { entt, this };
-			auto& tc = entity.GetComponent<TransformComponent>();
-			auto& rb2d = entity.GetComponent<Rigidbody2DComponent>();
-
-			b2BodyDef bodyDef;
-			bodyDef.type = Utils::Rigidbody2DTypeToBox2DBody(rb2d.Type);
-			bodyDef.position.Set(tc.Translation.x, tc.Translation.y);
-			bodyDef.angle = tc.Rotation.z;
-
-			b2Body* body = m_PhysicsWorld->CreateBody(&bodyDef);
-			body->SetFixedRotation(rb2d.FixedRotation);
-			rb2d.RuntimeBody = body;
-
-			if (entity.HasComponent<BoxCollider2DComponent>())
-			{
-				auto& bc2d = entity.GetComponent<BoxCollider2DComponent>();
-
-				b2PolygonShape boxShape;
-				boxShape.SetAsBox(bc2d.Size.x * tc.Scale.x, bc2d.Size.y * tc.Scale.y);
-
-				b2FixtureDef fixtureDef;
-				fixtureDef.shape = &boxShape;
-				fixtureDef.density = bc2d.Density;
-				fixtureDef.friction = bc2d.Friction;
-				fixtureDef.restitution = bc2d.Restitution;
-				fixtureDef.restitutionThreshold = bc2d.RestitutionThreshold;
-
-				body->CreateFixture(&fixtureDef);
-			}
-		}
-
+		OnPhysics2DStart();
 	}
 
 	void Scene::OnRuntimeStop()
 	{
-		delete m_PhysicsWorld;
-		m_PhysicsWorld = nullptr;
+		OnPhysics2DStop();
+	}
+
+	void Scene::OnSimulationStart()
+	{
+		OnPhysics2DStart();
+	}
+
+	void Scene::OnSimulationStop()
+	{
+		OnPhysics2DStop();
 	}
 
 	void Scene::OnUpdateEditor(Timestep ts, EditorCamera& camera)
@@ -196,7 +172,6 @@ namespace Uneye
 
 
 				Renderer2D::DrawSprite(transform.GetTransform(), sprite, (int)entity);
-				Renderer2D::DrawRect(transform.GetTransform(), glm::vec4(1, 0, 1, 1));
 			}
 		}
 
@@ -211,11 +186,6 @@ namespace Uneye
 				Renderer2D::DrawCircle(transform.GetTransform(), circle.Color, circle.Thickness, circle.Fade, (int)entity);
 			}
 		}
-
-		//Renderer2D::DrawLine(glm::vec3(0), glm::vec3(5.0f), glm::vec4(1, 0, 1, 1));
-
-		//Renderer2D::DrawRect(glm::vec3(2.0f, 0, 0), glm::vec2(1.0f));
-		//Renderer2D::DrawRect(glm::vec3(4.0f, 0, 0), glm::vec2(1.0f));
 
 		Renderer2D::EndScene();
 
@@ -320,6 +290,49 @@ namespace Uneye
 
 	}
 
+	void Scene::OnUpdateSimulation(Timestep ts, EditorCamera& camera)
+	{
+		UNEYE_PROFILE_FUNCTION();
+
+		float currentTime = Time::GetTime();
+		if (currentTime - m_LastTime >= 1.0f)
+		{
+			m_FPS = m_FPSCounter / (currentTime - m_LastTime);
+			m_LastTime = currentTime;
+			m_FPSCounter = 0;
+		}
+
+		Renderer2D::BeginScene(camera);
+
+		// Draw Sprite
+		{
+			auto group = m_Registry.group<TransformComponent>(entt::get<SpriteComponent>);
+			for (auto entity : group)
+			{
+				auto [transform, sprite] = group.get<TransformComponent, SpriteComponent>(entity);
+
+
+				Renderer2D::DrawSprite(transform.GetTransform(), sprite, (int)entity);
+			}
+		}
+
+		// Draw Circle
+		{
+			auto view = m_Registry.view<TransformComponent, CircleComponent>();
+			for (auto entity : view)
+			{
+				auto [transform, circle] = view.get<TransformComponent, CircleComponent>(entity);
+
+
+				Renderer2D::DrawCircle(transform.GetTransform(), circle.Color, circle.Thickness, circle.Fade, (int)entity);
+			}
+		}
+
+		Renderer2D::EndScene();
+
+		m_FPSCounter++;
+	}
+
 	void Scene::OnViewportResize(uint32_t width, uint32_t height)
 	{
 		UNEYE_PROFILE_FUNCTION();
@@ -350,6 +363,7 @@ namespace Uneye
 		CopyComponentIfExists<NativeScriptComponent>(newEntity, entt);
 		CopyComponentIfExists<Rigidbody2DComponent>(newEntity, entt);
 		CopyComponentIfExists<BoxCollider2DComponent>(newEntity, entt);
+		CopyComponentIfExists<CircleCollider2DComponent>(newEntity, entt);
 
 	}
 
@@ -365,6 +379,69 @@ namespace Uneye
 		}
 
 		return Entity();
+	}
+
+	void Scene::OnPhysics2DStart()
+	{
+		m_PhysicsWorld = new b2World({ 0.0f, -9.8f });
+		//m_PhysicsWorld->CreateBody();
+		auto view = m_Registry.view<Rigidbody2DComponent>();
+		for (auto entt : view)
+		{
+			Entity entity = { entt, this };
+			auto& tc = entity.GetComponent<TransformComponent>();
+			auto& rb2d = entity.GetComponent<Rigidbody2DComponent>();
+
+			b2BodyDef bodyDef;
+			bodyDef.type = Utils::Rigidbody2DTypeToBox2DBody(rb2d.Type);
+			bodyDef.position.Set(tc.Translation.x, tc.Translation.y);
+			bodyDef.angle = tc.Rotation.z;
+
+			b2Body* body = m_PhysicsWorld->CreateBody(&bodyDef);
+			body->SetFixedRotation(rb2d.FixedRotation);
+			rb2d.RuntimeBody = body;
+
+			if (entity.HasComponent<BoxCollider2DComponent>())
+			{
+				auto& bc2d = entity.GetComponent<BoxCollider2DComponent>();
+
+				b2PolygonShape boxShape;
+				boxShape.SetAsBox(bc2d.Size.x * tc.Scale.x, bc2d.Size.y * tc.Scale.y);
+
+				b2FixtureDef fixtureDef;
+				fixtureDef.shape = &boxShape;
+				fixtureDef.density = bc2d.Density;
+				fixtureDef.friction = bc2d.Friction;
+				fixtureDef.restitution = bc2d.Restitution;
+				fixtureDef.restitutionThreshold = bc2d.RestitutionThreshold;
+
+				body->CreateFixture(&fixtureDef);
+			}
+
+			if (entity.HasComponent<CircleCollider2DComponent>())
+			{
+				auto& cc2d = entity.GetComponent<CircleCollider2DComponent>();
+
+				b2CircleShape circleShape;
+				circleShape.m_p.Set(cc2d.Offset.x, cc2d.Offset.y);
+				circleShape.m_radius = tc.Scale.x * cc2d.Radius;
+
+				b2FixtureDef fixtureDef;
+				fixtureDef.shape = &circleShape;
+				fixtureDef.density = cc2d.Density;
+				fixtureDef.friction = cc2d.Friction;
+				fixtureDef.restitution = cc2d.Restitution;
+				fixtureDef.restitutionThreshold = cc2d.RestitutionThreshold;
+
+				body->CreateFixture(&fixtureDef);
+			}
+		}
+	}
+
+	void Scene::OnPhysics2DStop()
+	{
+		delete m_PhysicsWorld;
+		m_PhysicsWorld = nullptr;
 	}
 
 	template<typename T>
@@ -418,6 +495,11 @@ namespace Uneye
 
 	template<>
 	void Scene::OnComponentAdded<BoxCollider2DComponent>(Entity entity, BoxCollider2DComponent& component)
+	{
+	}
+
+	template<>
+	void Scene::OnComponentAdded<CircleCollider2DComponent>(Entity entity, CircleCollider2DComponent& component)
 	{
 	}
 

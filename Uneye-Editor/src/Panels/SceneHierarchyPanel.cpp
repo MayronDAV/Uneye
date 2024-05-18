@@ -235,6 +235,14 @@ namespace Uneye
 						}
 					}
 
+					if (!m_SelectionContext.HasComponent<CircleComponent>())
+					{
+						if (ImGui::MenuItem("Circle"))
+						{
+							m_SelectionContext.AddComponent<CircleComponent>();
+							ImGui::CloseCurrentPopup();
+						}
+					}
 					if (!m_SelectionContext.HasComponent<Rigidbody2DComponent>())
 					{
 						if (ImGui::MenuItem("Rigidbody 2D"))
@@ -253,14 +261,15 @@ namespace Uneye
 						}
 					}
 
-					if (!m_SelectionContext.HasComponent<CircleComponent>())
+					if (!m_SelectionContext.HasComponent<CircleCollider2DComponent>())
 					{
-						if (ImGui::MenuItem("Circle"))
+						if (ImGui::MenuItem("CircleCollider 2D"))
 						{
-							m_SelectionContext.AddComponent<CircleComponent>();
+							m_SelectionContext.AddComponent<CircleCollider2DComponent>();
 							ImGui::CloseCurrentPopup();
 						}
 					}
+
 
 					ImGui::EndPopup();
 				}
@@ -406,23 +415,15 @@ namespace Uneye
 			}, true);
 
 
-			DrawComponentUI<BoxCollider2DComponent>(entt, "BoxCollider 2D", [&](auto& bc2d) {
+			DrawComponentUI<CircleComponent>(entt, "Circle", [&](auto& cc) {
 
-				//UI::DrawFloatControl("OffsetX", bc2d.Offset.x);
-				//UI::DrawFloatControl("OffsetY", bc2d.Offset.y);
-				//UI::DrawFloatControl("SizeX", bc2d.Size.x);
-				//UI::DrawFloatControl("SizeY", bc2d.Size.y);
+				UI::DrawColorEdit4("Color ", cc.Color, 1.0f);
 
-				UI::DrawFloat2Control("Size", bc2d.Size);
-				UI::DrawFloat2Control("Offset", bc2d.Offset);
+				//UI::DrawFloatControl("Radius", cc.Radius);
+				UI::DrawFloatControl("Thickness", cc.Thickness, 0.025f, 0.1f, 1.0f);
+				UI::DrawFloatControl("Fade", cc.Fade, 0.00025f, 0.00f, 1.0f);
 
-				UI::DrawFloatControl("Density", bc2d.Density);
-				UI::DrawFloatControl("Friction", bc2d.Friction);
-				UI::DrawFloatControl("Restitution", bc2d.Restitution, 0.0f, 0.0f, 1.0f);
-				UI::DrawFloatControl("RestitutionThreshold", bc2d.RestitutionThreshold, 0.0f, 0.0f, 1.0f);
-
-			}, true);
-
+				}, true);
 
 			DrawComponentUI<Rigidbody2DComponent>(entt, "Rigidbody 2D", [&](auto& rb2d) {
 
@@ -449,15 +450,30 @@ namespace Uneye
 
 			}, true);
 
-			DrawComponentUI<CircleComponent>(entt, "Circle", [&](auto& cc) {
 
-				UI::DrawColorEdit4("Color ", cc.Color, 1.0f);
+			DrawComponentUI<BoxCollider2DComponent>(entt, "BoxCollider 2D", [&](auto& bc2d) {
 
-				//UI::DrawFloatControl("Radius", cc.Radius);
-				UI::DrawFloatControl("Thickness", cc.Thickness, 0.025f, 0.1f, 1.0f);
-				UI::DrawFloatControl("Fade", cc.Fade, 0.00025f, 0.00f, 1.0f);
+				UI::DrawFloat2Control("Size", bc2d.Size);
+				UI::DrawFloat2Control("Offset", bc2d.Offset);
 
-			}, true);
+				UI::DrawFloatControl("Density", bc2d.Density);
+				UI::DrawFloatControl("Friction", bc2d.Friction);
+				UI::DrawFloatControl("Restitution", bc2d.Restitution, 0.0f, 0.0f, 1.0f);
+				UI::DrawFloatControl("RestitutionThreshold", bc2d.RestitutionThreshold, 0.0f, 0.0f, 1.0f);
+
+				}, true);
+
+			DrawComponentUI<CircleCollider2DComponent>(entt, "CircleCollider 2D", [&](auto& cc2d) {
+
+				UI::DrawFloat2Control("Offset", cc2d.Offset);
+				UI::DrawFloatControl("Radius", cc2d.Radius);
+
+				UI::DrawFloatControl("Density", cc2d.Density);
+				UI::DrawFloatControl("Friction", cc2d.Friction);
+				UI::DrawFloatControl("Restitution", cc2d.Restitution, 0.0f, 0.0f, 1.0f);
+				UI::DrawFloatControl("RestitutionThreshold", cc2d.RestitutionThreshold, 0.0f, 0.0f, 1.0f);
+
+				}, true);
 		}
 
 	}

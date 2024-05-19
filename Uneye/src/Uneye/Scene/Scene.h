@@ -61,6 +61,9 @@ namespace Uneye
 
 			void OnPhysics2DStart();
 			void OnPhysics2DStop();
+
+			void RenderScene(EditorCamera& camera);
+
 		private:
 			entt::registry m_Registry;
 			uint32_t m_ViewportWidth = 0, m_ViewportHeight = 0;

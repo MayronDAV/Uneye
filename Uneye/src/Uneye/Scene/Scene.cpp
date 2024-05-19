@@ -47,7 +47,7 @@ namespace Uneye
 
 	Scene::~Scene()
 	{
-
+		delete m_PhysicsWorld;
 	}
 
 	template<typename Component>
@@ -161,33 +161,7 @@ namespace Uneye
 			m_FPSCounter = 0;
 		}
 
-		Renderer2D::BeginScene(camera);
-
-		// Draw Sprite
-		{
-			auto group = m_Registry.group<TransformComponent>(entt::get<SpriteComponent>);
-			for (auto entity : group)
-			{
-				auto [transform, sprite] = group.get<TransformComponent, SpriteComponent>(entity);
-
-
-				Renderer2D::DrawSprite(transform.GetTransform(), sprite, (int)entity);
-			}
-		}
-
-		// Draw Circle
-		{
-			auto view = m_Registry.view<TransformComponent, CircleComponent>();
-			for (auto entity : view)
-			{
-				auto [transform, circle] = view.get<TransformComponent, CircleComponent>(entity);
-
-
-				Renderer2D::DrawCircle(transform.GetTransform(), circle.Color, circle.Thickness, circle.Fade, (int)entity);
-			}
-		}
-
-		Renderer2D::EndScene();
+		RenderScene(camera);
 
 		m_FPSCounter++;
 	}
@@ -302,33 +276,33 @@ namespace Uneye
 			m_FPSCounter = 0;
 		}
 
-		Renderer2D::BeginScene(camera);
-
-		// Draw Sprite
+		// Physics
 		{
-			auto group = m_Registry.group<TransformComponent>(entt::get<SpriteComponent>);
-			for (auto entity : group)
+			const int32_t velocityIterations = 6;
+			const int32_t positionIterations = 2;
+
+			m_PhysicsWorld->Step(ts, velocityIterations, positionIterations);
+
+			// Retrieve from Box2D
+			auto view = m_Registry.view<Rigidbody2DComponent>();
+			for (auto entt : view)
 			{
-				auto [transform, sprite] = group.get<TransformComponent, SpriteComponent>(entity);
+				Entity entity = { entt, this };
+				auto& tc = entity.GetComponent<TransformComponent>();
+				auto& rb2d = entity.GetComponent<Rigidbody2DComponent>();
 
+				b2Body* body = (b2Body*)rb2d.RuntimeBody;
 
-				Renderer2D::DrawSprite(transform.GetTransform(), sprite, (int)entity);
+				const auto& position = body->GetPosition();
+				tc.Translation.x = position.x;
+				tc.Translation.y = position.y;
+				tc.Rotation.z = body->GetAngle();
+
 			}
 		}
 
-		// Draw Circle
-		{
-			auto view = m_Registry.view<TransformComponent, CircleComponent>();
-			for (auto entity : view)
-			{
-				auto [transform, circle] = view.get<TransformComponent, CircleComponent>(entity);
-
-
-				Renderer2D::DrawCircle(transform.GetTransform(), circle.Color, circle.Thickness, circle.Fade, (int)entity);
-			}
-		}
-
-		Renderer2D::EndScene();
+		// Render
+		RenderScene(camera);
 
 		m_FPSCounter++;
 	}
@@ -442,6 +416,37 @@ namespace Uneye
 	{
 		delete m_PhysicsWorld;
 		m_PhysicsWorld = nullptr;
+	}
+
+	void Scene::RenderScene(EditorCamera& camera)
+	{
+		Renderer2D::BeginScene(camera);
+
+		// Draw Sprite
+		{
+			auto group = m_Registry.group<TransformComponent>(entt::get<SpriteComponent>);
+			for (auto entity : group)
+			{
+				auto [transform, sprite] = group.get<TransformComponent, SpriteComponent>(entity);
+
+
+				Renderer2D::DrawSprite(transform.GetTransform(), sprite, (int)entity);
+			}
+		}
+
+		// Draw Circle
+		{
+			auto view = m_Registry.view<TransformComponent, CircleComponent>();
+			for (auto entity : view)
+			{
+				auto [transform, circle] = view.get<TransformComponent, CircleComponent>(entity);
+
+
+				Renderer2D::DrawCircle(transform.GetTransform(), circle.Color, circle.Thickness, circle.Fade, (int)entity);
+			}
+		}
+
+		Renderer2D::EndScene();
 	}
 
 	template<typename T>

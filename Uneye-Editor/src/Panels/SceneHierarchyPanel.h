@@ -24,6 +24,9 @@ namespace Uneye
 			void SetSelectedEntity(Entity entity);
 
 		private:
+			template<typename T>
+			void DisplayAddComponentEntry(const std::string& entryName);
+
 			void DrawEntityNode(Entity entt);
 			void DrawComponents(Entity entt);
 

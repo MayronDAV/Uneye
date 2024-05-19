@@ -10,7 +10,8 @@
 class Sandbox : public Uneye::Application
 {
 	public:
-		Sandbox(Uneye::ApplicationCommandLineArgs args)
+		Sandbox(const Uneye::ApplicationSpecification& specification)
+			: Uneye::Application(specification)
 		{
 			PushLayer(new Sandbox2D());
 
@@ -22,5 +23,10 @@ class Sandbox : public Uneye::Application
 
 Uneye::Application* Uneye::CreateApplication(Uneye::ApplicationCommandLineArgs args)
 {
-	return new Sandbox(args);
+	ApplicationSpecification spec;
+	spec.Name = "Sandbox";
+	spec.WorkingDirectory = "../Uneye-Editor";
+	spec.CommandLineArgs = args;
+
+	return new Sandbox(spec);
 }

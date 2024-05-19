@@ -50,26 +50,41 @@ namespace Uneye
 		delete m_PhysicsWorld;
 	}
 
-	template<typename Component>
+	template<typename... Component>
 	static void CopyComponent(entt::registry& dst, entt::registry& src, const std::unordered_map<UUID, entt::entity>& enttMap)
 	{
-		auto view = src.view<Component>();
-		for (auto e : view)
-		{
-			UUID uuid = src.get<IDComponent>(e).ID;
-			UNEYE_CORE_ASSERT(enttMap.find(uuid) == enttMap.end(), "This uuid exists?");
-			entt::entity dstEnttID = enttMap.at(uuid);
+		([&]()
+			{
+				auto view = src.view<Component>();
+				for (auto srcEntity : view)
+				{
+					entt::entity dstEntity = enttMap.at(src.get<IDComponent>(srcEntity).ID);
 
-			auto& component = src.get<Component>(e);
-			dst.emplace_or_replace<Component>(dstEnttID, component);
-		}
+					auto& srcComponent = src.get<Component>(srcEntity);
+					dst.emplace_or_replace<Component>(dstEntity, srcComponent);
+				}
+			}(), ...);
 	}
-	template<typename Component>
+
+	template<typename... Component>
+	static void CopyComponent(ComponentGroup<Component...>, entt::registry& dst, entt::registry& src, const std::unordered_map<UUID, entt::entity>& enttMap)
+	{
+		CopyComponent<Component...>(dst, src, enttMap);
+	}
+
+	template<typename... Component>
 	static void CopyComponentIfExists(Entity dst, Entity src)
 	{
-		if (src.HasComponent<Component>())
-			dst.AddOrReplaceComponent<Component>(src.GetComponent<Component>());
+		([&](){
+			if (src.HasComponent<Component>())
+				dst.AddOrReplaceComponent<Component>(src.GetComponent<Component>());
+		}(), ...);
+	}
 
+	template<typename... Component>
+	static void CopyComponentIfExists(ComponentGroup<Component...>, Entity dst, Entity src)
+	{
+		CopyComponentIfExists<Component...>(dst, src);
 	}
 
 
@@ -96,14 +111,7 @@ namespace Uneye
 
 
 		// Copy components
-		CopyComponent<TransformComponent>(dstSceneRegistry, srcSceneRegistry, enttMap);
-		CopyComponent<CameraComponent>(dstSceneRegistry, srcSceneRegistry, enttMap);
-		CopyComponent<SpriteComponent>(dstSceneRegistry, srcSceneRegistry, enttMap);
-		CopyComponent<CircleComponent>(dstSceneRegistry, srcSceneRegistry, enttMap);
-		CopyComponent<NativeScriptComponent>(dstSceneRegistry, srcSceneRegistry, enttMap);
-		CopyComponent<Rigidbody2DComponent>(dstSceneRegistry, srcSceneRegistry, enttMap);
-		CopyComponent<BoxCollider2DComponent>(dstSceneRegistry, srcSceneRegistry, enttMap);
-		CopyComponent<CircleCollider2DComponent>(dstSceneRegistry, srcSceneRegistry, enttMap);
+		CopyComponent(AllComponents{}, dstSceneRegistry, srcSceneRegistry, enttMap);
 	
 		return newScene;
 	}
@@ -125,7 +133,6 @@ namespace Uneye
 
 	void Scene::DestroyEntity(Entity entity)
 	{
-		
 		m_Registry.destroy(entity);
 	}
 
@@ -329,15 +336,7 @@ namespace Uneye
 	void Scene::DuplicateEntity(Entity entt)
 	{
 		Entity newEntity = CreateEntity(entt.GetName());
-
-		CopyComponentIfExists<TransformComponent>(newEntity, entt);
-		CopyComponentIfExists<CameraComponent>(newEntity, entt);
-		CopyComponentIfExists<SpriteComponent>(newEntity, entt);
-		CopyComponentIfExists<CircleComponent>(newEntity, entt);
-		CopyComponentIfExists<NativeScriptComponent>(newEntity, entt);
-		CopyComponentIfExists<Rigidbody2DComponent>(newEntity, entt);
-		CopyComponentIfExists<BoxCollider2DComponent>(newEntity, entt);
-		CopyComponentIfExists<CircleCollider2DComponent>(newEntity, entt);
+		CopyComponentIfExists(AllComponents{}, newEntity, entt);
 
 	}
 
@@ -452,7 +451,7 @@ namespace Uneye
 	template<typename T>
 	void Scene::OnComponentAdded(Entity entity, T& component)
 	{
-		//static_assert(false);
+		static_assert(sizeof(T) == 0);
 	}
 
 	template<>

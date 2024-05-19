@@ -295,7 +295,16 @@ namespace Uneye
 	{
 		UNEYE_PROFILE_FUNCTION();
 
-		YAML::Node data = YAML::LoadFile(filepath);
+		YAML::Node data;
+		try
+		{
+			data = YAML::LoadFile(filepath);
+		}
+		catch (YAML::ParserException e)
+		{
+			UNEYE_CORE_ERROR("Failed to load .uneye file '{0}'\n     {1}", filepath, e.what());
+			return false;
+		}
 
 		if (!data["Scene"])
 			return false;
@@ -425,6 +434,7 @@ namespace Uneye
 			}
 		}
 
+		UNEYE_CORE_INFO("Deserialized scene '{0}' successfully", sceneName);
 		return true;
 	}
 

@@ -30,10 +30,18 @@ namespace Uneye {
 		}
 	};
 
+	struct ApplicationSpecification
+	{
+		std::string Name = "Uneye Application";
+		std::string WorkingDirectory;
+		ApplicationCommandLineArgs CommandLineArgs;
+	};
+
 	class Application
 	{
 		public:
-			Application(const std::string& name = "Uneye App", ApplicationCommandLineArgs args = ApplicationCommandLineArgs());
+			Application() = default;
+			Application(const ApplicationSpecification& specification);
 			virtual ~Application();
 
 			void Run();
@@ -50,13 +58,13 @@ namespace Uneye {
 
 			inline static Application& Get() { return *s_Instance; }
 
-			ApplicationCommandLineArgs GetCommandLineArgs() const { return m_CommandLineArgs; }
+			const ApplicationSpecification& GetSpecification() const { return m_Specification; }
 		private:
 			bool OnWindowClose(WindowCloseEvent& e);
 			bool OnWindowResize(WindowResizeEvent& e);
 
 		private:
-			ApplicationCommandLineArgs m_CommandLineArgs;
+			ApplicationSpecification m_Specification;
 			Scope<Window> m_Window;
 			ImGuiLayer* m_ImGuiLayer;
 			bool m_Running = true;
@@ -69,6 +77,5 @@ namespace Uneye {
 	};
 
 	// To be defined in CLIENT
-	Application* CreateApplication();
 	Application* CreateApplication(ApplicationCommandLineArgs args);
 }

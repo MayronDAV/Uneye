@@ -28,7 +28,8 @@ namespace Uneye
 
 			virtual bool operator== (const Texture& other) const override
 			{
-				return m_RendererID == ((OpenGLTexture2D&)other).m_RendererID || m_Path == ((OpenGLTexture2D&)other).m_Path;
+				return m_RendererID == ((OpenGLTexture2D&)other).GetRendererID() ||
+					m_Path == ((OpenGLTexture2D&)other).m_Path;
 			}
 
 		private:

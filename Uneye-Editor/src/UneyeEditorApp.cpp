@@ -9,8 +9,8 @@ namespace Uneye
 	class UneyeEditor : public Application
 	{
 	public:
-		UneyeEditor(ApplicationCommandLineArgs args)
-			: Application("Uneye-Editor", args)
+		UneyeEditor(const ApplicationSpecification& spec)
+			: Application(spec)
 		{
 			PushLayer(new EditorLayer());
 		}
@@ -20,6 +20,10 @@ namespace Uneye
 
 	Application* CreateApplication(ApplicationCommandLineArgs args)
 	{
-		return new UneyeEditor(args);
+		ApplicationSpecification spec;
+		spec.Name = "Uneye-Editor";
+		spec.CommandLineArgs = args;
+
+		return new UneyeEditor(spec);
 	}
 }

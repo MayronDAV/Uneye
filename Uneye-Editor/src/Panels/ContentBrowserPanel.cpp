@@ -239,8 +239,7 @@ namespace Uneye
 					for (auto& directoryEntry : std::filesystem::directory_iterator(m_CurrentDirectory))
 					{
 						const auto& path = directoryEntry.path();
-						auto relativePath = std::filesystem::relative(path, g_AssetPath);
-						std::string filenameString = relativePath.filename().string();
+						std::string filenameString = path.filename().string();
 
 						Ref<Texture2D> icon = nullptr;
 						if (directoryEntry.is_directory())
@@ -262,6 +261,7 @@ namespace Uneye
 
 						if (ImGui::BeginDragDropSource())
 						{
+							auto relativePath = std::filesystem::relative(path, g_AssetPath);
 							const wchar_t* itemPath = relativePath.c_str();
 							ImGui::SetDragDropPayload("CONTENT_BROWSER_ITEM", itemPath, (wcslen(itemPath) + 1) * sizeof(wchar_t));
 							ImGui::EndDragDropSource();

@@ -81,7 +81,7 @@ namespace Uneye {
 			(*--it)->OnEvent(e);
 			if (e.Handled)
 			{
-				UNEYE_CORE_TRACE("{0} -> {1}", (*it)->GetName(), e);
+				//UNEYE_CORE_TRACE("{0} -> {1}", (*it)->GetName(), e);
 				break;
 			}
 		}

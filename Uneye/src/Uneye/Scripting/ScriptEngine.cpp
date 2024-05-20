@@ -1,5 +1,6 @@
 #include "uypch.h"
 #include "ScriptEngine.h"
+#include "ScriptGlue.h"
 
 #include "mono/jit/jit.h"
 #include "mono/metadata/assembly.h"
@@ -9,19 +10,9 @@
 
 namespace Uneye
 {
-	struct ScriptEngineData
-	{
-		MonoDomain* RootDomain = nullptr;
-		MonoDomain* AppDomain = nullptr;
-
-		MonoAssembly* CoreAssembly = nullptr;
-	};
-
-	static ScriptEngineData* s_Data = nullptr;
-
 	namespace Utils
 	{
-		char* ReadBytes(const std::string& filepath, uint32_t* outSize)
+		static char* ReadBytes(const std::filesystem::path& filepath, uint32_t* outSize)
 		{
 			std::ifstream stream(filepath, std::ios::binary | std::ios::ate);
 
@@ -41,10 +32,10 @@ namespace Uneye
 			return buffer;
 		}
 
-		MonoAssembly* LoadCSharpAssembly(const std::string& assemblyPath)
+		static MonoAssembly* LoadMonoAssembly(const std::filesystem::path& assemblyPath)
 		{
 			uint32_t fileSize = 0;
-			char* fileData = ReadBytes(assemblyPath, &fileSize);
+			char* fileData = ReadBytes(assemblyPath.string(), &fileSize);
 
 			// NOTE: We can't use this image for anything other than loading the assembly because this image doesn't have a reference to the assembly
 			MonoImageOpenStatus status;
@@ -57,7 +48,9 @@ namespace Uneye
 				return nullptr;
 			}
 
-			MonoAssembly* assembly = mono_assembly_load_from_full(image, assemblyPath.c_str(), &status, 0);
+			std::string pathStr = assemblyPath.string();
+
+			MonoAssembly* assembly = mono_assembly_load_from_full(image, pathStr.c_str(), &status, 0);
 			mono_image_close(image);
 
 			// Don't forget to free the file data
@@ -66,7 +59,7 @@ namespace Uneye
 			return assembly;
 		}
 
-		void PrintAssemblyTypes(MonoAssembly* assembly)
+		static void PrintAssemblyTypes(MonoAssembly* assembly)
 		{
 			MonoImage* image = mono_assembly_get_image(assembly);
 			const MonoTableInfo* typeDefinitionsTable = mono_image_get_table_info(image, MONO_TABLE_TYPEDEF);
@@ -84,32 +77,19 @@ namespace Uneye
 			}
 		}
 
-		MonoClass* GetClassInAssembly(MonoAssembly* assembly, const char* namespaceName, const char* className)
-		{
-			MonoImage* image = mono_assembly_get_image(assembly);
-			MonoClass* klass = mono_class_from_name(image, namespaceName, className);
 
-			UNEYE_CORE_ASSERT(klass == nullptr, "");
-
-			return klass;
-		}
-
-		MonoObject* InstantiateClass(const char* namespaceName, const char* className)
-		{
-			// Get a reference to the class we want to instantiate
-			MonoClass* testingClass = GetClassInAssembly(s_Data->CoreAssembly, namespaceName, className);
-
-			// Allocate an instance of our class
-			MonoObject* classInstance = mono_object_new(s_Data->AppDomain, testingClass);
-
-			UNEYE_CORE_ASSERT(classInstance == nullptr, "");
-
-			// Call the parameterless (default) constructor
-			mono_runtime_object_init(classInstance);
-
-			return classInstance;
-		}
 	}
+
+	struct ScriptEngineData
+	{
+		MonoDomain* RootDomain = nullptr;
+		MonoDomain* AppDomain = nullptr;
+
+		MonoAssembly* CoreAssembly = nullptr;
+		MonoImage* CoreAssemblyImage = nullptr;
+	};
+
+	static ScriptEngineData* s_Data = nullptr;
 
 
 	void ScriptEngine::Init()
@@ -117,6 +97,37 @@ namespace Uneye
 		s_Data = new ScriptEngineData();
 
 		InitMono();
+
+		LoadAssembly("Resources/Scripts/Uneye-ScriptCore.dll");
+
+		ScriptGlue::RegisterFunction();
+
+		ScriptClass mainClass("Uneye", "Main");
+
+		// Call method
+		mainClass.CallMethod("PrintMessage");
+
+		// Call method with one param
+		int value = 33;
+		void* param = &value;
+		mainClass.CallMethod("PrintInt", 1, &param);
+
+		// Call method with 2 param
+		int value1 = 33;
+		int value2 = 18;
+		void* params[2] =
+		{
+			&value1,
+			&value2
+		};
+		mainClass.CallMethod("PrintInts", 2, params);
+
+		// Call method with string param
+		MonoString* str = mono_string_new(s_Data->AppDomain, "Hello World from C++!!!");
+		void* paramStr = str;
+		mainClass.CallMethod("PrintCustomMessage", 1, &paramStr);
+
+		//UNEYE_CORE_ASSERT(true, "");
 	}
 
 	void ScriptEngine::Shutdown()
@@ -134,60 +145,6 @@ namespace Uneye
 		UNEYE_CORE_ASSERT(rootDomain == nullptr, "");
 
 		s_Data->RootDomain = rootDomain;
-
-		s_Data->AppDomain = mono_domain_create_appdomain("UneyeScriptRuntime", nullptr);
-		mono_domain_set(s_Data->AppDomain, true);
-
-		// Move this maybe
-		s_Data->CoreAssembly = Utils::LoadCSharpAssembly("Resources/Scripts/Uneye-ScriptCore.dll");
-
-		Utils::PrintAssemblyTypes(s_Data->CoreAssembly);
-
-		MonoClass* monoClass = Utils::GetClassInAssembly(s_Data->CoreAssembly, "Uneye", "Main");
-
-		// 1 - create an object ( and call constructor)
-		MonoObject* classInstance = mono_object_new(s_Data->AppDomain, monoClass);
-		mono_runtime_object_init(classInstance);
-
-		// 2 - call function
-		MonoMethod* printMessageFunc = mono_class_get_method_from_name(monoClass, "PrintMessage", 0);
-		mono_runtime_invoke(printMessageFunc, classInstance, nullptr, nullptr);
-
-		// 1 - call function with param
-		{
-			MonoMethod* printIntFunc = mono_class_get_method_from_name(monoClass, "PrintInt", 1);
-
-			int value = 33;
-			void* param = &value;
-
-			mono_runtime_invoke(printIntFunc, classInstance, &param, nullptr);
-		}
-		
-		{
-			MonoMethod* printIntsFunc = mono_class_get_method_from_name(monoClass, "PrintInts", 2);
-
-			int value1 = 33;
-			int value2 = 18;
-
-			void* params[2] =
-			{
-				&value1,
-				&value2
-			};
-
-			mono_runtime_invoke(printIntsFunc, classInstance, params, nullptr);
-		}
-
-		{
-
-			MonoMethod* printCustomMessageFunc = mono_class_get_method_from_name(monoClass, "PrintCustomMessage", 1);
-			
-			MonoString* str = mono_string_new(s_Data->AppDomain, "Hello World from C++!!!");
-
-			void* param = str;
-			
-			mono_runtime_invoke(printCustomMessageFunc, classInstance, &param, nullptr);
-		}
 	}
 
 	void ScriptEngine::ShutdownMono()
@@ -200,5 +157,69 @@ namespace Uneye
 
 		//mono_jit_cleanup(s_Data->RootDomain);
 		s_Data->RootDomain = nullptr;
+	}
+
+
+	void ScriptEngine::LoadAssembly(const std::filesystem::path& filepath)
+	{
+		s_Data->AppDomain = mono_domain_create_appdomain("UneyeScriptRuntime", nullptr);
+		mono_domain_set(s_Data->AppDomain, true);
+
+		// Move this maybe
+		s_Data->CoreAssembly = Utils::LoadMonoAssembly(filepath);
+		//Utils::PrintAssemblyTypes(s_Data->CoreAssembly);
+		s_Data->CoreAssemblyImage = mono_assembly_get_image(s_Data->CoreAssembly);
+	}
+
+	MonoObject* ScriptEngine::InstantiateClass(MonoClass* monoClass)
+	{
+		MonoObject* classInstance = mono_object_new(s_Data->AppDomain, monoClass);
+		mono_runtime_object_init(classInstance);
+
+		return classInstance;
+	}
+
+
+
+	ScriptClass::ScriptClass( const std::string& classNamespace, const std::string& className, bool instantiate)
+		: m_Namespace(classNamespace), m_Name(className), m_Instantiate(instantiate)
+	{
+		m_MonoClass = mono_class_from_name(s_Data->CoreAssemblyImage, classNamespace.c_str(), className.c_str());
+
+		if (m_Instantiate)
+		{
+			m_ClassObject = mono_object_new(s_Data->AppDomain, m_MonoClass);
+			mono_runtime_object_init(m_ClassObject);
+		}
+
+	}
+
+	MonoClass* ScriptClass::GetClass() { return m_MonoClass; }
+
+	MonoObject* ScriptClass::GetInstance()
+	{
+		if (!m_Instantiate)
+		{
+			m_ClassObject = mono_object_new(s_Data->AppDomain, m_MonoClass);
+			mono_runtime_object_init(m_ClassObject);
+		}
+
+		return m_ClassObject; 
+	}
+
+	MonoObject* ScriptClass::CallMethod(const std::string& methodName, int param_count, void** params, MonoObject** exc)
+	{
+		MonoMethod* method = mono_class_get_method_from_name(m_MonoClass, methodName.c_str(), param_count);
+		return mono_runtime_invoke(method, m_ClassObject, params, exc);
+	}
+
+	MonoMethod* ScriptClass::GetMethod(const std::string& methodName, int param_count)
+	{
+		return mono_class_get_method_from_name(m_MonoClass, methodName.c_str(), param_count);
+	}
+
+	MonoObject* ScriptClass::InvokeMethod(MonoMethod* method, void** params, MonoObject** exc)
+	{
+		return mono_runtime_invoke(method, m_ClassObject, params, exc);
 	}
 }

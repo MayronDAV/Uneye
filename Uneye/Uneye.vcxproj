@@ -195,6 +195,7 @@
     <ClInclude Include="src\Uneye\Scene\SceneSerializer.h" />
     <ClInclude Include="src\Uneye\Scene\ScriptableEntity.h" />
     <ClInclude Include="src\Uneye\Scripting\ScriptEngine.h" />
+    <ClInclude Include="src\Uneye\Scripting\ScriptGlue.h" />
     <ClInclude Include="src\Uneye\Utils\PlatformUtils.h" />
     <ClInclude Include="src\uypch.h" />
     <ClInclude Include="vendor\ImGuizmo\ImCurveEdit.h" />
@@ -630,6 +631,7 @@
     <ClCompile Include="src\Uneye\Scene\SceneCamera.cpp" />
     <ClCompile Include="src\Uneye\Scene\SceneSerializer.cpp" />
     <ClCompile Include="src\Uneye\Scripting\ScriptEngine.cpp" />
+    <ClCompile Include="src\Uneye\Scripting\ScriptGlue.cpp" />
     <ClCompile Include="src\uypch.cpp">
       <PrecompiledHeader>Create</PrecompiledHeader>
     </ClCompile>

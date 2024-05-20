@@ -1,8 +1,18 @@
 using System;
-
+using System.Runtime.CompilerServices;
 
 namespace Uneye
 {
+	public static class InternalCalls
+	{
+		#region LogCalls
+
+		[MethodImpl(MethodImplOptions.InternalCall)]
+		internal extern static void NativeLog(string message);
+
+		#endregion
+	}
+
 	public class Main
 	{
 		public float FloatVar { get; set; }
@@ -10,6 +20,8 @@ namespace Uneye
 		public Main()
 		{
 			Console.WriteLine("Main Constructor!");
+
+			InternalCalls.NativeLog("Hello C++ world!!!");
 		}
 		public void PrintMessage()
 		{
@@ -32,4 +44,4 @@ namespace Uneye
 		}
 
 	}
-}
+};

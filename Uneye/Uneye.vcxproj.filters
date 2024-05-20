@@ -1422,6 +1422,7 @@
     <ClInclude Include="vendor\stb\include\stb_voxel_render.h">
       <Filter>vendor\stb\include</Filter>
     </ClInclude>
+    <ClInclude Include="src\Uneye\Scripting\ScriptGlue.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Platform\OpenGL\OpenGLBuffer.cpp">
@@ -1565,5 +1566,6 @@
     <ClCompile Include="vendor\stb\src\stb_image.cpp">
       <Filter>vendor\stb\src</Filter>
     </ClCompile>
+    <ClCompile Include="src\Uneye\Scripting\ScriptGlue.cpp" />
   </ItemGroup>
 </Project>

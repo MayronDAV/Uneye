@@ -51,9 +51,9 @@ namespace Uneye {
 			it->second();
 
 		float fontSize = 18.0f;// *2.0f;
-		auto font0 = io.Fonts->AddFontFromFileTTF("../Uneye/assets/fonts/Roboto_Slab/static/RobotoSlab-Regular.ttf", fontSize);
-		auto font1 = io.Fonts->AddFontFromFileTTF("../Uneye/assets/fonts/Roboto_Slab/static/RobotoSlab-Bold.ttf", fontSize);
-		auto font2 = io.Fonts->AddFontFromFileTTF("../Uneye/assets/fonts/arrow/Arrows-Regular.ttf", fontSize);
+		auto font0 = io.Fonts->AddFontFromFileTTF("assets/fonts/Roboto_Slab/static/RobotoSlab-Regular.ttf", fontSize);
+		auto font1 = io.Fonts->AddFontFromFileTTF("assets/fonts/Roboto_Slab/static/RobotoSlab-Bold.ttf", fontSize);
+		auto font2 = io.Fonts->AddFontFromFileTTF("assets/fonts/arrow/Arrows-Regular.ttf", fontSize);
 		FontManager::PushFont("Regular", font0);
 		FontManager::PushFont("Bold", font1);
 		FontManager::PushFont("Arrows", font2);

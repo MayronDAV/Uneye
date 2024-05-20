@@ -79,6 +79,7 @@
   <ItemGroup>
     <None Include="..\..\Sandbox\premake5.lua" />
     <None Include="..\..\Uneye-Editor\premake5.lua" />
+    <None Include="..\..\Uneye-ScriptCore\premake5.lua" />
     <None Include="..\..\Uneye\premake5.lua" />
     <None Include="..\..\Uneye\vendor\Box2D\premake5.lua" />
     <None Include="..\..\Uneye\vendor\GLFW\premake5.lua" />

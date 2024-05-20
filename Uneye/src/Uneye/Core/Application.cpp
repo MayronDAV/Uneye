@@ -4,6 +4,7 @@
 #include "Uneye/Core/Log.h"
 
 #include "Uneye/Renderer/Renderer.h"
+#include "Uneye/Scripting/ScriptEngine.h"
 
 #include "Uneye/Core/Input.h"
 #include "Uneye/Renderer/Camera.h"
@@ -37,6 +38,7 @@ namespace Uneye {
 		m_Window->SetEventCallback(BIND_EVENT_FN(OnEvent));
 
 		Renderer::Init();
+		ScriptEngine::Init();
 
 		m_ImGuiLayer = new ImGuiLayer();
 		PushOverlay(m_ImGuiLayer);
@@ -47,6 +49,7 @@ namespace Uneye {
 
 	Application::~Application()
 	{
+		ScriptEngine::Shutdown();
 	}
 
 	void Application::PushLayer(Layer* layer)

@@ -37,6 +37,9 @@
     <Filter Include="src\Uneye\Scene">
       <UniqueIdentifier>{3F1F3F7A-ABAA-AC3E-B4BB-2F3320C6083F}</UniqueIdentifier>
     </Filter>
+    <Filter Include="src\Uneye\Scripting">
+      <UniqueIdentifier>{24683E95-90C9-1BA3-1937-625585975262}</UniqueIdentifier>
+    </Filter>
     <Filter Include="src\Uneye\Utils">
       <UniqueIdentifier>{82B36C7A-EE3E-DA3E-F74F-5D33635A363F}</UniqueIdentifier>
     </Filter>
@@ -141,6 +144,9 @@
     <ClInclude Include="src\Uneye\Core\Timestep.h">
       <Filter>src\Uneye\Core</Filter>
     </ClInclude>
+    <ClInclude Include="src\Uneye\Core\UUID.h">
+      <Filter>src\Uneye\Core</Filter>
+    </ClInclude>
     <ClInclude Include="src\Uneye\Core\Window.h">
       <Filter>src\Uneye\Core</Filter>
     </ClInclude>
@@ -224,6 +230,9 @@
     </ClInclude>
     <ClInclude Include="src\Uneye\Scene\ScriptableEntity.h">
       <Filter>src\Uneye\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Uneye\Scripting\ScriptEngine.h">
+      <Filter>src\Uneye\Scripting</Filter>
     </ClInclude>
     <ClInclude Include="src\Uneye\Utils\PlatformUtils.h">
       <Filter>src\Uneye\Utils</Filter>
@@ -1413,7 +1422,6 @@
     <ClInclude Include="vendor\stb\include\stb_voxel_render.h">
       <Filter>vendor\stb\include</Filter>
     </ClInclude>
-    <ClInclude Include="src\Uneye\Core\UUID.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Platform\OpenGL\OpenGLBuffer.cpp">
@@ -1462,6 +1470,9 @@
       <Filter>src\Uneye\Core</Filter>
     </ClCompile>
     <ClCompile Include="src\Uneye\Core\Log.cpp">
+      <Filter>src\Uneye\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Uneye\Core\UUID.cpp">
       <Filter>src\Uneye\Core</Filter>
     </ClCompile>
     <ClCompile Include="src\Uneye\ImGui\ImGuiBuild.cpp">
@@ -1521,6 +1532,9 @@
     <ClCompile Include="src\Uneye\Scene\SceneSerializer.cpp">
       <Filter>src\Uneye\Scene</Filter>
     </ClCompile>
+    <ClCompile Include="src\Uneye\Scripting\ScriptEngine.cpp">
+      <Filter>src\Uneye\Scripting</Filter>
+    </ClCompile>
     <ClCompile Include="src\uypch.cpp">
       <Filter>src</Filter>
     </ClCompile>
@@ -1551,6 +1565,5 @@
     <ClCompile Include="vendor\stb\src\stb_image.cpp">
       <Filter>vendor\stb\src</Filter>
     </ClCompile>
-    <ClCompile Include="src\Uneye\Core\UUID.cpp" />
   </ItemGroup>
 </Project>

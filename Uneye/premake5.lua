@@ -40,6 +40,7 @@ project "Uneye"
 		"%{IncludeDir.Box2D}",
 		"%{IncludeDir.stb}",
 		"%{IncludeDir.entt}",
+		"%{IncludeDir.mono}",
 		"%{IncludeDir.yaml_cpp}",
 		"%{IncludeDir.ImGuizmo}",
 		"%{IncludeDir.VulkanSDK}"
@@ -52,7 +53,9 @@ project "Uneye"
 		"ImGui",
 		"Box2D",
 		"yaml-cpp",
-		"opengl32.lib"
+		"opengl32.lib",
+
+		"%{Library.mono}"
 	}
 
 	filter "files:vendor/ImGuizmo/**.cpp"
@@ -61,10 +64,19 @@ project "Uneye"
 	filter "system:windows"
 		systemversion "latest"
 
+
 		defines
 		{
 			"UNEYE_PLATFORM_WINDOWS",
 			"GLFW_INCLUDE_NONE"
+		}
+
+		links
+		{
+			"%{Library.WinSock}",
+			"%{Library.WinMM}",
+			"%{Library.WinVersion}",
+			"%{Library.BCrypt}"
 		}
 
 	filter "configurations:Debug"

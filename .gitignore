@@ -1,12 +1,18 @@
+# Binaries
+**/bin/
+bin-int/
+Intermediates/
+
 # Directories
-.vs/
-/bin/
-!/vendor/premake/bin/
-/bin-int/
 Uneye/vendor/VulkanSDK
 Uneye-Editor/assets/cache
-scripts/__pycache__
+Scripts/__pycache__
 
-# Files
-*.user
+# Visual Studio files and folder
+.vs/
+**.sln
+**.vcxproj
+**.vcxproj.filters
+**.vcxproj.user
+**.csproj
 

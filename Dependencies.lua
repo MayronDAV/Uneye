@@ -12,6 +12,7 @@ IncludeDir["ImGui"] = "%{wks.location}/Uneye/vendor/imgui"
 IncludeDir["glm"] = "%{wks.location}/Uneye/vendor/glm"
 IncludeDir["Box2D"] = "%{wks.location}/Uneye/vendor/Box2D/include"
 IncludeDir["entt"] = "%{wks.location}/Uneye/vendor/entt/include"
+IncludeDir["mono"] = "%{wks.location}/Uneye/vendor/mono/include"
 IncludeDir["ImGuizmo"] = "%{wks.location}/Uneye/vendor/ImGuizmo"
 IncludeDir["shaderc"] = "%{wks.location}/Uneye/vendor/shaderc/libshaderc/include"
 IncludeDir["SPIRV_Cross"] = "%{wks.location}/Uneye/vendor/SPIRV-Cross/include"
@@ -20,8 +21,12 @@ IncludeDir["VulkanSDK"] = "%{VULKAN_SDK}/Include"
 LibraryDir = {}
 
 LibraryDir["VulkanSDK"] = "%{VULKAN_SDK}/Lib"
+LibraryDir["mono"] = "%{wks.location}/Uneye/vendor/mono/lib/%{cfg.buildcfg}"
 
 Library = {}
+
+Library["mono"] = "%{LibraryDir.mono}/libmono-static-sgen.lib"
+
 Library["Vulkan"] = "%{LibraryDir.VulkanSDK}/vulkan-1.lib"
 Library["VulkanUtils"] = "%{LibraryDir.VulkanSDK}/VkLayer_utils.lib"
 
@@ -33,3 +38,9 @@ Library["SPIRV_Tools_Debug"] = "%{LibraryDir.VulkanSDK}/SPIRV-Toolsd.lib"
 Library["ShaderC_Release"] = "%{LibraryDir.VulkanSDK}/shaderc_shared.lib"
 Library["SPIRV_Cross_Release"] = "%{LibraryDir.VulkanSDK}/spirv-cross-core.lib"
 Library["SPIRV_Cross_GLSL_Release"] = "%{LibraryDir.VulkanSDK}/spirv-cross-glsl.lib"
+
+-- Windows
+Library["WinSock"] = "Ws2_32.lib"
+Library["WinMM"] = "Winmm.lib"
+Library["WinVersion"] = "Version.lib"
+Library["BCrypt"] = "Bcrypt.lib"

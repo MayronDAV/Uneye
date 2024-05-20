@@ -37,6 +37,7 @@ group ""
 
 group "Core"
 	include "Uneye"
+	include "Uneye-ScriptCore"
 group ""
 
 group "Tools"

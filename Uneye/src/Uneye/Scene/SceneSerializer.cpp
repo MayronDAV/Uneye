@@ -179,6 +179,17 @@ namespace Uneye
 			out << YAML::EndMap; // CameraComponent
 		}
 
+		if (entity.HasComponent<ScriptComponent>())
+		{
+			out << YAML::Key << "ScriptComponent";
+			out << YAML::BeginMap; // ScriptComponent
+
+			auto& name = entity.GetComponent<ScriptComponent>().Name;
+			out << YAML::Key << "Name" << YAML::Value << name;
+
+			out << YAML::EndMap; // ScriptComponent
+		}
+
 		if (entity.HasComponent<SpriteComponent>())
 		{
 			out << YAML::Key << "SpriteComponent";
@@ -356,6 +367,13 @@ namespace Uneye
 
 					cc.Primary = cameraComponent["Primary"].as<bool>();
 					cc.FixedAspectRatio = cameraComponent["FixedAspectRatio"].as<bool>();
+				}
+
+				auto scriptComponent = entity["ScriptComponent"];
+				if (scriptComponent)
+				{
+					auto& sc = deserializedEntity.AddComponent<ScriptComponent>();
+					sc.Name = scriptComponent["Name"].as<std::string>();
 				}
 
 				auto spriteComponent = entity["SpriteComponent"];

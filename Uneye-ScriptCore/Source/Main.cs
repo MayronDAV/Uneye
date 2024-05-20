@@ -1,17 +1,9 @@
 using System;
-using System.Runtime.CompilerServices;
+
+
 
 namespace Uneye
 {
-	public static class InternalCalls
-	{
-		#region LogCalls
-
-		[MethodImpl(MethodImplOptions.InternalCall)]
-		internal extern static void NativeLog(string message);
-
-		#endregion
-	}
 
 	public class Main
 	{

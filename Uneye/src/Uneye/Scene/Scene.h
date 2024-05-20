@@ -44,6 +44,8 @@ namespace Uneye
 
 			void DuplicateEntity(Entity entt);
 
+			Entity GetEntityByUUID(UUID uuid);
+
 			Entity GetPrimaryCameraEntity();
 
 			float GetFPS() { return m_FPS; }
@@ -73,6 +75,8 @@ namespace Uneye
 			float m_FPS = 0;
 
 			b2World* m_PhysicsWorld = nullptr;
+
+			std::unordered_map<UUID, Entity> m_EntityMap;
 
 			friend class Entity;
 			friend class SceneHierarchyPanel;

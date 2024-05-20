@@ -233,6 +233,7 @@ namespace Uneye
 				{
 
 					DisplayAddComponentEntry<CameraComponent>("Camera");
+					DisplayAddComponentEntry<ScriptComponent>("C# Script");
 					DisplayAddComponentEntry<SpriteComponent>("Sprite");
 					DisplayAddComponentEntry<CircleComponent>("Circle");
 					DisplayAddComponentEntry<Rigidbody2DComponent>("Rigidbody 2D");
@@ -319,6 +320,17 @@ namespace Uneye
 
 			}, true);
 
+			DrawComponentUI<ScriptComponent>(entt, "Script", [&](auto& sc) {
+
+				char buffer[64];
+				memset(buffer, 0, sizeof(buffer));
+				strcpy_s(buffer, sizeof(buffer), sc.Name.c_str());
+				if (UI::DrawInputText("Class", buffer, sizeof(buffer)))
+				{
+					sc.Name = std::string(buffer);
+				}
+
+			});
 
 			DrawComponentUI<SpriteComponent>(entt, "Sprite", [&](auto& mc) {
 

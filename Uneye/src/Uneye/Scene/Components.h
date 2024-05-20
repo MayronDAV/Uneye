@@ -177,6 +177,13 @@ namespace Uneye
 		CircleCollider2DComponent(const CircleCollider2DComponent&) = default;
 	};
 
+	struct ScriptComponent
+	{
+		std::string Name;
+
+		ScriptComponent() = default;
+		ScriptComponent(const ScriptComponent&) = default;
+	};
 
 	template<typename... Component>
 	struct ComponentGroup
@@ -186,5 +193,5 @@ namespace Uneye
 	using AllComponents =
 		ComponentGroup<TransformComponent, SpriteComponent,
 		CircleComponent, CameraComponent, NativeScriptComponent,
-		Rigidbody2DComponent, BoxCollider2DComponent, CircleCollider2DComponent>;
+		Rigidbody2DComponent, BoxCollider2DComponent, CircleCollider2DComponent, ScriptComponent>;
 }

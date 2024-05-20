@@ -78,6 +78,8 @@ Entities:
       Translation: [9.54022503, 9.10357857, 0]
       Rotation: [0, 0, 1.03323495]
       Scale: [1, 1, 1]
+    ScriptComponent:
+      Name: Sandbox.Player
     CircleComponent:
       Color: [1, 1, 1, 1]
       Thickness: 1

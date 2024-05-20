@@ -5,11 +5,13 @@
 #include "Uneye/Scene/ScriptableEntity.h"
 #include "Uneye/Renderer/Renderer2D.h"
 
-#include <glm/glm.hpp>
-
 #include "Uneye/Scene/Entity.h"
-#include <chrono>
 #include "Uneye/Core/Timer.h"
+
+#include "Uneye/Scripting/ScriptEngine.h"
+
+#include <glm/glm.hpp>
+#include <chrono>
 
 // Box2D
 #include "box2d/b2_world.h"
@@ -128,22 +130,41 @@ namespace Uneye
 		entity.AddComponent<TransformComponent>();
 		entity.AddComponent<TagComponent>((name.empty()) ? "Entity" : name);
 
+		m_EntityMap[uuid] = entity;
+
 		return entity;
 	}
 
 	void Scene::DestroyEntity(Entity entity)
 	{
 		m_Registry.destroy(entity);
+		m_EntityMap.erase(entity.GetUUID());
 	}
 
 	void Scene::OnRuntimeStart()
 	{
 		OnPhysics2DStart();
+
+		// Scripting
+		{
+			ScriptEngine::OnRuntimeStart(this);
+			// Instantiate all script entts
+
+			auto view = m_Registry.view<ScriptComponent>();
+			for (auto entt : view)
+			{
+				Entity entity = { entt, this };
+				ScriptEngine::OnCreateEntity(entity);
+			}
+
+		}
 	}
 
 	void Scene::OnRuntimeStop()
 	{
 		OnPhysics2DStop();
+
+		ScriptEngine::OnRuntimeStop();
 	}
 
 	void Scene::OnSimulationStart()
@@ -179,6 +200,14 @@ namespace Uneye
 
 		// Update Script
 		{
+			// C# script - Entity OnUpdate
+			auto view = m_Registry.view<ScriptComponent>();
+			for (auto entt : view)
+			{
+				Entity entity = { entt, this };
+				ScriptEngine::OnUpdateEntity(entity, ts);
+			}
+
 			m_Registry.view<NativeScriptComponent>().each([=](auto entity, auto& nsc) 
 			{
 				// TODO: Move to Scene::OnScenePlay
@@ -340,6 +369,16 @@ namespace Uneye
 
 	}
 
+	Entity Scene::GetEntityByUUID(UUID uuid)
+	{
+		// TODO: Maybe assert
+		if (m_EntityMap.find(uuid) != m_EntityMap.end())
+			return m_EntityMap[uuid];
+		
+		return {};
+
+	}
+
 
 	Entity Scene::GetPrimaryCameraEntity()
 	{
@@ -475,6 +514,11 @@ namespace Uneye
 	{
 		if (m_ViewportWidth > 0 && m_ViewportHeight > 0)
 			component.Camera.SetViewportSize(m_ViewportWidth, m_ViewportHeight);
+	}
+
+	template<>
+	void Scene::OnComponentAdded<ScriptComponent>(Entity entity, ScriptComponent& component)
+	{
 	}
 
 	template<>

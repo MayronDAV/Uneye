@@ -11,22 +11,30 @@ namespace Sandbox
 {
 	public class Player : Entity
 	{
+		private TransformComponent m_Transform;
+		private Rigidbody2DComponent m_Rigidbody;
+
 		public void OnCreate()
 		{
 			Console.WriteLine($"Player.OnCreate - {ID}");
 
-			
-			//Console.WriteLine($"Translation: {Translation}");
+			bool hasTransform = HasComponent<TransformComponent>();
+
+			Console.WriteLine($"Has Transform {hasTransform}");
+
+			m_Transform = GetComponent<TransformComponent>();
+			m_Rigidbody = GetComponent<Rigidbody2DComponent>();
+
 		}
 
 		public void OnUpdate(float ts)
 		{
-			Console.WriteLine($"Player.OnUpdate: {ts}");
+			//Console.WriteLine($"Player.OnUpdate: {ts}");
 			//Console.WriteLine($"Player.OnUpdate: {ID}");
 
 			Vector3 Direction = Vector3.Zero;
 
-			Vector3 Speed = new Vector3(1.0f * ts);
+			Vector3 Speed = new Vector3(0.5f * ts);
 
 			if (Input.IsKeyDown(KeyCode.W))
 				Direction.Y = 1;
@@ -40,11 +48,14 @@ namespace Sandbox
 			if (Input.IsKeyDown(KeyCode.D))
 				Direction.X = 1;
 
+			
+			m_Rigidbody.ApplyLinearImpulse(Direction.XY * Speed.XY, true);
+
 			// R = P + D * L
 
-			Vector3 translation = Translation;
-			translation += Direction * Speed;
-			Translation = translation;
+			//Vector3 translation = m_Transform.Translation;
+			//translation += Direction * Speed;
+			//m_Transform.Translation = translation;
 		}
 
 	}

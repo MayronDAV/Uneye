@@ -15,6 +15,7 @@ extern "C" {
 	typedef struct _MonoObject MonoObject;
 	typedef struct _MonoMethod MonoMethod;
 	typedef struct _MonoAssembly MonoAssembly;
+	typedef struct _MonoImage MonoImage;
 }
 
 #pragma endregion
@@ -86,6 +87,9 @@ namespace Uneye
 
 			static Scene* GetSceneContext();
 			static std::unordered_map<std::string, Ref<ScriptClass>> GetEntitySubClasses();
+			
+			static MonoImage* GetCoreAssemblyImage();
+
 		private:
 			static void InitMono();
 			static void ShutdownMono();
@@ -93,5 +97,6 @@ namespace Uneye
 			static MonoObject* InstantiateClass(MonoClass* monoClass);
 
 			friend class ScriptClass;
+			friend class ScriptGlue;
 	};
 }

@@ -31,6 +31,15 @@
     <Filter Include="..\Uneye-Editor">
       <UniqueIdentifier>{CA53CFC3-36DF-3C88-3FF0-BF7CABFA9888}</UniqueIdentifier>
     </Filter>
+    <Filter Include="..\Uneye-Editor\SandboxProject">
+      <UniqueIdentifier>{9F19F231-8B3F-BC98-7485-4164604AE164}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="..\Uneye-Editor\SandboxProject\Assets">
+      <UniqueIdentifier>{A177513A-0D3C-502A-D6A1-80F44225EC5F}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="..\Uneye-Editor\SandboxProject\Assets\Scripts">
+      <UniqueIdentifier>{D86F8C5A-44E0-8ED3-0DFF-085C792EC7D4}</UniqueIdentifier>
+    </Filter>
     <Filter Include="..\Uneye-ScriptCore">
       <UniqueIdentifier>{8185CFC5-EDE6-ACD3-7654-F385E2B4E392}</UniqueIdentifier>
     </Filter>
@@ -38,6 +47,9 @@
   <ItemGroup>
     <None Include="..\..\Sandbox\premake5.lua">
       <Filter>..\Sandbox</Filter>
+    </None>
+    <None Include="..\..\Uneye-Editor\SandboxProject\Assets\Scripts\premake5.lua">
+      <Filter>..\Uneye-Editor\SandboxProject\Assets\Scripts</Filter>
     </None>
     <None Include="..\..\Uneye-Editor\premake5.lua">
       <Filter>..\Uneye-Editor</Filter>

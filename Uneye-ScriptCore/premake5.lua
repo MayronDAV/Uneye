@@ -3,8 +3,8 @@ project "Uneye-ScriptCore"
 	language "C#"
 	dotnetframework "4.7.2"
 
-	targetdir ("%{wks.location}/Uneye-Editor/Resources/Scripts")
-	objdir ("%{wks.location}/Uneye-Editor/Resources/Scripts/Intermediates")
+	targetdir ("../Uneye-Editor/Resources/Scripts")
+	objdir ("../Uneye-Editor/Resources/Scripts/Intermediates")
 
 	files
 	{

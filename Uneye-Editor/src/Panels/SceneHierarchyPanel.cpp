@@ -330,7 +330,7 @@ namespace Uneye
 					sc.Name = std::string(buffer);
 				}
 
-			});
+			}, true);
 
 			DrawComponentUI<SpriteComponent>(entt, "Sprite", [&](auto& mc) {
 

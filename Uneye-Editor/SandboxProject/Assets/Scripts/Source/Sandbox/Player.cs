@@ -7,8 +7,14 @@ using System.Threading.Tasks;
 using Uneye;
 
 
+
 namespace Sandbox
 {
+	public static class Wraper
+	{
+		public static Vector3 player_position;
+	}
+
 	public class Player : Entity
 	{
 		private TransformComponent m_Transform;
@@ -34,7 +40,7 @@ namespace Sandbox
 
 			Vector3 Direction = Vector3.Zero;
 
-			Vector3 Speed = new Vector3(0.5f * ts);
+			Vector3 Speed = new Vector3(2.0f * ts);
 
 			if (Input.IsKeyDown(KeyCode.W))
 				Direction.Y = 1;
@@ -48,14 +54,16 @@ namespace Sandbox
 			if (Input.IsKeyDown(KeyCode.D))
 				Direction.X = 1;
 
-			
-			m_Rigidbody.ApplyLinearImpulse(Direction.XY * Speed.XY, true);
+
+			//m_Rigidbody.ApplyLinearImpulse(Direction.XY * Speed.XY, true);
 
 			// R = P + D * L
 
-			//Vector3 translation = m_Transform.Translation;
-			//translation += Direction * Speed;
-			//m_Transform.Translation = translation;
+			Vector3 translation = m_Transform.Translation;
+			translation += Direction * Speed;
+			m_Transform.Translation = translation;
+
+			Wraper.player_position = m_Transform.Translation;
 		}
 
 	}

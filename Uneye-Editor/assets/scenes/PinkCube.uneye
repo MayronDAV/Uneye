@@ -1,14 +1,27 @@
 Scene: Untitled
 Entities:
-  - Entity: 5912015990610741404
+  - Entity: 13635232174674205793
     TagComponent:
-      Tag: Top
+      Tag: Left
     TransformComponent:
-      Translation: [0, 0.5, 0]
-      Rotation: [1.57079637, 0.785398185, 0]
+      Translation: [-0.354999989, 0, 0.349999994]
+      Rotation: [0, -0.785398185, 0]
       Scale: [1, 1, 1]
     SpriteComponent:
-      Color: [0.876447856, 0, 0.834712803, 1]
+      Color: [1, 0, 0.949807167, 1]
+      TexturePath: assets/textures/checkerboard.png
+      IsSubTexture: false
+  - Entity: 4124659280985015699
+    TagComponent:
+      Tag: Right
+    TransformComponent:
+      Translation: [0.351999998, 0, 0.349999994]
+      Rotation: [0, 0.785398185, 0]
+      Scale: [1, 1, 1]
+    ScriptComponent:
+      Name: Sandbox.Player
+    SpriteComponent:
+      Color: [0.54842025, 0, 0.586872578, 1]
       TexturePath: assets/textures/checkerboard.png
       IsSubTexture: false
   - Entity: 6760434249954998043
@@ -20,7 +33,7 @@ Entities:
       Scale: [1, 1, 1]
     CameraComponent:
       Camera:
-        ProjectionType: 0
+        ProjectionType: 1
         PerspectiveFOV: 0.52359879
         PerspectiveNear: 0.00999999978
         PerspectiveFar: 1000
@@ -29,25 +42,16 @@ Entities:
         OrthographicFar: 1
       Primary: true
       FixedAspectRatio: false
-  - Entity: 4124659280985015699
+    ScriptComponent:
+      Name: Sandbox.Camera
+  - Entity: 5912015990610741404
     TagComponent:
-      Tag: Right
+      Tag: Top
     TransformComponent:
-      Translation: [0.351999998, 0, 0.349999994]
-      Rotation: [0, 0.785398185, 0]
+      Translation: [0, 0.5, 0]
+      Rotation: [1.57079637, 0.785398185, 0]
       Scale: [1, 1, 1]
     SpriteComponent:
-      Color: [0.54842025, 0, 0.586872578, 1]
-      TexturePath: assets/textures/checkerboard.png
-      IsSubTexture: false
-  - Entity: 13635232174674205793
-    TagComponent:
-      Tag: Left
-    TransformComponent:
-      Translation: [-0.354999989, 0, 0.349999994]
-      Rotation: [0, -0.785398185, 0]
-      Scale: [1, 1, 1]
-    SpriteComponent:
-      Color: [1, 0, 0.949807167, 1]
+      Color: [0.876447856, 0, 0.834712803, 1]
       TexturePath: assets/textures/checkerboard.png
       IsSubTexture: false

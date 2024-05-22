@@ -5,11 +5,55 @@
 #include "mono/jit/jit.h"
 #include "mono/metadata/assembly.h"
 #include "mono/metadata/object.h"
+#include "mono/metadata/tabledefs.h"
 
 
 
 namespace Uneye
 {
+	static std::unordered_map<std::string, ScriptFieldType> s_ScriptFieldTypeMap =
+	{
+		{ "System.Single",  ScriptFieldType::Float   },
+		{ "System.Double",  ScriptFieldType::Double  },
+		{ "System.Boolean", ScriptFieldType::Bool    },
+		{ "System.Char",	ScriptFieldType::Char    },
+		{ "System.Int16",	ScriptFieldType::Short   },
+		{ "System.Int32",	ScriptFieldType::Int     },
+		{ "System.Int64",	ScriptFieldType::Long    },
+		{ "System.Byte",	ScriptFieldType::Byte    },
+		{ "System.UInt16",	ScriptFieldType::UShort  },
+		{ "System.UInt32",	ScriptFieldType::UInt    },
+		{ "System.UInt64",	ScriptFieldType::ULong   },
+
+		{ "Uneye.Vector2",	ScriptFieldType::Vector2 },
+		{ "Uneye.Vector3",	ScriptFieldType::Vector3 },
+		{ "Uneye.Vector4",	ScriptFieldType::Vector4 },
+
+		{ "Uneye.Entity",	ScriptFieldType::Entity	 },
+	};
+
+	static std::unordered_map<ScriptFieldType, const char*> s_ScriptFieldTypeString =
+	{
+		{ ScriptFieldType::None,	"None"    },
+		{ ScriptFieldType::Float,   "Float"   },
+		{ ScriptFieldType::Double,  "Double"  },
+		{ ScriptFieldType::Bool,    "Bool"	  },
+		{ ScriptFieldType::Char,    "Char"	  },
+		{ ScriptFieldType::Short,   "Short"	  },
+		{ ScriptFieldType::Int,     "Int"	  },
+		{ ScriptFieldType::Long,    "Long"	  },
+		{ ScriptFieldType::Byte,    "Byte"	  },
+		{ ScriptFieldType::UShort,  "UShort"  },
+		{ ScriptFieldType::UInt,    "UInt"	  },
+		{ ScriptFieldType::ULong,   "ULong"	  },
+
+		{ ScriptFieldType::Vector2, "Vector2" },
+		{ ScriptFieldType::Vector3, "Vector3" },
+		{ ScriptFieldType::Vector4, "Vector4" },
+
+		{ ScriptFieldType::Entity,  "Entity"  },
+	};
+
 	namespace Utils
 	{
 		static char* ReadBytes(const std::filesystem::path& filepath, uint32_t* outSize)
@@ -77,6 +121,25 @@ namespace Uneye
 			}
 		}
 
+		static ScriptFieldType MonoTypeToScriptFieldType(MonoType* type)
+		{
+			const std::string& typeName = mono_type_get_name(type);
+
+			auto it = s_ScriptFieldTypeMap.find(typeName);
+			if (it == s_ScriptFieldTypeMap.end())
+				return ScriptFieldType::None;
+
+			return it->second;
+		}
+
+		static const char* ScriptFieldTypeToString(ScriptFieldType fieldType)
+		{
+			auto it = s_ScriptFieldTypeString.find(fieldType);
+			if (it == s_ScriptFieldTypeString.end())
+				return "Invalid";
+
+			return it->second;
+		}
 
 	}
 
@@ -195,6 +258,15 @@ namespace Uneye
 		return s_Data->SceneContext;
 	}
 
+	Ref<ScriptInstance> ScriptEngine::GetEntityScriptInstance(UUID enttID)
+	{
+		auto it = s_Data->EntityInstances.find(enttID);
+		if (it == s_Data->EntityInstances.end())
+			return nullptr;
+
+		return it->second;
+	}
+
 	std::unordered_map<std::string, Ref<ScriptClass>> ScriptEngine::GetEntitySubClasses()
 	{
 		return s_Data->EntitySubClasses;
@@ -214,22 +286,50 @@ namespace Uneye
 			mono_metadata_decode_row(typeDefinitionsTable, i, cols, MONO_TYPEDEF_SIZE);
 
 			const char* nameSpace = mono_metadata_string_heap(s_Data->AppAssemblyImage, cols[MONO_TYPEDEF_NAMESPACE]);
-			const char* name = mono_metadata_string_heap(s_Data->AppAssemblyImage, cols[MONO_TYPEDEF_NAME]);
+			const char* className = mono_metadata_string_heap(s_Data->AppAssemblyImage, cols[MONO_TYPEDEF_NAME]);
 			std::string fullName;
 			if (strlen(nameSpace) != 0)
-				fullName = fmt::format("{}.{}", nameSpace, name);
+				fullName = fmt::format("{}.{}", nameSpace, className);
 			else
-				fullName = name;
+				fullName = className;
 
-			MonoClass* monoClass = mono_class_from_name(s_Data->AppAssemblyImage, nameSpace, name);
+			MonoClass* monoClass = mono_class_from_name(s_Data->AppAssemblyImage, nameSpace, className);
 
 			if (monoClass == entityClass)
 				continue;
 
 			bool isEntity = mono_class_is_subclass_of(monoClass, entityClass, false);
-			if (isEntity)
-				s_Data->EntitySubClasses[fullName] = CreateRef<ScriptClass>(nameSpace, name);
+			if (!isEntity)
+				continue;
+			
+			Ref<ScriptClass>  scriptClass = CreateRef<ScriptClass>(nameSpace, className);
+			s_Data->EntitySubClasses[fullName] = scriptClass;
+
+
+			int fieldlNum = mono_class_num_fields(monoClass);
+			UNEYE_CORE_INFO("{0} has {1} fields: ", className, fieldlNum);
+			void* iterator = nullptr;
+			while (MonoClassField* field = mono_class_get_fields(monoClass, &iterator))
+			{
+				const char* fieldname = mono_field_get_name(field);
+				uint32_t flags = mono_field_get_flags(field);
+
+				//UNEYE_CORE_WARN("	{0} flags = {1}", fieldname, flags);
+
+				if (flags & FIELD_ATTRIBUTE_PUBLIC)
+				{
+					MonoType* type = mono_field_get_type(field);
+					//const char* typeName = mono_type_get_name(type);
+
+					ScriptFieldType fieldType = Utils::MonoTypeToScriptFieldType(type);
+
+					//UNEYE_CORE_WARN("	{} ({})", fieldname, Utils::ScriptFieldTypeToString(fieldType));
+				
+					scriptClass->m_Fields[fieldname] = {fieldType, fieldname, field};
+				}
+			}
 		}
+
 	}
 
 	bool ScriptEngine::EntitySubClassExists(const std::string& fullClassName)
@@ -344,6 +444,30 @@ namespace Uneye
 			void* param = &ts;
 			m_ScriptClass->InvokeMethod(m_Instance, m_OnUpdateMethod, &param);
 		}
+	}
+
+	bool ScriptInstance::GetFieldValueInternal(const std::string& name, void* buffer)
+	{
+		const auto& fields = m_ScriptClass->GetFields();
+		auto it = fields.find(name);
+		if (it == fields.end())
+			return false;
+
+		ScriptField field = it->second;
+		mono_field_get_value(m_Instance, field.ClassField, buffer);
+		return true;
+	}
+
+	bool ScriptInstance::SetFieldValueInternal(const std::string& name, const void* value)
+	{
+		const auto& fields = m_ScriptClass->GetFields();
+		auto it = fields.find(name);
+		if (it == fields.end())
+			return false;
+
+		ScriptField field = it->second;
+		mono_field_set_value(m_Instance, field.ClassField, (void*)value);
+		return true;
 	}
 
 	#pragma endregion

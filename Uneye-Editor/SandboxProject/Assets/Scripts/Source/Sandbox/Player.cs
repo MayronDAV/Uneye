@@ -17,30 +17,26 @@ namespace Sandbox
 
 	public class Player : Entity
 	{
+
 		private TransformComponent m_Transform;
 		private Rigidbody2DComponent m_Rigidbody;
 
+		public static Vector3 Position;
+
+		public float f_speed;
+
 		public void OnCreate()
 		{
-			Console.WriteLine($"Player.OnCreate - {ID}");
-
-			bool hasTransform = HasComponent<TransformComponent>();
-
-			Console.WriteLine($"Has Transform {hasTransform}");
-
 			m_Transform = GetComponent<TransformComponent>();
 			m_Rigidbody = GetComponent<Rigidbody2DComponent>();
-
+			f_speed = 2.0f;
 		}
 
 		public void OnUpdate(float ts)
 		{
-			//Console.WriteLine($"Player.OnUpdate: {ts}");
-			//Console.WriteLine($"Player.OnUpdate: {ID}");
-
 			Vector3 Direction = Vector3.Zero;
 
-			Vector3 Speed = new Vector3(2.0f * ts);
+			Vector3 Speed = new Vector3(f_speed * ts);
 
 			if (Input.IsKeyDown(KeyCode.W))
 				Direction.Y = 1;
@@ -59,11 +55,10 @@ namespace Sandbox
 
 			// R = P + D * L
 
-			Vector3 translation = m_Transform.Translation;
-			translation += Direction * Speed;
-			m_Transform.Translation = translation;
+			Position = m_Transform.Translation;
+			Position += Direction * Speed;
+			m_Transform.Translation = Position;
 
-			Wraper.player_position = m_Transform.Translation;
 		}
 
 	}

@@ -1,16 +1,18 @@
 #include "Panels/SceneHierarchyPanel.h"
 
+#include "Uneye/Scene/Components.h"
+#include "UI/UI.h"
+#include "Uneye/Renderer/Renderer2D.h"
+#include "Uneye/Utils/PlatformUtils.h"
+
+#include "Uneye/Scripting/ScriptEngine.h"
+
 #include <imgui/imgui.h>
 #include <imgui/imgui_internal.h>
-
-#include "Uneye/Scene/Components.h"
 
 #include <glm/glm.hpp>
 #include <glm/gtc/type_ptr.hpp>
 
-#include "UI/UI.h"
-#include "Uneye/Renderer/Renderer2D.h"
-#include "Uneye/Utils/PlatformUtils.h"
 
 #include <filesystem>
 
@@ -19,7 +21,7 @@
 namespace Uneye
 {
 	extern const std::filesystem::path g_AssetPath;
-
+	
 
 	SceneHierarchyPanel::SceneHierarchyPanel(const Ref<Scene>& context)
 	{
@@ -329,6 +331,32 @@ namespace Uneye
 				{
 					sc.Name = std::string(buffer);
 				}
+
+				Ref<ScriptInstance> scriptInstance = ScriptEngine::GetEntityScriptInstance(entt.GetUUID());
+
+				if (scriptInstance)
+				{
+					ImGui::Spacing();
+					if (ImGui::TreeNodeEx("Public Fields"))
+					{
+						auto fields = scriptInstance->GetScriptClass()->GetFields();
+						for (const auto& [name, field] : fields)
+						{
+							if (field.Type == ScriptFieldType::Float)
+							{
+								float data = scriptInstance->GetFieldValue<float>(name);
+								if (UI::DrawFloatControl(name, data))
+								{
+									scriptInstance->SetFieldValue(name, data);
+								}
+							}
+						}
+
+						ImGui::TreePop();
+					}		
+
+				}
+
 
 			}, true);
 

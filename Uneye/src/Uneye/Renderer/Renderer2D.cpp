@@ -239,7 +239,6 @@ namespace Uneye
 	{
 		UNEYE_PROFILE_FUNCTION();
 
-
 		s_Data.CameraBuffer.ViewProjection = camera.GetProjection() * glm::inverse(transform);
 		s_Data.CameraUniformBuffer->SetData(&s_Data.CameraBuffer, sizeof(Renderer2Ddata::CameraData));
 
@@ -271,6 +270,7 @@ namespace Uneye
 		if (s_Data.QuadIndexCount)
 		{
 			uint32_t dataSize = (uint32_t)((uint8_t*)s_Data.QuadVertexBufferPtr - (uint8_t*)s_Data.QuadVertexBufferBase);
+
 			s_Data.QuadVertexBuffer->SetData(s_Data.QuadVertexBufferBase, dataSize);
 
 			for (uint32_t i = 0; i < s_Data.TextureSlotIndex; i++)
@@ -796,16 +796,6 @@ namespace Uneye
 	{
 		s_Data.LineWidth = width;
 	}
-
-
-
-
-
-
-
-
-
-
 
 
 	Renderer2D::Statistics Renderer2D::GetStats()

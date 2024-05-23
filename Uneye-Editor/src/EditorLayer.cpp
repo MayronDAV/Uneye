@@ -29,7 +29,7 @@ namespace Uneye
 		fbspec.Attachments = {
 			FramebufferTextureFormat::RGBA8, 
 			FramebufferTextureFormat::RED_INTEGER,
-			FramebufferTextureFormat::Depth 
+			FramebufferTextureFormat::Depth
 		};
 		fbspec.Width = 800;
 		fbspec.Height = 600;
@@ -44,8 +44,7 @@ namespace Uneye
 		if (commandLineArgs.Count > 1)
 		{
 			auto sceneFilePath = commandLineArgs[1];
-			SceneSerializer serializer(m_ActiveScene);
-			serializer.Deserialize(sceneFilePath);
+			OpenScene(sceneFilePath);
 		}
 
 		m_EditorCamera = EditorCamera(45.0f, 1.677, 0.1f, 1000.0f);
@@ -228,7 +227,7 @@ namespace Uneye
 		m_ViewportBounds[1] = { viewportMaxRegion.x + viewportOffset.x, viewportMaxRegion.y + viewportOffset.y };		m_ViewportFocused = ImGui::IsWindowFocused();
 		
 		m_ViewportHovered = ImGui::IsWindowHovered();
-		Application::Get().GetImGuiLayer()->BlockEvents(!m_ViewportFocused && !m_ViewportHovered);
+		Application::Get().GetImGuiLayer()->BlockEvents(!m_ViewportHovered);
 		//Application::Get().GetImGuiLayer()->BlockEvents(ImGui::IsAnyItemHovered() || ImGui::IsAnyItemFocused() || ImGui::IsAnyItemActive());
 
 		ImVec2 viewportSize = ImGui::GetContentRegionAvail();

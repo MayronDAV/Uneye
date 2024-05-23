@@ -20,11 +20,17 @@ namespace Uneye
 		[MethodImpl(MethodImplOptions.InternalCall)]
 		internal extern static bool Entity_HasComponent(ulong entityID, Type componentType);
 
+		[MethodImpl(MethodImplOptions.InternalCall)]
+		internal extern static ulong Entity_FindFirstEntityByName( string name);
+
+		[ MethodImpl(MethodImplOptions.InternalCall) ]
+		internal extern static object GetScriptInstance( ulong entityID );
+
 		#endregion
 
 		#region TransformComponent
 
-		[MethodImpl(MethodImplOptions.InternalCall)]
+		[ MethodImpl(MethodImplOptions.InternalCall)]
 		internal extern static void TransformComponent_GetTranslation(ulong entityID, out Vector3 translation);
 
 		[MethodImpl(MethodImplOptions.InternalCall)]
@@ -39,6 +45,9 @@ namespace Uneye
 
 		[MethodImpl(MethodImplOptions.InternalCall)]
 		internal extern static void Rigidbody2DComponent_ApplyLinearImpulseToCenter(ulong entityID, ref Vector2 impulse, bool wake);
+
+		[MethodImpl(MethodImplOptions.InternalCall)]
+		internal extern static void Rigidbody2DComponent_SetTransform( ulong entityID, ref Vector2 impulse, float angle);
 
 
 		#endregion

@@ -11,49 +11,6 @@
 
 namespace Uneye
 {
-	static std::unordered_map<std::string, ScriptFieldType> s_ScriptFieldTypeMap =
-	{
-		{ "System.Single",  ScriptFieldType::Float   },
-		{ "System.Double",  ScriptFieldType::Double  },
-		{ "System.Boolean", ScriptFieldType::Bool    },
-		{ "System.Char",	ScriptFieldType::Char    },
-		{ "System.Int16",	ScriptFieldType::Short   },
-		{ "System.Int32",	ScriptFieldType::Int     },
-		{ "System.Int64",	ScriptFieldType::Long    },
-		{ "System.Byte",	ScriptFieldType::Byte    },
-		{ "System.UInt16",	ScriptFieldType::UShort  },
-		{ "System.UInt32",	ScriptFieldType::UInt    },
-		{ "System.UInt64",	ScriptFieldType::ULong   },
-
-		{ "Uneye.Vector2",	ScriptFieldType::Vector2 },
-		{ "Uneye.Vector3",	ScriptFieldType::Vector3 },
-		{ "Uneye.Vector4",	ScriptFieldType::Vector4 },
-
-		{ "Uneye.Entity",	ScriptFieldType::Entity	 },
-	};
-
-	static std::unordered_map<ScriptFieldType, const char*> s_ScriptFieldTypeString =
-	{
-		{ ScriptFieldType::None,	"None"    },
-		{ ScriptFieldType::Float,   "Float"   },
-		{ ScriptFieldType::Double,  "Double"  },
-		{ ScriptFieldType::Bool,    "Bool"	  },
-		{ ScriptFieldType::Char,    "Char"	  },
-		{ ScriptFieldType::Short,   "Short"	  },
-		{ ScriptFieldType::Int,     "Int"	  },
-		{ ScriptFieldType::Long,    "Long"	  },
-		{ ScriptFieldType::Byte,    "Byte"	  },
-		{ ScriptFieldType::UShort,  "UShort"  },
-		{ ScriptFieldType::UInt,    "UInt"	  },
-		{ ScriptFieldType::ULong,   "ULong"	  },
-
-		{ ScriptFieldType::Vector2, "Vector2" },
-		{ ScriptFieldType::Vector3, "Vector3" },
-		{ ScriptFieldType::Vector4, "Vector4" },
-
-		{ ScriptFieldType::Entity,  "Entity"  },
-	};
-
 	namespace Utils
 	{
 		static char* ReadBytes(const std::filesystem::path& filepath, uint32_t* outSize)
@@ -121,7 +78,7 @@ namespace Uneye
 			}
 		}
 
-		static ScriptFieldType MonoTypeToScriptFieldType(MonoType* type)
+		ScriptFieldType MonoTypeToScriptFieldType(MonoType* type)
 		{
 			const std::string& typeName = mono_type_get_name(type);
 
@@ -131,16 +88,6 @@ namespace Uneye
 
 			return it->second;
 		}
-
-		static const char* ScriptFieldTypeToString(ScriptFieldType fieldType)
-		{
-			auto it = s_ScriptFieldTypeString.find(fieldType);
-			if (it == s_ScriptFieldTypeString.end())
-				return "Invalid";
-
-			return it->second;
-		}
-
 	}
 
 	struct ScriptEngineData
@@ -159,13 +106,15 @@ namespace Uneye
 		std::unordered_map<std::string, Ref<ScriptClass>> EntitySubClasses;
 		std::unordered_map<UUID, Ref<ScriptInstance>> EntityInstances;
 
+		std::unordered_map<UUID, ScriptFieldMap> EntityScriptFields;
+
 		// Runtime
 		Scene* SceneContext = nullptr;
 	};
 
 	static ScriptEngineData* s_Data = nullptr;
 
-	#pragma region ScriptEngine
+#pragma region ScriptEngine
 
 	void ScriptEngine::Init()
 	{
@@ -201,7 +150,7 @@ namespace Uneye
 		mono_set_assemblies_path("mono/lib");
 
 		MonoDomain* rootDomain = mono_jit_init("UneyeJITRuntime");
-		
+
 		UNEYE_CORE_ASSERT(rootDomain == nullptr, "");
 
 		s_Data->RootDomain = rootDomain;
@@ -272,6 +221,23 @@ namespace Uneye
 		return s_Data->EntitySubClasses;
 	}
 
+	Ref<ScriptClass> ScriptEngine::GetEntityClass(const std::string& name)
+	{
+		auto it = s_Data->EntitySubClasses.find(name);
+		if (it == s_Data->EntitySubClasses.end())
+			return nullptr;
+
+		return it->second;
+	}
+
+	ScriptFieldMap& ScriptEngine::GetScriptFieldMap(Entity entt)
+	{
+		UNEYE_CORE_ASSERT(!entt, "");
+
+		UUID entityID = entt.GetUUID();
+		return s_Data->EntityScriptFields[entityID];
+	}
+
 	void ScriptEngine::LoadAssemblyClasses()
 	{
 		s_Data->EntitySubClasses.clear();
@@ -301,7 +267,7 @@ namespace Uneye
 			bool isEntity = mono_class_is_subclass_of(monoClass, entityClass, false);
 			if (!isEntity)
 				continue;
-			
+
 			Ref<ScriptClass>  scriptClass = CreateRef<ScriptClass>(nameSpace, className);
 			s_Data->EntitySubClasses[fullName] = scriptClass;
 
@@ -324,8 +290,8 @@ namespace Uneye
 					ScriptFieldType fieldType = Utils::MonoTypeToScriptFieldType(type);
 
 					//UNEYE_CORE_WARN("	{} ({})", fieldname, Utils::ScriptFieldTypeToString(fieldType));
-				
-					scriptClass->m_Fields[fieldname] = {fieldType, fieldname, field};
+
+					scriptClass->m_Fields[fieldname] = { fieldType, fieldname, field };
 				}
 			}
 		}
@@ -345,6 +311,15 @@ namespace Uneye
 			UUID enttID = entt.GetUUID();
 			Ref<ScriptInstance> instance = CreateRef<ScriptInstance>(s_Data->EntitySubClasses[sc.Name], entt);
 			s_Data->EntityInstances[enttID] = instance;
+
+			// Copy field values
+			if (s_Data->EntityScriptFields.find(enttID) != s_Data->EntityScriptFields.end())
+			{
+				const ScriptFieldMap& fieldMap = s_Data->EntityScriptFields.at(enttID);
+				for (const auto& [name, fieldInstance] : fieldMap)
+					instance->SetFieldValueInternal(name, fieldInstance.m_Buffer);
+			}
+
 
 			instance->InvokeOnCreate();
 		}
@@ -377,12 +352,21 @@ namespace Uneye
 		return s_Data->CoreAssemblyImage;
 	}
 
-	#pragma endregion
+	MonoObject* ScriptEngine::GetManageInstance(UUID enttID)
+	{
+		auto it = s_Data->EntityInstances.find(enttID);
+		if (it == s_Data->EntityInstances.end())
+			return nullptr;
+
+		return it->second->GetManageObject();
+	}
+
+#pragma endregion
 
 
-	#pragma region ScriptClass
+#pragma region ScriptClass
 
-	ScriptClass::ScriptClass( const std::string& classNamespace, const std::string& className, bool isCore)
+	ScriptClass::ScriptClass(const std::string& classNamespace, const std::string& className, bool isCore)
 		: m_Namespace(classNamespace), m_Name(className)
 	{
 		m_MonoClass = mono_class_from_name(isCore ? s_Data->CoreAssemblyImage : s_Data->AppAssemblyImage, classNamespace.c_str(), className.c_str());
@@ -409,17 +393,17 @@ namespace Uneye
 		return mono_runtime_invoke(method, instance, params, exc);
 	}
 
-	#pragma endregion
+#pragma endregion
 
 
-	#pragma region ScriptInstance
+#pragma region ScriptInstance
 
 	ScriptInstance::ScriptInstance(Ref<ScriptClass> scriptClass, Entity entity)
 		:m_ScriptClass(scriptClass)
 	{
-		m_Instance		 = m_ScriptClass->Instantiate();
+		m_Instance = m_ScriptClass->Instantiate();
 
-		m_Constructor    = s_Data->EntityClass.GetMethod(".ctor", 1);
+		m_Constructor = s_Data->EntityClass.GetMethod(".ctor", 1);
 		m_OnCreateMethod = m_ScriptClass->GetMethod("OnCreate", 0);
 		m_OnUpdateMethod = m_ScriptClass->GetMethod("OnUpdate", 1);
 

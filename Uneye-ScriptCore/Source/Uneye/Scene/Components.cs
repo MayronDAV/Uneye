@@ -42,5 +42,11 @@ namespace Uneye
 		{
 			InternalCalls.Rigidbody2DComponent_ApplyLinearImpulseToCenter(Entity.ID, ref impulse, wake);
 		}
+		
+		public void SetTransform(Vector2 position, float angle = 0.0f)
+		{
+			InternalCalls.Rigidbody2DComponent_SetTransform(Entity.ID, ref position, angle);
+		}
+
 	}
 }

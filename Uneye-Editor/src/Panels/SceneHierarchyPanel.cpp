@@ -21,7 +21,7 @@
 namespace Uneye
 {
 	extern const std::filesystem::path g_AssetPath;
-	
+
 
 	SceneHierarchyPanel::SceneHierarchyPanel(const Ref<Scene>& context)
 	{
@@ -41,10 +41,10 @@ namespace Uneye
 		if (m_Context)
 		{
 			m_Context->m_Registry.each([&](auto entt)
-			{
-				Entity entity{ entt, m_Context.get() };
-				DrawEntityNode(entity);
-			});
+				{
+					Entity entity{ entt, m_Context.get() };
+					DrawEntityNode(entity);
+				});
 
 			// Right click on blank space
 			if (ImGui::BeginPopupContextWindow(0, 1 | ImGuiPopupFlags_NoOpenOverItems))
@@ -79,7 +79,7 @@ namespace Uneye
 		auto stats = Uneye::Renderer2D::GetStats();
 		ImGui::Text("Renderer2D Stats");
 		UI::DrawTextArgs("Draw Calls", " %d", stats.DrawCalls);
-		UI::DrawTextArgs("Quad Count",	" %d", stats.QuadCount);
+		UI::DrawTextArgs("Quad Count", " %d", stats.QuadCount);
 		UI::DrawTextArgs("Vertices", " %d", stats.GetTotalVertexCount());
 		UI::DrawTextArgs("Indices", " %d", stats.GetTotalIndexCount());
 
@@ -151,7 +151,7 @@ namespace Uneye
 	{
 
 		const ImGuiTreeNodeFlags treeNodeFlags = ImGuiTreeNodeFlags_DefaultOpen
-			| ImGuiTreeNodeFlags_AllowItemOverlap | ImGuiTreeNodeFlags_Framed | 
+			| ImGuiTreeNodeFlags_AllowItemOverlap | ImGuiTreeNodeFlags_Framed |
 			ImGuiTreeNodeFlags_SpanAvailWidth | ImGuiTreeNodeFlags_FramePadding;
 		if (entt.HasComponent<Component>())
 		{
@@ -168,9 +168,9 @@ namespace Uneye
 			bool removeComponent = false;
 			if (settings)
 			{
-				
+
 				ImGui::SameLine(contentRegionAvailable.x - lineHeight * 0.5f);
-				if (ImGui::Button("+", {lineHeight, lineHeight}))
+				if (ImGui::Button("+", { lineHeight, lineHeight }))
 					ImGui::OpenPopup("ComponentSettings");
 
 				if (ImGui::BeginPopup("ComponentSettings"))
@@ -180,7 +180,7 @@ namespace Uneye
 
 					ImGui::EndPopup();
 				}
-				
+
 			}
 
 			if (open)
@@ -256,8 +256,8 @@ namespace Uneye
 				tc.Rotation = glm::radians(rotation);
 				UI::DrawFloat3Control("Scale", tc.Scale, 1.0f);
 
-			});
-			
+				});
+
 			DrawComponentUI<CameraComponent>(entt, "Camera", [&](auto& cameraComponent) {
 
 				auto& camera = cameraComponent.Camera;
@@ -281,7 +281,7 @@ namespace Uneye
 						if (isSelected)
 							ImGui::SetItemDefaultFocus();
 					}
-				});
+					});
 
 
 				if (camera.GetProjectionType() == SceneCamera::ProjectionType::Perspective)
@@ -320,9 +320,11 @@ namespace Uneye
 					UI::DrawCheckBox("Fixed Aspect Ratio", &cameraComponent.FixedAspectRatio);
 				}
 
-			}, true);
+				}, true);
 
-			DrawComponentUI<ScriptComponent>(entt, "Script", [&](auto& sc) {
+			DrawComponentUI<ScriptComponent>(entt, "Script", [&, scene = m_Context](auto& sc)
+			{
+				bool scriptClassExists = ScriptEngine::EntitySubClassExists(sc.Name);
 
 				char buffer[64];
 				memset(buffer, 0, sizeof(buffer));
@@ -332,29 +334,63 @@ namespace Uneye
 					sc.Name = std::string(buffer);
 				}
 
-				Ref<ScriptInstance> scriptInstance = ScriptEngine::GetEntityScriptInstance(entt.GetUUID());
-
-				if (scriptInstance)
+				bool sceneRunning = scene->IsRunning();
+				if (sceneRunning)
 				{
-					ImGui::Spacing();
-					if (ImGui::TreeNodeEx("Public Fields"))
+					Ref<ScriptInstance> scriptInstance = ScriptEngine::GetEntityScriptInstance(entt.GetUUID());
+					if (scriptInstance)
 					{
-						auto fields = scriptInstance->GetScriptClass()->GetFields();
+						const auto& fields = scriptInstance->GetScriptClass()->GetFields();
 						for (const auto& [name, field] : fields)
 						{
 							if (field.Type == ScriptFieldType::Float)
 							{
 								float data = scriptInstance->GetFieldValue<float>(name);
 								if (UI::DrawFloatControl(name, data))
-								{
 									scriptInstance->SetFieldValue(name, data);
+							}
+						}
+					}
+				}
+				else
+				{
+					if (scriptClassExists)
+					{
+						Ref<ScriptClass> entityClass = ScriptEngine::GetEntityClass(sc.Name);
+						const auto& fields = entityClass->GetFields();
+
+						auto& entityFields = ScriptEngine::GetScriptFieldMap(entt);
+						for (const auto& [name, field] : fields)
+						{
+							// Field has been set in editor
+							if (entityFields.find(name) != entityFields.end())
+							{
+								ScriptFieldInstance& scriptField = entityFields.at(name);
+
+								// Display control to set it maybe
+								if (field.Type == ScriptFieldType::Float)
+								{
+									float data = scriptField.GetValue<float>();
+									if (UI::DrawFloatControl(name, data))
+										scriptField.SetValue(data);
+								}
+							}
+							else
+							{
+								// Display control to set it maybe
+								if (field.Type == ScriptFieldType::Float)
+								{
+									float data = 0.0f;
+									if (UI::DrawFloatControl(name, data))
+									{
+										ScriptFieldInstance& fieldInstance = entityFields[name];
+										fieldInstance.Field = field;
+										fieldInstance.SetValue(data);
+									}
 								}
 							}
 						}
-
-						ImGui::TreePop();
-					}		
-
+					}
 				}
 
 
@@ -367,46 +403,46 @@ namespace Uneye
 				std::string filename = std::filesystem::path(mc.TexturePath).filename().string();
 				UI::DrawClickableText("Texture Path", filename, [&]() {
 
-						mc.TexturePath = " ";
-						mc.Texture = nullptr;
-						mc.IsSubTexture = false;
-						mc.SubTexture = nullptr;
+					mc.TexturePath = " ";
+					mc.Texture = nullptr;
+					mc.IsSubTexture = false;
+					mc.SubTexture = nullptr;
 
-				}, [&]() {
-				
-					std::string filepath = FileDialogs::OpenFile("img files (*.png)|*.jpg|All files (*.*)|*.*");
-					std::string path = mc.TexturePath;
-					if (filepath.empty())
-						mc.TexturePath = path;
-					else
-						mc.TexturePath = filepath;
+					}, [&]() {
 
-					if (mc.TexturePath == "" || mc.TexturePath == " " || mc.TexturePath == std::string())
-					{
-						mc.Texture = nullptr;
-						mc.IsSubTexture = false;
-					}
-					else	
-						mc.Texture = Texture2D::Create(mc.TexturePath);
+						std::string filepath = FileDialogs::OpenFile("img files (*.png)|*.jpg|All files (*.*)|*.*");
+						std::string path = mc.TexturePath;
+						if (filepath.empty())
+							mc.TexturePath = path;
+						else
+							mc.TexturePath = filepath;
 
-					filename = std::filesystem::path(mc.TexturePath).filename().string();
-
-				}, [&]() {
-					if (ImGui::BeginDragDropTarget())
-					{
-						if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("CONTENT_BROWSER_ITEM"))
+						if (mc.TexturePath == "" || mc.TexturePath == " " || mc.TexturePath == std::string())
 						{
-							const wchar_t* path = (const wchar_t*)payload->Data;
-							std::filesystem::path texturePath = std::filesystem::path(g_AssetPath) / path;
-							mc.TexturePath = texturePath.string();
-							filename = std::filesystem::path(mc.TexturePath).filename().string();
-							mc.Texture = Texture2D::Create(texturePath.string());
+							mc.Texture = nullptr;
+							mc.IsSubTexture = false;
 						}
-						ImGui::EndDragDropTarget();
-					}
+						else
+							mc.Texture = Texture2D::Create(mc.TexturePath);
 
-				});
-					
+						filename = std::filesystem::path(mc.TexturePath).filename().string();
+
+						}, [&]() {
+							if (ImGui::BeginDragDropTarget())
+							{
+								if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("CONTENT_BROWSER_ITEM"))
+								{
+									const wchar_t* path = (const wchar_t*)payload->Data;
+									std::filesystem::path texturePath = std::filesystem::path(g_AssetPath) / path;
+									mc.TexturePath = texturePath.string();
+									filename = std::filesystem::path(mc.TexturePath).filename().string();
+									mc.Texture = Texture2D::Create(texturePath.string());
+								}
+								ImGui::EndDragDropTarget();
+							}
+
+							});
+
 				UI::DrawCheckBox("Is SubTexture ", &mc.IsSubTexture);
 
 				if (mc.IsSubTexture)
@@ -421,7 +457,7 @@ namespace Uneye
 						mc.SubTexture = nullptr;
 				}
 
-			}, true);
+				}, true);
 
 
 			DrawComponentUI<CircleComponent>(entt, "Circle", [&](auto& cc) {
@@ -457,7 +493,7 @@ namespace Uneye
 
 				UI::DrawCheckBox("FixedRotation", &rb2d.FixedRotation);
 
-			}, true);
+				}, true);
 
 
 			DrawComponentUI<BoxCollider2DComponent>(entt, "BoxCollider 2D", [&](auto& bc2d) {
@@ -486,5 +522,4 @@ namespace Uneye
 		}
 
 	}
-
 }

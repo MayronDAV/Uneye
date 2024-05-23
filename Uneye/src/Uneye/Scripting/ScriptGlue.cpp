@@ -78,18 +78,36 @@ namespace Uneye
 		static bool Entity_HasComponent(UUID enttID, MonoReflectionType* componentType)
 		{
 			Scene* scene = ScriptEngine::GetSceneContext();
-
 			UNEYE_CORE_ASSERT(scene == nullptr, "Scene is null");
 
 			Entity entt = scene->GetEntityByUUID(enttID);
-
 			UNEYE_CORE_ASSERT(!entt, "Entity is null");
 
 			MonoType* managedType = mono_reflection_type_get_type(componentType);
-
 			UNEYE_CORE_ASSERT(s_EntityHasComponentsFuncs.find(managedType) == s_EntityHasComponentsFuncs.end(), "Unknown managed type");
 
 			return s_EntityHasComponentsFuncs.at(managedType)(entt);
+		}
+
+		static uint64_t Entity_FindFirstEntityByName(MonoString* name)
+		{
+			char* name_c_str = mono_string_to_utf8(name);
+
+			Scene* scene = ScriptEngine::GetSceneContext();
+			UNEYE_CORE_ASSERT(scene == nullptr, "Scene is null");
+
+			Entity entt = scene->FindFirstEntityByName(name_c_str);
+			mono_free(name_c_str);
+
+			if (!entt)
+				return 0;
+
+			return entt.GetUUID();
+		}
+
+		static MonoObject* GetScriptInstance(UUID entityID)
+		{
+			return ScriptEngine::GetManageInstance(entityID);
 		}
 
 		#pragma endregion 
@@ -99,11 +117,9 @@ namespace Uneye
 		static void TransformComponent_GetTranslation(UUID enttID, glm::vec3* outTranslation)
 		{
 			Scene* scene = ScriptEngine::GetSceneContext();
-
 			UNEYE_CORE_ASSERT(scene == nullptr, "Scene is null");
 
 			Entity entt = scene->GetEntityByUUID(enttID);
-
 			UNEYE_CORE_ASSERT(!entt, "Entity is null");
 
 			*outTranslation = entt.GetComponent<TransformComponent>().Translation;
@@ -112,11 +128,9 @@ namespace Uneye
 		static void TransformComponent_SetTranslation(UUID enttID,  glm::vec3* translation)
 		{
 			Scene* scene = ScriptEngine::GetSceneContext();
-
 			UNEYE_CORE_ASSERT(scene == nullptr, "Scene is null");
 
-			Entity entt = scene->GetEntityByUUID(enttID);
-			
+			Entity entt = scene->GetEntityByUUID(enttID);		
 			UNEYE_CORE_ASSERT(!entt, "Entity is null");
 
 			entt.GetComponent<TransformComponent>().Translation = *translation;
@@ -142,20 +156,18 @@ namespace Uneye
 			*outTranslation = glm::vec2(body->GetTransform().p.x, body->GetTransform().p.y);
 		}
 
-		static void Rigidbody2DComponent_SetTranslation(UUID enttID, glm::vec2* translation)
+		static void Rigidbody2DComponent_SetTransform(UUID enttID, glm::vec2* position, float angle)
 		{
 			Scene* scene = ScriptEngine::GetSceneContext();
-
 			UNEYE_CORE_ASSERT(scene == nullptr, "Scene is null");
 
 			Entity entt = scene->GetEntityByUUID(enttID);
-
 			UNEYE_CORE_ASSERT(!entt, "Entity is null");
 
 			auto& rb2d = entt.GetComponent<Rigidbody2DComponent>();
 			b2Body* body = (b2Body*)rb2d.RuntimeBody;
 
-			body->SetTransform(b2Vec2(translation->x, translation->y), 0);
+			body->SetTransform(b2Vec2(position->x, position->y), angle);
 		}
 
 		static void Rigidbody2DComponent_ApplyLinearImpulse(UUID enttID, glm::vec2* impulse, glm::vec2* point, bool wake)
@@ -226,6 +238,8 @@ namespace Uneye
 		#pragma region Entity
 
 		UNEYE_ADD_INTERNAL_CALL(Entity_HasComponent);
+		UNEYE_ADD_INTERNAL_CALL(Entity_FindFirstEntityByName);
+		UNEYE_ADD_INTERNAL_CALL(GetScriptInstance);
 
 		#pragma endregion
 
@@ -239,7 +253,7 @@ namespace Uneye
 		#pragma region Rigidbody2DComponent
 
 		//UNEYE_ADD_INTERNAL_CALL(Rigidbody2DComponent_GetTranslation);
-		//UNEYE_ADD_INTERNAL_CALL(Rigidbody2DComponent_SetTranslation);
+		UNEYE_ADD_INTERNAL_CALL(Rigidbody2DComponent_SetTransform);
 		UNEYE_ADD_INTERNAL_CALL(Rigidbody2DComponent_ApplyLinearImpulse);
 		UNEYE_ADD_INTERNAL_CALL(Rigidbody2DComponent_ApplyLinearImpulseToCenter);
 

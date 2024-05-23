@@ -44,11 +44,15 @@ namespace Uneye
 
 			void DuplicateEntity(Entity entt);
 
+			Entity FindFirstEntityByName(std::string_view name);
 			Entity GetEntityByUUID(UUID uuid);
+
 
 			Entity GetPrimaryCameraEntity();
 
 			float GetFPS() { return m_FPS; }
+
+			bool IsRunning() const { return m_IsRunning; }
 
 			template<typename... Components>
 			auto GetAllEntitiesWith()
@@ -69,6 +73,7 @@ namespace Uneye
 		private:
 			entt::registry m_Registry;
 			uint32_t m_ViewportWidth = 0, m_ViewportHeight = 0;
+			bool m_IsRunning = false;
 
 			float m_LastTime = Time::GetTime();
 			float m_FPSCounter = 0;

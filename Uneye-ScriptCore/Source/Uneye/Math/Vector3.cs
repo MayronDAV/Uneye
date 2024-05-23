@@ -40,6 +40,13 @@ namespace Uneye
 			Z = vec3.Z;
 		}
 
+		public Vector3(Vector2 xy, float z)
+		{
+			X = xy.X;
+			Y = xy.Y;
+			Z = z;
+		}
+
 		public static Vector3 operator +(Vector3 left, Vector3 right)
 		{
 			return new Vector3(left.X + right.X, left.Y + right.Y, left.Z + right.Z);

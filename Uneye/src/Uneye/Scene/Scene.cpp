@@ -143,6 +143,8 @@ namespace Uneye
 
 	void Scene::OnRuntimeStart()
 	{
+		m_IsRunning = true;
+
 		OnPhysics2DStart();
 
 		// Scripting
@@ -162,6 +164,8 @@ namespace Uneye
 
 	void Scene::OnRuntimeStop()
 	{
+		m_IsRunning = false;
+
 		OnPhysics2DStop();
 
 		ScriptEngine::OnRuntimeStop();
@@ -169,6 +173,8 @@ namespace Uneye
 
 	void Scene::OnSimulationStart()
 	{
+		m_IsRunning = false;
+
 		OnPhysics2DStart();
 	}
 
@@ -367,6 +373,19 @@ namespace Uneye
 		Entity newEntity = CreateEntity(entt.GetName());
 		CopyComponentIfExists(AllComponents{}, newEntity, entt);
 
+	}
+
+	Entity Scene::FindFirstEntityByName(std::string_view name)
+	{
+		auto view = m_Registry.view<TagComponent>();
+		for (auto entity : view)
+		{
+			auto& tc = view.get<TagComponent>(entity);
+			if (tc.Tag == name)
+				return Entity{ entity, this };
+		}
+
+		return {};
 	}
 
 	Entity Scene::GetEntityByUUID(UUID uuid)

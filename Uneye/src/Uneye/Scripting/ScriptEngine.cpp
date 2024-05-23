@@ -101,6 +101,9 @@ namespace Uneye
 		MonoAssembly* AppAssembly = nullptr;
 		MonoImage* AppAssemblyImage = nullptr;
 
+		std::filesystem::path CoreAssemblyFilepath;
+		std::filesystem::path AppAssemblyFilepath;
+
 		ScriptClass EntityClass;
 
 		std::unordered_map<std::string, Ref<ScriptClass>> EntitySubClasses;
@@ -121,18 +124,18 @@ namespace Uneye
 		s_Data = new ScriptEngineData();
 
 		InitMono();
+		ScriptGlue::RegisterFunction();
 
 		LoadAssembly("Resources/Scripts/Uneye-ScriptCore.dll");
 		LoadAppAssembly("SandboxProject/Assets/Scripts/Binaries/Sandbox.dll");
 
 		LoadAssemblyClasses();
 
-		Utils::PrintAssemblyTypes(s_Data->AppAssembly);
-
 		ScriptGlue::RegisterComponents();
-		ScriptGlue::RegisterFunction();
 
 		s_Data->EntityClass = ScriptClass("Uneye", "Entity", true);
+		//Utils::PrintAssemblyTypes(s_Data->AppAssembly);
+
 
 		MonoObject* instance = s_Data->EntityClass.Instantiate();
 
@@ -161,16 +164,19 @@ namespace Uneye
 		// WHY, WHY MONO
 		// maybe come back to this
 
-		//mono_domain_unload(s_Data->AppDomain);
+		mono_domain_set(mono_get_root_domain(), false);
+		mono_domain_unload(s_Data->AppDomain);
 		s_Data->AppDomain = nullptr;
 
-		//mono_jit_cleanup(s_Data->RootDomain);
+		mono_jit_cleanup(s_Data->RootDomain);
 		s_Data->RootDomain = nullptr;
 	}
 
 
 	void ScriptEngine::LoadAssembly(const std::filesystem::path& filepath)
 	{
+		s_Data->CoreAssemblyFilepath = filepath;
+
 		s_Data->AppDomain = mono_domain_create_appdomain("UneyeScriptRuntime", nullptr);
 		mono_domain_set(s_Data->AppDomain, true);
 
@@ -182,11 +188,28 @@ namespace Uneye
 
 	void ScriptEngine::LoadAppAssembly(const std::filesystem::path& filepath)
 	{
-		// Move this maybe
+		s_Data->AppAssemblyFilepath = filepath;
+
 		s_Data->AppAssembly = Utils::LoadMonoAssembly(filepath);
 		//Utils::PrintAssemblyTypes(s_Data->AppAssembly);
 		s_Data->AppAssemblyImage = mono_assembly_get_image(s_Data->AppAssembly);
 
+	}
+
+	void ScriptEngine::ReloadAssembly()
+	{
+		mono_domain_set(mono_get_root_domain(), false);
+		mono_domain_unload(s_Data->AppDomain);
+		//mono_domain_free(s_Data->AppDomain, true);
+
+		LoadAssembly(s_Data->CoreAssemblyFilepath);
+		LoadAppAssembly(s_Data->AppAssemblyFilepath);
+
+		LoadAssemblyClasses();
+
+		ScriptGlue::RegisterComponents();
+
+		s_Data->EntityClass = ScriptClass("Uneye", "Entity", true);
 	}
 
 

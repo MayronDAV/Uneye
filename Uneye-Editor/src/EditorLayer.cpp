@@ -4,9 +4,10 @@
 
 #include "Uneye/Scene/SceneSerializer.h"
 #include "Uneye/Utils/PlatformUtils.h"
+#include "Uneye/Scripting/ScriptEngine.h"
 
-#include <ImGuizmo.h>
 #include "Uneye/Math/Math.h"
+#include <ImGuizmo.h>
 
 
 
@@ -203,6 +204,20 @@ namespace Uneye
 					SaveSceneAs();
 
 				if (ImGui::MenuItem("Exit")) { Uneye::Application::Get().Close(); }
+
+				ImGui::EndMenu();
+			}
+
+			if (ImGui::BeginMenu("Script"))
+			{
+				if (ImGui::MenuItem("Reload Assembly", "Ctrl+R"))
+				{
+					if (m_SceneState != SceneState::Edit)
+						OnSceneStop(); // Maybe log this?
+
+					//if (!m_ActiveScene->IsRunning())
+					ScriptEngine::ReloadAssembly();
+				}
 
 				ImGui::EndMenu();
 			}

@@ -222,6 +222,7 @@ namespace Uneye
 
 	void ScriptGlue::RegisterComponents()
 	{
+		s_EntityHasComponentsFuncs.clear();
 		RegisterComponent(AllComponents{});
 	}
 

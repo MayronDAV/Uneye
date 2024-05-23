@@ -261,6 +261,8 @@ namespace Uneye
 			static void LoadAssembly(const std::filesystem::path& filepath);
 			static void LoadAppAssembly(const std::filesystem::path& filepath);
 
+			static void ReloadAssembly();
+
 			static void OnRuntimeStart(Scene* scene);
 			static void OnRuntimeStop();
 

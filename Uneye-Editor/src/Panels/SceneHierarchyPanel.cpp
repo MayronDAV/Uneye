@@ -168,7 +168,6 @@ namespace Uneye
 			bool removeComponent = false;
 			if (settings)
 			{
-
 				ImGui::SameLine(contentRegionAvailable.x - lineHeight * 0.5f);
 				if (ImGui::Button("+", { lineHeight, lineHeight }))
 					ImGui::OpenPopup("ComponentSettings");

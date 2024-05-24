@@ -165,6 +165,7 @@
     <ClInclude Include="src\Uneye\Core\Log.h" />
     <ClInclude Include="src\Uneye\Core\Timer.h" />
     <ClInclude Include="src\Uneye\Core\Timestep.h" />
+    <ClInclude Include="src\Uneye\Core\TraitHelpers.h" />
     <ClInclude Include="src\Uneye\Core\UUID.h" />
     <ClInclude Include="src\Uneye\Core\Window.h" />
     <ClInclude Include="src\Uneye\Debug\Instrumentor.h" />
@@ -610,6 +611,7 @@
     <ClCompile Include="src\Uneye\Core\Layer.cpp" />
     <ClCompile Include="src\Uneye\Core\LayerStack.cpp" />
     <ClCompile Include="src\Uneye\Core\Log.cpp" />
+    <ClCompile Include="src\Uneye\Core\TraitHelpers.cpp" />
     <ClCompile Include="src\Uneye\Core\UUID.cpp" />
     <ClCompile Include="src\Uneye\ImGui\ImGuiBuild.cpp" />
     <ClCompile Include="src\Uneye\ImGui\ImGuiLayer.cpp" />

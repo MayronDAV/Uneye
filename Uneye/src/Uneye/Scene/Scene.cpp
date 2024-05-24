@@ -518,68 +518,27 @@ namespace Uneye
 		Renderer2D::EndScene();
 	}
 
+
 	template<typename T>
-	void Scene::OnComponentAdded(Entity entity, T& component)
-	{
-		static_assert(sizeof(T) == 0);
+	void Scene::OnComponentAdded(Entity entity, T& component) {
+		OnComponentAddedImpl(entity, component);
+	}
+
+	template<typename T, typename>
+	void Scene::OnComponentAddedImpl(Entity entity, T& component) {
+		// T don't have OnComponentAdded
+	}
+
+	template<typename T>
+	void Scene::OnComponentAddedImpl(Entity entity, T& component,
+		typename std::enable_if<has_OnComponentAdded_in_scene<Scene, void(Entity, T&)>::value>::type*) {
+		// T have OnComponentAdded
+		OnComponentAddedImpl<T>(entity, component);
 	}
 
 	template<>
-	void Scene::OnComponentAdded<IDComponent>(Entity entity, IDComponent& component)
-	{
-	}
-
-
-	template<>
-	void Scene::OnComponentAdded<TagComponent>(Entity entity, TagComponent& component)
-	{
-	}
-
-	template<>
-	void Scene::OnComponentAdded<TransformComponent>(Entity entity, TransformComponent& component)
-	{
-	}
-
-	template<>
-	void Scene::OnComponentAdded<CameraComponent>(Entity entity, CameraComponent& component)
-	{
+	void Scene::OnComponentAddedImpl<CameraComponent>(Entity entity, CameraComponent& component) {
 		if (m_ViewportWidth > 0 && m_ViewportHeight > 0)
 			component.Camera.SetViewportSize(m_ViewportWidth, m_ViewportHeight);
 	}
-
-	template<>
-	void Scene::OnComponentAdded<ScriptComponent>(Entity entity, ScriptComponent& component)
-	{
-	}
-
-	template<>
-	void Scene::OnComponentAdded<SpriteComponent>(Entity entity, SpriteComponent& component)
-	{
-	}
-
-	template<>
-	void Scene::OnComponentAdded<CircleComponent>(Entity entity, CircleComponent& component)
-	{
-	}
-
-	template<>
-	void Scene::OnComponentAdded<NativeScriptComponent>(Entity entity, NativeScriptComponent& component)
-	{
-	}
-
-	template<>
-	void Scene::OnComponentAdded<Rigidbody2DComponent>(Entity entity, Rigidbody2DComponent& component)
-	{
-	}
-
-	template<>
-	void Scene::OnComponentAdded<BoxCollider2DComponent>(Entity entity, BoxCollider2DComponent& component)
-	{
-	}
-
-	template<>
-	void Scene::OnComponentAdded<CircleCollider2DComponent>(Entity entity, CircleCollider2DComponent& component)
-	{
-	}
-
 }

@@ -4,9 +4,11 @@
 #include "Uneye/Core/UUID.h"
 #include "Uneye/Renderer/EditorCamera.h"
 #include "Uneye/Utils/PlatformUtils.h"
+#include "Uneye/Core/TraitHelpers.h"
 
 #include <string>
 #include <entt/entt.hpp>
+
 
 
 
@@ -69,6 +71,14 @@ namespace Uneye
 		private:
 			template<typename T>
 			void OnComponentAdded(Entity entity, T& component);
+
+			template<typename T, typename = void>
+			void OnComponentAddedImpl(Entity entity, T& component);
+
+			template<typename T>
+			void OnComponentAddedImpl(Entity entity, T& component,
+				typename std::enable_if<has_OnComponentAdded_in_scene<Scene, void(Entity, T&)>::value>::type* = nullptr);
+
 
 			void OnPhysics2DStart();
 			void OnPhysics2DStop();

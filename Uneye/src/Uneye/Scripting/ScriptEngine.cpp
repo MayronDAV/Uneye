@@ -7,6 +7,9 @@
 #include "mono/metadata/object.h"
 #include "mono/metadata/tabledefs.h"
 
+#include "filewatch/FileWatch.h"
+
+#include "Uneye/Core/Application.h"
 
 
 namespace Uneye
@@ -111,6 +114,9 @@ namespace Uneye
 
 		std::unordered_map<UUID, ScriptFieldMap> EntityScriptFields;
 
+		Scope<filewatch::FileWatch<std::string>> AppAssemblyFileWatcher;
+		bool AssemblyReloadPending = false;
+
 		// Runtime
 		Scene* SceneContext = nullptr;
 	};
@@ -121,6 +127,8 @@ namespace Uneye
 
 	void ScriptEngine::Init()
 	{
+		UNEYE_PROFILE_FUNCTION();
+
 		s_Data = new ScriptEngineData();
 
 		InitMono();
@@ -144,12 +152,15 @@ namespace Uneye
 
 	void ScriptEngine::Shutdown()
 	{
+
 		ShutdownMono();
 		delete s_Data;
 	}
 
 	void ScriptEngine::InitMono()
 	{
+		UNEYE_PROFILE_FUNCTION();
+
 		mono_set_assemblies_path("mono/lib");
 
 		MonoDomain* rootDomain = mono_jit_init("UneyeJITRuntime");
@@ -161,8 +172,7 @@ namespace Uneye
 
 	void ScriptEngine::ShutdownMono()
 	{
-		// WHY, WHY MONO
-		// maybe come back to this
+		UNEYE_PROFILE_FUNCTION();
 
 		mono_domain_set(mono_get_root_domain(), false);
 		mono_domain_unload(s_Data->AppDomain);
@@ -186,6 +196,22 @@ namespace Uneye
 		s_Data->CoreAssemblyImage = mono_assembly_get_image(s_Data->CoreAssembly);
 	}
 
+	static void OnAppAssemblyFileSystemEvent(const std::string& path, const filewatch::Event change_type)
+	{
+		if (!s_Data->AssemblyReloadPending && change_type == filewatch::Event::modified)
+		{
+			s_Data->AssemblyReloadPending = true;
+
+			Application::Get().SubmitToMainThread([]() 
+			{
+				s_Data->AppAssemblyFileWatcher.reset();
+				ScriptEngine::ReloadAssembly(); 
+			});
+		}
+
+		std::cout << path << " - " << (int)change_type << "\n";
+	}
+	
 	void ScriptEngine::LoadAppAssembly(const std::filesystem::path& filepath)
 	{
 		s_Data->AppAssemblyFilepath = filepath;
@@ -194,10 +220,18 @@ namespace Uneye
 		//Utils::PrintAssemblyTypes(s_Data->AppAssembly);
 		s_Data->AppAssemblyImage = mono_assembly_get_image(s_Data->AppAssembly);
 
+		s_Data->AppAssemblyFileWatcher = CreateScope<filewatch::FileWatch<std::string>>(
+			filepath.string(),
+			OnAppAssemblyFileSystemEvent
+		);
+
+		s_Data->AssemblyReloadPending = false;
 	}
 
 	void ScriptEngine::ReloadAssembly()
 	{
+		UNEYE_PROFILE_FUNCTION();
+
 		mono_domain_set(mono_get_root_domain(), false);
 		mono_domain_unload(s_Data->AppDomain);
 		//mono_domain_free(s_Data->AppDomain, true);
@@ -263,6 +297,8 @@ namespace Uneye
 
 	void ScriptEngine::LoadAssemblyClasses()
 	{
+		UNEYE_PROFILE_FUNCTION();
+
 		s_Data->EntitySubClasses.clear();
 
 		const MonoTableInfo* typeDefinitionsTable = mono_image_get_table_info(s_Data->AppAssemblyImage, MONO_TABLE_TYPEDEF);
@@ -328,6 +364,8 @@ namespace Uneye
 
 	void ScriptEngine::OnCreateEntity(Entity entt)
 	{
+		UNEYE_PROFILE_FUNCTION();
+
 		const auto& sc = entt.GetComponent<ScriptComponent>();
 		if (ScriptEngine::EntitySubClassExists(sc.Name))
 		{
@@ -350,6 +388,8 @@ namespace Uneye
 
 	void ScriptEngine::OnUpdateEntity(Entity entt, Timestep ts)
 	{
+		UNEYE_PROFILE_FUNCTION();
+
 		UUID entityUUID = entt.GetUUID();
 		if (s_Data->EntityInstances.find(entityUUID) != s_Data->EntityInstances.end())
 		{

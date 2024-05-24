@@ -20,6 +20,7 @@ project "Uneye-Editor"
 		"%{wks.location}/Uneye/src",
 		"%{wks.location}/Uneye/vendor",
 		"%{IncludeDir.entt}",
+		"%{IncludeDir.filewatch}",
 		"%{IncludeDir.glm}",
 		"%{IncludeDir.ImGuizmo}"
 	}

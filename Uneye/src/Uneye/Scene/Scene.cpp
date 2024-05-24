@@ -21,6 +21,7 @@
 #include "box2d/b2_circle_shape.h"
 
 
+
 namespace Uneye
 {
 	namespace Utils
@@ -92,6 +93,8 @@ namespace Uneye
 
 	Ref<Scene> Scene::Copy(Ref<Scene> other)
 	{
+		UNEYE_PROFILE_FUNCTION();
+
 		Ref<Scene> newScene = CreateRef<Scene>();
 
 		newScene->m_ViewportWidth = other->m_ViewportWidth;
@@ -203,53 +206,55 @@ namespace Uneye
 	void Scene::OnUpdateRuntime(Timestep ts)
 	{
 		UNEYE_PROFILE_FUNCTION();
-
-		// Update Script
+		if (!m_IsPaused || m_StepFrames-- > 0)
 		{
-			// C# script - Entity OnUpdate
-			auto view = m_Registry.view<ScriptComponent>();
-			for (auto entt : view)
+			// Update Script
 			{
-				Entity entity = { entt, this };
-				ScriptEngine::OnUpdateEntity(entity, ts);
-			}
-
-			m_Registry.view<NativeScriptComponent>().each([=](auto entity, auto& nsc) 
-			{
-				// TODO: Move to Scene::OnScenePlay
-				if (!nsc.Instance)
+				// C# script - Entity OnUpdate
+				auto view = m_Registry.view<ScriptComponent>();
+				for (auto entt : view)
 				{
-					nsc.Instance = nsc.InstantiateScript();
-					nsc.Instance->m_Entity = Entity{ entity, this };
-					nsc.Instance->OnCreate();
+					Entity entity = { entt, this };
+					ScriptEngine::OnUpdateEntity(entity, ts);
 				}
 
-				nsc.Instance->OnUpdate(ts);
-			});
-		}
+				m_Registry.view<NativeScriptComponent>().each([=](auto entity, auto& nsc)
+					{
+						// TODO: Move to Scene::OnScenePlay
+						if (!nsc.Instance)
+						{
+							nsc.Instance = nsc.InstantiateScript();
+							nsc.Instance->m_Entity = Entity{ entity, this };
+							nsc.Instance->OnCreate();
+						}
 
-		// Physics
-		{
-			const int32_t velocityIterations = 6;
-			const int32_t positionIterations = 2;
+						nsc.Instance->OnUpdate(ts);
+					});
+			}
 
-			m_PhysicsWorld->Step(ts, velocityIterations, positionIterations);
-
-			// Retrieve from Box2D
-			auto view = m_Registry.view<Rigidbody2DComponent>();
-			for (auto entt : view)
+			// Physics
 			{
-				Entity entity = { entt, this };
-				auto& tc = entity.GetComponent<TransformComponent>();
-				auto& rb2d = entity.GetComponent<Rigidbody2DComponent>();
+				const int32_t velocityIterations = 6;
+				const int32_t positionIterations = 2;
 
-				b2Body* body = (b2Body*)rb2d.RuntimeBody;
+				m_PhysicsWorld->Step(ts, velocityIterations, positionIterations);
 
-				const auto& position = body->GetPosition();
-				tc.Translation.x = position.x;
-				tc.Translation.y = position.y;
-				tc.Rotation.z = body->GetAngle();
+				// Retrieve from Box2D
+				auto view = m_Registry.view<Rigidbody2DComponent>();
+				for (auto entt : view)
+				{
+					Entity entity = { entt, this };
+					auto& tc = entity.GetComponent<TransformComponent>();
+					auto& rb2d = entity.GetComponent<Rigidbody2DComponent>();
 
+					b2Body* body = (b2Body*)rb2d.RuntimeBody;
+
+					const auto& position = body->GetPosition();
+					tc.Translation.x = position.x;
+					tc.Translation.y = position.y;
+					tc.Rotation.z = body->GetAngle();
+
+				}
 			}
 		}
 
@@ -303,50 +308,52 @@ namespace Uneye
 
 			Renderer2D::EndScene();
 		}
-
 	}
 
 	void Scene::OnUpdateSimulation(Timestep ts, EditorCamera& camera)
 	{
 		UNEYE_PROFILE_FUNCTION();
 
-		float currentTime = Time::GetTime();
-		if (currentTime - m_LastTime >= 1.0f)
+		if (!m_IsPaused || m_StepFrames-- > 0)
 		{
-			m_FPS = m_FPSCounter / (currentTime - m_LastTime);
-			m_LastTime = currentTime;
-			m_FPSCounter = 0;
-		}
-
-		// Physics
-		{
-			const int32_t velocityIterations = 6;
-			const int32_t positionIterations = 2;
-
-			m_PhysicsWorld->Step(ts, velocityIterations, positionIterations);
-
-			// Retrieve from Box2D
-			auto view = m_Registry.view<Rigidbody2DComponent>();
-			for (auto entt : view)
+			float currentTime = Time::GetTime();
+			if (currentTime - m_LastTime >= 1.0f)
 			{
-				Entity entity = { entt, this };
-				auto& tc = entity.GetComponent<TransformComponent>();
-				auto& rb2d = entity.GetComponent<Rigidbody2DComponent>();
+				m_FPS = m_FPSCounter / (currentTime - m_LastTime);
+				m_LastTime = currentTime;
+				m_FPSCounter = 0;
+			}
 
-				b2Body* body = (b2Body*)rb2d.RuntimeBody;
+			// Physics
+			{
+				const int32_t velocityIterations = 6;
+				const int32_t positionIterations = 2;
 
-				const auto& position = body->GetPosition();
-				tc.Translation.x = position.x;
-				tc.Translation.y = position.y;
-				tc.Rotation.z = body->GetAngle();
+				m_PhysicsWorld->Step(ts, velocityIterations, positionIterations);
 
+				// Retrieve from Box2D
+				auto view = m_Registry.view<Rigidbody2DComponent>();
+				for (auto entt : view)
+				{
+					Entity entity = { entt, this };
+					auto& tc = entity.GetComponent<TransformComponent>();
+					auto& rb2d = entity.GetComponent<Rigidbody2DComponent>();
+
+					b2Body* body = (b2Body*)rb2d.RuntimeBody;
+
+					const auto& position = body->GetPosition();
+					tc.Translation.x = position.x;
+					tc.Translation.y = position.y;
+					tc.Rotation.z = body->GetAngle();
+
+				}
 			}
 		}
 
 		// Render
 		RenderScene(camera);
-
-		m_FPSCounter++;
+		if (!m_IsPaused || m_StepFrames-- > 0)
+			m_FPSCounter++;
 	}
 
 	void Scene::OnViewportResize(uint32_t width, uint32_t height)
@@ -410,6 +417,11 @@ namespace Uneye
 		}
 
 		return Entity();
+	}
+
+	void Scene::Step(int frames)
+	{
+		m_StepFrames = frames;
 	}
 
 	void Scene::OnPhysics2DStart()

@@ -11,13 +11,13 @@ IncludeDir["Glad"] = "%{wks.location}/Uneye/vendor/Glad/include"
 IncludeDir["ImGui"] = "%{wks.location}/Uneye/vendor/imgui"
 IncludeDir["glm"] = "%{wks.location}/Uneye/vendor/glm"
 IncludeDir["Box2D"] = "%{wks.location}/Uneye/vendor/Box2D/include"
+IncludeDir["filewatch"] = "%{wks.location}/Uneye/vendor/filewatch"
 IncludeDir["entt"] = "%{wks.location}/Uneye/vendor/entt/include"
 IncludeDir["mono"] = "%{wks.location}/Uneye/vendor/mono/include"
 IncludeDir["ImGuizmo"] = "%{wks.location}/Uneye/vendor/ImGuizmo"
 IncludeDir["shaderc"] = "%{wks.location}/Uneye/vendor/shaderc/libshaderc/include"
 IncludeDir["SPIRV_Cross"] = "%{wks.location}/Uneye/vendor/SPIRV-Cross/include"
 IncludeDir["VulkanSDK"] = "%{VULKAN_SDK}/Include"
-
 LibraryDir = {}
 
 LibraryDir["VulkanSDK"] = "%{VULKAN_SDK}/Lib"

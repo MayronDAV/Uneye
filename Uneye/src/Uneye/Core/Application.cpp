@@ -99,6 +99,7 @@ namespace Uneye {
 			Timestep timestep = time - m_LastFrameTime;
 			m_LastFrameTime = time;
 
+			ExecuteMainThreadQueue();
 
 			if (!m_Minimized)
 			{
@@ -125,6 +126,13 @@ namespace Uneye {
 		}
 	}
 
+	void Application::SubmitToMainThread(const std::function<void()>& func)
+	{
+		std::scoped_lock<std::mutex> lock(m_MainThreadQueueMutex);
+
+		m_MainThreadQueue.emplace_back(func);
+	}
+
 	bool Application::OnWindowClose(WindowCloseEvent& e)
 	{
 		m_Running = false;
@@ -145,6 +153,19 @@ namespace Uneye {
 		Renderer::OnWindowResize(e.GetWidth(), e.GetHeight());
 
 		return false;
+	}
+
+	void Application::ExecuteMainThreadQueue()
+	{
+		std::vector<std::function<void()>> copy;
+		{
+			std::scoped_lock<std::mutex> lock(m_MainThreadQueueMutex);
+			copy = m_MainThreadQueue;
+			m_MainThreadQueue.clear();
+		}
+
+		for (auto& func : copy)
+			func();
 	}
 
 

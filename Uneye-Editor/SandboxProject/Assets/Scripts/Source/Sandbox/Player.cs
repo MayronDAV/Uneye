@@ -23,7 +23,7 @@ namespace Sandbox
 
 		public static Vector3 Position;
 
-		public float f_speed = 5.0f;
+		public float f_speed = 2.5f;
 
 		private Camera m_Camera;
 

@@ -42,6 +42,7 @@ namespace Uneye
 		void SerializeScene(Ref<Scene> scene, const std::filesystem::path& path);
 
 		void OnScenePlay();
+		void OnScenePause();
 		void OnSceneStop();
 
 		void OnSceneSimulate();
@@ -86,6 +87,6 @@ namespace Uneye
 		ContentBrowserPanel m_ContentBrowserPanel;
 
 		// Editor resources
-		Ref<Texture2D> m_IconPlay, m_IconStop, m_IconSimulate;
+		Ref<Texture2D> m_IconPlay, m_IconPause, m_IconStop, m_IconStep, m_IconSimulate;
 	};
 }

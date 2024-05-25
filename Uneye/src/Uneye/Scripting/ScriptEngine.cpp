@@ -1,49 +1,35 @@
 #include "uypch.h"
 #include "ScriptEngine.h"
 #include "ScriptGlue.h"
+#include "Uneye/Core/Buffer.h"
+#include "Uneye/Core/FileSystem.h"
+
+#include "Uneye/Core/Application.h"
 
 #include "mono/jit/jit.h"
 #include "mono/metadata/assembly.h"
 #include "mono/metadata/object.h"
 #include "mono/metadata/tabledefs.h"
+#include "mono/metadata/mono-debug.h"
+#include "mono/metadata/threads.h"
 
 #include "filewatch/FileWatch.h"
 
-#include "Uneye/Core/Application.h"
 
 
 namespace Uneye
 {
 	namespace Utils
 	{
-		static char* ReadBytes(const std::filesystem::path& filepath, uint32_t* outSize)
-		{
-			std::ifstream stream(filepath, std::ios::binary | std::ios::ate);
 
-			UNEYE_CORE_ASSERT(!stream, "");
-
-			std::streampos end = stream.tellg();
-			stream.seekg(0, std::ios::beg);
-			uint32_t size = end - stream.tellg();
-
-			UNEYE_CORE_ASSERT(size == 0, "");
-
-			char* buffer = new char[size];
-			stream.read((char*)buffer, size);
-			stream.close();
-
-			*outSize = size;
-			return buffer;
-		}
-
-		static MonoAssembly* LoadMonoAssembly(const std::filesystem::path& assemblyPath)
+		static MonoAssembly* LoadMonoAssembly(const std::filesystem::path& assemblyPath, bool loadPDB = false)
 		{
 			uint32_t fileSize = 0;
-			char* fileData = ReadBytes(assemblyPath.string(), &fileSize);
+			ScopedBuffer fileData = FileSystem::ReadFileBinary(assemblyPath);
 
 			// NOTE: We can't use this image for anything other than loading the assembly because this image doesn't have a reference to the assembly
 			MonoImageOpenStatus status;
-			MonoImage* image = mono_image_open_from_data_full(fileData, fileSize, 1, &status, 0);
+			MonoImage* image = mono_image_open_from_data_full(fileData.As<char>(), (uint32_t)fileData.Size(), 1, &status, 0);
 
 			if (status != MONO_IMAGE_OK)
 			{
@@ -52,13 +38,24 @@ namespace Uneye
 				return nullptr;
 			}
 
+			if (loadPDB)
+			{
+				std::filesystem::path pdbPath = assemblyPath;
+				pdbPath.replace_extension(".pdb");
+
+				if (std::filesystem::exists(pdbPath))
+				{
+					uint32_t pdbFileSize = 0;
+					ScopedBuffer pdbFileData = FileSystem::ReadFileBinary(pdbPath);
+					mono_debug_open_image_from_memory(image, pdbFileData.As<const mono_byte>(), (int)pdbFileData.Size());
+					UNEYE_CORE_INFO("Loaded PDB {}", pdbPath);
+				}
+			}
+
 			std::string pathStr = assemblyPath.string();
 
 			MonoAssembly* assembly = mono_assembly_load_from_full(image, pathStr.c_str(), &status, 0);
 			mono_image_close(image);
-
-			// Don't forget to free the file data
-			delete[] fileData;
 
 			return assembly;
 		}
@@ -117,6 +114,8 @@ namespace Uneye
 		Scope<filewatch::FileWatch<std::string>> AppAssemblyFileWatcher;
 		bool AssemblyReloadPending = false;
 
+		bool EnableDebugging = true;
+
 		// Runtime
 		Scene* SceneContext = nullptr;
 	};
@@ -147,7 +146,7 @@ namespace Uneye
 
 		MonoObject* instance = s_Data->EntityClass.Instantiate();
 
-		//UNEYE_CORE_ASSERT(true, "");
+		//UNEYE_CORE_ASSERT(true);
 	}
 
 	void ScriptEngine::Shutdown()
@@ -163,11 +162,28 @@ namespace Uneye
 
 		mono_set_assemblies_path("mono/lib");
 
+		if (s_Data->EnableDebugging)
+		{
+			const char* argv[2] = {
+				"--debugger-agent=transport=dt_socket,address=127.0.0.1:2550,server=y,suspend=n,loglevel=3,logfile=MonoDebugger.log",
+				"--soft-breakpoints"
+			};
+
+			mono_jit_parse_options(2, (char**)argv);
+			mono_debug_init(MONO_DEBUG_FORMAT_MONO);
+		}
+
+
 		MonoDomain* rootDomain = mono_jit_init("UneyeJITRuntime");
 
-		UNEYE_CORE_ASSERT(rootDomain == nullptr, "");
+		UNEYE_CORE_ASSERT(rootDomain == nullptr);
 
 		s_Data->RootDomain = rootDomain;
+
+		if (s_Data->EnableDebugging)
+			mono_debug_domain_create(s_Data->RootDomain);
+
+		mono_thread_set_main(mono_thread_current());
 	}
 
 	void ScriptEngine::ShutdownMono()
@@ -209,14 +225,26 @@ namespace Uneye
 			});
 		}
 
-		std::cout << path << " - " << (int)change_type << "\n";
+		switch (change_type)
+		{
+			case filewatch::Event::added:
+				UNEYE_TRACE("path: {0} - type: added", path); break;
+			case filewatch::Event::modified:
+				UNEYE_TRACE("path: {0} - type: modified", path); break;
+			case filewatch::Event::removed:
+				UNEYE_TRACE("path: {0} - type: removed", path); break;
+			case filewatch::Event::renamed_new:
+				UNEYE_TRACE("path: {0} - type: renamed_new", path); break;
+			case filewatch::Event::renamed_old:
+				UNEYE_TRACE("path: {0} - type: renamed_old", path); break;
+		}
 	}
 	
 	void ScriptEngine::LoadAppAssembly(const std::filesystem::path& filepath)
 	{
 		s_Data->AppAssemblyFilepath = filepath;
 
-		s_Data->AppAssembly = Utils::LoadMonoAssembly(filepath);
+		s_Data->AppAssembly = Utils::LoadMonoAssembly(filepath, s_Data->EnableDebugging);
 		//Utils::PrintAssemblyTypes(s_Data->AppAssembly);
 		s_Data->AppAssemblyImage = mono_assembly_get_image(s_Data->AppAssembly);
 
@@ -289,7 +317,7 @@ namespace Uneye
 
 	ScriptFieldMap& ScriptEngine::GetScriptFieldMap(Entity entt)
 	{
-		UNEYE_CORE_ASSERT(!entt, "");
+		UNEYE_CORE_ASSERT(!entt);
 
 		UUID entityID = entt.GetUUID();
 		return s_Data->EntityScriptFields[entityID];

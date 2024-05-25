@@ -78,13 +78,13 @@ namespace Uneye
 		static bool Entity_HasComponent(UUID enttID, MonoReflectionType* componentType)
 		{
 			Scene* scene = ScriptEngine::GetSceneContext();
-			UNEYE_CORE_ASSERT(scene == nullptr, "Scene is null");
+			UNEYE_CORE_ASSERT(scene == nullptr);
 
 			Entity entt = scene->GetEntityByUUID(enttID);
-			UNEYE_CORE_ASSERT(!entt, "Entity is null");
+			UNEYE_CORE_ASSERT(!entt);
 
 			MonoType* managedType = mono_reflection_type_get_type(componentType);
-			UNEYE_CORE_ASSERT(s_EntityHasComponentsFuncs.find(managedType) == s_EntityHasComponentsFuncs.end(), "Unknown managed type");
+			UNEYE_CORE_ASSERT(s_EntityHasComponentsFuncs.find(managedType) == s_EntityHasComponentsFuncs.end());
 
 			return s_EntityHasComponentsFuncs.at(managedType)(entt);
 		}
@@ -94,7 +94,7 @@ namespace Uneye
 			char* name_c_str = mono_string_to_utf8(name);
 
 			Scene* scene = ScriptEngine::GetSceneContext();
-			UNEYE_CORE_ASSERT(scene == nullptr, "Scene is null");
+			UNEYE_CORE_ASSERT(scene == nullptr);
 
 			Entity entt = scene->FindFirstEntityByName(name_c_str);
 			mono_free(name_c_str);
@@ -117,10 +117,10 @@ namespace Uneye
 		static void TransformComponent_GetTranslation(UUID enttID, glm::vec3* outTranslation)
 		{
 			Scene* scene = ScriptEngine::GetSceneContext();
-			UNEYE_CORE_ASSERT(scene == nullptr, "Scene is null");
+			UNEYE_CORE_ASSERT(scene == nullptr);
 
 			Entity entt = scene->GetEntityByUUID(enttID);
-			UNEYE_CORE_ASSERT(!entt, "Entity is null");
+			UNEYE_CORE_ASSERT(!entt);
 
 			*outTranslation = entt.GetComponent<TransformComponent>().Translation;
 		}
@@ -128,10 +128,10 @@ namespace Uneye
 		static void TransformComponent_SetTranslation(UUID enttID,  glm::vec3* translation)
 		{
 			Scene* scene = ScriptEngine::GetSceneContext();
-			UNEYE_CORE_ASSERT(scene == nullptr, "Scene is null");
+			UNEYE_CORE_ASSERT(scene == nullptr);
 
 			Entity entt = scene->GetEntityByUUID(enttID);		
-			UNEYE_CORE_ASSERT(!entt, "Entity is null");
+			UNEYE_CORE_ASSERT(!entt);
 
 			entt.GetComponent<TransformComponent>().Translation = *translation;
 		}
@@ -144,11 +144,11 @@ namespace Uneye
 		{
 			Scene* scene = ScriptEngine::GetSceneContext();
 
-			UNEYE_CORE_ASSERT(scene == nullptr, "Scene is null");
+			UNEYE_CORE_ASSERT(scene == nullptr);
 
 			Entity entt = scene->GetEntityByUUID(enttID);
 
-			UNEYE_CORE_ASSERT(!entt, "Entity is null");
+			UNEYE_CORE_ASSERT(!entt);
 
 			auto& rb2d = entt.GetComponent<Rigidbody2DComponent>();
 			b2Body* body = (b2Body*)rb2d.RuntimeBody;
@@ -159,10 +159,10 @@ namespace Uneye
 		static void Rigidbody2DComponent_SetTransform(UUID enttID, glm::vec2* position, float angle)
 		{
 			Scene* scene = ScriptEngine::GetSceneContext();
-			UNEYE_CORE_ASSERT(scene == nullptr, "Scene is null");
+			UNEYE_CORE_ASSERT(scene == nullptr);
 
 			Entity entt = scene->GetEntityByUUID(enttID);
-			UNEYE_CORE_ASSERT(!entt, "Entity is null");
+			UNEYE_CORE_ASSERT(!entt);
 
 			auto& rb2d = entt.GetComponent<Rigidbody2DComponent>();
 			b2Body* body = (b2Body*)rb2d.RuntimeBody;
@@ -174,11 +174,11 @@ namespace Uneye
 		{
 			Scene* scene = ScriptEngine::GetSceneContext();
 
-			UNEYE_CORE_ASSERT(scene == nullptr, "Scene is null");
+			UNEYE_CORE_ASSERT(scene == nullptr);
 
 			Entity entt = scene->GetEntityByUUID(enttID);
 
-			UNEYE_CORE_ASSERT(!entt, "Entity is null");
+			UNEYE_CORE_ASSERT(!entt);
 
 			auto& rb2d = entt.GetComponent<Rigidbody2DComponent>();
 			b2Body* body = (b2Body*)rb2d.RuntimeBody;
@@ -192,11 +192,11 @@ namespace Uneye
 		{
 			Scene* scene = ScriptEngine::GetSceneContext();
 
-			UNEYE_CORE_ASSERT(scene == nullptr, "Scene is null");
+			UNEYE_CORE_ASSERT(scene == nullptr);
 
 			Entity entt = scene->GetEntityByUUID(enttID);
 
-			UNEYE_CORE_ASSERT(!entt, "Entity is null");
+			UNEYE_CORE_ASSERT(!entt);
 
 			auto& rb2d = entt.GetComponent<Rigidbody2DComponent>();
 			b2Body* body = (b2Body*)rb2d.RuntimeBody;

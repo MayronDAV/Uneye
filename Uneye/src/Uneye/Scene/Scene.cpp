@@ -360,17 +360,20 @@ namespace Uneye
 	{
 		UNEYE_PROFILE_FUNCTION();
 
-		m_ViewportWidth = width;
-		m_ViewportHeight = height;
-
-		// Resize non-FixedAspectRatio cameras
-		auto view = m_Registry.view<CameraComponent>();
-		for (auto entity : view)
+		if (width > 0 && height > 0)
 		{
-			auto& cameraComponent = view.get<CameraComponent>(entity);
-			if (!cameraComponent.FixedAspectRatio)
+			m_ViewportWidth = width;
+			m_ViewportHeight = height;
+
+			// Resize non-FixedAspectRatio cameras
+			auto view = m_Registry.view<CameraComponent>();
+			for (auto entity : view)
 			{
-				cameraComponent.Camera.SetViewportSize(width, height);
+				auto& cameraComponent = view.get<CameraComponent>(entity);
+				if (!cameraComponent.FixedAspectRatio)
+				{
+					cameraComponent.Camera.SetViewportSize(width, height);
+				}
 			}
 		}
 	}

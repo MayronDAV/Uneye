@@ -156,7 +156,9 @@
     <ClInclude Include="src\Uneye.h" />
     <ClInclude Include="src\Uneye\Core\Application.h" />
     <ClInclude Include="src\Uneye\Core\Base.h" />
+    <ClInclude Include="src\Uneye\Core\Buffer.h" />
     <ClInclude Include="src\Uneye\Core\EntryPoint.h" />
+    <ClInclude Include="src\Uneye\Core\Filesystem.h" />
     <ClInclude Include="src\Uneye\Core\FontManager.h" />
     <ClInclude Include="src\Uneye\Core\Input.h" />
     <ClInclude Include="src\Uneye\Core\KeyCodes.h" />
@@ -175,6 +177,8 @@
     <ClInclude Include="src\Uneye\Events\MouseEvent.h" />
     <ClInclude Include="src\Uneye\ImGui\ImGuiLayer.h" />
     <ClInclude Include="src\Uneye\Math\Math.h" />
+    <ClInclude Include="src\Uneye\Project\Project.h" />
+    <ClInclude Include="src\Uneye\Project\ProjectSerializer.h" />
     <ClInclude Include="src\Uneye\Renderer\Buffer.h" />
     <ClInclude Include="src\Uneye\Renderer\Camera.h" />
     <ClInclude Include="src\Uneye\Renderer\EditorCamera.h" />
@@ -607,6 +611,7 @@
     <ClCompile Include="src\Platform\Windows\WindowsPlatformUtils.cpp" />
     <ClCompile Include="src\Platform\Windows\WindowsWindow.cpp" />
     <ClCompile Include="src\Uneye\Core\Application.cpp" />
+    <ClCompile Include="src\Uneye\Core\Filesystem.cpp" />
     <ClCompile Include="src\Uneye\Core\FontManager.cpp" />
     <ClCompile Include="src\Uneye\Core\Layer.cpp" />
     <ClCompile Include="src\Uneye\Core\LayerStack.cpp" />
@@ -616,6 +621,8 @@
     <ClCompile Include="src\Uneye\ImGui\ImGuiBuild.cpp" />
     <ClCompile Include="src\Uneye\ImGui\ImGuiLayer.cpp" />
     <ClCompile Include="src\Uneye\Math\Math.cpp" />
+    <ClCompile Include="src\Uneye\Project\Project.cpp" />
+    <ClCompile Include="src\Uneye\Project\ProjectSerializer.cpp" />
     <ClCompile Include="src\Uneye\Renderer\Buffer.cpp" />
     <ClCompile Include="src\Uneye\Renderer\EditorCamera.cpp" />
     <ClCompile Include="src\Uneye\Renderer\Framebuffer.cpp" />

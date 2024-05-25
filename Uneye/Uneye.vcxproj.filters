@@ -1426,6 +1426,10 @@
       <Filter>vendor\stb\include</Filter>
     </ClInclude>
     <ClInclude Include="src\Uneye\Core\TraitHelpers.h" />
+    <ClInclude Include="src\Uneye\Project\Project.h" />
+    <ClInclude Include="src\Uneye\Core\Buffer.h" />
+    <ClInclude Include="src\Uneye\Core\Filesystem.h" />
+    <ClInclude Include="src\Uneye\Project\ProjectSerializer.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Platform\OpenGL\OpenGLBuffer.cpp">
@@ -1573,5 +1577,8 @@
       <Filter>vendor\stb\src</Filter>
     </ClCompile>
     <ClCompile Include="src\Uneye\Core\TraitHelpers.cpp" />
+    <ClCompile Include="src\Uneye\Core\Filesystem.cpp" />
+    <ClCompile Include="src\Uneye\Project\Project.cpp" />
+    <ClCompile Include="src\Uneye\Project\ProjectSerializer.cpp" />
   </ItemGroup>
 </Project>

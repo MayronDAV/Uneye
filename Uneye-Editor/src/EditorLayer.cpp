@@ -14,8 +14,6 @@
 
 namespace Uneye
 {
-	extern const std::filesystem::path g_AssetPath;
-
 	void EditorLayer::OnAttach()
 	{
 		UNEYE_PROFILE_FUNCTION();
@@ -43,12 +41,24 @@ namespace Uneye
 		m_EditorScene = CreateRef<Scene>();
 		m_ActiveScene = m_EditorScene;
 
-		auto commandLineArgs = Application::Get().GetSpecification().CommandLineArgs;
-		if (commandLineArgs.Count > 1)
+		// Move this to another place
+		bool useCommandLineArgs = false;
+		if (useCommandLineArgs)
 		{
-			auto sceneFilePath = commandLineArgs[1];
-			OpenScene(sceneFilePath);
+			auto commandLineArgs = Application::Get().GetSpecification().CommandLineArgs;
+			if (commandLineArgs.Count > 1)
+			{
+				auto projectFilePath = commandLineArgs[1];
+				OpenProject(projectFilePath);
+			}
+			else
+			{
+				// TODO: create a way to the user select or create a new project
+				NewProject();
+			}
 		}
+		else
+			OpenProject("SandboxProject/Sandbox.uyproj");
 
 		m_EditorCamera = EditorCamera(45.0f, 1.677, 0.1f, 1000.0f);
 
@@ -228,7 +238,7 @@ namespace Uneye
 		}
 
 		m_SceneHierarchyPanel.OnImGuiRender();
-		m_ContentBrowserPanel.OnImGuiRender();
+		m_ContentBrowserPanel->OnImGuiRender();
 
 		ImGui::Begin("Settings");
 		ImGui::Checkbox("Show physics colliders", &m_ShowPhysicsColliders);
@@ -257,7 +267,7 @@ namespace Uneye
 			if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("CONTENT_BROWSER_ITEM"))
 			{
 				const wchar_t* path = (const wchar_t*)payload->Data;
-				OpenScene(std::filesystem::path(g_AssetPath) / path);
+				OpenScene(Project::GetAssetFileSystemPath(path));
 			}
 			ImGui::EndDragDropTarget();
 		}
@@ -354,7 +364,7 @@ namespace Uneye
 		if (hasPlayButton)
 		{
 			Ref<Texture2D> icon = (m_SceneState == SceneState::Edit || m_SceneState == SceneState::Simulate) ? m_IconPlay : m_IconStop;
-			if (ImGui::ImageButton((ImTextureID)icon->GetRendererID(), ImVec2(size, size), ImVec2(0, 0), ImVec2(1, 1), 0, ImVec4(0.0f, 0.0f, 0.0f, 0.0f), tintColor) && toolbarEnabled)
+			if (ImGui::ImageButton((ImTextureID)(uint64_t)icon->GetRendererID(), ImVec2(size, size), ImVec2(0, 0), ImVec2(1, 1), 0, ImVec4(0.0f, 0.0f, 0.0f, 0.0f), tintColor) && toolbarEnabled)
 			{
 				if (m_SceneState == SceneState::Edit || m_SceneState == SceneState::Simulate)
 					OnScenePlay();
@@ -369,7 +379,7 @@ namespace Uneye
 				ImGui::SameLine();
 
 			Ref<Texture2D> icon = (m_SceneState == SceneState::Edit || m_SceneState == SceneState::Play) ? m_IconSimulate : m_IconStop;
-			if (ImGui::ImageButton((ImTextureID)icon->GetRendererID(), ImVec2(size, size), ImVec2(0, 0), ImVec2(1, 1), 0, ImVec4(0.0f, 0.0f, 0.0f, 0.0f), tintColor) && toolbarEnabled)
+			if (ImGui::ImageButton((ImTextureID)(uint64_t)icon->GetRendererID(), ImVec2(size, size), ImVec2(0, 0), ImVec2(1, 1), 0, ImVec4(0.0f, 0.0f, 0.0f, 0.0f), tintColor) && toolbarEnabled)
 			{
 				if (m_SceneState == SceneState::Edit || m_SceneState == SceneState::Play)
 					OnSceneSimulate();
@@ -383,7 +393,7 @@ namespace Uneye
 			ImGui::SameLine();
 			{
 				Ref<Texture2D> icon = m_IconPause;
-				if (ImGui::ImageButton((ImTextureID)icon->GetRendererID(), ImVec2(size, size), ImVec2(0, 0), ImVec2(1, 1), 0, ImVec4(0.0f, 0.0f, 0.0f, 0.0f), tintColor) && toolbarEnabled)
+				if (ImGui::ImageButton((ImTextureID)(uint64_t)icon->GetRendererID(), ImVec2(size, size), ImVec2(0, 0), ImVec2(1, 1), 0, ImVec4(0.0f, 0.0f, 0.0f, 0.0f), tintColor) && toolbarEnabled)
 				{
 					m_ActiveScene->SetPaused(!isPaused);
 				}
@@ -396,7 +406,7 @@ namespace Uneye
 				{
 					Ref<Texture2D> icon = m_IconStep;
 					bool isPaused = m_ActiveScene->IsPaused();
-					if (ImGui::ImageButton((ImTextureID)icon->GetRendererID(), ImVec2(size, size), ImVec2(0, 0), ImVec2(1, 1), 0, ImVec4(0.0f, 0.0f, 0.0f, 0.0f), tintColor) && toolbarEnabled)
+					if (ImGui::ImageButton((ImTextureID)(uint64_t)icon->GetRendererID(), ImVec2(size, size), ImVec2(0, 0), ImVec2(1, 1), 0, ImVec4(0.0f, 0.0f, 0.0f, 0.0f), tintColor) && toolbarEnabled)
 					{
 						// maybe make it adjustable
 						m_ActiveScene->Step(60);
@@ -495,6 +505,8 @@ namespace Uneye
 				break;
 			}
 		}
+
+		return false;
 	}
 
 	bool EditorLayer::OnMouseButtonPressed(MouseButtonPressedEvent& e)
@@ -571,6 +583,27 @@ namespace Uneye
 		Renderer2D::EndScene();
 	}
 
+	void EditorLayer::NewProject()
+	{
+		Project::New();
+	}
+
+	void EditorLayer::OpenProject(const std::filesystem::path& path)
+	{
+		if (Project::Load(path))
+		{
+			auto startScenePath = Project::GetAssetFileSystemPath(Project::GetStartScene());
+			OpenScene(startScenePath);
+			m_ContentBrowserPanel = CreateScope<ContentBrowserPanel>();
+		}
+	}
+
+	void EditorLayer::SaveProject()
+	{
+		//Project::SaveActive();
+	}
+
+
 	void EditorLayer::NewScene()
 	{
 		m_ActiveScene = CreateRef<Scene>();
@@ -582,7 +615,7 @@ namespace Uneye
 
 	void EditorLayer::OpenScene()
 	{
-		std::string filepath = FileDialogs::OpenFile("Uneye Scene (*.uneye)\0*.uneye\0");
+		std::string filepath = FileDialogs::OpenFile("Uneye Scene (*.uyscene)\0*.uyscene\0");
 		if (!filepath.empty())
 		{
 			OpenScene(filepath);
@@ -594,7 +627,7 @@ namespace Uneye
 		if (m_SceneState != SceneState::Edit)
 			OnSceneStop();
 
-		if (path.extension() == ".uneye")
+		if (path.extension() == ".uyscene")
 		{
 			Ref<Scene> newScene = CreateRef<Scene>();
 			SceneSerializer serializer(newScene);
@@ -625,7 +658,7 @@ namespace Uneye
 
 	void EditorLayer::SaveSceneAs()
 	{
-		std::string filepath = FileDialogs::SaveFile("Uneye Scene (*.uneye)\0*.uneye\0");
+		std::string filepath = FileDialogs::SaveFile("Uneye Scene (*.uyscene)\0*.uyscene\0");
 		if (!filepath.empty())
 		{
 			SerializeScene(m_ActiveScene, filepath);

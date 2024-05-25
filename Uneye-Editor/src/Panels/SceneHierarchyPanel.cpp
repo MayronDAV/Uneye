@@ -7,6 +7,8 @@
 
 #include "Uneye/Scripting/ScriptEngine.h"
 
+#include "Uneye/Project/Project.h"
+
 #include <imgui/imgui.h>
 #include <imgui/imgui_internal.h>
 
@@ -20,9 +22,6 @@
 
 namespace Uneye
 {
-	extern const std::filesystem::path g_AssetPath;
-
-
 	SceneHierarchyPanel::SceneHierarchyPanel(const Ref<Scene>& context)
 	{
 		SetContext(context);
@@ -432,7 +431,7 @@ namespace Uneye
 								if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("CONTENT_BROWSER_ITEM"))
 								{
 									const wchar_t* path = (const wchar_t*)payload->Data;
-									std::filesystem::path texturePath = std::filesystem::path(g_AssetPath) / path;
+									std::filesystem::path texturePath = Project::GetAssetFileSystemPath(path);
 									mc.TexturePath = texturePath.string();
 									filename = std::filesystem::path(mc.TexturePath).filename().string();
 									mc.Texture = Texture2D::Create(texturePath.string());

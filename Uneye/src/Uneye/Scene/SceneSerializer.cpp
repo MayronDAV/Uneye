@@ -5,6 +5,7 @@
 #include "Uneye/Scene/Components.h"
 #include "Uneye/Scripting/ScriptEngine.h"
 #include "Uneye/Core/UUID.h"
+#include "Uneye/Project/Project.h"
 
 #include <fstream>
 
@@ -389,7 +390,7 @@ namespace Uneye
 		}
 		catch (YAML::ParserException e)
 		{
-			UNEYE_CORE_ERROR("Failed to load .uneye file '{0}'\n     {1}", filepath, e.what());
+			UNEYE_CORE_ERROR("Failed to load .uyscene file '{0}'\n     {1}", filepath, e.what());
 			return false;
 		}
 
@@ -455,7 +456,7 @@ namespace Uneye
 					if (scriptFields)
 					{
 						Ref<ScriptClass> entityClass = ScriptEngine::GetEntityClass(sc.Name);
-						UNEYE_CORE_ASSERT(!entityClass, "");
+						UNEYE_CORE_ASSERT(!entityClass);
 						const auto& fields = entityClass->GetFields();
 						auto& entityFields = ScriptEngine::GetScriptFieldMap(deserializedEntity);
 
@@ -468,7 +469,7 @@ namespace Uneye
 							ScriptFieldInstance& fieldInstance = entityFields[name];
 
 							// TODO: turn this assert into log warning
-							//UNEYE_CORE_ASSERT(fields.find(name) == fields.end(), "");
+							//UNEYE_CORE_ASSERT(fields.find(name) == fields.end());
 
 							if (fields.find(name) == fields.end())
 								continue;
@@ -511,6 +512,11 @@ namespace Uneye
 					}
 					else
 					{
+						//mc.TexturePath = Project::GetAssetFileSystemPath(mc.TexturePath).string();
+						//auto assetPath = Project::GetProjectDirectory() / Project::GetAssetDirectory();
+						//mc.TexturePath = std::filesystem::relative(mc.TexturePath, assetPath).string();
+						//mc.TexturePath = Project::GetAssetFileSystemPath(mc.TexturePath).string();
+
 						mc.Texture = Texture2D::Create(mc.TexturePath);
 					}
 

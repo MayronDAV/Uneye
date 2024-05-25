@@ -255,7 +255,7 @@ namespace Uneye
 
 	int OpenGLFramebuffer::ReadPixel(uint32_t attachmentIndex, int x, int y)
 	{
-		UNEYE_CORE_ASSERT(attachmentIndex >= m_ColorAttachments.size(), "");
+		UNEYE_CORE_ASSERT(attachmentIndex >= m_ColorAttachments.size());
 		
 		glReadBuffer(GL_COLOR_ATTACHMENT0 + attachmentIndex);
 
@@ -266,7 +266,7 @@ namespace Uneye
 
 	void OpenGLFramebuffer::ClearAttachment(uint32_t attachmentIndex, int value)
 	{
-		UNEYE_CORE_ASSERT(attachmentIndex >= m_ColorAttachments.size(), "");
+		UNEYE_CORE_ASSERT(attachmentIndex >= m_ColorAttachments.size());
 
 		auto& spec = m_ColorAttachmentSpecs[attachmentIndex];
 		glClearTexImage(m_ColorAttachments[attachmentIndex], 0,

@@ -24,6 +24,8 @@ namespace Uneye
 		spec.Name = "Uneye-Editor";
 		spec.CommandLineArgs = args;
 
+		//Project::New()->SaveActive("SandboxProject/Sandbox.uyproj");
+
 		return new UneyeEditor(spec);
 	}
 }

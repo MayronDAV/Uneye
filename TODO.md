@@ -1,0 +1,2 @@
+## Bugs:
+- [ ] fix generate mipmap

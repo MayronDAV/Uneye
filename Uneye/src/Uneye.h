@@ -13,6 +13,8 @@
 
 #include "Uneye/ImGui/ImGuiLayer.h"
 
+#include "Uneye/Project/Project.h"
+
 // --- Scene ------------------------
 #include "Uneye/Scene/Scene.h"
 #include "Uneye/Scene/Entity.h"

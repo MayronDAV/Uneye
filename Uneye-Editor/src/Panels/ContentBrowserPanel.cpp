@@ -2,10 +2,14 @@
 #include "ContentBrowserPanel.h"
 
 #include "UI/UI.h"
+#include "Uneye/Project/Project.h"
+
+#include "Uneye/Core/Filesystem.h"
 
 #include <imgui/imgui.h>
 #include <stack>
 #include <imgui/imgui_internal.h>
+#include <regex>
 
 
 
@@ -27,15 +31,11 @@ namespace Uneye
 
 			return textures[path];
 		}
+		
 	}
 
-
-	// TODO: change this for project directory
-	extern const std::filesystem::path g_AssetPath = "assets";
-
-
 	ContentBrowserPanel::ContentBrowserPanel()
-		:m_CurrentDirectory(g_AssetPath)
+		:m_BaseDirectory(Project::GetAssetDirectory()), m_CurrentDirectory(m_BaseDirectory)
 	{
 		m_DirectoryIcon = Texture2D::Create("Resources/Icons/ContentBrowser/DirectoryIcon.png");
 		m_FileIcon = Texture2D::Create("Resources/Icons/ContentBrowser/FileIcon.png");
@@ -49,9 +49,8 @@ namespace Uneye
 			{
 				const auto& entryPath = entry.path();
 
-				if (fs::is_directory(entry.status())) 
+				if (fs::is_directory(entry.status()))
 				{
-
 					if (ImGui::TreeNode(entryPath.filename().string().c_str()))
 					{
 						ShowDirectoryTree(entryPath);
@@ -61,7 +60,6 @@ namespace Uneye
 				}
 				else
 				{
-
 					ImGui::Text("%s", entryPath.filename().string().c_str());
 				}
 			}
@@ -76,8 +74,8 @@ namespace Uneye
 			s_FuturePaths.pop();
 	}
 
-	static void SearchFiles(const std::filesystem::path& directory, const std::string& query, std::vector<std::filesystem::path>& results) {
-		for (const auto& entry : std::filesystem::recursive_directory_iterator(directory)) {
+	static void SearchFiles(const fs::path& directory, const std::string& query, std::vector<fs::path>& results) {
+		for (const auto& entry : fs::recursive_directory_iterator(directory)) {
 			if (entry.is_regular_file()) {
 				if (entry.path().filename().string().find(query) != std::string::npos) {
 					results.push_back(entry.path());
@@ -86,7 +84,7 @@ namespace Uneye
 		}
 	}
 
-	static std::vector<std::filesystem::path> searchResults;
+	static std::vector<fs::path> searchResults;
 	static char searchText[256] = "";
 
 	void ContentBrowserPanel::OnImGuiRender()
@@ -106,7 +104,7 @@ namespace Uneye
 				ImGui::PushFont(FontManager::GetFont("Arrows"));
 				if (ImGui::Button("b", {0, 0}))
 				{
-					if (m_CurrentDirectory != std::filesystem::path(g_AssetPath))
+					if (m_CurrentDirectory != fs::path(m_BaseDirectory))
 					{
 						s_FuturePaths.push(m_CurrentDirectory);
 						m_CurrentDirectory = m_CurrentDirectory.parent_path();
@@ -152,14 +150,14 @@ namespace Uneye
 					searchResults.clear();
 					if (strlen(searchText) > 0)
 					{
-						SearchFiles(g_AssetPath, searchText, searchResults);
+						SearchFiles(m_BaseDirectory, searchText, searchResults);
 					}
 				}
 
 				ImGui::SameLine();
 
-				std::vector<std::filesystem::path> pathSegments;
-				std::filesystem::path pathAccumulator;
+				std::vector<fs::path> pathSegments;
+				fs::path pathAccumulator;
 
 				for (const auto& part : m_CurrentDirectory)
 				{
@@ -200,7 +198,7 @@ namespace Uneye
 				// Left panel (Directory Tree)
 				ImGui::BeginChild("left_panel", ImVec2(leftPanelWidth, 0), true);
 				{
-					ShowDirectoryTree(g_AssetPath);
+					ShowDirectoryTree(m_BaseDirectory);
 				}
 				ImGui::EndChild();
 
@@ -236,11 +234,11 @@ namespace Uneye
 
 					ImGui::Columns(columnCount, 0, false);
 
-					for (auto& directoryEntry : std::filesystem::directory_iterator(m_CurrentDirectory))
+					for (auto& directoryEntry : fs::directory_iterator(m_CurrentDirectory))
 					{
 						const auto& path = directoryEntry.path();
 						std::string filenameString = path.filename().string();
-
+						
 						Ref<Texture2D> icon = nullptr;
 						if (directoryEntry.is_directory())
 							icon = m_DirectoryIcon;
@@ -261,7 +259,7 @@ namespace Uneye
 
 						if (ImGui::BeginDragDropSource())
 						{
-							auto relativePath = std::filesystem::relative(path, g_AssetPath);
+							auto relativePath = fs::relative(path, m_BaseDirectory);
 							const wchar_t* itemPath = relativePath.c_str();
 							ImGui::SetDragDropPayload("CONTENT_BROWSER_ITEM", itemPath, (wcslen(itemPath) + 1) * sizeof(wchar_t));
 							ImGui::EndDragDropSource();
@@ -290,9 +288,10 @@ namespace Uneye
 					// Display search results
 					for (const auto& result : searchResults)
 					{
+
 						if (ImGui::Selectable(result.string().c_str()))
 						{
-							if (std::filesystem::is_directory(result))
+							if (fs::is_directory(result))
 							{
 								clearStack();
 								m_CurrentDirectory = result;
@@ -306,7 +305,7 @@ namespace Uneye
 
 						if (ImGui::BeginDragDropSource())
 						{
-							auto relativePath = std::filesystem::relative(result, g_AssetPath);
+							auto relativePath = fs::relative(result, m_BaseDirectory);
 							const wchar_t* itemPath = relativePath.c_str();
 							ImGui::SetDragDropPayload("CONTENT_BROWSER_ITEM", itemPath, (wcslen(itemPath) + 1) * sizeof(wchar_t));
 							ImGui::EndDragDropSource();

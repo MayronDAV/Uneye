@@ -39,7 +39,7 @@ namespace Uneye
 				case GL_VERTEX_SHADER:   return shaderc_glsl_vertex_shader;
 				case GL_FRAGMENT_SHADER: return shaderc_glsl_fragment_shader;
 			}
-			UNEYE_CORE_ASSERT(true, "");
+			UNEYE_CORE_ASSERT(true);
 			return (shaderc_shader_kind)0;
 		}
 
@@ -50,7 +50,7 @@ namespace Uneye
 				case GL_VERTEX_SHADER:   return "GL_VERTEX_SHADER";
 				case GL_FRAGMENT_SHADER: return "GL_FRAGMENT_SHADER";
 			}
-			UNEYE_CORE_ASSERT(true, "");
+			UNEYE_CORE_ASSERT(true);
 			return nullptr;
 		}
 
@@ -79,7 +79,7 @@ namespace Uneye
 				case GL_VERTEX_SHADER:    return ".cached_opengl.vert";
 				case GL_FRAGMENT_SHADER:  return ".cached_opengl.frag";
 			}
-			UNEYE_CORE_ASSERT(true, "");
+			UNEYE_CORE_ASSERT(true);
 			return "";
 		}
 
@@ -90,7 +90,7 @@ namespace Uneye
 				case GL_VERTEX_SHADER:    return ".cached_vulkan.vert";
 				case GL_FRAGMENT_SHADER:  return ".cached_vulkan.frag";
 			}
-			UNEYE_CORE_ASSERT(true, "");
+			UNEYE_CORE_ASSERT(true);
 			return "";
 		}
 
@@ -227,7 +227,7 @@ namespace Uneye
 				if (module.GetCompilationStatus() != shaderc_compilation_status_success)
 				{
 					UNEYE_CORE_ERROR(module.GetErrorMessage());
-					UNEYE_CORE_ASSERT(true, "");
+					UNEYE_CORE_ASSERT(true);
 				}
 
 				shaderData[stage] = std::vector<uint32_t>(module.cbegin(), module.cend());
@@ -288,7 +288,7 @@ namespace Uneye
 				if (module.GetCompilationStatus() != shaderc_compilation_status_success)
 				{
 					UNEYE_CORE_ERROR(module.GetErrorMessage());
-					UNEYE_CORE_ASSERT(true, "");
+					UNEYE_CORE_ASSERT(true);
 				}
 
 				shaderData[stage] = std::vector<uint32_t>(module.cbegin(), module.cend());

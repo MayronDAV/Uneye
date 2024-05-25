@@ -25,7 +25,7 @@ namespace Uneye {
 
 		const char* operator[](int index) const
 		{
-			UNEYE_CORE_ASSERT(index < Count, "");
+			UNEYE_CORE_ASSERT(index >= Count);
 			return Args[index];
 		}
 	};

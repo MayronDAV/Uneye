@@ -6,6 +6,8 @@
 
 #include "Uneye/Core/Application.h"
 
+#include "Uneye/Project/Project.h"
+
 #include "mono/jit/jit.h"
 #include "mono/metadata/assembly.h"
 #include "mono/metadata/object.h"
@@ -114,7 +116,7 @@ namespace Uneye
 		Scope<filewatch::FileWatch<std::string>> AppAssemblyFileWatcher;
 		bool AssemblyReloadPending = false;
 
-		bool EnableDebugging = true;
+		bool EnableDebugging = false;
 
 		// Runtime
 		Scene* SceneContext = nullptr;
@@ -133,8 +135,19 @@ namespace Uneye
 		InitMono();
 		ScriptGlue::RegisterFunction();
 
-		LoadAssembly("Resources/Scripts/Uneye-ScriptCore.dll");
-		LoadAppAssembly("SandboxProject/Assets/Scripts/Binaries/Sandbox.dll");
+		bool status = LoadAssembly("Resources/Scripts/Uneye-ScriptCore.dll");
+		if (!status)
+		{
+			UNEYE_CORE_ERROR("[ScriptEngine] Could not load Uneye-ScriptCore assembly.");
+			return;
+		}
+		auto scriptModulePath = Project::GetAssetDirectory() / Project::GetActive()->GetConfig().ScriptModulePath;
+		status = LoadAppAssembly(scriptModulePath);
+		if (!status)
+		{
+			UNEYE_CORE_ERROR("[ScriptEngine] Could not load app assembly.");
+			return;
+		}
 
 		LoadAssemblyClasses();
 
@@ -199,17 +212,22 @@ namespace Uneye
 	}
 
 
-	void ScriptEngine::LoadAssembly(const std::filesystem::path& filepath)
+	bool ScriptEngine::LoadAssembly(const std::filesystem::path& filepath)
 	{
 		s_Data->CoreAssemblyFilepath = filepath;
 
 		s_Data->AppDomain = mono_domain_create_appdomain("UneyeScriptRuntime", nullptr);
 		mono_domain_set(s_Data->AppDomain, true);
 
-		// Move this maybe
 		s_Data->CoreAssembly = Utils::LoadMonoAssembly(filepath);
-		//Utils::PrintAssemblyTypes(s_Data->CoreAssembly);
+		if (s_Data->CoreAssembly == nullptr)
+			return false;
+
 		s_Data->CoreAssemblyImage = mono_assembly_get_image(s_Data->CoreAssembly);
+		if (s_Data->CoreAssemblyImage == nullptr)
+			return false;
+
+		return true;
 	}
 
 	static void OnAppAssemblyFileSystemEvent(const std::string& path, const filewatch::Event change_type)
@@ -240,13 +258,17 @@ namespace Uneye
 		}
 	}
 	
-	void ScriptEngine::LoadAppAssembly(const std::filesystem::path& filepath)
+	bool ScriptEngine::LoadAppAssembly(const std::filesystem::path& filepath)
 	{
 		s_Data->AppAssemblyFilepath = filepath;
 
 		s_Data->AppAssembly = Utils::LoadMonoAssembly(filepath, s_Data->EnableDebugging);
-		//Utils::PrintAssemblyTypes(s_Data->AppAssembly);
+		if (s_Data->AppAssembly == nullptr)
+			return false;
+
 		s_Data->AppAssemblyImage = mono_assembly_get_image(s_Data->AppAssembly);
+		if (s_Data->AppAssemblyImage == nullptr)
+			return false;
 
 		s_Data->AppAssemblyFileWatcher = CreateScope<filewatch::FileWatch<std::string>>(
 			filepath.string(),
@@ -254,6 +276,8 @@ namespace Uneye
 		);
 
 		s_Data->AssemblyReloadPending = false;
+
+		return true;
 	}
 
 	void ScriptEngine::ReloadAssembly()

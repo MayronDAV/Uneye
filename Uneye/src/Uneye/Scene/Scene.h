@@ -44,7 +44,7 @@ namespace Uneye
 			void OnUpdateSimulation(Timestep ts, EditorCamera& camera);
 			void OnViewportResize(uint32_t width, uint32_t height);
 
-			void DuplicateEntity(Entity entt);
+			Entity DuplicateEntity(Entity entt);
 
 			Entity FindFirstEntityByName(std::string_view name);
 			Entity GetEntityByUUID(UUID uuid);

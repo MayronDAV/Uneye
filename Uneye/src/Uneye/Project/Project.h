@@ -54,10 +54,11 @@ namespace Uneye
 				return s_ActiveProject->m_ProjectDirectory;
 			}
 
-			// Maybe change this to return a list of all asset directories provided.
+			// TODO: Move to Asset manager
 			static std::filesystem::path GetAssetFileSystemPath(const std::filesystem::path& path)
 			{
 				UNEYE_CORE_ASSERT(!s_ActiveProject);
+
 				return GetAssetDirectory() / path;
 			}
 

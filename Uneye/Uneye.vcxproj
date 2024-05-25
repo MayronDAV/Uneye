@@ -177,6 +177,7 @@
     <ClInclude Include="src\Uneye\Events\MouseEvent.h" />
     <ClInclude Include="src\Uneye\ImGui\ImGuiLayer.h" />
     <ClInclude Include="src\Uneye\Math\Math.h" />
+    <ClInclude Include="src\Uneye\Physics\Physics2D.h" />
     <ClInclude Include="src\Uneye\Project\Project.h" />
     <ClInclude Include="src\Uneye\Project\ProjectSerializer.h" />
     <ClInclude Include="src\Uneye\Renderer\Buffer.h" />

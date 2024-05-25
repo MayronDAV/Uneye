@@ -1,5 +1,7 @@
 #pragma once
 
+#include "Uneye/Core/Log.h"
+
 #include <memory>
 #include <filesystem>
 

@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Uneye
 {
@@ -28,6 +24,11 @@ namespace Uneye
 		{
 			X = vec2.X;
 			Y = vec2.Y;
+		}
+
+		public float Length()
+		{
+			return (float)Math.Sqrt(X * X + Y * Y);
 		}
 
 		public static Vector2 operator +(Vector2 left, Vector2 right)

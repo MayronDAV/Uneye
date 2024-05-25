@@ -23,7 +23,7 @@ namespace Uneye
 
 		static std::unordered_map<std::string, Ref<Texture2D>> textures;
 
-		Ref<Texture2D> CreateTexture(const std::string& path)
+		static Ref<Texture2D> CreateTexture(const std::string& path)
 		{
 			auto it = textures.find(path);
 			if (it == textures.end())
@@ -32,6 +32,15 @@ namespace Uneye
 			return textures[path];
 		}
 		
+		static void SearchFiles(const fs::path& directory, const std::string& query, std::vector<fs::path>& results) {
+			for (const auto& entry : fs::recursive_directory_iterator(directory)) {
+				if (entry.is_regular_file()) {
+					if (entry.path().filename().string().find(query) != std::string::npos) {
+						results.push_back(entry.path());
+					}
+				}
+			}
+		}
 	}
 
 	ContentBrowserPanel::ContentBrowserPanel()
@@ -72,16 +81,6 @@ namespace Uneye
 	{
 		while (!s_FuturePaths.empty())
 			s_FuturePaths.pop();
-	}
-
-	static void SearchFiles(const fs::path& directory, const std::string& query, std::vector<fs::path>& results) {
-		for (const auto& entry : fs::recursive_directory_iterator(directory)) {
-			if (entry.is_regular_file()) {
-				if (entry.path().filename().string().find(query) != std::string::npos) {
-					results.push_back(entry.path());
-				}
-			}
-		}
 	}
 
 	static std::vector<fs::path> searchResults;
@@ -150,7 +149,7 @@ namespace Uneye
 					searchResults.clear();
 					if (strlen(searchText) > 0)
 					{
-						SearchFiles(m_BaseDirectory, searchText, searchResults);
+						Utils::SearchFiles(m_BaseDirectory, searchText, searchResults);
 					}
 				}
 
@@ -159,10 +158,14 @@ namespace Uneye
 				std::vector<fs::path> pathSegments;
 				fs::path pathAccumulator;
 
-				for (const auto& part : m_CurrentDirectory)
+				auto currentRelPath = Project::GetAssetFileSystemPath(fs::relative(m_CurrentDirectory, m_BaseDirectory));
+				for (const auto& part : currentRelPath)
 				{
-					pathAccumulator /= part;
-					pathSegments.push_back(pathAccumulator);
+					if (part != ".")
+					{
+						pathAccumulator /= part;
+						pathSegments.push_back(pathAccumulator);
+					}
 				}
 
 				bool first = true;
@@ -175,10 +178,19 @@ namespace Uneye
 						ImGui::SameLine();
 					}
 
+					auto segmentSTR = fs::relative(segment, m_BaseDirectory);
+					auto assetRelPath = Project::GetAssetFileSystemPath(segmentSTR);
+					auto filenameStr = assetRelPath.filename().string();
+					//UNEYE_CORE_TRACE("path: {}", filenameStr);
+					if (filenameStr == "..")
+						continue;
+					else if (filenameStr == ".")
+						filenameStr = Project::GetAssetDirectory().filename().string();
+
 					ImGui::PushStyleColor(ImGuiCol_Button, { 0, 0, 0, 0 });
 					ImGui::PushStyleColor(ImGuiCol_ButtonHovered, { 0.3f, 0.3f, 0.35f, 0.5f });
 					ImGui::PushStyleColor(ImGuiCol_ButtonActive, { 0.3f, 0.3f, 0.35f, 0.5f });
-					if (ImGui::Button(segment.filename().string().c_str()))
+					if (ImGui::Button((filenameStr.empty()) ? "##Current" : filenameStr.c_str()))
 					{
 						clearStack();
 						m_CurrentDirectory = segment;

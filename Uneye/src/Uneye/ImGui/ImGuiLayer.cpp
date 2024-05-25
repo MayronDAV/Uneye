@@ -236,6 +236,11 @@ namespace Uneye {
 		return m_BgColor;
 	}
 
+	uint32_t ImGuiLayer::GetActiveWidgetID() const
+	{
+		return GImGui->ActiveId;
+	}
+
 	void ImGuiLayer::SetPurpleThemeColors()
 	{
 		UNEYE_PROFILE_FUNCTION();

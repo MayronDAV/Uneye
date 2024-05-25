@@ -58,7 +58,11 @@ namespace Uneye
 			}
 		}
 		else
-			OpenProject("SandboxProject/Sandbox.uyproj");
+		{
+			//OpenProject("SandboxProject/Sandbox.uyproj");
+			if (!OpenProject())
+				Application::Get().Close();
+		}
 
 		m_EditorCamera = EditorCamera(45.0f, 1.677, 0.1f, 1000.0f);
 
@@ -203,17 +207,21 @@ namespace Uneye
 		{
 			if (ImGui::BeginMenu("File"))
 			{
+				if (ImGui::MenuItem("Open Project...", "Ctrl+O"))
+					OpenProject();
+
+				ImGui::Separator();
+
 				if (ImGui::MenuItem("New", "Ctrl+N"))
 					NewScene();
-
-				if (ImGui::MenuItem("Open...", "Ctrl+O"))
-					OpenScene();
 
 				if (ImGui::MenuItem("Save", "Ctrl+S"))
 					SaveScene();
 
 				if (ImGui::MenuItem("Save As...", "Ctrl+Shift+S"))
 					SaveSceneAs();
+
+				ImGui::Separator();
 
 				if (ImGui::MenuItem("Exit")) { Uneye::Application::Get().Close(); }
 
@@ -438,7 +446,7 @@ namespace Uneye
 			case Key::O:
 			{
 				if (control)
-					OpenScene();
+					OpenProject();
 
 				break;
 			}
@@ -588,10 +596,22 @@ namespace Uneye
 		Project::New();
 	}
 
+	bool EditorLayer::OpenProject()
+	{
+		std::string filepath = FileDialogs::OpenFile("Uneye Project (*.uyroj)\0*.uyproj\0");
+		if (filepath.empty())
+			return false;
+
+		OpenProject(filepath);
+		return true;
+	}
+
 	void EditorLayer::OpenProject(const std::filesystem::path& path)
 	{
-		if (Project::Load(path))
+		if (path.extension() == ".uyproj" && Project::Load(path))
 		{
+			ScriptEngine::Init();
+
 			auto startScenePath = Project::GetAssetFileSystemPath(Project::GetStartScene());
 			OpenScene(startScenePath);
 			m_ContentBrowserPanel = CreateScope<ContentBrowserPanel>();
@@ -732,7 +752,10 @@ namespace Uneye
 
 		Entity selectedEntt = m_SceneHierarchyPanel.GetSelectedEntity();
 		if (selectedEntt)
-			m_EditorScene->DuplicateEntity(selectedEntt);
+		{
+			Entity newEntity = m_EditorScene->DuplicateEntity(selectedEntt);
+			m_SceneHierarchyPanel.SetSelectedEntity(newEntity);
+		}
 	}
 
 	void EditorLayer::OnDestroyEntity()

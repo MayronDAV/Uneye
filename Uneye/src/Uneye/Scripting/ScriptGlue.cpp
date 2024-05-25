@@ -6,6 +6,8 @@
 #include "Uneye/Core/KeyCodes.h"
 #include "Uneye/Core/Input.h"
 
+#include "Uneye/Physics/Physics2D.h"
+
 #include <glm/glm.hpp>
 
 #include "mono/metadata/object.h"
@@ -143,11 +145,9 @@ namespace Uneye
 		static void Rigidbody2DComponent_GetTranslation(UUID enttID, glm::vec2* outTranslation)
 		{
 			Scene* scene = ScriptEngine::GetSceneContext();
-
 			UNEYE_CORE_ASSERT(scene == nullptr);
 
 			Entity entt = scene->GetEntityByUUID(enttID);
-
 			UNEYE_CORE_ASSERT(!entt);
 
 			auto& rb2d = entt.GetComponent<Rigidbody2DComponent>();
@@ -173,11 +173,9 @@ namespace Uneye
 		static void Rigidbody2DComponent_ApplyLinearImpulse(UUID enttID, glm::vec2* impulse, glm::vec2* point, bool wake)
 		{
 			Scene* scene = ScriptEngine::GetSceneContext();
-
 			UNEYE_CORE_ASSERT(scene == nullptr);
 
 			Entity entt = scene->GetEntityByUUID(enttID);
-
 			UNEYE_CORE_ASSERT(!entt);
 
 			auto& rb2d = entt.GetComponent<Rigidbody2DComponent>();
@@ -191,11 +189,9 @@ namespace Uneye
 		static void Rigidbody2DComponent_ApplyLinearImpulseToCenter(UUID enttID, glm::vec2* impulse, bool wake)
 		{
 			Scene* scene = ScriptEngine::GetSceneContext();
-
 			UNEYE_CORE_ASSERT(scene == nullptr);
 
 			Entity entt = scene->GetEntityByUUID(enttID);
-
 			UNEYE_CORE_ASSERT(!entt);
 
 			auto& rb2d = entt.GetComponent<Rigidbody2DComponent>();
@@ -203,6 +199,46 @@ namespace Uneye
 
 			b2Vec2 b2_impulse(impulse->x, impulse->y);
 			body->ApplyLinearImpulseToCenter(b2_impulse, wake);
+		}
+
+		static void Rigidbody2DComponent_GetLinearVelocity(UUID enttID, glm::vec2* outLinearVelocity)
+		{
+			Scene* scene = ScriptEngine::GetSceneContext();
+			UNEYE_CORE_ASSERT(scene == nullptr);
+
+			Entity entt = scene->GetEntityByUUID(enttID);
+			UNEYE_CORE_ASSERT(!entt);
+
+			auto& rb2d = entt.GetComponent<Rigidbody2DComponent>();
+			b2Body* body = (b2Body*)rb2d.RuntimeBody;
+			const b2Vec2& linearVelocity = body->GetLinearVelocity();
+			*outLinearVelocity = glm::vec2(linearVelocity.x, linearVelocity.y);
+		}
+
+		static Rigidbody2DComponent::BodyType Rigidbody2DComponent_GetType(UUID enttID)
+		{
+			Scene* scene = ScriptEngine::GetSceneContext();
+			UNEYE_CORE_ASSERT(scene == nullptr);
+
+			Entity entt = scene->GetEntityByUUID(enttID);
+			UNEYE_CORE_ASSERT(!entt);
+
+			auto& rb2d = entt.GetComponent<Rigidbody2DComponent>();
+			b2Body* body = (b2Body*)rb2d.RuntimeBody;
+			return Utils::Rigidbody2DTypeFromBox2DBody(body->GetType());
+		}
+
+		static void Rigidbody2DComponent_SetType(UUID enttID, Rigidbody2DComponent::BodyType bodyType)
+		{
+			Scene* scene = ScriptEngine::GetSceneContext();
+			UNEYE_CORE_ASSERT(scene == nullptr);
+
+			Entity entt = scene->GetEntityByUUID(enttID);
+			UNEYE_CORE_ASSERT(!entt);
+
+			auto& rb2d = entt.GetComponent<Rigidbody2DComponent>();
+			b2Body* body = (b2Body*)rb2d.RuntimeBody;
+			body->SetType(Utils::Rigidbody2DTypeToBox2DBody(bodyType));
 		}
 
 		#pragma endregion
@@ -257,6 +293,10 @@ namespace Uneye
 		UNEYE_ADD_INTERNAL_CALL(Rigidbody2DComponent_SetTransform);
 		UNEYE_ADD_INTERNAL_CALL(Rigidbody2DComponent_ApplyLinearImpulse);
 		UNEYE_ADD_INTERNAL_CALL(Rigidbody2DComponent_ApplyLinearImpulseToCenter);
+		UNEYE_ADD_INTERNAL_CALL(Rigidbody2DComponent_GetLinearVelocity);
+		UNEYE_ADD_INTERNAL_CALL(Rigidbody2DComponent_GetType);
+		UNEYE_ADD_INTERNAL_CALL(Rigidbody2DComponent_SetType);
+
 
 		#pragma endregion
 

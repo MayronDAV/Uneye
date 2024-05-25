@@ -43,6 +43,8 @@ namespace Uneye {
 
 			float* GetColorBG();
 
+			uint32_t GetActiveWidgetID() const;
+
 		private:
 			float m_BgColor[4] = {1.0f, 1.0f, 1.0f, 1.0f};
 

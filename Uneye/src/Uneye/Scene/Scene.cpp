@@ -10,6 +10,8 @@
 
 #include "Uneye/Scripting/ScriptEngine.h"
 
+#include "Uneye/Physics/Physics2D.h"
+
 #include <glm/glm.hpp>
 #include <chrono>
 
@@ -24,24 +26,6 @@
 
 namespace Uneye
 {
-	namespace Utils
-	{
-		static b2BodyType Rigidbody2DTypeToBox2DBody(Rigidbody2DComponent::BodyType bodyType)
-		{
-			switch (bodyType)
-			{
-				case Uneye::Rigidbody2DComponent::BodyType::Static: 
-					return b2BodyType::b2_staticBody;
-				case Uneye::Rigidbody2DComponent::BodyType::Dynamic:
-					return b2BodyType::b2_dynamicBody;
-				case Uneye::Rigidbody2DComponent::BodyType::Kinematic:
-					return b2BodyType::b2_kinematicBody;
-			}
-
-			UNEYE_CORE_ASSERT(true, "Unknown body type!");
-			return b2BodyType::b2_staticBody;
-		}
-	}
 
 
 	Scene::Scene()
@@ -378,11 +362,11 @@ namespace Uneye
 		}
 	}
 
-	void Scene::DuplicateEntity(Entity entt)
+	Entity Scene::DuplicateEntity(Entity entt)
 	{
 		Entity newEntity = CreateEntity(entt.GetName());
 		CopyComponentIfExists(AllComponents{}, newEntity, entt);
-
+		return newEntity;
 	}
 
 	Entity Scene::FindFirstEntityByName(std::string_view name)

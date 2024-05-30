@@ -61,6 +61,10 @@ namespace Uneye {
 			const ApplicationSpecification& GetSpecification() const { return m_Specification; }
 		
 			void SubmitToMainThread(const std::function<void()>& func);
+
+			void ReloadImGui() { m_ReloadImGui = true; m_ImGuiIsReloaded = false; }
+			bool ImGuiIsReloaded() { return m_ImGuiIsReloaded; }
+
 		private:
 			bool OnWindowClose(WindowCloseEvent& e);
 			bool OnWindowResize(WindowResizeEvent& e);
@@ -78,6 +82,8 @@ namespace Uneye {
 			std::vector<std::function<void()>> m_MainThreadQueue;
 			std::mutex m_MainThreadQueueMutex;
 
+			bool m_ReloadImGui = false;
+			bool m_ImGuiIsReloaded = false;
 		private:
 			static Application* s_Instance;
 	};

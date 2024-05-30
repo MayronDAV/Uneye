@@ -22,3 +22,6 @@
 [submodule "Uneye/vendor/Box2D"]
 	path = Uneye/vendor/Box2D
 	url = https://github.com/TheCherno/box2d.git
+[submodule "Uneye/vendor/msdf-atlas-gen"]
+	path = Uneye/vendor/msdf-atlas-gen
+	url = https://github.com/TheCherno/msdf-atlas-gen

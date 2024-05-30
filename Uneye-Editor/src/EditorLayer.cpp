@@ -26,7 +26,7 @@ namespace Uneye
 		m_IconSimulate = Texture2D::Create("Resources/Icons/SimulateButton.png");
 		m_IconStop = Texture2D::Create("Resources/Icons/StopButton.png");
 
-		Uneye::FramebufferSpecification fbspec;
+		FramebufferSpecification fbspec;
 		fbspec.Attachments = {
 			FramebufferTextureFormat::RGBA8, 
 			FramebufferTextureFormat::RED_INTEGER,
@@ -34,7 +34,7 @@ namespace Uneye
 		};
 		fbspec.Width = 800;
 		fbspec.Height = 600;
-		m_Framebuffer = Uneye::Framebuffer::Create(fbspec);
+		m_Framebuffer = Framebuffer::Create(fbspec);
 
 
 
@@ -222,6 +222,10 @@ namespace Uneye
 					SaveSceneAs();
 
 				ImGui::Separator();
+
+				if (ImGui::MenuItem("ReloadImGui")) {
+					Uneye::Application::Get().ReloadImGui();
+				}
 
 				if (ImGui::MenuItem("Exit")) { Uneye::Application::Get().Close(); }
 

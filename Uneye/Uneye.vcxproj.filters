@@ -31,6 +31,12 @@
     <Filter Include="src\Uneye\Math">
       <UniqueIdentifier>{BB5A0659-A728-FA5E-90BC-6A857C29D6C3}</UniqueIdentifier>
     </Filter>
+    <Filter Include="src\Uneye\Physics">
+      <UniqueIdentifier>{14C6AB2C-80DC-A9C2-C953-35E435A97A4A}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\Uneye\Project">
+      <UniqueIdentifier>{E8664543-547D-43D9-9DF4-CEFA094A1461}</UniqueIdentifier>
+    </Filter>
     <Filter Include="src\Uneye\Renderer">
       <UniqueIdentifier>{885AFF98-743E-C0EE-DD9E-BA41C9A1AA70}</UniqueIdentifier>
     </Filter>
@@ -117,7 +123,13 @@
     <ClInclude Include="src\Uneye\Core\Base.h">
       <Filter>src\Uneye\Core</Filter>
     </ClInclude>
+    <ClInclude Include="src\Uneye\Core\Buffer.h">
+      <Filter>src\Uneye\Core</Filter>
+    </ClInclude>
     <ClInclude Include="src\Uneye\Core\EntryPoint.h">
+      <Filter>src\Uneye\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Uneye\Core\Filesystem.h">
       <Filter>src\Uneye\Core</Filter>
     </ClInclude>
     <ClInclude Include="src\Uneye\Core\FontManager.h">
@@ -138,10 +150,19 @@
     <ClInclude Include="src\Uneye\Core\Log.h">
       <Filter>src\Uneye\Core</Filter>
     </ClInclude>
+    <ClInclude Include="src\Uneye\Core\Theme.h">
+      <Filter>src\Uneye\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Uneye\Core\ThemeManager.h">
+      <Filter>src\Uneye\Core</Filter>
+    </ClInclude>
     <ClInclude Include="src\Uneye\Core\Timer.h">
       <Filter>src\Uneye\Core</Filter>
     </ClInclude>
     <ClInclude Include="src\Uneye\Core\Timestep.h">
+      <Filter>src\Uneye\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Uneye\Core\TraitHelpers.h">
       <Filter>src\Uneye\Core</Filter>
     </ClInclude>
     <ClInclude Include="src\Uneye\Core\UUID.h">
@@ -171,6 +192,15 @@
     <ClInclude Include="src\Uneye\Math\Math.h">
       <Filter>src\Uneye\Math</Filter>
     </ClInclude>
+    <ClInclude Include="src\Uneye\Physics\Physics2D.h">
+      <Filter>src\Uneye\Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Uneye\Project\Project.h">
+      <Filter>src\Uneye\Project</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Uneye\Project\ProjectSerializer.h">
+      <Filter>src\Uneye\Project</Filter>
+    </ClInclude>
     <ClInclude Include="src\Uneye\Renderer\Buffer.h">
       <Filter>src\Uneye\Renderer</Filter>
     </ClInclude>
@@ -178,6 +208,9 @@
       <Filter>src\Uneye\Renderer</Filter>
     </ClInclude>
     <ClInclude Include="src\Uneye\Renderer\EditorCamera.h">
+      <Filter>src\Uneye\Renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Uneye\Renderer\Font.h">
       <Filter>src\Uneye\Renderer</Filter>
     </ClInclude>
     <ClInclude Include="src\Uneye\Renderer\Framebuffer.h">
@@ -238,6 +271,9 @@
       <Filter>src\Uneye\Scripting</Filter>
     </ClInclude>
     <ClInclude Include="src\Uneye\Utils\PlatformUtils.h">
+      <Filter>src\Uneye\Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Uneye\Utils\YamlTemplates.h">
       <Filter>src\Uneye\Utils</Filter>
     </ClInclude>
     <ClInclude Include="src\uypch.h">
@@ -1425,12 +1461,6 @@
     <ClInclude Include="vendor\stb\include\stb_voxel_render.h">
       <Filter>vendor\stb\include</Filter>
     </ClInclude>
-    <ClInclude Include="src\Uneye\Core\TraitHelpers.h" />
-    <ClInclude Include="src\Uneye\Project\Project.h" />
-    <ClInclude Include="src\Uneye\Core\Buffer.h" />
-    <ClInclude Include="src\Uneye\Core\Filesystem.h" />
-    <ClInclude Include="src\Uneye\Project\ProjectSerializer.h" />
-    <ClInclude Include="src\Uneye\Physics\Physics2D.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Platform\OpenGL\OpenGLBuffer.cpp">
@@ -1469,6 +1499,9 @@
     <ClCompile Include="src\Uneye\Core\Application.cpp">
       <Filter>src\Uneye\Core</Filter>
     </ClCompile>
+    <ClCompile Include="src\Uneye\Core\Filesystem.cpp">
+      <Filter>src\Uneye\Core</Filter>
+    </ClCompile>
     <ClCompile Include="src\Uneye\Core\FontManager.cpp">
       <Filter>src\Uneye\Core</Filter>
     </ClCompile>
@@ -1479,6 +1512,15 @@
       <Filter>src\Uneye\Core</Filter>
     </ClCompile>
     <ClCompile Include="src\Uneye\Core\Log.cpp">
+      <Filter>src\Uneye\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Uneye\Core\Theme.cpp">
+      <Filter>src\Uneye\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Uneye\Core\ThemeManager.cpp">
+      <Filter>src\Uneye\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Uneye\Core\TraitHelpers.cpp">
       <Filter>src\Uneye\Core</Filter>
     </ClCompile>
     <ClCompile Include="src\Uneye\Core\UUID.cpp">
@@ -1493,10 +1535,19 @@
     <ClCompile Include="src\Uneye\Math\Math.cpp">
       <Filter>src\Uneye\Math</Filter>
     </ClCompile>
+    <ClCompile Include="src\Uneye\Project\Project.cpp">
+      <Filter>src\Uneye\Project</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Uneye\Project\ProjectSerializer.cpp">
+      <Filter>src\Uneye\Project</Filter>
+    </ClCompile>
     <ClCompile Include="src\Uneye\Renderer\Buffer.cpp">
       <Filter>src\Uneye\Renderer</Filter>
     </ClCompile>
     <ClCompile Include="src\Uneye\Renderer\EditorCamera.cpp">
+      <Filter>src\Uneye\Renderer</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Uneye\Renderer\Font.cpp">
       <Filter>src\Uneye\Renderer</Filter>
     </ClCompile>
     <ClCompile Include="src\Uneye\Renderer\Framebuffer.cpp">
@@ -1577,9 +1628,5 @@
     <ClCompile Include="vendor\stb\src\stb_image.cpp">
       <Filter>vendor\stb\src</Filter>
     </ClCompile>
-    <ClCompile Include="src\Uneye\Core\TraitHelpers.cpp" />
-    <ClCompile Include="src\Uneye\Core\Filesystem.cpp" />
-    <ClCompile Include="src\Uneye\Project\Project.cpp" />
-    <ClCompile Include="src\Uneye\Project\ProjectSerializer.cpp" />
   </ItemGroup>
 </Project>

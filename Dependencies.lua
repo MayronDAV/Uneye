@@ -4,24 +4,27 @@
 VULKAN_SDK = os.getenv("VULKAN_SDK")
 
 IncludeDir = {}
-IncludeDir["stb"] = "%{wks.location}/Uneye/vendor/stb/include"
-IncludeDir["yaml_cpp"] = "%{wks.location}/Uneye/vendor/yaml-cpp/include"
-IncludeDir["GLFW"] = "%{wks.location}/Uneye/vendor/GLFW/include"
-IncludeDir["Glad"] = "%{wks.location}/Uneye/vendor/Glad/include"
-IncludeDir["ImGui"] = "%{wks.location}/Uneye/vendor/imgui"
-IncludeDir["glm"] = "%{wks.location}/Uneye/vendor/glm"
-IncludeDir["Box2D"] = "%{wks.location}/Uneye/vendor/Box2D/include"
-IncludeDir["filewatch"] = "%{wks.location}/Uneye/vendor/filewatch"
-IncludeDir["entt"] = "%{wks.location}/Uneye/vendor/entt/include"
-IncludeDir["mono"] = "%{wks.location}/Uneye/vendor/mono/include"
-IncludeDir["ImGuizmo"] = "%{wks.location}/Uneye/vendor/ImGuizmo"
-IncludeDir["shaderc"] = "%{wks.location}/Uneye/vendor/shaderc/libshaderc/include"
-IncludeDir["SPIRV_Cross"] = "%{wks.location}/Uneye/vendor/SPIRV-Cross/include"
+IncludeDir["stb"] = "../Uneye/vendor/stb/include"
+IncludeDir["yaml_cpp"] = "../Uneye/vendor/yaml-cpp/include"
+IncludeDir["GLFW"] = "../Uneye/vendor/GLFW/include"
+IncludeDir["Glad"] = "../Uneye/vendor/Glad/include"
+IncludeDir["ImGui"] = "../Uneye/vendor/imgui"
+IncludeDir["glm"] = "../Uneye/vendor/glm"
+IncludeDir["Box2D"] = "../Uneye/vendor/Box2D/include"
+IncludeDir["filewatch"] = "../Uneye/vendor/filewatch"
+IncludeDir["entt"] = "../Uneye/vendor/entt/include"
+IncludeDir["mono"] = "../Uneye/vendor/mono/include"
+IncludeDir["ImGuizmo"] = "../Uneye/vendor/ImGuizmo"
+IncludeDir["shaderc"] = "../Uneye/vendor/shaderc/libshaderc/include"
+IncludeDir["SPIRV_Cross"] = "../Uneye/vendor/SPIRV-Cross/include"
 IncludeDir["VulkanSDK"] = "%{VULKAN_SDK}/Include"
+IncludeDir["msdf_atlas_gen"] = "../Uneye/vendor/msdf-atlas-gen/msdf-atlas-gen"
+IncludeDir["msdfgen"] = "../Uneye/vendor/msdf-atlas-gen/msdfgen"
+
 LibraryDir = {}
 
 LibraryDir["VulkanSDK"] = "%{VULKAN_SDK}/Lib"
-LibraryDir["mono"] = "%{wks.location}/Uneye/vendor/mono/lib/%{cfg.buildcfg}"
+LibraryDir["mono"] = "../Uneye/vendor/mono/lib/%{cfg.buildcfg}"
 
 Library = {}
 

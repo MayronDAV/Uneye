@@ -65,7 +65,7 @@ namespace Uneye
 
 		Entity m_HoveredEntity;
 
-		Uneye::Ref<Uneye::Framebuffer> m_Framebuffer;
+		Ref<Framebuffer> m_Framebuffer;
 
 		Ref<Scene> m_ActiveScene;
 		Ref<Scene> m_EditorScene;

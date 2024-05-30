@@ -11,6 +11,8 @@
 #include "Uneye/Utils/PlatformUtils.h"
 
 #include <filesystem>
+#include <backends/imgui_impl_glfw.h>
+#include <backends/imgui_impl_opengl3.h>
 
 
 
@@ -19,6 +21,7 @@
 namespace Uneye {
 
 #define BIND_EVENT_FN(x) std::bind(&Application::x, this, std::placeholders::_1)
+#define BIND_FN(x) std::bind(&x, this, std::placeholders::_1)
 
 	Application* Application::s_Instance = nullptr;
 
@@ -39,7 +42,6 @@ namespace Uneye {
 
 		Renderer::Init();
 		
-
 		m_ImGuiLayer = new ImGuiLayer();
 		PushOverlay(m_ImGuiLayer);
 
@@ -49,6 +51,7 @@ namespace Uneye {
 
 	Application::~Application()
 	{
+
 		ScriptEngine::Shutdown();
 	}
 
@@ -98,6 +101,20 @@ namespace Uneye {
 			float time = Time::GetTime();
 			Timestep timestep = time - m_LastFrameTime;
 			m_LastFrameTime = time;
+
+			if (m_ReloadImGui)
+			{
+				m_ImGuiLayer->OnDetach();
+				m_LayerStack.PopOverlay(m_ImGuiLayer);
+				m_ImGuiLayer = nullptr;
+
+				m_ImGuiLayer = new ImGuiLayer();
+				PushOverlay(m_ImGuiLayer);
+
+				m_ReloadImGui = false;
+				m_ImGuiIsReloaded = true;
+			}
+
 
 			ExecuteMainThreadQueue();
 

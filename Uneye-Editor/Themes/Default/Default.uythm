@@ -1,0 +1,91 @@
+Theme:
+  Name: Default
+
+  Fonts:
+    Regular: Assets/Fonts/RobotoSlab/RobotoSlab-Regular.ttf
+    Bold: Assets/Fonts/RobotoSlab/RobotoSlab-Bold.ttf
+
+  Icons: Assets/Icons
+
+  Alpha: 1
+  WindowPadding: [8, 8]
+  WindowRounding: 7
+  WindowBorderSize: 1
+  WindowMinSize: [32, 32]
+  WindowTitleAlign: [0, 0.5]
+  ChildRounding: 4
+  ChildBorderSize: 1
+  PopupRounding: 4
+  PopupBorderSize: 1
+  FramePadding: [4, 3]
+  FrameRounding: 3
+  FrameBorderSize: 3
+  ItemSpacing: [8, 4]
+  ItemInnerSpacing: [4, 4]
+  TouchExtraPadding: [0, 0]
+  IndentSpacing: 21
+  ColumnsMinSpacing: 6
+  ScrollbarSize: 16
+  ScrollbarRounding: 9
+  GrabMinSize: 10
+  GrabRounding: 3
+  TabRounding: 4
+  TabBorderSize: 0
+  ButtonTextAlign: [0.5, 0.5]
+  SelectableTextAlign: [0, 0]
+  DisplayWindowPadding: [19, 19]
+  DisplaySafeAreaPadding: [3, 3]
+  MouseCursorScale: 1 
+  AntiAliasedLines: true
+  AntiAliasedFill: true
+  CurveTessellationTol: 1.25
+
+  Colors:
+    WindowBg: [0.1, 0.1, 0.13, 1]
+    MenuBarBg: [0.16, 0.16, 0.21, 1]
+    Border: [0.44, 0.37, 0.61, 0.29]
+    BorderShadow: [0.0, 0.0, 0.0, 0.24]
+    Text: [1, 1, 1, 1]
+    TextDisabled: [0.5, 0.5, 0.5, 1]
+    Header: [0.13, 0.13, 0.17, 1]
+    HeaderHovered: [0.19, 0.2, 0.25, 1]
+    HeaderActive: [0.16, 0.16, 0.21, 1]
+    Button: [0.13, 0.13, 0.17, 1]
+    ButtonHovered: [0.19, 0.2, 0.25, 1]
+    ButtonActive: [0.16, 0.16, 0.21, 1]
+    CheckMark: [0.74, 0.58, 0.98, 1]
+    PopupBg: [ 0.1, 0.1, 0.13, 0.92 ]
+    SliderGrab: [ 0.44, 0.37, 0.61, 0.54 ]
+    SliderGrabActive: [ 0.74, 0.58, 0.98, 0.54 ]
+    FrameBg: [ 0.13, 0.13, 0.17, 1.0 ]
+    FrameBgHovered: [ 0.19, 0.2, 0.25, 1.0 ]
+    FrameBgActive: [ 0.16, 0.16, 0.21, 1.0 ]
+    Tab: [ 0.16, 0.16, 0.21, 1.0 ]
+    TabHovered: [ 0.24, 0.24, 0.32, 1.0 ]
+    TabActive: [ 0.2, 0.22, 0.27, 1.0 ]
+    TabUnfocused: [ 0.16, 0.16, 0.21, 1.0 ]
+    TabUnfocusedActive: [ 0.16, 0.16, 0.21, 1.0 ]
+    TitleBg: [ 0.16, 0.16, 0.21, 1.0 ]
+    TitleBgActive: [ 0.16, 0.16, 0.21, 1.0 ]
+    TitleBgCollapsed: [ 0.16, 0.16, 0.21, 1.0 ]
+    ScrollbarBg: [ 0.1, 0.1, 0.13, 1.0 ]
+    ScrollbarGrab: [ 0.16, 0.16, 0.21, 1.0 ]
+    ScrollbarGrabHovered: [ 0.19, 0.2, 0.25, 1.0 ]
+    ScrollbarGrabActive: [ 0.24, 0.24, 0.32, 1.0 ]
+    Separator: [ 0.44, 0.37, 0.61, 1.0 ]
+    SeparatorHovered: [ 0.74, 0.58, 0.98, 1.0 ]
+    SeparatorActive: [ 0.84, 0.58, 1.0, 1.0 ]
+    ResizeGrip: [ 0.44, 0.37, 0.61, 0.29 ]
+    ResizeGripHovered: [ 0.74, 0.58, 0.98, 0.29 ]
+    ResizeGripActive: [ 0.84, 0.58, 1.0, 0.29 ]
+    ChildBg: [0, 0, 0, 0]
+    PlotLines: [0.61, 0.61, 0.61, 1]
+    PlotLinesHovered: [1, 0.43, 0.35, 1]
+    PlotHistogram: [0.9, 0.7, 0, 1]
+    PlotHistogramHovered: [1, 0.6, 0, 1]
+    TextSelectedBg: [0.26, 0.59, 0.98, 0.35]
+    DragDropTarget: [1, 1, 0, 0.9]
+    NavHighlight: [0.26, 0.59, 0.98, 1]
+    NavWindowingHighlight: [1, 1, 1, 0.7]
+    NavWindowingDimBg: [0.8, 0.8, 0.8, 0.2]
+    ModalWindowDimBg: [0.8, 0.8, 0.8, 0.35]

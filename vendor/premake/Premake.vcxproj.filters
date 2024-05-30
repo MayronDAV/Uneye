@@ -25,6 +25,12 @@
     <Filter Include="..\Uneye\vendor\imgui">
       <UniqueIdentifier>{1DFE9EC6-896A-5AC1-525E-F21EBE897C29}</UniqueIdentifier>
     </Filter>
+    <Filter Include="..\Uneye\vendor\msdf-atlas-gen">
+      <UniqueIdentifier>{F5531412-E179-DE78-CABF-6344B6840345}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="..\Uneye\vendor\msdf-atlas-gen\msdfgen">
+      <UniqueIdentifier>{68F1FDF3-5443-D5E3-3D62-12F42953EECC}</UniqueIdentifier>
+    </Filter>
     <Filter Include="..\Uneye\vendor\yaml-cpp">
       <UniqueIdentifier>{857ED56A-71A3-24EB-9AEE-097B86722309}</UniqueIdentifier>
     </Filter>
@@ -71,6 +77,12 @@
     </None>
     <None Include="..\..\Uneye\vendor\imgui\premake5.lua">
       <Filter>..\Uneye\vendor\imgui</Filter>
+    </None>
+    <None Include="..\..\Uneye\vendor\msdf-atlas-gen\msdfgen\premake5.lua">
+      <Filter>..\Uneye\vendor\msdf-atlas-gen\msdfgen</Filter>
+    </None>
+    <None Include="..\..\Uneye\vendor\msdf-atlas-gen\premake5.lua">
+      <Filter>..\Uneye\vendor\msdf-atlas-gen</Filter>
     </None>
     <None Include="..\..\Uneye\vendor\yaml-cpp\premake5.lua">
       <Filter>..\Uneye\vendor\yaml-cpp</Filter>

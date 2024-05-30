@@ -28,7 +28,6 @@ namespace Uneye {
 
 			virtual void OnAttach() override;
 			virtual void OnDetach() override;
-			virtual void OnImGuiRender() override;
 			virtual void OnEvent(Event& event) override;
 
 			void BlockEvents(bool block) { m_BlockEvents = block; }
@@ -36,27 +35,10 @@ namespace Uneye {
 			void Begin();
 			void End();
 
-			void SetDeepDarkThemeColors();
-			void SetPurpleThemeColors();
-			void SetDarkThemeColors();
-			void SetLightThemeColors();
-
-			float* GetColorBG();
-
 			uint32_t GetActiveWidgetID() const;
 
 		private:
-			float m_BgColor[4] = {1.0f, 1.0f, 1.0f, 1.0f};
-
-
 			bool m_BlockEvents = true;
-			ImGuiThemes m_Theme = PurpleThemeDefault;
-			std::unordered_map<int, std::function<void()>> m_AllThemes = {
-				{PurpleThemeDefault, [=]() { SetPurpleThemeColors(); }},
-				{DeepDarkThemeDefault, [=]() { SetDarkThemeColors(); }},
-				{DarkThemeDefault, [=]() { SetDarkThemeColors(); }},
-				{LightThemeDefault, [=]() { SetLightThemeColors(); }}
-			};
 	};
 
 }

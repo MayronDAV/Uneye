@@ -6,6 +6,8 @@
 #include "Uneye/Utils/PlatformUtils.h"
 #include "Uneye/Scripting/ScriptEngine.h"
 
+#include "Uneye/Core/ThemeManager.h"
+
 #include "Uneye/Math/Math.h"
 #include <ImGuizmo.h>
 
@@ -223,11 +225,35 @@ namespace Uneye
 
 				ImGui::Separator();
 
-				if (ImGui::MenuItem("ReloadImGui")) {
-					Uneye::Application::Get().ReloadImGui();
+				if (ImGui::MenuItem("Exit")) { Application::Get().Close(); }
+
+				ImGui::EndMenu();
+			}
+
+			if (ImGui::BeginMenu("Tools"))
+			{
+				if (ImGui::MenuItem("ReloadAssembly")) {
+					ScriptEngine::ReloadAssembly();
 				}
 
-				if (ImGui::MenuItem("Exit")) { Uneye::Application::Get().Close(); }
+				if (ImGui::MenuItem("ReloadImGui")) {
+					Application::Get().ReloadImGui();
+				}
+
+				ImGui::Separator();
+
+				if (ImGui::BeginMenu("Themes"))
+				{
+					for (const auto& theme : ThemeManager::GetThemes())
+					{
+						const auto& name = theme.first;
+						if (ImGui::MenuItem(name.c_str()))
+							Application::Get().ChangeTheme(name);
+					}
+					
+
+					ImGui::EndMenu();
+				}
 
 				ImGui::EndMenu();
 			}

@@ -176,7 +176,6 @@ namespace Uneye
 
 		if (theme["Colors"])
 		{
-
 			BIND_MEMBER_MAP(WindowBg);
 			BIND_MEMBER_MAP(MenuBarBg);
 			BIND_MEMBER_MAP(Border);
@@ -186,7 +185,7 @@ namespace Uneye
 			BIND_MEMBER_MAP(Header);
 			BIND_MEMBER_MAP(HeaderHovered);
 			BIND_MEMBER_MAP(HeaderActive);
-			BIND_MEMBER_MAP(ButtonBg);
+			BIND_MEMBER_MAP(Button);
 			BIND_MEMBER_MAP(ButtonHovered);
 			BIND_MEMBER_MAP(ButtonActive);
 			BIND_MEMBER_MAP(CheckMark);

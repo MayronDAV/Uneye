@@ -45,15 +45,17 @@ namespace Uneye {
 		//io.ConfigFlags |= ImGuiConfigFlags_NavEnableGamepad;      // Enable Gamepad Controls
 		io.ConfigFlags |= ImGuiConfigFlags_DockingEnable;           // Enable Docking
 		io.ConfigFlags |= ImGuiConfigFlags_ViewportsEnable;         // Enable Multi-Viewport / Platform Windows
-		//io.ConfigFlags |= ImGuiConfigFlags_DpiEnableScaleViewports; // Habilita escala de DPI em viewports
-		//io.ConfigFlags |= ImGuiConfigFlags_DpiEnableScaleFonts; // Habilita escala de DPI em fonts
-		//io.ConfigFlags |= ImGuiConfigFlags_DpiEnableScaleViewports; // Habilita escala de DPI em viewports
+		io.ConfigFlags |= ImGuiConfigFlags_DpiEnableScaleViewports; // Habilita escala de DPI em viewports
+		io.ConfigFlags |= ImGuiConfigFlags_DpiEnableScaleFonts; // Habilita escala de DPI em fonts
+		io.ConfigFlags |= ImGuiConfigFlags_DpiEnableScaleViewports; // Habilita escala de DPI em viewports
 
-		if (ThemeManager::LoadTheme("Themes/PurpleTheme/PurpleTheme.uythm"))
-		{
-			auto themeFunc = ThemeManager::GetTheme("PurpleTheme");
-			if (themeFunc != NULL) themeFunc();
+		for (const auto& entry : std::filesystem::recursive_directory_iterator("Themes")) {
+			if (entry.is_regular_file() && entry.path().extension() == ".uythm")
+				ThemeManager::LoadTheme(entry.path().string());
 		}
+
+		auto themeFunc = ThemeManager::GetTheme(Application::Get().GetTheme());
+		if (themeFunc != NULL) themeFunc();
 
 		float fontSize = 18.0f;
 		auto font0 = io.Fonts->AddFontFromFileTTF("assets/fonts/Roboto_Slab/static/RobotoSlab-Regular.ttf", fontSize);

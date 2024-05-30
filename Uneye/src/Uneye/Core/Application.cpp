@@ -10,6 +10,8 @@
 #include "Uneye/Renderer/Camera.h"
 #include "Uneye/Utils/PlatformUtils.h"
 
+#include "Uneye/Core/ThemeManager.h"
+
 #include <filesystem>
 #include <backends/imgui_impl_glfw.h>
 #include <backends/imgui_impl_opengl3.h>
@@ -110,6 +112,9 @@ namespace Uneye {
 
 				m_ImGuiLayer = new ImGuiLayer();
 				PushOverlay(m_ImGuiLayer);
+
+				auto themeFunc = ThemeManager::GetTheme(m_Theme);
+				if (themeFunc != NULL) themeFunc();
 
 				m_ReloadImGui = false;
 				m_ImGuiIsReloaded = true;

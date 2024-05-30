@@ -1,28 +1,28 @@
 Theme:
   Name: DeepDark
 
-    WindowPadding: [8.00, 8.00]
-    FramePadding: [5.00, 2.00]
-    CellPadding: [6.00, 6.00]
-    ItemSpacing: [6.00, 6.00]
-    ItemInnerSpacing: [6.00, 6.00]
-    TouchExtraPadding: [0.00, 0.00]
-    IndentSpacing: 25
-    ScrollbarSize: 15
-    GrabMinSize: 10
-    WindowBorderSize: 1
-    ChildBorderSize: 1
-    PopupBorderSize: 1
-    FrameBorderSize: 1
-    TabBorderSize: 1
-    WindowRounding: 7
-    ChildRounding: 4
-    FrameRounding: 3
-    PopupRounding: 4
-    ScrollbarRounding: 9
-    GrabRounding: 3
-    LogSliderDeadzone: 4
-    TabRounding: 4
+  WindowPadding: [8.00, 8.00]
+  FramePadding: [5.00, 2.00]
+  CellPadding: [6.00, 6.00]
+  ItemSpacing: [6.00, 6.00]
+  ItemInnerSpacing: [6.00, 6.00]
+  TouchExtraPadding: [0.00, 0.00]
+  IndentSpacing: 25
+  ScrollbarSize: 15
+  GrabMinSize: 10
+  WindowBorderSize: 1
+  ChildBorderSize: 1
+  PopupBorderSize: 1
+  FrameBorderSize: 1
+  TabBorderSize: 1
+  WindowRounding: 7
+  ChildRounding: 4
+  FrameRounding: 3
+  PopupRounding: 4
+  ScrollbarRounding: 9
+  GrabRounding: 3
+  LogSliderDeadzone: 4
+  TabRounding: 4
 
   Colors:
     Text: [1.00, 1.00, 1.00, 1.00]

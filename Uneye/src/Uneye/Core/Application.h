@@ -62,7 +62,16 @@ namespace Uneye {
 		
 			void SubmitToMainThread(const std::function<void()>& func);
 
-			void ReloadImGui() { m_ReloadImGui = true; m_ImGuiIsReloaded = false; }
+			void ReloadImGui() { 
+				m_ReloadImGui = true;
+				m_ImGuiIsReloaded = false; 
+			}
+			const std::string& GetTheme() { return m_Theme; }
+			void ChangeTheme(const std::string& name) {
+				m_Theme = name;
+				m_ReloadImGui = true;
+				m_ImGuiIsReloaded = false;
+			}
 			bool ImGuiIsReloaded() { return m_ImGuiIsReloaded; }
 
 		private:
@@ -84,6 +93,8 @@ namespace Uneye {
 
 			bool m_ReloadImGui = false;
 			bool m_ImGuiIsReloaded = false;
+
+			std::string m_Theme = "Dark";
 		private:
 			static Application* s_Instance;
 	};

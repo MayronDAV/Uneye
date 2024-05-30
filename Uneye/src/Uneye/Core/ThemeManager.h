@@ -16,6 +16,7 @@ namespace Uneye
 			static void SubmitTheme(const std::string& name, const std::function<void()>& func);
 			static bool LoadTheme(const std::string& filepath);
 
+			static const std::unordered_map<std::string, Theme>& GetThemes() { return s_Themes; }
 		private:
 			static std::function<void()> CreateThemeFunc(const Theme& theme);
 

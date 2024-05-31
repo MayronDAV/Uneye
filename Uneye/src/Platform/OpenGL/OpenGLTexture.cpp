@@ -11,13 +11,41 @@
 
 namespace Uneye
 {
-	OpenGLTexture2D::OpenGLTexture2D(uint32_t width, uint32_t height)
-		:m_Width(width), m_Height(height)
+	namespace Utils {
+
+		static GLenum ImageFormatToGLDataFormat(ImageFormat format)
+		{
+			switch (format)
+			{
+			case ImageFormat::RGB8:  return GL_RGB;
+			case ImageFormat::RGBA8: return GL_RGBA;
+			}
+
+			UNEYE_CORE_ASSERT(true);
+			return 0;
+		}
+
+		static GLenum ImageFormatToGLInternalFormat(ImageFormat format)
+		{
+			switch (format)
+			{
+			case ImageFormat::RGB8:  return GL_RGB8;
+			case ImageFormat::RGBA8: return GL_RGBA8;
+			}
+
+			UNEYE_CORE_ASSERT(true);
+			return 0;
+		}
+
+	}
+
+	OpenGLTexture2D::OpenGLTexture2D(const TextureSpecification& specification)
+		: m_Specification(specification), m_Width(m_Specification.Width), m_Height(m_Specification.Height)
 	{
 		UNEYE_PROFILE_FUNCTION();
 
-		m_InternalFormat = GL_RGBA8;
-		m_Format = GL_RGBA;
+		m_InternalFormat = Utils::ImageFormatToGLInternalFormat(m_Specification.Format);
+		m_Format = Utils::ImageFormatToGLDataFormat(m_Specification.Format);
 
 		glGenTextures(1, &m_RendererID);
 		glBindTexture(GL_TEXTURE_2D, m_RendererID);

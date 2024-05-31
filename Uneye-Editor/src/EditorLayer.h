@@ -17,7 +17,7 @@ namespace Uneye
 	class EditorLayer : public Layer
 	{
 	public:
-		EditorLayer() :Layer("EditorLayer") {}
+		EditorLayer();
 		virtual ~EditorLayer() = default;
 
 		virtual void OnAttach() override;

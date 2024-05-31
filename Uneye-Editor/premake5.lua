@@ -25,18 +25,11 @@ project "Uneye-Editor"
 		"%{IncludeDir.ImGuizmo}"
 	}
 
-	links
-	{
-		"Uneye"
-	}
+	links "Uneye"
 
 	filter "system:windows"
 		systemversion "latest"
-
-		defines
-		{
-			"UNEYE_PLATFORM_WINDOWS"
-		}
+		defines "UNEYE_PLATFORM_WINDOWS"
 
 	filter "configurations:Debug"
 		defines "UNEYE_DEBUG"

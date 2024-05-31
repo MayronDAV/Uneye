@@ -19,7 +19,7 @@ namespace Uneye
 
 	namespace Utils
 	{
-		// TODO: Create a texture manager and remove this part of code
+		// TODO: Remove this when creating an asset manager
 
 		static std::unordered_map<std::string, Ref<Texture2D>> textures;
 

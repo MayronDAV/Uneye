@@ -1,37 +1,37 @@
 include "./vendor/premake/premake_customization/solution_items.lua"
 include "Dependencies.lua"
 
+
 workspace "Uneye"
 	architecture "x64"
-	startproject "Uneye-Editor"
-
+	startproject "Uneye-Editor"	
+	
 	configurations
 	{
 		"Debug",
 		"Release",
 		"Dist"
 	}
-
+	
 	solution_items
 	{
 		".editorconfig"
 	}
-
+	
 	flags
 	{
 		"MultiProcessorCompile"
 	}
-
+	
 	defines
 	{
 		"_SILENCE_STDEXT_ARR_ITERS_DEPRECATION_WARNING",
 		"_SILENCE_ALL_MS_EXT_DEPRECATION_WARNINGS"
 	}
-
-
-
-outputdir = "%{cfg.buildcfg}-%{cfg.system}-%{cfg.architecture}"
-
+	
+	outputdir = "%{cfg.buildcfg}-%{cfg.system}-%{cfg.architecture}"
+	
+	
 group "Dependencies"
 	include "vendor/premake"
 	include "Uneye/vendor/GLFW"
@@ -46,7 +46,7 @@ group "Core"
 	include "Uneye"
 	include "Uneye-ScriptCore"
 group ""
-
+	
 group "Tools"
 	include "Uneye-Editor"
 group ""

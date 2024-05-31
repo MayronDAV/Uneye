@@ -12,13 +12,14 @@ namespace Uneye
 	class OpenGLTexture2D : public Texture2D
 	{
 		public:
-			OpenGLTexture2D(uint32_t width, uint32_t height);
+			OpenGLTexture2D(const TextureSpecification& specification);
 			OpenGLTexture2D(const std::string& path);
 			virtual ~OpenGLTexture2D();
 
 			virtual void SetData(void* data, uint32_t size) override;
 
 			virtual uint32_t GetRendererID() override { return m_RendererID; }
+			virtual const TextureSpecification& GetSpecification() const override { return m_Specification; }
 
 			virtual uint32_t GetWidth() const override { return m_Width;  }
 			virtual uint32_t GetHeight() const override { return m_Height; }
@@ -33,6 +34,8 @@ namespace Uneye
 			}
 
 		private:
+			TextureSpecification m_Specification;
+
 			std::string m_Path			= " ";
 			uint32_t m_Width			= NULL;
 			uint32_t m_Height			= NULL;

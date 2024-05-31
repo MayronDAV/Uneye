@@ -5,6 +5,7 @@
 #include "Uneye/Scene/SceneSerializer.h"
 #include "Uneye/Utils/PlatformUtils.h"
 #include "Uneye/Scripting/ScriptEngine.h"
+#include "Uneye/Renderer/Font.h"
 
 #include "Uneye/Core/ThemeManager.h"
 
@@ -16,6 +17,14 @@
 
 namespace Uneye
 {
+	static Font* s_Font;
+
+	EditorLayer::EditorLayer()
+		:Layer("EditorLayer")
+	{
+		s_Font = new Font("assets/fonts/Roboto_Slab/static/RobotoSlab-Regular.ttf");
+	}
+
 	void EditorLayer::OnAttach()
 	{
 		UNEYE_PROFILE_FUNCTION();
@@ -280,6 +289,8 @@ namespace Uneye
 
 		ImGui::Begin("Settings");
 		ImGui::Checkbox("Show physics colliders", &m_ShowPhysicsColliders);
+
+		ImGui::Image((ImTextureID)s_Font->GetAtlasTexture()->GetRendererID(), { 512,512 }, { 0, 1 }, { 1, 0 });
 		ImGui::End();
 
 

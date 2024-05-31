@@ -5,6 +5,7 @@
 #include "Uneye/Renderer/SubTexture.h"
 
 #include "Uneye/Renderer/EditorCamera.h"
+#include "Uneye/Renderer/Font.h"
 
 #include "Uneye/Scene/Components.h"
 
@@ -54,12 +55,26 @@ namespace Uneye
 
 			static void DrawSprite(const glm::mat4& transform, SpriteComponent& mc, int entityID);
 
-			static void DrawCircle(const glm::mat4& transform, const glm::vec4& color, float thickness = 1.0f, float fade = 0.005f, int entityID = -1);
+			static void DrawCircle(const glm::mat4& transform, const glm::vec4& color, float thickness = 1.0f, 
+				float fade = 0.005f, int entityID = -1);
 
 			static void DrawLine(const glm::vec3& p0, const glm::vec3& p1, const glm::vec4& color, int entityID = -1);
 
-			static void DrawRect(const glm::vec3& position, const glm::vec2 size, const glm::vec4& color = glm::vec4(1), int entityID = -1);
+			static void DrawRect(const glm::vec3& position, const glm::vec2 size, 
+				const glm::vec4& color = glm::vec4(1), int entityID = -1);
 			static void DrawRect(const glm::mat4& transform, const glm::vec4& color = glm::vec4(1), int entityID = -1);
+
+			struct TextParams
+			{
+				glm::vec4 Color{ 1.0f };
+				float Kerning = 0.0f;
+				float LineSpacing = 0.0f;
+			};
+			static void DrawString(const std::string& string, Ref<Font> font, const glm::mat4& transform,
+				const TextParams& textParams, int entityID = -1);
+			static void DrawString(const std::string& string, const glm::mat4& transform,
+				const TextComponent& component, int entityID = -1);
+
 
 			static float GetLineWidth();
 			static void  SetLineWidth(float width);

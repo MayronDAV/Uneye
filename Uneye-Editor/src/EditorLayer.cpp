@@ -17,12 +17,12 @@
 
 namespace Uneye
 {
-	static Font* s_Font;
+	static Ref<Font> s_Font;
 
 	EditorLayer::EditorLayer()
 		:Layer("EditorLayer")
 	{
-		s_Font = new Font("assets/fonts/Roboto_Slab/static/RobotoSlab-Regular.ttf");
+		s_Font = Font::GetDefault();
 	}
 
 	void EditorLayer::OnAttach()

@@ -11,6 +11,7 @@
 
 #include <imgui/imgui.h>
 #include <imgui/imgui_internal.h>
+#include <imgui/misc/cpp/imgui_stdlib.h>
 
 #include <glm/glm.hpp>
 #include <glm/gtc/type_ptr.hpp>
@@ -239,7 +240,7 @@ namespace Uneye
 					DisplayAddComponentEntry<Rigidbody2DComponent>("Rigidbody 2D");
 					DisplayAddComponentEntry<BoxCollider2DComponent>("BoxCollider 2D");
 					DisplayAddComponentEntry<CircleCollider2DComponent>("CircleCollider 2D");
-
+					DisplayAddComponentEntry<TextComponent>("Text Component");
 
 					ImGui::EndPopup();
 				}
@@ -517,6 +518,14 @@ namespace Uneye
 				UI::DrawFloatControl("RestitutionThreshold", cc2d.RestitutionThreshold, 0.0f, 0.0f, 1.0f);
 
 				}, true);
+
+			DrawComponentUI<TextComponent>(entt, "Text Renderer", [](auto& component)
+			{
+					ImGui::InputTextMultiline("Text String", &component.TextString);
+					ImGui::ColorEdit4("Color", glm::value_ptr(component.Color));
+					ImGui::DragFloat("Kerning", &component.Kerning, 0.025f);
+					ImGui::DragFloat("Line Spacing", &component.LineSpacing, 0.025f);
+			});
 		}
 
 	}

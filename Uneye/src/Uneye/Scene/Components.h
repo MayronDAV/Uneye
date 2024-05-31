@@ -6,6 +6,7 @@
 #include "Uneye/Renderer/Texture.h"
 #include "Uneye/Renderer/SubTexture.h"
 #include "Uneye/Core/UUID.h"
+#include "Uneye/Renderer/Font.h"
 
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
@@ -177,6 +178,15 @@ namespace Uneye
 		CircleCollider2DComponent(const CircleCollider2DComponent&) = default;
 	};
 
+	struct TextComponent
+	{
+		std::string TextString;
+		Ref<Font> FontAsset = Font::GetDefault();
+		glm::vec4 Color{ 1.0f };
+		float Kerning = 0.0f;
+		float LineSpacing = 0.0f;
+	};
+
 	struct ScriptComponent
 	{
 		std::string Name;
@@ -193,5 +203,5 @@ namespace Uneye
 	using AllComponents =
 		ComponentGroup<TransformComponent, SpriteComponent,
 		CircleComponent, CameraComponent, NativeScriptComponent,
-		Rigidbody2DComponent, BoxCollider2DComponent, CircleCollider2DComponent, ScriptComponent>;
+		Rigidbody2DComponent, BoxCollider2DComponent, CircleCollider2DComponent, TextComponent, ScriptComponent>;
 }

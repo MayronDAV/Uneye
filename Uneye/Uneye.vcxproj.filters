@@ -219,6 +219,9 @@
     <ClInclude Include="src\Uneye\Renderer\GraphicsContext.h">
       <Filter>src\Uneye\Renderer</Filter>
     </ClInclude>
+    <ClInclude Include="src\Uneye\Renderer\MSDFData.h">
+      <Filter>src\Uneye\Renderer</Filter>
+    </ClInclude>
     <ClInclude Include="src\Uneye\Renderer\RenderCommand.h">
       <Filter>src\Uneye\Renderer</Filter>
     </ClInclude>

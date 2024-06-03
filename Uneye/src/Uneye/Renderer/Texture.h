@@ -1,7 +1,12 @@
 #pragma once
 
-#include <string>
 #include "Uneye/Core/Base.h"
+#include "Uneye/Core/Buffer.h"
+
+#include "Uneye/Asset/Asset.h"
+
+#include <string>
+
 
 
 namespace Uneye
@@ -23,7 +28,7 @@ namespace Uneye
 		bool GenerateMips = true;
 	};
 
-	class Texture
+	class Texture : public Asset
 	{
 		public:
 			virtual ~Texture() = default;
@@ -35,7 +40,7 @@ namespace Uneye
 
 			virtual uint32_t GetRendererID() = 0;
 
-			virtual void SetData(void* data, uint32_t size) = 0;
+			virtual void SetData(Buffer data) = 0;
 
 			virtual void Bind(uint32_t slot = 0) = 0;
 			virtual void Unbind() = 0;
@@ -47,8 +52,10 @@ namespace Uneye
 	class Texture2D : public Texture
 	{
 		public:
-			static Ref<Texture2D> Create(const TextureSpecification& specification);
-			static Ref<Texture2D> Create(const std::string& path);
+			static Ref<Texture2D> Create(const TextureSpecification& specification, Buffer data = Buffer());
+			
+			static AssetType GetStaticType() { return AssetType::Texture2D; }
+			virtual AssetType GetType() const { return GetStaticType(); }
 	};
 
 }

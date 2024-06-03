@@ -2,4 +2,5 @@ Project:
   Name: SandboxProject
   StartScene: "Scenes\\Physics2D.uyscene"
   AssetDirectory: "Assets"
+  AssetRegistryPath: "Registry.uyreg"
   ScriptModulePath: "Scripts\\Binaries\\Sandbox.dll"

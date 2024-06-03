@@ -20,49 +20,28 @@ namespace Uneye
 			static void Init();
 			static void Shutdown();
 
-			static void BeginScene(const Camera& camera, const glm::mat4& transform);
-			static void BeginScene(const EditorCamera& camera);
+			static void BeginScene(const Camera& p_camera, const glm::mat4& p_transform);
+			static void BeginScene(const EditorCamera& p_camera);
 			static void EndScene();
 			static void Flush();
 
 
-			static void DrawQuad(const glm::vec2& position, const glm::vec2& size,
-				const glm::vec4& color = glm::vec4(1.0f), const Ref<Texture2D>& texture = nullptr);
-			static void DrawQuad(const glm::vec3& position, const glm::vec2& size,
-				const glm::vec4& color = glm::vec4(1.0f), const Ref<Texture2D>& texture = nullptr);		
-			static void DrawQuad(const glm::mat4& transform, const glm::vec4& color = glm::vec4(1.0f),
-				const Ref<Texture2D>& texture = nullptr, int entityID = -1);
+			static void DrawQuad(const glm::vec2& p_position, const glm::vec2& p_size, const glm::vec4& p_color = glm::vec4(1.0f), const Ref<Texture2D>& p_texture = nullptr, int p_entityID = -1);
+			static void DrawQuad(const glm::vec3& p_position, const glm::vec2& p_size, const glm::vec4& p_color = glm::vec4(1.0f), const Ref<Texture2D>& p_texture = nullptr, int p_entityID = -1);
+			static void DrawQuad(const glm::mat4& p_transform, const glm::vec4& p_color = glm::vec4(1.0f), const Ref<Texture2D>& p_texture = nullptr, int p_entityID = -1);
 
+			static void DrawQuad(const glm::vec2& p_position, const glm::vec2& p_size, const Ref<SubTexture2D>& p_subtexture = nullptr, const glm::vec4& p_color = glm::vec4(1.0f), int p_entityID = -1);
+			static void DrawQuad(const glm::vec3& p_position, const glm::vec2& p_size, const Ref<SubTexture2D>& p_subtexture = nullptr, const glm::vec4& p_color = glm::vec4(1.0f), int p_entityID = -1);
+			static void DrawQuad(const glm::mat4& p_transform, const Ref<SubTexture2D>& p_subtexture = nullptr, const glm::vec4& p_color = glm::vec4(1.0f), int p_entityID = -1);
 
-			static void DrawRotateQuad(const glm::vec2& position, const glm::vec2& size,
-				float rotation, const glm::vec4& color = glm::vec4(1.0f), const Ref<Texture2D>& texture = nullptr);
-			static void DrawRotateQuad(const glm::vec3& position, const glm::vec2& size,
-				float rotation, const glm::vec4& color = glm::vec4(1.0f), const Ref<Texture2D>& texture = nullptr);
+			static void DrawSprite(const glm::mat4& p_transform, SpriteComponent& p_sc, int p_entityID);
 
+			static void DrawCircle(const glm::mat4& p_transform, const glm::vec4& p_color, float p_thickness = 1.0f, float p_fade = 0.005f, int p_entityID = -1);
 
-			static void DrawQuad(const glm::vec2& position, const glm::vec2& size,
-				const Ref<SubTexture2D>& subtexture = nullptr, const glm::vec4& color = glm::vec4(1.0f));
-			static void DrawQuad(const glm::vec3& position, const glm::vec2& size,
-				const Ref<SubTexture2D>& subtexture = nullptr, const glm::vec4& color = glm::vec4(1.0f));
-			static void DrawQuad(const glm::mat4& transform, const Ref<SubTexture2D>& subtexture = nullptr,
-				const glm::vec4& color = glm::vec4(1.0f), int entityID = -1);
+			static void DrawLine(const glm::vec3& p_p0, const glm::vec3& p_p1, const glm::vec4& p_color, int p_entityID = -1);
 
-
-			static void DrawRotateQuad(const glm::vec2& position, const glm::vec2& size,
-				float rotation, const Ref<SubTexture2D>& subtexture = nullptr, const glm::vec4& color = glm::vec4(1.0f));
-			static void DrawRotateQuad(const glm::vec3& position, const glm::vec2& size,
-				float rotation, const Ref<SubTexture2D>& subtexture = nullptr, const glm::vec4& color = glm::vec4(1.0f));
-
-			static void DrawSprite(const glm::mat4& transform, SpriteComponent& mc, int entityID);
-
-			static void DrawCircle(const glm::mat4& transform, const glm::vec4& color, float thickness = 1.0f, 
-				float fade = 0.005f, int entityID = -1);
-
-			static void DrawLine(const glm::vec3& p0, const glm::vec3& p1, const glm::vec4& color, int entityID = -1);
-
-			static void DrawRect(const glm::vec3& position, const glm::vec2 size, 
-				const glm::vec4& color = glm::vec4(1), int entityID = -1);
-			static void DrawRect(const glm::mat4& transform, const glm::vec4& color = glm::vec4(1), int entityID = -1);
+			static void DrawRect(const glm::vec3& p_position, const glm::vec2& p_size, const glm::vec4& p_color = glm::vec4(1), int p_entityID = -1);
+			static void DrawRect(const glm::mat4& p_transform, const glm::vec4& p_color = glm::vec4(1), int p_entityID = -1);
 
 			struct TextParams
 			{
@@ -70,14 +49,12 @@ namespace Uneye
 				float Kerning = 0.0f;
 				float LineSpacing = 0.0f;
 			};
-			static void DrawString(const std::string& string, Ref<Font> font, const glm::mat4& transform,
-				const TextParams& textParams, int entityID = -1);
-			static void DrawString(const std::string& string, const glm::mat4& transform,
-				const TextComponent& component, int entityID = -1);
+			static void DrawString(const std::string& p_string, Ref<Font> p_font, const glm::mat4& p_transform, const TextParams& p_textParams, int p_entityID = -1);
+			static void DrawString(const std::string& p_string, const glm::mat4& p_transform, const TextComponent& p_component, int p_entityID = -1);
 
 
 			static float GetLineWidth();
-			static void  SetLineWidth(float width);
+			static void  SetLineWidth(float p_width);
 
 			// Stats
 			struct Statistics

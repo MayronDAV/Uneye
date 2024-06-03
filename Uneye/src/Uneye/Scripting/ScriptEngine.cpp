@@ -141,7 +141,7 @@ namespace Uneye
 			UNEYE_CORE_ERROR("[ScriptEngine] Could not load Uneye-ScriptCore assembly.");
 			return;
 		}
-		auto scriptModulePath = Project::GetAssetDirectory() / Project::GetActive()->GetConfig().ScriptModulePath;
+		auto scriptModulePath = Project::GetActiveAssetDirectory() / Project::GetActive()->GetConfig().ScriptModulePath;
 		status = LoadAppAssembly(scriptModulePath);
 		if (!status)
 		{
@@ -474,6 +474,11 @@ namespace Uneye
 			return nullptr;
 
 		return it->second->GetManageObject();
+	}
+
+	MonoString* ScriptEngine::CreateString(const char* string)
+	{
+		return mono_string_new(s_Data->AppDomain, string);
 	}
 
 #pragma endregion

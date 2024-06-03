@@ -13,6 +13,9 @@
 #include <unordered_map>
 #include <unordered_set>
 
+#include "Uneye/Core/Base.h"
+#include "Uneye/Core/Buffer.h"
+
 #include "Uneye/Core/Log.h"
 #include "Uneye/Debug/Instrumentor.h"
 

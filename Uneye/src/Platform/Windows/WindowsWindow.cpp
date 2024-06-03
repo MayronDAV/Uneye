@@ -177,6 +177,19 @@ namespace Uneye {
 			data.EventCallback(event);
 		});
 		UNEYE_CORE_INFO("Setted cursor pos callback");
+
+		glfwSetDropCallback(m_Window, [](GLFWwindow* window, int pathCount, const char* paths[])
+		{
+				WindowData& data = *(WindowData*)glfwGetWindowUserPointer(window);
+
+				std::vector<std::filesystem::path> filepaths(pathCount);
+				for (int i = 0; i < pathCount; i++)
+					filepaths[i] = paths[i];
+
+				WindowDropEvent event(std::move(filepaths));
+				data.EventCallback(event);
+		});
+		UNEYE_CORE_INFO("Setted drop callback");
 	}
 
 	void WindowsWindow::Shutdown()

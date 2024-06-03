@@ -1464,6 +1464,14 @@
     <ClInclude Include="vendor\stb\include\stb_voxel_render.h">
       <Filter>vendor\stb\include</Filter>
     </ClInclude>
+    <ClInclude Include="src\Uneye\Asset\Asset.h" />
+    <ClInclude Include="src\Uneye\Asset\AssetMetadata.h" />
+    <ClInclude Include="src\Uneye\Asset\TextureImporter.h" />
+    <ClInclude Include="src\Uneye\Asset\AssetManagerBase.h" />
+    <ClInclude Include="src\Uneye\Asset\AssetManager.h" />
+    <ClInclude Include="src\Uneye\Asset\RuntimeAssetManager.h" />
+    <ClInclude Include="src\Uneye\Asset\EditorAssetManager.h" />
+    <ClInclude Include="src\Uneye\Asset\AssetImporter.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Platform\OpenGL\OpenGLBuffer.cpp">
@@ -1631,5 +1639,12 @@
     <ClCompile Include="vendor\stb\src\stb_image.cpp">
       <Filter>vendor\stb\src</Filter>
     </ClCompile>
+    <ClCompile Include="src\Uneye\Asset\Asset.cpp" />
+    <ClCompile Include="src\Uneye\Asset\TextureImporter.cpp" />
+    <ClCompile Include="src\Uneye\Asset\AssetManagerBase.cpp" />
+    <ClCompile Include="src\Uneye\Asset\AssetManager.cpp" />
+    <ClCompile Include="src\Uneye\Asset\RuntimeAssetManager.cpp" />
+    <ClCompile Include="src\Uneye\Asset\EditorAssetManager.cpp" />
+    <ClCompile Include="src\Uneye\Asset\AssetImporter.cpp" />
   </ItemGroup>
 </Project>

@@ -18,6 +18,11 @@
 	#define UNEYE_ENABLE_ASSERTS
 #endif
 
+#ifndef UNEYE_DIST
+	#define UNEYE_ENABLE_VERIFY
+#endif
+
+
 #define UNEYE_EXPAND_MACRO(x) x
 #define UNEYE_STRINGIFY_MACRO(x) #x
 
@@ -38,6 +43,24 @@
 #else
 	#define UNEYE_ASSERT(...)
 	#define UNEYE_CORE_ASSERT(...)
+#endif
+
+#ifdef UNEYE_ENABLE_VERIFY
+	// Alteratively we could use the same "default" message for both "WITH_MSG" and "NO_MSG" and
+	// provide support for custom formatting by concatenating the formatting string instead of having the format inside the default message
+	#define UNEYE_INTERNAL_VERIFY_IMPL(type, check, msg, ...) { if(check) { UNEYE##type##ERROR(msg, __VA_ARGS__); UNEYE_DEBUGBREAK(); } }
+	#define UNEYE_INTERNAL_VERIFY_WITH_MSG(type, check, ...) UNEYE_INTERNAL_VERIFY_IMPL(type, check, "Assertion failed: {0}", __VA_ARGS__)
+	#define UNEYE_INTERNAL_VERIFY_NO_MSG(type, check) UNEYE_INTERNAL_VERIFY_IMPL(type, check, "Assertion '{0}' failed at {1}:{2}", UNEYE_STRINGIFY_MACRO(check), std::filesystem::path(__FILE__).filename().string(), __LINE__)
+
+	#define UNEYE_INTERNAL_VERIFY_GET_MACRO_NAME(arg1, arg2, macro, ...) macro
+	#define UNEYE_INTERNAL_VERIFY_GET_MACRO(...) UNEYE_EXPAND_MACRO( UNEYE_INTERNAL_VERIFY_GET_MACRO_NAME(__VA_ARGS__, UNEYE_INTERNAL_VERIFY_WITH_MSG, UNEYE_INTERNAL_VERIFY_NO_MSG) )
+
+	// Currently accepts at least the condition and one additional parameter (the message) being optional
+	#define UNEYE_VERIFY(...) UNEYE_EXPAND_MACRO( UNEYE_INTERNAL_VERIFY_GET_MACRO(__VA_ARGS__)(_, __VA_ARGS__) )
+	#define UNEYE_CORE_VERIFY(...) UNEYE_EXPAND_MACRO( UNEYE_INTERNAL_VERIFY_GET_MACRO(__VA_ARGS__)(_CORE_, __VA_ARGS__) )
+#else
+	#define UNEYE_VERIFY(...)
+	#define UNEYE_CORE_VERIFY(...)
 #endif
 
 #pragma endregion

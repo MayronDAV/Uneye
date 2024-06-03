@@ -19,6 +19,7 @@ extern "C" {
 	typedef struct _MonoImage MonoImage;
 	typedef struct _MonoClassField MonoClassField;
 	typedef struct _MonoType MonoType;
+	typedef struct _MonoString MonoString;
 }
 
 #pragma endregion
@@ -286,6 +287,7 @@ namespace Uneye
 
 			static MonoObject* GetManageInstance(UUID enttID);
 
+			static MonoString* CreateString(const char* string);
 		private:
 			static void InitMono();
 			static void ShutdownMono();

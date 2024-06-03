@@ -7,6 +7,9 @@
 #include "Uneye/Core/UUID.h"
 #include "Uneye/Project/Project.h"
 
+#include "Uneye/Asset/AssetManager.h"
+#include "Uneye/Project/Project.h"
+
 #include <fstream>
 
 #include <yaml-cpp/yaml.h>
@@ -157,12 +160,13 @@ namespace Uneye
 			auto& spriteComponent = entity.GetComponent<SpriteComponent>();
 			out << YAML::Key << "Color" << YAML::Value << spriteComponent.Color;
 			out << YAML::Key << "TexturePath" << YAML::Value << spriteComponent.TexturePath;
+			out << YAML::Key << "TextureHandle" << YAML::Value << spriteComponent.Texture;
 			out << YAML::Key << "IsSubTexture" << YAML::Value << spriteComponent.IsSubTexture;
 
 			if (spriteComponent.IsSubTexture)
 			{
 				out << YAML::Key << "TileSize" << YAML::Value << spriteComponent.TileSize;
-				out << YAML::Key << "Coords" << YAML::Value << spriteComponent.Coords;
+				out << YAML::Key << "TileCoord" << YAML::Value << spriteComponent.TileCoord;
 				out << YAML::Key << "SpriteSize" << YAML::Value << spriteComponent.SpriteSize;
 			}
 
@@ -402,31 +406,19 @@ namespace Uneye
 					auto& mc = deserializedEntity.AddComponent<SpriteComponent>();
 					mc.Color = spriteComponent["Color"].as<glm::vec4>();
 					mc.TexturePath = spriteComponent["TexturePath"].as<std::string>();
-					if (mc.TexturePath == "" || mc.TexturePath == " " || mc.TexturePath == std::string())
-					{
-						mc.Texture = nullptr;
-						mc.IsSubTexture = false;
-					}
-					else
-					{
-						//mc.TexturePath = Project::GetAssetFileSystemPath(mc.TexturePath).string();
-						//auto assetPath = Project::GetProjectDirectory() / Project::GetAssetDirectory();
-						//mc.TexturePath = std::filesystem::relative(mc.TexturePath, assetPath).string();
-						//mc.TexturePath = Project::GetAssetFileSystemPath(mc.TexturePath).string();
 
-						mc.Texture = Texture2D::Create(mc.TexturePath);
-					}
+					if (spriteComponent["TextureHandle"])
+						mc.Texture = spriteComponent["TextureHandle"].as<AssetHandle>();
 
 					mc.IsSubTexture = spriteComponent["IsSubTexture"].as<bool>();
 
 					if (mc.IsSubTexture)
 					{
 						mc.TileSize = spriteComponent["TileSize"].as<glm::vec2>();
-						mc.Coords = spriteComponent["Coords"].as<glm::vec2>();
+						mc.TileCoord = spriteComponent["Coords"].as<glm::vec2>();
 						mc.SpriteSize = spriteComponent["SpriteSize"].as<glm::vec2>();
 
-						mc.SubTexture = SubTexture2D::CreateFromTexture(mc.Texture, mc.Coords,
-							mc.TileSize, mc.SpriteSize);
+						//mc.SubTexture = SubTexture2D::CreateFromTexture(AssetManager::GetAsset<Texture2D>(mc.Texture), mc.Coords, mc.TileSize, mc.SpriteSize);
 					}
 				}
 

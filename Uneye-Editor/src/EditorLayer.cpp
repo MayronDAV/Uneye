@@ -1,6 +1,5 @@
 #include "EditorLayer.h"
 
-#include <imgui/imgui.h>
 
 #include "Uneye/Scene/SceneSerializer.h"
 #include "Uneye/Utils/PlatformUtils.h"
@@ -10,6 +9,11 @@
 #include "Uneye/Core/ThemeManager.h"
 
 #include "Uneye/Math/Math.h"
+
+#include "Uneye/Asset/AssetManager.h"
+#include "Uneye/Asset/TextureImporter.h"
+
+#include <imgui/imgui.h>
 #include <ImGuizmo.h>
 
 
@@ -31,11 +35,11 @@ namespace Uneye
 
 		//Application::Get().GetWindow().SetVSync(false);
 
-		m_IconPlay = Texture2D::Create("Resources/Icons/PlayButton.png");
-		m_IconPause = Texture2D::Create("Resources/Icons/PauseButton.png");
-		m_IconStep = Texture2D::Create("Resources/Icons/StepButton.png");
-		m_IconSimulate = Texture2D::Create("Resources/Icons/SimulateButton.png");
-		m_IconStop = Texture2D::Create("Resources/Icons/StopButton.png");
+		m_IconPlay = TextureImporter::LoadTexture2D("Resources/Icons/PlayButton.png");
+		m_IconPause = TextureImporter::LoadTexture2D("Resources/Icons/PauseButton.png");
+		m_IconSimulate = TextureImporter::LoadTexture2D("Resources/Icons/SimulateButton.png");
+		m_IconStep = TextureImporter::LoadTexture2D("Resources/Icons/StepButton.png");
+		m_IconStop = TextureImporter::LoadTexture2D("Resources/Icons/StopButton.png");
 
 		FramebufferSpecification fbspec;
 		fbspec.Attachments = {
@@ -165,6 +169,7 @@ namespace Uneye
 		EventDispatcher dispatcher(e);
 		dispatcher.Dispatch<KeyPressedEvent>(UNEYE_BIND_EVENT_FN(EditorLayer::OnKeyPressed));
 		dispatcher.Dispatch<MouseButtonPressedEvent>(UNEYE_BIND_EVENT_FN(EditorLayer::OnMouseButtonPressed));
+		dispatcher.Dispatch<WindowDropEvent>(UNEYE_BIND_EVENT_FN(EditorLayer::OnWindowDrop));
 	}
 
 	void EditorLayer::OnImGuiRender()
@@ -241,6 +246,12 @@ namespace Uneye
 
 			if (ImGui::BeginMenu("Tools"))
 			{
+				if (ImGui::MenuItem("Import Asset")) {
+					m_AssetImporterPanelIsOpen = true;
+				}
+
+				ImGui::Separator();
+
 				if (ImGui::MenuItem("ReloadAssembly")) {
 					ScriptEngine::ReloadAssembly();
 				}
@@ -316,7 +327,7 @@ namespace Uneye
 			if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("CONTENT_BROWSER_ITEM"))
 			{
 				const wchar_t* path = (const wchar_t*)payload->Data;
-				OpenScene(Project::GetAssetFileSystemPath(path));
+				OpenScene(Project::GetActiveAssetFileSystemPath(path));
 			}
 			ImGui::EndDragDropTarget();
 		}
@@ -379,6 +390,15 @@ namespace Uneye
 		ImGui::PopStyleVar();
 
 		UI_Toolbar();
+
+		if (m_AssetImporterPanelIsOpen)
+		{
+			m_AssetImporterPanel.SetOpen();
+			m_AssetImporterPanel.Open();
+		}
+
+		if (!m_AssetImporterPanel)
+			m_AssetImporterPanelIsOpen = false;
 
 		ImGui::End();
 
@@ -568,6 +588,15 @@ namespace Uneye
 		return false;
 	}
 
+	bool EditorLayer::OnWindowDrop(WindowDropEvent& e)
+	{
+		// TODO: if a project is dropped in, probably open it
+
+		//AssetManager::ImportAsset();
+
+		return true;
+	}
+
 	void EditorLayer::OnOverlayRender()
 	{
 		if (m_SceneState == SceneState::Play)
@@ -653,7 +682,7 @@ namespace Uneye
 		{
 			ScriptEngine::Init();
 
-			auto startScenePath = Project::GetAssetFileSystemPath(Project::GetStartScene());
+			auto startScenePath = Project::GetActiveAssetFileSystemPath(Project::GetStartScene());
 			OpenScene(startScenePath);
 			m_ContentBrowserPanel = CreateScope<ContentBrowserPanel>();
 		}

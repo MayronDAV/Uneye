@@ -8,6 +8,8 @@
 #include "Uneye/Scripting/ScriptEngine.h"
 
 #include "Uneye/Project/Project.h"
+#include "Uneye/Asset/TextureImporter.h"
+#include "Uneye/Asset/AssetManager.h"
 
 #include <imgui/imgui.h>
 #include <imgui/imgui_internal.h>
@@ -321,16 +323,16 @@ namespace Uneye
 
 				}, true);
 
-			DrawComponentUI<ScriptComponent>(entt, "Script", [&, scene = m_Context](auto& sc)
+			DrawComponentUI<ScriptComponent>(entt, "Script", [&, scene = m_Context](auto& p_sc)
 			{
-				bool scriptClassExists = ScriptEngine::EntitySubClassExists(sc.Name);
+				bool scriptClassExists = ScriptEngine::EntitySubClassExists(p_sc.Name);
 
 				char buffer[64];
 				memset(buffer, 0, sizeof(buffer));
-				strcpy_s(buffer, sizeof(buffer), sc.Name.c_str());
+				strcpy_s(buffer, sizeof(buffer), p_sc.Name.c_str());
 				if (UI::DrawInputText("Class", buffer, sizeof(buffer)))
 				{
-					sc.Name = std::string(buffer);
+					p_sc.Name = std::string(buffer);
 				}
 
 				bool sceneRunning = scene->IsRunning();
@@ -355,7 +357,7 @@ namespace Uneye
 				{
 					if (scriptClassExists)
 					{
-						Ref<ScriptClass> entityClass = ScriptEngine::GetEntityClass(sc.Name);
+						Ref<ScriptClass> entityClass = ScriptEngine::GetEntityClass(p_sc.Name);
 						const auto& fields = entityClass->GetFields();
 
 						auto& entityFields = ScriptEngine::GetScriptFieldMap(entt);
@@ -395,36 +397,28 @@ namespace Uneye
 
 			}, true);
 
-			DrawComponentUI<SpriteComponent>(entt, "Sprite", [&](auto& mc) {
+			DrawComponentUI<SpriteComponent>(entt, "Sprite", [&](auto& p_sc) {
 
-				UI::DrawColorEdit4("Color ", mc.Color, 1.0f);
+				UI::DrawColorEdit4("Color ", p_sc.Color, 1.0f);
 
-				std::string filename = std::filesystem::path(mc.TexturePath).filename().string();
+				std::string filename = std::filesystem::path(p_sc.TexturePath).filename().string();
 				UI::DrawClickableText("Texture Path", filename, [&]() {
 
-					mc.TexturePath = " ";
-					mc.Texture = nullptr;
-					mc.IsSubTexture = false;
-					mc.SubTexture = nullptr;
+					p_sc.TexturePath = " ";
+					p_sc.IsSubTexture = false;
 
 					}, [&]() {
 
 						std::string filepath = FileDialogs::OpenFile("img files (*.png)|*.jpg|All files (*.*)|*.*");
-						std::string path = mc.TexturePath;
+						std::string path = p_sc.TexturePath;
 						if (filepath.empty())
-							mc.TexturePath = path;
+							p_sc.TexturePath = path;
 						else
-							mc.TexturePath = filepath;
+							p_sc.TexturePath = filepath;
 
-						if (mc.TexturePath == "" || mc.TexturePath == " " || mc.TexturePath == std::string())
-						{
-							mc.Texture = nullptr;
-							mc.IsSubTexture = false;
-						}
-						else
-							mc.Texture = Texture2D::Create(mc.TexturePath);
+						//p_sc.Texture = TextureImporter::ImportTexture2D(UUID(), {AssetType::Texture2D, p_sc.TexturePath })->Handle;
 
-						filename = std::filesystem::path(mc.TexturePath).filename().string();
+						filename = std::filesystem::path(p_sc.TexturePath).filename().string();
 
 						}, [&]() {
 							if (ImGui::BeginDragDropTarget())
@@ -432,28 +426,28 @@ namespace Uneye
 								if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("CONTENT_BROWSER_ITEM"))
 								{
 									const wchar_t* path = (const wchar_t*)payload->Data;
-									std::filesystem::path texturePath = Project::GetAssetFileSystemPath(path);
-									mc.TexturePath = texturePath.string();
-									filename = std::filesystem::path(mc.TexturePath).filename().string();
-									mc.Texture = Texture2D::Create(texturePath.string());
+									std::filesystem::path texturePath = Project::GetActiveAssetFileSystemPath(path);
+									p_sc.TexturePath = texturePath.string();
+									filename = std::filesystem::path(p_sc.TexturePath).filename().string();
+									//p_sc.Texture = TextureImporter::ImportTexture2D(UUID(), { AssetType::Texture2D, texturePath.string() })->Handle;
 								}
 								ImGui::EndDragDropTarget();
 							}
 
 							});
 
-				UI::DrawCheckBox("Is SubTexture ", &mc.IsSubTexture);
+				UI::DrawCheckBox("Is SubTexture ", &p_sc.IsSubTexture);
 
-				if (mc.IsSubTexture)
+				if (p_sc.IsSubTexture)
 				{
-					UI::DrawFloat2Input("Global Tile Size", mc.TileSize, 1.0f);
-					UI::DrawFloat2Input("Tile Coord", mc.Coords);
-					UI::DrawFloat2Input("Sprite Multiple Size", mc.SpriteSize, 1.0f);
+					UI::DrawFloat2Input("Tile Size", p_sc.TileSize, 1.0f);
+					UI::DrawFloat2Input("Tile Coord", p_sc.TileCoord);
+					UI::DrawFloat2Input("Sprite Size", p_sc.SpriteSize, 1.0f);
 
-					if (!(mc.TexturePath == "" || mc.TexturePath == " " || mc.TexturePath == std::string()))
-						mc.SubTexture = SubTexture2D::CreateFromTexture(mc.Texture, mc.Coords, mc.TileSize, mc.SpriteSize);
+					/*if (!(p_sc.TexturePath == "" || p_sc.TexturePath == " " || p_sc.TexturePath == std::string()))
+						p_sc.SubTexture = SubTexture2D::CreateFromTexture(TextureImporter::LoadTexture2D(p_sc.TexturePath), p_sc.Coords, p_sc.TileSize, p_sc.SpriteSize);
 					else
-						mc.SubTexture = nullptr;
+						p_sc.SubTexture = nullptr;*/
 				}
 
 				}, true);

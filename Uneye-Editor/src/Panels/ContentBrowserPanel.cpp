@@ -6,6 +6,8 @@
 
 #include "Uneye/Core/Filesystem.h"
 
+#include "Uneye/Asset/TextureImporter.h"
+
 #include <imgui/imgui.h>
 #include <stack>
 #include <imgui/imgui_internal.h>
@@ -27,7 +29,7 @@ namespace Uneye
 		{
 			auto it = textures.find(path);
 			if (it == textures.end())
-				textures[path] = Texture2D::Create(path);
+				textures[path] = TextureImporter::LoadTexture2D(path);
 
 			return textures[path];
 		}
@@ -44,10 +46,10 @@ namespace Uneye
 	}
 
 	ContentBrowserPanel::ContentBrowserPanel()
-		:m_BaseDirectory(Project::GetAssetDirectory()), m_CurrentDirectory(m_BaseDirectory)
+		:m_BaseDirectory(Project::GetActiveAssetDirectory()), m_CurrentDirectory(m_BaseDirectory)
 	{
-		m_DirectoryIcon = Texture2D::Create("Resources/Icons/ContentBrowser/DirectoryIcon.png");
-		m_FileIcon = Texture2D::Create("Resources/Icons/ContentBrowser/FileIcon.png");
+		m_DirectoryIcon = TextureImporter::LoadTexture2D("Resources/Icons/ContentBrowser/DirectoryIcon.png");
+		m_FileIcon = TextureImporter::LoadTexture2D("Resources/Icons/ContentBrowser/FileIcon.png");
 	}
 
 	void ContentBrowserPanel::ShowDirectoryTree(const fs::path& path)
@@ -158,7 +160,7 @@ namespace Uneye
 				std::vector<fs::path> pathSegments;
 				fs::path pathAccumulator;
 
-				auto currentRelPath = Project::GetAssetFileSystemPath(fs::relative(m_CurrentDirectory, m_BaseDirectory));
+				auto currentRelPath = Project::GetActiveAssetFileSystemPath(fs::relative(m_CurrentDirectory, m_BaseDirectory));
 				for (const auto& part : currentRelPath)
 				{
 					if (part != ".")
@@ -179,13 +181,13 @@ namespace Uneye
 					}
 
 					auto segmentSTR = fs::relative(segment, m_BaseDirectory);
-					auto assetRelPath = Project::GetAssetFileSystemPath(segmentSTR);
+					auto assetRelPath = Project::GetActiveAssetFileSystemPath(segmentSTR);
 					auto filenameStr = assetRelPath.filename().string();
 					//UNEYE_CORE_TRACE("path: {}", filenameStr);
 					if (filenameStr == "..")
 						continue;
 					else if (filenameStr == ".")
-						filenameStr = Project::GetAssetDirectory().filename().string();
+						filenameStr = Project::GetActiveAssetDirectory().filename().string();
 
 					ImGui::PushStyleColor(ImGuiCol_Button, { 0, 0, 0, 0 });
 					ImGui::PushStyleColor(ImGuiCol_ButtonHovered, { 0.3f, 0.3f, 0.35f, 0.5f });

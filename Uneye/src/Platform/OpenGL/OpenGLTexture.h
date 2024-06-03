@@ -12,11 +12,10 @@ namespace Uneye
 	class OpenGLTexture2D : public Texture2D
 	{
 		public:
-			OpenGLTexture2D(const TextureSpecification& specification);
-			OpenGLTexture2D(const std::string& path);
+			OpenGLTexture2D(const TextureSpecification& specification, Buffer data = Buffer());
 			virtual ~OpenGLTexture2D();
 
-			virtual void SetData(void* data, uint32_t size) override;
+			virtual void SetData(Buffer data) override;
 
 			virtual uint32_t GetRendererID() override { return m_RendererID; }
 			virtual const TextureSpecification& GetSpecification() const override { return m_Specification; }
@@ -29,14 +28,12 @@ namespace Uneye
 
 			virtual bool operator== (const Texture& other) const override
 			{
-				return m_RendererID == ((OpenGLTexture2D&)other).GetRendererID() ||
-					m_Path == ((OpenGLTexture2D&)other).m_Path;
+				return m_RendererID == ((OpenGLTexture2D&)other).GetRendererID();
 			}
 
 		private:
 			TextureSpecification m_Specification;
 
-			std::string m_Path			= " ";
 			uint32_t m_Width			= NULL;
 			uint32_t m_Height			= NULL;
 			uint32_t m_RendererID		= NULL;

@@ -4,6 +4,9 @@
 #include <glm/glm.hpp>
 #include "Uneye/Core/FontManager.h"
 
+#include <imgui/imgui.h>
+#include <imgui/imgui_internal.h>
+	
 
 namespace Uneye
 {

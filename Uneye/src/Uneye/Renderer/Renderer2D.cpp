@@ -6,6 +6,8 @@
 
 #include "Uneye/Renderer/UniformBuffer.h"
 
+#include "Uneye/Asset/AssetManager.h"
+
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
 
@@ -245,7 +247,7 @@ namespace Uneye
 
 		s_Data.WhiteTexture = Texture2D::Create(TextureSpecification());
 		uint32_t whiteTextureData = 0xffffffff;
-		s_Data.WhiteTexture->SetData(&whiteTextureData, sizeof(whiteTextureData));
+		s_Data.WhiteTexture->SetData(Buffer(&whiteTextureData, sizeof(uint32_t)));
 
 		int32_t samplers[s_Data.MaxTextureSlots];
 		for (uint32_t i = 0; i < s_Data.MaxTextureSlots; i++)
@@ -283,21 +285,21 @@ namespace Uneye
 		s_Data.TextureSlotIndex = 1;
 	}
 
-	void Renderer2D::BeginScene(const Camera& camera, const glm::mat4& transform)
+	void Renderer2D::BeginScene(const Camera& p_camera, const glm::mat4& p_transform)
 	{
 		UNEYE_PROFILE_FUNCTION();
 
-		s_Data.CameraBuffer.ViewProjection = camera.GetProjection() * glm::inverse(transform);
+		s_Data.CameraBuffer.ViewProjection = p_camera.GetProjection() * glm::inverse(p_transform);
 		s_Data.CameraUniformBuffer->SetData(&s_Data.CameraBuffer, sizeof(Renderer2Ddata::CameraData));
 
 		StartBatch();
 	}
 
-	void Renderer2D::BeginScene(const EditorCamera& camera)
+	void Renderer2D::BeginScene(const EditorCamera& p_camera)
 	{
 		UNEYE_PROFILE_FUNCTION();
 
-		s_Data.CameraBuffer.ViewProjection = camera.GetViewProjection();
+		s_Data.CameraBuffer.ViewProjection = p_camera.GetViewProjection();
 		s_Data.CameraUniformBuffer->SetData(&s_Data.CameraBuffer, sizeof(Renderer2Ddata::CameraData));
 
 		StartBatch();
@@ -374,16 +376,17 @@ namespace Uneye
 
 
 
-	void Renderer2D::DrawQuad(const glm::vec2& position, const glm::vec2& size, 
-		const glm::vec4& color, const Ref<Texture2D>& texture)
+	void Renderer2D::DrawQuad(const glm::vec2& p_position, const glm::vec2& p_size, 
+		const glm::vec4& p_color, const Ref<Texture2D>& p_texture, int p_entityID)
 	{
-		DrawQuad({ position.x, position.y, 0.0f }, size, color, texture);
+		DrawQuad({ p_position.x, p_position.y, 0.0f }, p_size, p_color, p_texture);
 	}
 
-	void Renderer2D::DrawQuad(const glm::vec3& position, const glm::vec2& size,
-		const glm::vec4& color, const Ref<Texture2D>& texture)
+	void Renderer2D::DrawQuad(const glm::vec3& p_position, const glm::vec2& p_size,
+		const glm::vec4& p_color, const Ref<Texture2D>& p_texture, int p_entityID)
 	{
 		UNEYE_PROFILE_FUNCTION();
+		UNEYE_CORE_VERIFY(!p_texture);
 
 		constexpr size_t quadVertexCount = 4;
 		constexpr glm::vec2 QuadTexCoords[] = {
@@ -397,11 +400,11 @@ namespace Uneye
 			FlushAndReset();
 
 		float textureIndex = 0.0f; // White texture
-		if (texture != nullptr)
+		if (p_texture != nullptr)
 		{
 			for (uint32_t i = 1; i < s_Data.TextureSlotIndex; i++)
 			{
-				if (*s_Data.TextureSlots[i].get() == *texture.get())
+				if (*s_Data.TextureSlots[i].get() == *p_texture.get())
 				{
 					textureIndex = (float)i;
 					break;
@@ -414,20 +417,21 @@ namespace Uneye
 					FlushAndReset();
 
 				textureIndex = (float)s_Data.TextureSlotIndex;
-				s_Data.TextureSlots[s_Data.TextureSlotIndex] = texture;
+				s_Data.TextureSlots[s_Data.TextureSlotIndex] = p_texture;
 				s_Data.TextureSlotIndex++;
 			}
 		}
 
-		glm::mat4 transform = glm::translate(glm::mat4(1.0f), position);
-		transform = glm::scale(transform, { size.x, size.y, 1.0f });
+		glm::mat4 transform = glm::translate(glm::mat4(1.0f), p_position);
+		transform = glm::scale(transform, { p_size.x, p_size.y, 1.0f });
 
 		for (int i = 0; i < quadVertexCount; i++)
 		{
 			s_Data.QuadVertexBufferPtr->Position = transform * s_Data.QuadVertexPositions[i];
-			s_Data.QuadVertexBufferPtr->Color = color;
+			s_Data.QuadVertexBufferPtr->Color = p_color;
 			s_Data.QuadVertexBufferPtr->TexCoord = QuadTexCoords[i];
 			s_Data.QuadVertexBufferPtr->TexIndex = textureIndex;
+			s_Data.QuadVertexBufferPtr->EntityID = p_entityID;
 			s_Data.QuadVertexBufferPtr++;
 		}
 
@@ -438,8 +442,8 @@ namespace Uneye
 		s_Data.Stats.QuadCount++;
 	}
 
-	void Renderer2D::DrawQuad(const glm::mat4& transform, const glm::vec4& color,
-		const Ref<Texture2D>& texture, int entityID)
+	void Renderer2D::DrawQuad(const glm::mat4& p_transform, const glm::vec4& p_color,
+		const Ref<Texture2D>& p_texture, int p_entityID)
 	{
 		UNEYE_PROFILE_FUNCTION();
 
@@ -455,11 +459,11 @@ namespace Uneye
 			FlushAndReset();
 
 		float textureIndex = 0.0f; // White texture
-		if (texture != nullptr)
+		if (p_texture != nullptr)
 		{
 			for (uint32_t i = 1; i < s_Data.TextureSlotIndex; i++)
 			{
-				if (*s_Data.TextureSlots[i].get() == *texture.get())
+				if (*s_Data.TextureSlots[i].get() == *p_texture.get())
 				{
 					textureIndex = (float)i;
 					break;
@@ -472,18 +476,18 @@ namespace Uneye
 					FlushAndReset();
 
 				textureIndex = (float)s_Data.TextureSlotIndex;
-				s_Data.TextureSlots[s_Data.TextureSlotIndex] = texture;
+				s_Data.TextureSlots[s_Data.TextureSlotIndex] = p_texture;
 				s_Data.TextureSlotIndex++;
 			}
 		}
 
 		for (int i = 0; i < quadVertexCount; i++)
 		{
-			s_Data.QuadVertexBufferPtr->Position = transform * s_Data.QuadVertexPositions[i];
-			s_Data.QuadVertexBufferPtr->Color = color;
+			s_Data.QuadVertexBufferPtr->Position = p_transform * s_Data.QuadVertexPositions[i];
+			s_Data.QuadVertexBufferPtr->Color = p_color;
 			s_Data.QuadVertexBufferPtr->TexCoord = QuadTexCoords[i];
 			s_Data.QuadVertexBufferPtr->TexIndex = textureIndex;
-			s_Data.QuadVertexBufferPtr->EntityID = entityID;
+			s_Data.QuadVertexBufferPtr->EntityID = p_entityID;
 			s_Data.QuadVertexBufferPtr++;
 		}
 
@@ -497,92 +501,21 @@ namespace Uneye
 
 
 
-	void Renderer2D::DrawRotateQuad(const glm::vec2& position,
-		const glm::vec2& size, float rotation,
-		const glm::vec4& color, const Ref<Texture2D>& texture)
+	void Renderer2D::DrawQuad(const glm::vec2& p_position, const glm::vec2& p_size,
+		const Ref<SubTexture2D>& p_subtexture, const glm::vec4& p_color, int p_entityID)
 	{
-		DrawRotateQuad({ position.x, position.y, 0.0f }, size, 
-			rotation, color, texture);
+		DrawQuad(glm::vec3(p_position, 0.0f), p_size, p_subtexture, p_color);
 	}
 
-	void Renderer2D::DrawRotateQuad(const glm::vec3& position,
-		const glm::vec2& size, float rotation,
-		const glm::vec4& color, const Ref<Texture2D>& texture)
-	{
-		UNEYE_PROFILE_FUNCTION();
-
-		constexpr size_t quadVertexCount = 4;
-		constexpr glm::vec2 QuadTexCoords[] = {
-			{0.0f, 0.0f},
-			{1.0f, 0.0f},
-			{1.0f, 1.0f},
-			{0.0f, 1.0f}
-		};
-
-		if (s_Data.QuadIndexCount >= Renderer2Ddata::MaxVertices)
-			FlushAndReset();
-
-		float textureIndex = 0.0f; // White texture
-		if (texture != nullptr)
-		{
-			for (uint32_t i = 1; i < s_Data.TextureSlotIndex; i++)
-			{
-				if (*s_Data.TextureSlots[i].get() == *texture.get())
-				{
-					textureIndex = (float)i;
-					break;
-				}
-			}
-
-			if (textureIndex == 0.0f)
-			{
-				if (s_Data.TextureSlotIndex >= Renderer2Ddata::MaxTextureSlots)
-					FlushAndReset();
-
-				textureIndex = (float)s_Data.TextureSlotIndex;
-				s_Data.TextureSlots[s_Data.TextureSlotIndex] = texture;
-				++s_Data.TextureSlotIndex;
-			}
-		}
-
-		glm::mat4 transform = glm::translate(glm::mat4(1.0f), position);
-		transform = glm::rotate(transform, rotation, { 0.0f, 0.0f, 1.0f });
-		transform = glm::scale(transform, { size.x, size.y, 1.0f });
-
-		for (int i = 0; i < quadVertexCount; i++)
-		{
-			s_Data.QuadVertexBufferPtr->Position = transform * s_Data.QuadVertexPositions[i];
-			s_Data.QuadVertexBufferPtr->Color = color;
-			s_Data.QuadVertexBufferPtr->TexCoord = QuadTexCoords[i];
-			s_Data.QuadVertexBufferPtr->TexIndex = textureIndex;
-			s_Data.QuadVertexBufferPtr++;
-		}
-
-		s_Data.QuadIndexCount += 6;
-
-
-
-		s_Data.Stats.QuadCount++;
-	}
-
-
-
-
-	void Renderer2D::DrawQuad(const glm::vec2& position, const glm::vec2& size,
-		const Ref<SubTexture2D>& subtexture, const glm::vec4& color)
-	{
-		DrawQuad(glm::vec3(position, 0.0f), size, subtexture, color);
-	}
-
-	void Renderer2D::DrawQuad(const glm::vec3& position, const glm::vec2& size, 
-		const Ref<SubTexture2D>& subtexture, const glm::vec4& color)
+	void Renderer2D::DrawQuad(const glm::vec3& p_position, const glm::vec2& p_size, 
+		const Ref<SubTexture2D>& p_subtexture, const glm::vec4& p_color, int p_entityID)
 	{
 		UNEYE_PROFILE_FUNCTION();
 
 		constexpr size_t quadVertexCount = 4;
 		const glm::vec2* texcoord;
-		if (subtexture != nullptr)
-			texcoord = subtexture->GetTexCoords();
+		if (p_subtexture != nullptr)
+			texcoord = p_subtexture->GetTexCoords();
 		else
 		{
 			texcoord = new glm::vec2[4]{
@@ -597,11 +530,11 @@ namespace Uneye
 			FlushAndReset();
 
 		float textureIndex = 0.0f; // White texture
-		if (subtexture != nullptr)
+		if (p_subtexture != nullptr)
 		{
 			for (uint32_t i = 1; i < s_Data.TextureSlotIndex; i++)
 			{
-				if (*s_Data.TextureSlots[i].get() == *subtexture->GetTexture().get())
+				if (*s_Data.TextureSlots[i].get() == *(AssetManager::GetAsset<Texture2D>(p_subtexture->GetTextureHandle()).get()))
 				{
 					textureIndex = (float)i;
 					break;
@@ -614,20 +547,21 @@ namespace Uneye
 					FlushAndReset();
 
 				textureIndex = (float)s_Data.TextureSlotIndex;
-				s_Data.TextureSlots[s_Data.TextureSlotIndex] = subtexture->GetTexture();
+				s_Data.TextureSlots[s_Data.TextureSlotIndex] = AssetManager::GetAsset<Texture2D>(p_subtexture->GetTextureHandle());
 				++s_Data.TextureSlotIndex;
 			}
 		}
 
-		glm::mat4 transform = glm::translate(glm::mat4(1.0f), position);
-		transform = glm::scale(transform, { size.x, size.y, 1.0f });
+		glm::mat4 transform = glm::translate(glm::mat4(1.0f), p_position);
+		transform = glm::scale(transform, { p_size.x, p_size.y, 1.0f });
 
 		for (int i = 0; i < quadVertexCount; i++)
 		{
 			s_Data.QuadVertexBufferPtr->Position = transform * s_Data.QuadVertexPositions[i];
-			s_Data.QuadVertexBufferPtr->Color = color;
+			s_Data.QuadVertexBufferPtr->Color = p_color;
 			s_Data.QuadVertexBufferPtr->TexCoord = texcoord[i];
 			s_Data.QuadVertexBufferPtr->TexIndex = textureIndex;
+			s_Data.QuadVertexBufferPtr->EntityID = p_entityID;
 			s_Data.QuadVertexBufferPtr++;
 		}
 
@@ -638,15 +572,15 @@ namespace Uneye
 		s_Data.Stats.QuadCount++;
 	}
 
-	void Renderer2D::DrawQuad(const glm::mat4& transform, const Ref<SubTexture2D>& subtexture,
-		const glm::vec4& color, int entityID)
+	void Renderer2D::DrawQuad(const glm::mat4& p_transform, const Ref<SubTexture2D>& p_subtexture,
+		const glm::vec4& p_color, int p_entityID)
 	{
 		UNEYE_PROFILE_FUNCTION();
 
 		constexpr size_t quadVertexCount = 4;
 		const glm::vec2* texcoord;
-		if (subtexture != nullptr)
-			texcoord = subtexture->GetTexCoords();
+		if (p_subtexture != nullptr)
+			texcoord = p_subtexture->GetTexCoords();
 		else
 		{
 			texcoord = new glm::vec2[4]{
@@ -661,11 +595,11 @@ namespace Uneye
 			FlushAndReset();
 
 		float textureIndex = 0.0f; // White texture
-		if (subtexture != nullptr)
+		if (p_subtexture != nullptr)
 		{
 			for (uint32_t i = 1; i < s_Data.TextureSlotIndex; i++)
 			{
-				if (*s_Data.TextureSlots[i].get() == *subtexture->GetTexture().get())
+				if (*s_Data.TextureSlots[i].get() == *(AssetManager::GetAsset<Texture2D>(p_subtexture->GetTextureHandle()).get()))
 				{
 					textureIndex = (float)i;
 					break;
@@ -678,18 +612,18 @@ namespace Uneye
 					FlushAndReset();
 
 				textureIndex = (float)s_Data.TextureSlotIndex;
-				s_Data.TextureSlots[s_Data.TextureSlotIndex] = subtexture->GetTexture();
+				s_Data.TextureSlots[s_Data.TextureSlotIndex] = AssetManager::GetAsset<Texture2D>(p_subtexture->GetTextureHandle());
 				++s_Data.TextureSlotIndex;
 			}
 		}
 
 		for (int i = 0; i < quadVertexCount; i++)
 		{
-			s_Data.QuadVertexBufferPtr->Position = transform * s_Data.QuadVertexPositions[i];
-			s_Data.QuadVertexBufferPtr->Color = color;
+			s_Data.QuadVertexBufferPtr->Position = p_transform * s_Data.QuadVertexPositions[i];
+			s_Data.QuadVertexBufferPtr->Color = p_color;
 			s_Data.QuadVertexBufferPtr->TexCoord = texcoord[i];
 			s_Data.QuadVertexBufferPtr->TexIndex = textureIndex;
-			s_Data.QuadVertexBufferPtr->EntityID = entityID;
+			s_Data.QuadVertexBufferPtr->EntityID = p_entityID;
 			s_Data.QuadVertexBufferPtr++;
 		}
 
@@ -702,88 +636,21 @@ namespace Uneye
 
 
 
-
-
-	void Renderer2D::DrawRotateQuad(const glm::vec2& position, const glm::vec2& size, 
-		float rotation, const Ref<SubTexture2D>& subtexture, const glm::vec4& color)
+	void Renderer2D::DrawSprite(const glm::mat4& p_transform, SpriteComponent& p_sc, int p_entityID)
 	{
-		DrawRotateQuad(glm::vec3(position, 0.0f), size, rotation, subtexture, color);
-	}
-
-	void Renderer2D::DrawRotateQuad(const glm::vec3& position, const glm::vec2& size,
-		float rotation, const Ref<SubTexture2D>& subtexture, const glm::vec4& color)
-	{
-		UNEYE_PROFILE_FUNCTION();
-
-		constexpr size_t quadVertexCount = 4;
-		const glm::vec2* texcoord;
-		if (subtexture != nullptr)
-			texcoord = subtexture->GetTexCoords();
+		if (p_sc.IsSubTexture)
+		{
+			Ref<SubTexture2D> subtexture = SubTexture2D::CreateFromTexture(p_sc.Texture, p_sc.TileSize, p_sc.TileCoord, p_sc.SpriteSize);
+			DrawQuad(p_transform, subtexture, p_sc.Color, p_entityID);
+		}
 		else
 		{
-			texcoord = new glm::vec2[4]{
-				{0.0f, 0.0f},
-				{1.0f, 0.0f},
-				{1.0f, 1.0f},
-				{0.0f, 1.0f},
-			};
+			Ref<Texture2D> texture = AssetManager::GetAsset<Texture2D>(p_sc.Texture);
+			DrawQuad(p_transform, p_sc.Color, texture, p_entityID);
 		}
-
-		if (s_Data.QuadIndexCount >= Renderer2Ddata::MaxVertices)
-			FlushAndReset();
-
-		float textureIndex = 0.0f; // White texture
-		if (subtexture != nullptr)
-		{
-			for (uint32_t i = 1; i < s_Data.TextureSlotIndex; i++)
-			{
-				if (*s_Data.TextureSlots[i].get() == *subtexture->GetTexture().get())
-				{
-					textureIndex = (float)i;
-					break;
-				}
-			}
-
-			if (textureIndex == 0.0f)
-			{
-				if (s_Data.TextureSlotIndex >= Renderer2Ddata::MaxTextureSlots)
-					FlushAndReset();
-
-				textureIndex = (float)s_Data.TextureSlotIndex;
-				s_Data.TextureSlots[s_Data.TextureSlotIndex] = subtexture->GetTexture();
-				++s_Data.TextureSlotIndex;
-			}
-		}
-
-		glm::mat4 transform = glm::translate(glm::mat4(1.0f), position);
-		transform = glm::rotate(transform, rotation, { 0.0f, 0.0f, 1.0f });
-		transform = glm::scale(transform, { size.x, size.y, 1.0f });
-
-		for (int i = 0; i < quadVertexCount; i++)
-		{
-			s_Data.QuadVertexBufferPtr->Position = transform * s_Data.QuadVertexPositions[i];
-			s_Data.QuadVertexBufferPtr->Color = color;
-			s_Data.QuadVertexBufferPtr->TexCoord = texcoord[i];
-			s_Data.QuadVertexBufferPtr->TexIndex = textureIndex;
-			s_Data.QuadVertexBufferPtr++;
-		}
-
-		s_Data.QuadIndexCount += 6;
-
-
-
-		s_Data.Stats.QuadCount++;
 	}
 
-	void Renderer2D::DrawSprite(const glm::mat4& transform, SpriteComponent& mc, int entityID)
-	{
-		if (mc.IsSubTexture)
-			DrawQuad(transform, mc.SubTexture, mc.Color, entityID);
-		else
-			DrawQuad(transform, mc.Color, mc.Texture, entityID);
-	}
-
-	void Renderer2D::DrawCircle(const glm::mat4& transform, const glm::vec4& color, float thickness, float fade, int entityID)
+	void Renderer2D::DrawCircle(const glm::mat4& p_transform, const glm::vec4& p_color, float p_thickness, float p_fade, int p_entityID)
 	{
 		UNEYE_PROFILE_FUNCTION();
 
@@ -794,12 +661,12 @@ namespace Uneye
 
 		for (size_t i = 0; i < 4; i++)
 		{
-			s_Data.CircleVertexBufferPtr->WorldPosition = transform * s_Data.QuadVertexPositions[i];
+			s_Data.CircleVertexBufferPtr->WorldPosition = p_transform * s_Data.QuadVertexPositions[i];
 			s_Data.CircleVertexBufferPtr->LocalPosition = s_Data.QuadVertexPositions[i] * 2.0f;
-			s_Data.CircleVertexBufferPtr->Color = color;
-			s_Data.CircleVertexBufferPtr->Thickness = thickness;
-			s_Data.CircleVertexBufferPtr->Fade = fade;
-			s_Data.CircleVertexBufferPtr->EntityID = entityID;
+			s_Data.CircleVertexBufferPtr->Color = p_color;
+			s_Data.CircleVertexBufferPtr->Thickness = p_thickness;
+			s_Data.CircleVertexBufferPtr->Fade = p_fade;
+			s_Data.CircleVertexBufferPtr->EntityID = p_entityID;
 			s_Data.CircleVertexBufferPtr++;
 		}
 
@@ -808,52 +675,52 @@ namespace Uneye
 		s_Data.Stats.QuadCount++;
 	}
 
-	void Renderer2D::DrawLine(const glm::vec3& p0, const glm::vec3& p1, const glm::vec4& color, int entityID)
+	void Renderer2D::DrawLine(const glm::vec3& p_p0, const glm::vec3& p_p1, const glm::vec4& p_color, int p_entityID)
 	{
-		s_Data.LineVertexBufferPtr->Position = p0;
-		s_Data.LineVertexBufferPtr->Color = color;
-		s_Data.LineVertexBufferPtr->EntityID = entityID;
+		s_Data.LineVertexBufferPtr->Position = p_p0;
+		s_Data.LineVertexBufferPtr->Color = p_color;
+		s_Data.LineVertexBufferPtr->EntityID = p_entityID;
 		s_Data.LineVertexBufferPtr++;
 
-		s_Data.LineVertexBufferPtr->Position = p1;
-		s_Data.LineVertexBufferPtr->Color = color;
-		s_Data.LineVertexBufferPtr->EntityID = entityID;
+		s_Data.LineVertexBufferPtr->Position = p_p1;
+		s_Data.LineVertexBufferPtr->Color = p_color;
+		s_Data.LineVertexBufferPtr->EntityID = p_entityID;
 		s_Data.LineVertexBufferPtr++;
 
 		s_Data.LineVertexCount += 2;
 	}
 
-	void Renderer2D::DrawRect(const glm::vec3& position, const glm::vec2 size, const glm::vec4& color, int entityID)
+	void Renderer2D::DrawRect(const glm::vec3& p_position, const glm::vec2& p_size, const glm::vec4& p_color, int p_entityID)
 	{
-		glm::vec3 p0 = glm::vec3(position.x - size.x * 0.5f, position.y - size.y * 0.5f, position.z);
-		glm::vec3 p1 = glm::vec3(position.x + size.x * 0.5f, position.y - size.y * 0.5f, position.z);
-		glm::vec3 p2 = glm::vec3(position.x + size.x * 0.5f, position.y + size.y * 0.5f, position.z);
-		glm::vec3 p3 = glm::vec3(position.x - size.x * 0.5f, position.y + size.y * 0.5f, position.z);
+		glm::vec3 p0 = glm::vec3(p_position.x - p_size.x * 0.5f, p_position.y - p_size.y * 0.5f, p_position.z);
+		glm::vec3 p1 = glm::vec3(p_position.x + p_size.x * 0.5f, p_position.y - p_size.y * 0.5f, p_position.z);
+		glm::vec3 p2 = glm::vec3(p_position.x + p_size.x * 0.5f, p_position.y + p_size.y * 0.5f, p_position.z);
+		glm::vec3 p3 = glm::vec3(p_position.x - p_size.x * 0.5f, p_position.y + p_size.y * 0.5f, p_position.z);
 
-		DrawLine(p0, p1, color, entityID);
-		DrawLine(p1, p2, color, entityID);
-		DrawLine(p2, p3, color, entityID);
-		DrawLine(p3, p0, color, entityID);
+		DrawLine(p0, p1,p_color, p_entityID);
+		DrawLine(p1, p2,p_color, p_entityID);
+		DrawLine(p2, p3,p_color, p_entityID);
+		DrawLine(p3, p0,p_color, p_entityID);
 	}
 
-	void Renderer2D::DrawRect(const glm::mat4& transform, const glm::vec4& color, int entityID)
+	void Renderer2D::DrawRect(const glm::mat4& p_transform, const glm::vec4& p_color, int p_entityID)
 	{
 		glm::vec3 lineVertices[4];
 		for (size_t i = 0; i < 4; i++)
-			lineVertices[i] = transform * s_Data.QuadVertexPositions[i];
+			lineVertices[i] = p_transform * s_Data.QuadVertexPositions[i];
 
-		DrawLine(lineVertices[0], lineVertices[1], color, entityID);
-		DrawLine(lineVertices[1], lineVertices[2], color, entityID);
-		DrawLine(lineVertices[2], lineVertices[3], color, entityID);
-		DrawLine(lineVertices[3], lineVertices[0], color, entityID);
+		DrawLine(lineVertices[0], lineVertices[1], p_color, p_entityID);
+		DrawLine(lineVertices[1], lineVertices[2], p_color, p_entityID);
+		DrawLine(lineVertices[2], lineVertices[3], p_color, p_entityID);
+		DrawLine(lineVertices[3], lineVertices[0], p_color, p_entityID);
 	}
 
-	void Renderer2D::DrawString(const std::string& string, Ref<Font> font, const glm::mat4& transform,
-		const TextParams& textParams, int entityID)
+	void Renderer2D::DrawString(const std::string& p_string, Ref<Font> p_font, const glm::mat4& p_transform,
+		const TextParams& p_textParams, int p_entityID)
 	{
-		const auto& fontGeometry = font->GetMSDFData()->FontGeometry;
+		const auto& fontGeometry = p_font->GetMSDFData()->FontGeometry;
 		const auto& metrics = fontGeometry.getMetrics();
-		Ref<Texture2D> fontAtlas = font->GetAtlasTexture();
+		Ref<Texture2D> fontAtlas = p_font->GetAtlasTexture();
 
 		s_Data.FontAtlasTexture = fontAtlas;
 
@@ -862,38 +729,38 @@ namespace Uneye
 		double y = 0.0;
 		const float spaceGlyphAdvance = fontGeometry.getGlyph(' ')->getAdvance();
 
-		for (size_t i = 0; i < string.size(); i++)
+		for (size_t i = 0; i < p_string.size(); i++)
 		{
-			char character = string[i];
+			char character = p_string[i];
 			if (character == '\r')
 				continue;
 
 			if (character == '\n')
 			{
 				x = 0;
-				y -= fsScale * metrics.lineHeight + textParams.LineSpacing;
+				y -= fsScale * metrics.lineHeight + p_textParams.LineSpacing;
 				continue;
 			}
 
 			if (character == ' ')
 			{
 				float advance = spaceGlyphAdvance;
-				if (i < string.size() - 1)
+				if (i < p_string.size() - 1)
 				{
-					char nextCharacter = string[i + 1];
+					char nextCharacter = p_string[i + 1];
 					double dAdvance;
 					fontGeometry.getAdvance(dAdvance, character, nextCharacter);
 					advance = (float)dAdvance;
 				}
 
-				x += fsScale * advance + textParams.Kerning;
+				x += fsScale * advance + p_textParams.Kerning;
 				continue;
 			}
 
 			if (character == '\t')
 			{
 				// NOTE: is this right?
-				x += 4.0f * (fsScale * spaceGlyphAdvance + textParams.Kerning);
+				x += 4.0f * (fsScale * spaceGlyphAdvance + p_textParams.Kerning);
 				continue;
 			}
 
@@ -926,49 +793,49 @@ namespace Uneye
 			texCoordMax *= glm::vec2(texelWidth, texelHeight);
 
 			// render here
-			s_Data.TextVertexBufferPtr->Position = transform * glm::vec4(quadMin, 0.0f, 1.0f);
-			s_Data.TextVertexBufferPtr->Color = textParams.Color;
+			s_Data.TextVertexBufferPtr->Position = p_transform * glm::vec4(quadMin, 0.0f, 1.0f);
+			s_Data.TextVertexBufferPtr->Color = p_textParams.Color;
 			s_Data.TextVertexBufferPtr->TexCoord = texCoordMin;
-			s_Data.TextVertexBufferPtr->EntityID = entityID;
+			s_Data.TextVertexBufferPtr->EntityID = p_entityID;
 			s_Data.TextVertexBufferPtr++;
 
-			s_Data.TextVertexBufferPtr->Position = transform * glm::vec4(quadMin.x, quadMax.y, 0.0f, 1.0f);
-			s_Data.TextVertexBufferPtr->Color = textParams.Color;
+			s_Data.TextVertexBufferPtr->Position = p_transform * glm::vec4(quadMin.x, quadMax.y, 0.0f, 1.0f);
+			s_Data.TextVertexBufferPtr->Color = p_textParams.Color;
 			s_Data.TextVertexBufferPtr->TexCoord = { texCoordMin.x, texCoordMax.y };
-			s_Data.TextVertexBufferPtr->EntityID = entityID;
+			s_Data.TextVertexBufferPtr->EntityID = p_entityID;
 			s_Data.TextVertexBufferPtr++;
 
-			s_Data.TextVertexBufferPtr->Position = transform * glm::vec4(quadMax, 0.0f, 1.0f);
-			s_Data.TextVertexBufferPtr->Color = textParams.Color;
+			s_Data.TextVertexBufferPtr->Position = p_transform * glm::vec4(quadMax, 0.0f, 1.0f);
+			s_Data.TextVertexBufferPtr->Color = p_textParams.Color;
 			s_Data.TextVertexBufferPtr->TexCoord = texCoordMax;
-			s_Data.TextVertexBufferPtr->EntityID = entityID;
+			s_Data.TextVertexBufferPtr->EntityID = p_entityID;
 			s_Data.TextVertexBufferPtr++;
 
-			s_Data.TextVertexBufferPtr->Position = transform * glm::vec4(quadMax.x, quadMin.y, 0.0f, 1.0f);
-			s_Data.TextVertexBufferPtr->Color = textParams.Color;
+			s_Data.TextVertexBufferPtr->Position = p_transform * glm::vec4(quadMax.x, quadMin.y, 0.0f, 1.0f);
+			s_Data.TextVertexBufferPtr->Color = p_textParams.Color;
 			s_Data.TextVertexBufferPtr->TexCoord = { texCoordMax.x, texCoordMin.y };
-			s_Data.TextVertexBufferPtr->EntityID = entityID;
+			s_Data.TextVertexBufferPtr->EntityID = p_entityID;
 			s_Data.TextVertexBufferPtr++;
 
 			s_Data.TextIndexCount += 6;
 			s_Data.Stats.QuadCount++;
 
-			if (i < string.size() - 1)
+			if (i < p_string.size() - 1)
 			{
 				double advance = glyph->getAdvance();
-				char nextCharacter = string[i + 1];
+				char nextCharacter = p_string[i + 1];
 				fontGeometry.getAdvance(advance, character, nextCharacter);
 
 				float kerningOffset = 0.0f;
-				x += fsScale * advance + textParams.Kerning;;
+				x += fsScale * advance + p_textParams.Kerning;;
 			}
 		}
 	}
 
-	void Renderer2D::DrawString(const std::string& string, const glm::mat4& transform, 
-		const TextComponent& component, int entityID)
+	void Renderer2D::DrawString(const std::string& string, const glm::mat4& p_transform, 
+		const TextComponent& component, int p_entityID)
 	{
-		DrawString(string, component.FontAsset, transform, { component.Color, component.Kerning, component.LineSpacing }, entityID);
+		DrawString(string, component.FontAsset, p_transform, { component.Color, component.Kerning, component.LineSpacing }, p_entityID);
 	}
 
 
@@ -977,9 +844,9 @@ namespace Uneye
 		return s_Data.LineWidth;
 	}
 
-	void Renderer2D::SetLineWidth(float width)
+	void Renderer2D::SetLineWidth(float p_width)
 	{
-		s_Data.LineWidth = width;
+		s_Data.LineWidth = p_width;
 	}
 
 

@@ -7,6 +7,7 @@
 
 #include "Panels/SceneHierarchyPanel.h"
 #include "Panels/ContentBrowserPanel.h"
+#include "Panels/AssetImporterPanel.h"
 
 #include "Uneye/Renderer/EditorCamera.h"
 
@@ -30,6 +31,7 @@ namespace Uneye
 	private:
 		bool OnKeyPressed(KeyPressedEvent& e);
 		bool OnMouseButtonPressed(MouseButtonPressedEvent& e);
+		bool OnWindowDrop(WindowDropEvent& e);
 
 		void OnOverlayRender();
 
@@ -90,6 +92,8 @@ namespace Uneye
 		// Panels
 		SceneHierarchyPanel m_SceneHierarchyPanel;
 		Scope<ContentBrowserPanel> m_ContentBrowserPanel;
+		bool m_AssetImporterPanelIsOpen = false;
+		AssetImporterPanel m_AssetImporterPanel;
 
 		// Editor resources
 		Ref<Texture2D> m_IconPlay, m_IconPause, m_IconStop, m_IconStep, m_IconSimulate;

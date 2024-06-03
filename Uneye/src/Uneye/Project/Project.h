@@ -3,6 +3,9 @@
 #include "Uneye/Core/Base.h"
 #include "Uneye/Core/Log.h"
 
+#include "Uneye/Asset/RuntimeAssetManager.h"
+#include "Uneye/Asset/EditorAssetManager.h"
+
 #include <string>
 #include <filesystem>
 
@@ -15,9 +18,8 @@ namespace Uneye
 
 		std::filesystem::path StartScene;
 
-		// Maybe change this to be a list of all asset directories provided.
 		std::filesystem::path AssetDirectory;
-		// Maybe change this to be a list of all scrípt directories provided.
+		std::filesystem::path AssetRegistryPath;
 		std::filesystem::path ScriptModulePath;
 
 		// TODO: A list of all scenes provided.
@@ -28,43 +30,66 @@ namespace Uneye
 	{
 		public:
 			
+			const std::filesystem::path& GetProjectDirectory() { return m_ProjectDirectory; }
+			std::filesystem::path GetAssetDirectory()
+			{
+				return GetProjectDirectory() / s_ActiveProject->m_Config.AssetDirectory;
+			}
+			std::filesystem::path GetAssetRegistryPath()
+			{
+				return GetAssetDirectory() / s_ActiveProject->m_Config.AssetRegistryPath;
+			}
+			// TODO: Move to Asset manager
+			std::filesystem::path GetAssetFileSystemPath(const std::filesystem::path& path) { return GetAssetDirectory() / path; }
+
+			static const std::filesystem::path& GetActiveProjectDirectory()
+			{
+				UNEYE_CORE_ASSERT(!s_ActiveProject);
+				return s_ActiveProject->GetProjectDirectory();
+			}
+
+			static std::filesystem::path GetActiveAssetDirectory()
+			{
+				UNEYE_CORE_ASSERT(!s_ActiveProject);
+				return s_ActiveProject->GetAssetDirectory();
+			}
+
+			static std::filesystem::path GetActiveAssetRegistryPath()
+			{
+				UNEYE_CORE_ASSERT(!s_ActiveProject);
+				return s_ActiveProject->GetAssetRegistryPath();
+			}
+
+			// TODO: move to asset manager when we have one
+			static std::filesystem::path GetActiveAssetFileSystemPath(const std::filesystem::path& path)
+			{
+				UNEYE_CORE_ASSERT(!s_ActiveProject);
+				return s_ActiveProject->GetAssetFileSystemPath(path);
+			}
+
 			static std::filesystem::path& GetStartScene()
 			{
 				UNEYE_CORE_ASSERT(!s_ActiveProject);
 				return s_ActiveProject->m_Config.StartScene;
 			}
 
-			// Maybe change this to return a list of all asset directories provided.
-			static std::filesystem::path GetAssetDirectory()
-			{
-				UNEYE_CORE_ASSERT(!s_ActiveProject);
-				return GetProjectDirectory() / s_ActiveProject->m_Config.AssetDirectory;
-			}
 
-			// Maybe change this to return a list of all scrípt directories provided.
 			static std::filesystem::path& GetScriptModulePath()
 			{
 				UNEYE_CORE_ASSERT(!s_ActiveProject);
 				return s_ActiveProject->m_Config.ScriptModulePath;
 			}
 
-			static const std::filesystem::path& GetProjectDirectory() 
-			{ 
-				UNEYE_CORE_ASSERT(!s_ActiveProject);
-				return s_ActiveProject->m_ProjectDirectory;
-			}
 
-			// TODO: Move to Asset manager
-			static std::filesystem::path GetAssetFileSystemPath(const std::filesystem::path& path)
-			{
-				UNEYE_CORE_ASSERT(!s_ActiveProject);
 
-				return GetAssetDirectory() / path;
-			}
+			ProjectConfig& GetConfig() { return m_Config; }
 
 			static Ref<Project> GetActive() { return s_ActiveProject;	}
 
-			ProjectConfig& GetConfig() { return m_Config; }
+			std::shared_ptr<AssetManagerBase> GetAssetManager() { return m_AssetManager; }
+			std::shared_ptr<RuntimeAssetManager> GetRuntimeAssetManager() { return std::static_pointer_cast<RuntimeAssetManager>(m_AssetManager); }
+			std::shared_ptr<EditorAssetManager> GetEditorAssetManager() { return std::static_pointer_cast<EditorAssetManager>(m_AssetManager); }
+
 
 			static Ref<Project> New();
 			static Ref<Project> Load(const std::filesystem::path& path);
@@ -73,6 +98,7 @@ namespace Uneye
 		private:
 			ProjectConfig m_Config;
 			std::filesystem::path m_ProjectDirectory;
+			std::shared_ptr<AssetManagerBase> m_AssetManager;
 
 			inline static Ref<Project> s_ActiveProject;
 	};

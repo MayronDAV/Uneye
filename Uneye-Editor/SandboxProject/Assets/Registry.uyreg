@@ -1,0 +1,22 @@
+AssetRegistry:
+  - Handle: 10576216302151252207
+    FilePath: C:/dev/Uneye/Uneye-Editor/SandboxProject/Assets/Textures/container.jpg
+    Type: AssetType::Texture2D
+  - Handle: 12108821400490400771
+    FilePath: C:/dev/Uneye/Uneye-Editor/SandboxProject/Assets/Textures/wall.jpg
+    Type: AssetType::Texture2D
+  - Handle: 3610758344920825692
+    FilePath: C:/dev/Uneye/Uneye-Editor/SandboxProject/Assets/Textures/wall.jpg
+    Type: AssetType::Texture2D
+  - Handle: 13871607328069632571
+    FilePath: C:/dev/Uneye/Uneye-Editor/SandboxProject/Assets/Textures/RPGpack_sheet_2X.png
+    Type: AssetType::Texture2D
+  - Handle: 2992975187023972915
+    FilePath: C:/dev/Uneye/Uneye-Editor/SandboxProject/Assets/Textures/blending_transparent_window.png
+    Type: AssetType::Texture2D
+  - Handle: 11227727769886277788
+    FilePath: C:/dev/Uneye/Uneye-Editor/SandboxProject/Assets/Textures/container.jpg
+    Type: AssetType::Texture2D
+  - Handle: 7762067873580352961
+    FilePath: C:/dev/Uneye/Uneye-Editor/SandboxProject/Assets/Textures/RPGpack_sheet_2X.png
+    Type: AssetType::Texture2D

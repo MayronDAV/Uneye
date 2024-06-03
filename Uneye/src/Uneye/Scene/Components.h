@@ -8,6 +8,8 @@
 #include "Uneye/Core/UUID.h"
 #include "Uneye/Renderer/Font.h"
 
+#include "Uneye/Asset/TextureImporter.h"
+
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 #define GLM_ENABLE_EXPERIMENTAL
@@ -24,8 +26,8 @@ namespace Uneye
 
 		IDComponent() = default;
 		IDComponent(const IDComponent&) = default;
-		IDComponent(const UUID& id)
-			:ID(id) {}
+		IDComponent(const UUID& p_id)
+			:ID(p_id) {}
 
 	};
 
@@ -35,8 +37,8 @@ namespace Uneye
 
 		TagComponent() = default;
 		TagComponent(const TagComponent&) = default;
-		TagComponent(const std::string& tag)
-			:Tag(tag) {}
+		TagComponent(const std::string& p_tag)
+			:Tag(p_tag) {}
 
 	};
 
@@ -48,8 +50,8 @@ namespace Uneye
 
 		TransformComponent() = default;
 		TransformComponent(const TransformComponent&) = default;
-		TransformComponent(const glm::vec3& translation)
-			:Translation(translation) {}
+		TransformComponent(const glm::vec3& p_translation)
+			:Translation(p_translation) {}
 
 		glm::mat4 GetTransform() const
 		{
@@ -65,22 +67,21 @@ namespace Uneye
 	{
 		glm::vec4 Color = { 1, 1, 1, 1 };
 		std::string TexturePath = "assets/textures/checkerboard.png";
-		Ref<Texture2D> Texture = Texture2D::Create(TexturePath);
-		Ref<SubTexture2D> SubTexture = nullptr;
+		AssetHandle Texture = 0;
 		bool IsSubTexture = false;
-		glm::vec2 TileSize = { 1, 1 }; // Tamanho geral de cada tile da textura.
-		glm::vec2 Coords = { 0, 0 }; // Coords dentro da textura
-		glm::vec2 SpriteSize = { 1, 1 }; // Mudar o nome
+		glm::vec2 TileSize = { 1, 1 };
+		glm::vec2 TileCoord = { 0, 0 };
+		glm::vec2 SpriteSize = { 1, 1 };
 
 		SpriteComponent() = default;
 		SpriteComponent(const SpriteComponent&) = default;
-		SpriteComponent(const glm::vec4& color, const std::string& texturepath = "assets/textures/checkerboard.png")
-			:Color(color), TexturePath(texturepath), Texture(Texture2D::Create(TexturePath)), IsSubTexture(false) {}
+		SpriteComponent(const glm::vec4& p_color, const std::string& p_texturepath = "assets/textures/checkerboard.png")
+			:Color(p_color), TexturePath(p_texturepath), IsSubTexture(false) {}
 
-		SpriteComponent(const glm::vec4& color, const std::string& texturepath, glm::vec2 tileSize,
-			glm::vec2 coords = glm::vec2(0, 0), glm::vec2 spriteSize = glm::vec2(1, 1))
-			:Color(color), TileSize(tileSize), Coords(coords), SpriteSize(spriteSize), IsSubTexture(true),
-			TexturePath(texturepath), Texture(Texture2D::Create(TexturePath)), SubTexture(SubTexture2D::CreateFromTexture(Texture, coords, tileSize, spriteSize)) {}
+		SpriteComponent(const glm::vec4& p_color, const std::string& p_texturepath, glm::vec2 p_tileSize,
+			glm::vec2 p_tilecoord = glm::vec2(0, 0), glm::vec2 p_spriteSize = glm::vec2(1, 1))
+			:Color(p_color), TileSize(p_tileSize), TileCoord(p_tileSize), SpriteSize(p_spriteSize), IsSubTexture(true),
+			TexturePath(p_texturepath) {}
 
 	};
 

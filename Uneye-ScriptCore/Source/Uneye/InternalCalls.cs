@@ -60,6 +60,34 @@ namespace Uneye
 
 		#endregion
 
+		#region TextComponent
+
+		[MethodImplAttribute(MethodImplOptions.InternalCall)]
+		internal extern static string TextComponent_GetText( ulong entityID );
+
+		[MethodImplAttribute(MethodImplOptions.InternalCall)]
+		internal extern static void TextComponent_SetText( ulong entityID, string text );
+
+		[MethodImplAttribute(MethodImplOptions.InternalCall)]
+		internal extern static void TextComponent_GetColor( ulong entityID, out Vector4 color );
+
+		[MethodImplAttribute(MethodImplOptions.InternalCall)]
+		internal extern static void TextComponent_SetColor( ulong entityID, ref Vector4 color );
+
+		[MethodImplAttribute(MethodImplOptions.InternalCall)]
+		internal extern static float TextComponent_GetKerning( ulong entityID );
+
+		[MethodImplAttribute(MethodImplOptions.InternalCall)]
+		internal extern static void TextComponent_SetKerning( ulong entityID, float kerning );
+
+		[MethodImplAttribute(MethodImplOptions.InternalCall)]
+		internal extern static float TextComponent_GetLineSpacing( ulong entityID );
+
+		[MethodImplAttribute(MethodImplOptions.InternalCall)]
+		internal extern static void TextComponent_SetLineSpacing( ulong entityID, float lineSpacing );
+
+		#endregion
+
 		#endregion
 
 		#region Events

@@ -4,6 +4,26 @@
 #include <fstream>
 #include <yaml-cpp/yaml.h>
 
+namespace YAML {
+
+	template<>
+	struct convert<Uneye::UUID>
+	{
+		static Node encode(const Uneye::UUID& p_uuid)
+		{
+			Node node;
+			node.push_back((uint64_t)p_uuid);
+			return node;
+		}
+
+		static bool decode(const Node& node, Uneye::UUID& p_uuid)
+		{
+			p_uuid = node.as<uint64_t>();
+			return true;
+		}
+	};
+}
+
 
 namespace Uneye
 {
@@ -34,9 +54,9 @@ namespace Uneye
 			{
 				out << YAML::Key << "Name" << YAML::Value << config.Name;
 				out << YAML::Key << "StartScene" << YAML::Value << config.StartScene;
-				out << YAML::Key << "AssetDirectory" << YAML::Value << config.AssetDirectory;
+				out << YAML::Key << "AssetDirectory" << YAML::Value << config.AssetDirectory.string();
 				out << YAML::Key << "AssetRegistryPath" << YAML::Value << config.AssetRegistryPath.string();
-				out << YAML::Key << "ScriptModulePath" << YAML::Value << config.ScriptModulePath;
+				out << YAML::Key << "ScriptModulePath" << YAML::Value << config.ScriptModulePath.string();
 			}
 			out << YAML::EndMap; // Project
 		}
@@ -71,10 +91,9 @@ namespace Uneye
 			return false;
 
 		config.Name = projectNode["Name"].as<std::string>();
-		config.StartScene = projectNode["StartScene"].as<std::string>();
+		config.StartScene = projectNode["StartScene"].as<uint64_t>();
 		config.AssetDirectory = projectNode["AssetDirectory"].as<std::string>();
-		if (projectNode["AssetRegistryPath"])
-			config.AssetRegistryPath = projectNode["AssetRegistryPath"].as<std::string>();
+		config.AssetRegistryPath = projectNode["AssetRegistryPath"].as<std::string>();
 		config.ScriptModulePath = projectNode["ScriptModulePath"].as<std::string>();
 
 		return true;

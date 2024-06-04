@@ -1,26 +1,16 @@
 Scene: Untitled
 Entities:
-  - Entity: 11638638948879070348
-    TagComponent:
-      Tag: Circle
-    TransformComponent:
-      Translation: [5.01507902, 0.186532184, -0.100000001]
-      Rotation: [0, 0, 0]
-      Scale: [10, 10, 1]
-    CircleComponent:
-      Color: [0.98841697, 0.560993433, 0.560993433, 1]
-      Thickness: 1
-      Fade: 1
-  - Entity: 16004482375809918089
+  - Entity: 12118735805444725410
     TagComponent:
       Tag: Ground
     TransformComponent:
-      Translation: [5.39402199, -1.29199815, 0]
-      Rotation: [0, 0, 0]
-      Scale: [15.0100002, 1.04999995, 1.04999995]
+      Translation: [6.12446308, 0.33744216, 0]
+      Rotation: [0, 0, 0.674925804]
+      Scale: [4.8888154, 1.04999936, 1.04999995]
     SpriteComponent:
       Color: [1, 0, 0, 1]
       TexturePath: " "
+      TextureHandle: 0
       IsSubTexture: false
     Rigidbody2DComponent:
       Type: 0
@@ -32,16 +22,17 @@ Entities:
       Friction: 0.5
       Restitution: 0
       RestitutionThreshold: 0.5
-  - Entity: 8725525677371069603
+  - Entity: 17025440298043341
     TagComponent:
       Tag: Ground
     TransformComponent:
-      Translation: [8.75274467, 5.40874338, 0]
-      Rotation: [0, 0, 0.500091791]
-      Scale: [4.6462698, 1, 1]
+      Translation: [1.27155125, 3.71037579, 0]
+      Rotation: [0, 0, -0.604141951]
+      Scale: [7.04258108, 0.999999404, 1]
     SpriteComponent:
       Color: [0.239382267, 1, 0, 1]
-      TexturePath: " "
+      TexturePath: ""
+      TextureHandle: 0
       IsSubTexture: false
     Rigidbody2DComponent:
       Type: 0
@@ -53,30 +44,6 @@ Entities:
       Friction: 0.5
       Restitution: 0
       RestitutionThreshold: 0.5
-  - Entity: 4721768605893392458
-    TagComponent:
-      Tag: Camera
-    TransformComponent:
-      Translation: [0, 0, 22.2999992]
-      Rotation: [0, 0, 0]
-      Scale: [1, 1, 1]
-    CameraComponent:
-      Camera:
-        ProjectionType: 0
-        PerspectiveFOV: 0.785398185
-        PerspectiveNear: 0.00999999978
-        PerspectiveFar: 1000
-        OrthographicSize: 10
-        OrthographicNear: -1
-        OrthographicFar: 1
-      Primary: true
-      FixedAspectRatio: false
-    ScriptComponent:
-      Name: Sandbox.Camera
-      ScriptFields:
-        - Name: DistanceFromPlayer
-          Type: Float
-          Data: 10
   - Entity: 545968042449813309
     TagComponent:
       Tag: Player
@@ -104,16 +71,41 @@ Entities:
       Friction: 0.5
       Restitution: 0.5
       RestitutionThreshold: 0.5
-  - Entity: 17025440298043341
+  - Entity: 4721768605893392458
+    TagComponent:
+      Tag: Camera
+    TransformComponent:
+      Translation: [0, 0, 22.2999992]
+      Rotation: [0, 0, 0]
+      Scale: [1, 1, 1]
+    CameraComponent:
+      Camera:
+        ProjectionType: 0
+        PerspectiveFOV: 0.785398185
+        PerspectiveNear: 0.00999999978
+        PerspectiveFar: 1000
+        OrthographicSize: 10
+        OrthographicNear: -1
+        OrthographicFar: 1
+      Primary: true
+      FixedAspectRatio: false
+    ScriptComponent:
+      Name: Sandbox.Camera
+      ScriptFields:
+        - Name: DistanceFromPlayer
+          Type: Float
+          Data: 10
+  - Entity: 8725525677371069603
     TagComponent:
       Tag: Ground
     TransformComponent:
-      Translation: [1.27155125, 3.71037579, 0]
-      Rotation: [0, 0, -0.604141951]
-      Scale: [7.04258108, 0.999999404, 1]
+      Translation: [8.75274467, 5.40874338, 0]
+      Rotation: [0, 0, 0.500091791]
+      Scale: [4.6462698, 1, 1]
     SpriteComponent:
       Color: [0.239382267, 1, 0, 1]
       TexturePath: " "
+      TextureHandle: 0
       IsSubTexture: false
     Rigidbody2DComponent:
       Type: 0
@@ -125,16 +117,17 @@ Entities:
       Friction: 0.5
       Restitution: 0
       RestitutionThreshold: 0.5
-  - Entity: 12118735805444725410
+  - Entity: 16004482375809918089
     TagComponent:
       Tag: Ground
     TransformComponent:
-      Translation: [6.12446308, 0.33744216, 0]
-      Rotation: [0, 0, 0.674925804]
-      Scale: [4.8888154, 1.04999936, 1.04999995]
+      Translation: [5.39402199, -1.29199815, 0]
+      Rotation: [0, 0, 0]
+      Scale: [15.0100002, 1.04999995, 1.04999995]
     SpriteComponent:
       Color: [1, 0, 0, 1]
-      TexturePath: " "
+      TexturePath: ""
+      TextureHandle: 0
       IsSubTexture: false
     Rigidbody2DComponent:
       Type: 0
@@ -146,3 +139,14 @@ Entities:
       Friction: 0.5
       Restitution: 0
       RestitutionThreshold: 0.5
+  - Entity: 11638638948879070348
+    TagComponent:
+      Tag: Circle
+    TransformComponent:
+      Translation: [5.01507902, 0.186532184, -0.100000001]
+      Rotation: [0, 0, 0]
+      Scale: [10, 10, 1]
+    CircleComponent:
+      Color: [0.98841697, 0.560993433, 0.560993433, 1]
+      Thickness: 1
+      Fade: 1

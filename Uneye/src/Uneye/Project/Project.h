@@ -16,7 +16,7 @@ namespace Uneye
 	{
 		std::string Name = "Untitled";
 
-		std::filesystem::path StartScene;
+		AssetHandle StartScene;
 
 		std::filesystem::path AssetDirectory;
 		std::filesystem::path AssetRegistryPath;
@@ -48,6 +48,12 @@ namespace Uneye
 				return s_ActiveProject->GetProjectDirectory();
 			}
 
+			static const std::filesystem::path& GetActiveProjectFile()
+			{
+				UNEYE_CORE_ASSERT(!s_ActiveProject);
+				return s_ActiveProject->m_ProjectFile;
+			}
+
 			static std::filesystem::path GetActiveAssetDirectory()
 			{
 				UNEYE_CORE_ASSERT(!s_ActiveProject);
@@ -60,19 +66,23 @@ namespace Uneye
 				return s_ActiveProject->GetAssetRegistryPath();
 			}
 
-			// TODO: move to asset manager when we have one
+			// TODO: move to asset manager when have one
 			static std::filesystem::path GetActiveAssetFileSystemPath(const std::filesystem::path& path)
 			{
 				UNEYE_CORE_ASSERT(!s_ActiveProject);
 				return s_ActiveProject->GetAssetFileSystemPath(path);
 			}
 
-			static std::filesystem::path& GetStartScene()
+			static AssetHandle& GetStartScene()
 			{
 				UNEYE_CORE_ASSERT(!s_ActiveProject);
 				return s_ActiveProject->m_Config.StartScene;
 			}
 
+			static void SetStartScene(AssetHandle p_handle)
+			{
+				s_ActiveProject->m_Config.StartScene = p_handle;
+			}
 
 			static std::filesystem::path& GetScriptModulePath()
 			{
@@ -98,6 +108,7 @@ namespace Uneye
 		private:
 			ProjectConfig m_Config;
 			std::filesystem::path m_ProjectDirectory;
+			std::filesystem::path m_ProjectFile;
 			std::shared_ptr<AssetManagerBase> m_AssetManager;
 
 			inline static Ref<Project> s_ActiveProject;

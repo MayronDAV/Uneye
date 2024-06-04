@@ -12,6 +12,7 @@
 
 #include "Uneye/Asset/AssetManager.h"
 #include "Uneye/Asset/TextureImporter.h"
+#include "Uneye/Asset/SceneImporter.h"
 
 #include <imgui/imgui.h>
 #include <ImGuizmo.h>
@@ -223,6 +224,9 @@ namespace Uneye
 		{
 			if (ImGui::BeginMenu("File"))
 			{
+				if (ImGui::MenuItem("Save Project..."))
+					SaveProject();
+
 				if (ImGui::MenuItem("Open Project...", "Ctrl+O"))
 					OpenProject();
 
@@ -246,19 +250,18 @@ namespace Uneye
 
 			if (ImGui::BeginMenu("Tools"))
 			{
-				if (ImGui::MenuItem("Import Asset")) {
-					m_AssetImporterPanelIsOpen = true;
-				}
+				if (ImGui::MenuItem("Set Default Scene"))
+					Project::SetStartScene(AssetManager::ImportAsset(m_EditScenePath));
 
 				ImGui::Separator();
 
-				if (ImGui::MenuItem("ReloadAssembly")) {
-					ScriptEngine::ReloadAssembly();
-				}
+				if (ImGui::MenuItem("Import..."))
+					m_AssetImporterPanelIsOpen = true;
 
-				if (ImGui::MenuItem("ReloadImGui")) {
+				ImGui::Separator();
+
+				if (ImGui::MenuItem("Reload ImGui"))
 					Application::Get().ReloadImGui();
-				}
 
 				ImGui::Separator();
 
@@ -270,7 +273,6 @@ namespace Uneye
 						if (ImGui::MenuItem(name.c_str()))
 							Application::Get().ChangeTheme(name);
 					}
-					
 
 					ImGui::EndMenu();
 				}
@@ -281,13 +283,7 @@ namespace Uneye
 			if (ImGui::BeginMenu("Script"))
 			{
 				if (ImGui::MenuItem("Reload Assembly", "Ctrl+R"))
-				{
-					if (m_SceneState != SceneState::Edit)
-						OnSceneStop(); // Maybe log this?
-
-					//if (!m_ActiveScene->IsRunning())
-					ScriptEngine::ReloadAssembly();
-				}
+					ReloadAssembly();
 
 				ImGui::EndMenu();
 			}
@@ -297,6 +293,7 @@ namespace Uneye
 
 		m_SceneHierarchyPanel.OnImGuiRender();
 		m_ContentBrowserPanel->OnImGuiRender();
+		m_LogPanel.OnImGuiRender();
 
 		ImGui::Begin("Settings");
 		ImGui::Checkbox("Show physics colliders", &m_ShowPhysicsColliders);
@@ -315,7 +312,6 @@ namespace Uneye
 		
 		m_ViewportHovered = ImGui::IsWindowHovered();
 		Application::Get().GetImGuiLayer()->BlockEvents(!m_ViewportHovered);
-		//Application::Get().GetImGuiLayer()->BlockEvents(ImGui::IsAnyItemHovered() || ImGui::IsAnyItemFocused() || ImGui::IsAnyItemActive());
 
 		ImVec2 viewportSize = ImGui::GetContentRegionAvail();
 		m_ViewportSize = { viewportSize.x, viewportSize.y };
@@ -327,7 +323,8 @@ namespace Uneye
 			if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("CONTENT_BROWSER_ITEM"))
 			{
 				const wchar_t* path = (const wchar_t*)payload->Data;
-				OpenScene(Project::GetActiveAssetFileSystemPath(path));
+				std::filesystem::path filepath = Project::GetActiveAssetFileSystemPath(path);
+				OpenScene(AssetManager::ImportAsset(filepath));
 			}
 			ImGui::EndDragDropTarget();
 		}
@@ -402,6 +399,7 @@ namespace Uneye
 
 		ImGui::End();
 
+		//ImGui::ShowDemoWindow();
 	}
 
 	void EditorLayer::UI_Toolbar()
@@ -591,7 +589,7 @@ namespace Uneye
 	bool EditorLayer::OnWindowDrop(WindowDropEvent& e)
 	{
 		// TODO: if a project is dropped in, probably open it
-
+		
 		//AssetManager::ImportAsset();
 
 		return true;
@@ -661,6 +659,19 @@ namespace Uneye
 		Renderer2D::EndScene();
 	}
 
+	void EditorLayer::ReloadAssembly()
+	{
+		if (m_SceneState != SceneState::Edit)
+		{
+			UNEYE_CORE_ERROR("Scene is running!!!");
+			UNEYE_CORE_WARN("Stopping the scene... Remember to stop the scene before reloading assembly");
+			OnSceneStop();
+		}
+
+		// TODO: a way to reload assembly while scene is running.
+		ScriptEngine::ReloadAssembly();
+	}
+
 	void EditorLayer::NewProject()
 	{
 		Project::New();
@@ -682,15 +693,16 @@ namespace Uneye
 		{
 			ScriptEngine::Init();
 
-			auto startScenePath = Project::GetActiveAssetFileSystemPath(Project::GetStartScene());
-			OpenScene(startScenePath);
+			AssetHandle startScene = Project::GetActive()->GetConfig().StartScene;
+			if (startScene)
+				OpenScene(startScene);
 			m_ContentBrowserPanel = CreateScope<ContentBrowserPanel>();
 		}
 	}
 
 	void EditorLayer::SaveProject()
 	{
-		//Project::SaveActive();
+		Project::SaveActive(Project::GetActiveProjectFile());
 	}
 
 
@@ -705,37 +717,29 @@ namespace Uneye
 
 	void EditorLayer::OpenScene()
 	{
-		std::string filepath = FileDialogs::OpenFile("Uneye Scene (*.uyscene)\0*.uyscene\0");
+		std::string path = FileDialogs::OpenFile("Uneye Scene (*.uyscene)\0*.uyscene\0");
+		std::filesystem::path filepath = std::filesystem::path(path);
 		if (!filepath.empty())
 		{
-			OpenScene(filepath);
+			OpenScene(AssetManager::ImportAsset(filepath));
 		}
 	}
 
-	void EditorLayer::OpenScene(const std::filesystem::path& path)
+	void EditorLayer::OpenScene(AssetHandle handle)
 	{
+		UNEYE_CORE_ASSERT(!handle);
+
 		if (m_SceneState != SceneState::Edit)
 			OnSceneStop();
 
-		if (path.extension() == ".uyscene")
-		{
-			Ref<Scene> newScene = CreateRef<Scene>();
-			SceneSerializer serializer(newScene);
-			if (serializer.Deserialize(path.string()))
-			{
-				m_EditorScene = newScene;
-				m_EditorScene->OnViewportResize((uint32_t)m_ViewportSize.x, (uint32_t)m_ViewportSize.y);
-				m_SceneHierarchyPanel.SetContext(m_EditorScene);
+		Ref<Scene> readOnlyScene = AssetManager::GetAsset<Scene>(handle);
+		Ref<Scene> newScene = Scene::Copy(readOnlyScene);
 
-				m_ActiveScene = m_EditorScene;
-				m_EditScenePath = path;
-			}
-		}
-		else
-		{
-			UNEYE_WARN("Could not load {0} - not a scene file", path.filename().string());
-			return;
-		}
+		m_EditorScene = newScene;
+		m_SceneHierarchyPanel.SetContext(m_EditorScene);
+
+		m_ActiveScene = m_EditorScene;
+		m_EditScenePath = Project::GetActive()->GetEditorAssetManager()->GetFilePath(handle);
 	}
 
 	void EditorLayer::SaveScene()
@@ -759,8 +763,7 @@ namespace Uneye
 
 	void EditorLayer::SerializeScene(Ref<Scene> scene, const std::filesystem::path& path)
 	{
-		SceneSerializer serializer(scene);
-		serializer.Serialize(path.string());
+		SceneImporter::SaveScene(scene, path);
 	}
 
 	void EditorLayer::OnScenePlay()

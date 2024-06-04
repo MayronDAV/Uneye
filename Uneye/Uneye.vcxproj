@@ -161,6 +161,7 @@
     <ClInclude Include="src\Uneye\Asset\AssetMetadata.h" />
     <ClInclude Include="src\Uneye\Asset\EditorAssetManager.h" />
     <ClInclude Include="src\Uneye\Asset\RuntimeAssetManager.h" />
+    <ClInclude Include="src\Uneye\Asset\SceneImporter.h" />
     <ClInclude Include="src\Uneye\Asset\TextureImporter.h" />
     <ClInclude Include="src\Uneye\Core\Application.h" />
     <ClInclude Include="src\Uneye\Core\Base.h" />
@@ -630,6 +631,7 @@
     <ClCompile Include="src\Uneye\Asset\AssetManagerBase.cpp" />
     <ClCompile Include="src\Uneye\Asset\EditorAssetManager.cpp" />
     <ClCompile Include="src\Uneye\Asset\RuntimeAssetManager.cpp" />
+    <ClCompile Include="src\Uneye\Asset\SceneImporter.cpp" />
     <ClCompile Include="src\Uneye\Asset\TextureImporter.cpp" />
     <ClCompile Include="src\Uneye\Core\Application.cpp" />
     <ClCompile Include="src\Uneye\Core\Filesystem.cpp" />

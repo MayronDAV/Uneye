@@ -160,19 +160,18 @@ namespace Uneye
 				std::vector<fs::path> pathSegments;
 				fs::path pathAccumulator;
 
-				auto currentRelPath = Project::GetActiveAssetFileSystemPath(fs::relative(m_CurrentDirectory, m_BaseDirectory));
+				auto currentRelPath = fs::relative(Project::GetActiveAssetFileSystemPath(m_CurrentDirectory), Project::GetActiveProjectDirectory());
 				for (const auto& part : currentRelPath)
 				{
-					if (part != ".")
-					{
-						pathAccumulator /= part;
-						pathSegments.push_back(pathAccumulator);
-					}
+					pathAccumulator /= part;
+					pathSegments.push_back(pathAccumulator);
 				}
 
 				bool first = true;
 				for (const auto& segment : pathSegments)
 				{
+					std::string filenameStr = segment.filename().string();
+
 					if (!first)
 					{
 						ImGui::SameLine();
@@ -180,22 +179,16 @@ namespace Uneye
 						ImGui::SameLine();
 					}
 
-					auto segmentSTR = fs::relative(segment, m_BaseDirectory);
-					auto assetRelPath = Project::GetActiveAssetFileSystemPath(segmentSTR);
-					auto filenameStr = assetRelPath.filename().string();
-					//UNEYE_CORE_TRACE("path: {}", filenameStr);
-					if (filenameStr == "..")
-						continue;
-					else if (filenameStr == ".")
-						filenameStr = Project::GetActiveAssetDirectory().filename().string();
-
 					ImGui::PushStyleColor(ImGuiCol_Button, { 0, 0, 0, 0 });
 					ImGui::PushStyleColor(ImGuiCol_ButtonHovered, { 0.3f, 0.3f, 0.35f, 0.5f });
 					ImGui::PushStyleColor(ImGuiCol_ButtonActive, { 0.3f, 0.3f, 0.35f, 0.5f });
 					if (ImGui::Button((filenameStr.empty()) ? "##Current" : filenameStr.c_str()))
 					{
-						clearStack();
-						m_CurrentDirectory = segment;
+						if (m_CurrentDirectory.filename() != segment.filename())
+						{
+							clearStack();
+							m_CurrentDirectory = Project::GetActiveProjectDirectory() / segment;
+						}
 					}
 					ImGui::PopStyleColor(3);
 

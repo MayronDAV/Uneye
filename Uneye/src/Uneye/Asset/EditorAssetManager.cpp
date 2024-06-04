@@ -50,6 +50,24 @@ namespace YAML {
 
 namespace Uneye
 {
+	static std::map<std::filesystem::path, AssetType> s_AssetExtensionMap = {
+		{ ".uyscene", AssetType::Scene },
+		{ ".png", AssetType::Texture2D },
+		{ ".jpg", AssetType::Texture2D },
+		{ ".jpeg", AssetType::Texture2D }
+	};
+
+	static AssetType GetAssetTypeFromFileExtension(const std::filesystem::path& extension)
+	{
+		if (s_AssetExtensionMap.find(extension) == s_AssetExtensionMap.end())
+		{
+			UNEYE_CORE_WARN("Could not find AssetType for {}", extension);
+			return AssetType::None;
+		}
+
+		return s_AssetExtensionMap.at(extension);
+	}
+
 	YAML::Emitter& operator<<(YAML::Emitter& out, const std::string_view& p_v)
 	{
 		out << std::string(p_v.data(), p_v.size());
@@ -61,6 +79,8 @@ namespace Uneye
 		out << (uint64_t)p_handle;
 		return out;
 	}
+
+	FilePathAssetRegistry EditorAssetManager::s_FilePathAssetRegistry;
 
 	bool EditorAssetManager::IsAssetHandleValid(AssetHandle p_handle) const
 	{
@@ -80,20 +100,34 @@ namespace Uneye
 		return m_AssetRegistry.at(p_handle).Type;
 	}
 
-	void EditorAssetManager::ImportAsset(const std::filesystem::path& p_filepath)
+
+	AssetHandle EditorAssetManager::ImportAsset(const std::filesystem::path& p_filepath)
 	{
 		AssetHandle handle; // generate new handle
-		AssetMetadata metadata;
-		metadata.FilePath = p_filepath;
-		metadata.Type = AssetType::Texture2D; // TODO(Yan): grab this from extension and try to load
-		Ref<Asset> asset = AssetImporter::ImportAsset(handle, metadata);
-		if (asset)
+
+		auto it = s_FilePathAssetRegistry.find(p_filepath);
+		if (it == s_FilePathAssetRegistry.end())
 		{
-			asset->Handle = handle;
-			m_LoadedAssets[handle] = asset;
-			m_AssetRegistry[handle] = metadata;
-			SerializeAssetRegistry();
+			AssetMetadata metadata;
+			metadata.FilePath = p_filepath;
+			metadata.Type = GetAssetTypeFromFileExtension(p_filepath.extension());
+			UNEYE_CORE_ASSERT(metadata.Type == AssetType::None);
+			Ref<Asset> asset = AssetImporter::ImportAsset(handle, metadata);
+			if (asset)
+			{
+				asset->Handle = handle;
+				m_LoadedAssets[handle] = asset;
+				m_AssetRegistry[handle] = metadata;
+				s_FilePathAssetRegistry[metadata.FilePath] = std::make_pair(handle, metadata);
+				SerializeAssetRegistry();
+			}
 		}
+		else
+		{
+			handle = it->second.first;
+		}
+
+		return handle;
 	}
 
 	const AssetMetadata& EditorAssetManager::GetMetadata(AssetHandle p_handle) const
@@ -133,6 +167,7 @@ namespace Uneye
 				// import failed
 				UNEYE_CORE_ERROR("EditorAssetManager::GetAsset - asset import failed!");
 			}
+			m_LoadedAssets[p_handle] = asset;
 		}
 		// 3. return asset
 		return asset;
@@ -143,35 +178,30 @@ namespace Uneye
 		UNEYE_PROFILE_FUNCTION();
 
 		auto path = Project::GetActiveAssetRegistryPath();
-		YAML::Node rootNode;
-
-		try 
-		{
-			rootNode = YAML::LoadFile(path.string());
-		}
-		catch (...) 
-		{
-			rootNode = YAML::Node(YAML::NodeType::Map);
-		}
-
-		if (!rootNode["AssetRegistry"] || !rootNode["AssetRegistry"].IsSequence()) 
-			rootNode["AssetRegistry"] = YAML::Node(YAML::NodeType::Sequence);
-
-		YAML::Node assetRegistryNode = rootNode["AssetRegistry"];
-
-		for (const auto& [handle, metadata] : m_AssetRegistry)
-		{
-			YAML::Node assetNode;
-			assetNode["Handle"] = (uint64_t)handle;
-			std::string filepathStr = metadata.FilePath.generic_string();
-			assetNode["FilePath"] = filepathStr;
-			assetNode["Type"] = AssetTypeToString(metadata.Type).data();
-
-			assetRegistryNode.push_back(assetNode);
-		}
-
+		
 		YAML::Emitter out;
-		out << rootNode;
+		{
+			out << YAML::BeginMap; // Root
+			out << YAML::Key << "AssetRegistry" << YAML::Value;
+
+			out << YAML::BeginSeq;
+			UNEYE_CORE_INFO("Serializing AssetRegistry");
+			for (const auto& [handle, metadata] : m_AssetRegistry)
+			{
+				UNEYE_CORE_INFO(" - Handle: {}", handle);
+				UNEYE_CORE_INFO("	Filepath: {}", metadata.FilePath);
+				UNEYE_CORE_INFO("	Type: {}", AssetTypeToString(metadata.Type));
+
+				out << YAML::BeginMap;
+				out << YAML::Key << "Handle" << YAML::Value << (uint64_t)handle;
+				std::string filepathStr = metadata.FilePath.generic_string();
+				out << YAML::Key << "FilePath" << YAML::Value << filepathStr;
+				out << YAML::Key << "Type" << YAML::Value << AssetTypeToString(metadata.Type).data();
+				out << YAML::EndMap;
+			}
+			out << YAML::EndSeq;
+			out << YAML::EndMap; // Root
+		}
 
 		std::ofstream fout(path);
 		fout << out.c_str();
@@ -204,6 +234,8 @@ namespace Uneye
 			auto& metadata = m_AssetRegistry[handle];
 			metadata.FilePath = node["FilePath"].as<std::string>();
 			metadata.Type = AssetTypeFromString(node["Type"].as<std::string>());
+
+			s_FilePathAssetRegistry[metadata.FilePath] = std::make_pair(handle, metadata);
 
 			UNEYE_CORE_INFO(" - Handle: {}", handle);
 			UNEYE_CORE_INFO("	Filepath: {}", metadata.FilePath);

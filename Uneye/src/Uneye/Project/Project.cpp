@@ -12,12 +12,6 @@ namespace Uneye
 		return s_ActiveProject;
 	}
 
-	static std::string convertBackslashesToSlashes(const std::string& path) {
-		std::string convertedPath = path;
-		std::replace(convertedPath.begin(), convertedPath.end(), '\\', '/');
-		return convertedPath;
-	}
-
 	Ref<Project> Project::Load(const std::filesystem::path& path)
 	{
 		Ref<Project> project = CreateRef<Project>();
@@ -25,6 +19,7 @@ namespace Uneye
 		ProjectSerializer serializer(project);
 		if (serializer.Deserialize(path))
 		{
+			project->m_ProjectFile = path;
 			project->m_ProjectDirectory = path.parent_path();
 			s_ActiveProject = project;
 			std::shared_ptr<EditorAssetManager> editorAssetManager = std::make_shared<EditorAssetManager>();
@@ -39,6 +34,7 @@ namespace Uneye
 	bool Project::SaveActive(const std::filesystem::path& path)
 	{
 		ProjectSerializer serializer(s_ActiveProject);
+		s_ActiveProject->m_ProjectFile = path;
 		s_ActiveProject->m_ProjectDirectory = path.parent_path();
 		return serializer.Serialize(path);
 	}

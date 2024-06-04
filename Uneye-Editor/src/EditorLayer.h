@@ -8,6 +8,7 @@
 #include "Panels/SceneHierarchyPanel.h"
 #include "Panels/ContentBrowserPanel.h"
 #include "Panels/AssetImporterPanel.h"
+#include "Panels/LogPanel.h"
 
 #include "Uneye/Renderer/EditorCamera.h"
 
@@ -35,6 +36,8 @@ namespace Uneye
 
 		void OnOverlayRender();
 
+		void ReloadAssembly();
+
 		void NewProject();
 		bool OpenProject();
 		void OpenProject(const std::filesystem::path& path);
@@ -42,7 +45,7 @@ namespace Uneye
 
 		void NewScene();
 		void OpenScene();
-		void OpenScene(const std::filesystem::path& path);
+		void OpenScene(AssetHandle handle);
 		void SaveScene();
 		void SaveSceneAs();
 
@@ -94,6 +97,7 @@ namespace Uneye
 		Scope<ContentBrowserPanel> m_ContentBrowserPanel;
 		bool m_AssetImporterPanelIsOpen = false;
 		AssetImporterPanel m_AssetImporterPanel;
+		LogPanel m_LogPanel;
 
 		// Editor resources
 		Ref<Texture2D> m_IconPlay, m_IconPause, m_IconStop, m_IconStep, m_IconSimulate;

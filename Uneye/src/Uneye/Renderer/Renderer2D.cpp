@@ -534,7 +534,7 @@ namespace Uneye
 		{
 			for (uint32_t i = 1; i < s_Data.TextureSlotIndex; i++)
 			{
-				if (*s_Data.TextureSlots[i].get() == *(AssetManager::GetAsset<Texture2D>(p_subtexture->GetTextureHandle()).get()))
+				if (*s_Data.TextureSlots[i].get() == *(p_subtexture->GetTexture().get()) )
 				{
 					textureIndex = (float)i;
 					break;
@@ -547,7 +547,7 @@ namespace Uneye
 					FlushAndReset();
 
 				textureIndex = (float)s_Data.TextureSlotIndex;
-				s_Data.TextureSlots[s_Data.TextureSlotIndex] = AssetManager::GetAsset<Texture2D>(p_subtexture->GetTextureHandle());
+				s_Data.TextureSlots[s_Data.TextureSlotIndex] = p_subtexture->GetTexture();
 				++s_Data.TextureSlotIndex;
 			}
 		}
@@ -599,7 +599,7 @@ namespace Uneye
 		{
 			for (uint32_t i = 1; i < s_Data.TextureSlotIndex; i++)
 			{
-				if (*s_Data.TextureSlots[i].get() == *(AssetManager::GetAsset<Texture2D>(p_subtexture->GetTextureHandle()).get()))
+				if (*(s_Data.TextureSlots[i].get()) == *(p_subtexture->GetTexture().get()) )
 				{
 					textureIndex = (float)i;
 					break;
@@ -612,7 +612,7 @@ namespace Uneye
 					FlushAndReset();
 
 				textureIndex = (float)s_Data.TextureSlotIndex;
-				s_Data.TextureSlots[s_Data.TextureSlotIndex] = AssetManager::GetAsset<Texture2D>(p_subtexture->GetTextureHandle());
+				s_Data.TextureSlots[s_Data.TextureSlotIndex] = p_subtexture->GetTexture();
 				++s_Data.TextureSlotIndex;
 			}
 		}
@@ -638,14 +638,15 @@ namespace Uneye
 
 	void Renderer2D::DrawSprite(const glm::mat4& p_transform, SpriteComponent& p_sc, int p_entityID)
 	{
+		Ref<Texture2D> texture = AssetManager::GetAsset<Texture2D>(p_sc.Texture);
+
 		if (p_sc.IsSubTexture)
 		{
-			Ref<SubTexture2D> subtexture = SubTexture2D::CreateFromTexture(p_sc.Texture, p_sc.TileSize, p_sc.TileCoord, p_sc.SpriteSize);
+			Ref<SubTexture2D> subtexture = SubTexture2D::CreateFromTexture(texture, p_sc.TileSize, p_sc.TileCoord, p_sc.SpriteSize);
 			DrawQuad(p_transform, subtexture, p_sc.Color, p_entityID);
 		}
 		else
 		{
-			Ref<Texture2D> texture = AssetManager::GetAsset<Texture2D>(p_sc.Texture);
 			DrawQuad(p_transform, p_sc.Color, texture, p_entityID);
 		}
 	}

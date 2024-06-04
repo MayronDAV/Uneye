@@ -8,6 +8,10 @@ namespace Uneye {
 	std::shared_ptr<spdlog::logger> Log::s_CoreLogger;
 	std::shared_ptr<spdlog::logger> Log::s_ClientLogger;
 
+	std::vector<LoggerMessage::LogMsg> LoggerMessage::s_LogMessages;
+
+	std::shared_ptr<LoggerMessage> Log::s_LoggerMessage = CreateRef<LoggerMessage>();
+
 	void Log::Init()
 	{
 		spdlog::set_pattern("%^[%T] %n: %v%$");

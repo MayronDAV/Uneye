@@ -1,5 +1,11 @@
 #pragma once
 
+#ifdef UNEYE_DIST
+	#ifdef _WIN32
+		#pragma comment(linker, "/SUBSYSTEM:windows /ENTRY:mainCRTStartup")
+	#endif
+#endif
+
 #include "Uneye/Core/Base.h"
 #include "Uneye/Core/Application.h"
 

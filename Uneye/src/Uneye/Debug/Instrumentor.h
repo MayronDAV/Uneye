@@ -126,7 +126,7 @@ namespace Uneye
     };
 }
 
-#define UNEYE_PROFILE 0
+#define UNEYE_PROFILE false
 #if UNEYE_PROFILE
     #define UNEYE_PROFILE_BEGIN_SESSION(name, filepath)  ::Uneye::Instrumentor::Get().BeginSession(name, filepath)
     #define UNEYE_PROFILE_END_SESSION()                  ::Uneye::Instrumentor::Get().EndSession()   

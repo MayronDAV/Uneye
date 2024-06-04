@@ -79,7 +79,7 @@ namespace Uneye
 					ShaderDataTypeToOpenGLBaseType(element.Type),
 					element.Normalized ? GL_TRUE : GL_FALSE,
 					layout.GetStride(),
-					(const void*)element.Offset);
+					(const void*)(const uint64_t)element.Offset);
 				m_VertexBufferIndex++;
 				break;
 			}
@@ -94,7 +94,7 @@ namespace Uneye
 					element.GetComponentCount(),
 					ShaderDataTypeToOpenGLBaseType(element.Type),
 					layout.GetStride(),
-					(const void*)element.Offset);
+					(const void*)(const uint64_t)element.Offset);
 				m_VertexBufferIndex++;
 				break;
 			}

@@ -20,6 +20,7 @@
       <Filter>UI</Filter>
     </ClInclude>
     <ClInclude Include="src\Panels\AssetImporterPanel.h" />
+    <ClInclude Include="src\Panels\LogPanel.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\EditorLayer.cpp" />
@@ -34,5 +35,6 @@
     </ClCompile>
     <ClCompile Include="src\UneyeEditorApp.cpp" />
     <ClCompile Include="src\Panels\AssetImporterPanel.cpp" />
+    <ClCompile Include="src\Panels\LogPanel.cpp" />
   </ItemGroup>
 </Project>

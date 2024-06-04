@@ -11,25 +11,30 @@ namespace Uneye
 	{
 		public:
 			template<typename T>
-			static Ref<T> GetAsset(AssetHandle handle)
+			static Ref<T> GetAsset(AssetHandle p_handle)
 			{
-				Ref<Asset> asset = Project::GetActive()->GetAssetManager()->GetAsset(handle);
+				Ref<Asset> asset = Project::GetActive()->GetAssetManager()->GetAsset(p_handle);
 				return std::static_pointer_cast<T>(asset);
 			}
 
-			static bool IsAssetHandleValid(AssetHandle handle)
+			static AssetHandle ImportAsset(const std::filesystem::path& p_filepath)
 			{
-				return Project::GetActive()->GetAssetManager()->IsAssetHandleValid(handle);
+				return Project::GetActive()->GetEditorAssetManager()->ImportAsset(p_filepath);
 			}
 
-			static bool IsAssetLoaded(AssetHandle handle)
+			static bool IsAssetHandleValid(AssetHandle p_handle)
 			{
-				return Project::GetActive()->GetAssetManager()->IsAssetLoaded(handle);
+				return Project::GetActive()->GetAssetManager()->IsAssetHandleValid(p_handle);
 			}
 
-			static AssetType GetAssetType(AssetHandle handle)
+			static bool IsAssetLoaded(AssetHandle p_handle)
 			{
-				return Project::GetActive()->GetAssetManager()->GetAssetType(handle);
+				return Project::GetActive()->GetAssetManager()->IsAssetLoaded(p_handle);
+			}
+
+			static AssetType GetAssetType(AssetHandle p_handle)
+			{
+				return Project::GetActive()->GetAssetManager()->GetAssetType(p_handle);
 			}
 	};
 }

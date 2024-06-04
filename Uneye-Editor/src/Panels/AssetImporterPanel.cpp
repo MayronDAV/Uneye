@@ -4,7 +4,7 @@
 #include "UI/UI.h"
 #include "Uneye/Utils/PlatformUtils.h"
 
-#include "Uneye/Asset/EditorAssetManager.h"
+#include "Uneye/Asset/AssetManager.h"
 
 #include <imgui/imgui.h>
 
@@ -86,9 +86,8 @@ namespace Uneye
 
 			if (ImGui::Button("Confirm"))
 			{
-				EditorAssetManager editor;
 				std::filesystem::path path = m_Options.FilePath;
-				editor.ImportAsset(path);
+				AssetManager::ImportAsset(path);
 
 				Close();
 			}

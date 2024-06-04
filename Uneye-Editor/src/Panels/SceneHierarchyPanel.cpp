@@ -404,8 +404,9 @@ namespace Uneye
 				std::string filename = std::filesystem::path(p_sc.TexturePath).filename().string();
 				UI::DrawClickableText("Texture Path", filename, [&]() {
 
-					p_sc.TexturePath = " ";
+					p_sc.TexturePath = "";
 					p_sc.IsSubTexture = false;
+					p_sc.Texture = 0;
 
 					}, [&]() {
 
@@ -416,25 +417,23 @@ namespace Uneye
 						else
 							p_sc.TexturePath = filepath;
 
-						//p_sc.Texture = TextureImporter::ImportTexture2D(UUID(), {AssetType::Texture2D, p_sc.TexturePath })->Handle;
+						p_sc.Texture = AssetManager::ImportAsset(p_sc.TexturePath);
 
 						filename = std::filesystem::path(p_sc.TexturePath).filename().string();
 
-						}, [&]() {
-							if (ImGui::BeginDragDropTarget())
+					}, [&]() {
+						if (ImGui::BeginDragDropTarget())
+						{
+							if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("CONTENT_BROWSER_ITEM"))
 							{
-								if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("CONTENT_BROWSER_ITEM"))
-								{
-									const wchar_t* path = (const wchar_t*)payload->Data;
-									std::filesystem::path texturePath = Project::GetActiveAssetFileSystemPath(path);
-									p_sc.TexturePath = texturePath.string();
-									filename = std::filesystem::path(p_sc.TexturePath).filename().string();
-									//p_sc.Texture = TextureImporter::ImportTexture2D(UUID(), { AssetType::Texture2D, texturePath.string() })->Handle;
-								}
-								ImGui::EndDragDropTarget();
+								const wchar_t* path = (const wchar_t*)payload->Data;
+								std::filesystem::path texturePath = Project::GetActiveAssetFileSystemPath(path);
+								p_sc.TexturePath = texturePath.string();
+								p_sc.Texture = AssetManager::ImportAsset(p_sc.TexturePath);
 							}
-
-							});
+							ImGui::EndDragDropTarget();
+						}
+				});
 
 				UI::DrawCheckBox("Is SubTexture ", &p_sc.IsSubTexture);
 
@@ -443,11 +442,6 @@ namespace Uneye
 					UI::DrawFloat2Input("Tile Size", p_sc.TileSize, 1.0f);
 					UI::DrawFloat2Input("Tile Coord", p_sc.TileCoord);
 					UI::DrawFloat2Input("Sprite Size", p_sc.SpriteSize, 1.0f);
-
-					/*if (!(p_sc.TexturePath == "" || p_sc.TexturePath == " " || p_sc.TexturePath == std::string()))
-						p_sc.SubTexture = SubTexture2D::CreateFromTexture(TextureImporter::LoadTexture2D(p_sc.TexturePath), p_sc.Coords, p_sc.TileSize, p_sc.SpriteSize);
-					else
-						p_sc.SubTexture = nullptr;*/
 				}
 
 				}, true);

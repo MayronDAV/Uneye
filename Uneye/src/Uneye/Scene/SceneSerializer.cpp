@@ -250,7 +250,7 @@ namespace Uneye
 		out << YAML::EndMap; // Entity
 	}
 
-	void SceneSerializer::Serialize(const std::string& filepath)
+	void SceneSerializer::Serialize(const std::filesystem::path& filepath)
 	{
 		UNEYE_PROFILE_FUNCTION();
 
@@ -273,21 +273,21 @@ namespace Uneye
 		fout << out.c_str();
 	}
 
-	void SceneSerializer::SerializeRuntime(const std::string& filepath)
+	void SceneSerializer::SerializeRuntime(const std::filesystem::path& filepath)
 	{
 		UNEYE_PROFILE_FUNCTION();
 
 		UNEYE_CORE_ASSERT(true, "Not implemented!");
 	}
 
-	bool SceneSerializer::Deserialize(const std::string& filepath)
+	bool SceneSerializer::Deserialize(const std::filesystem::path& filepath)
 	{
 		UNEYE_PROFILE_FUNCTION();
 
 		YAML::Node data;
 		try
 		{
-			data = YAML::LoadFile(filepath);
+			data = YAML::LoadFile(filepath.string());
 		}
 		catch (YAML::ParserException e)
 		{
@@ -403,22 +403,19 @@ namespace Uneye
 				auto spriteComponent = entity["SpriteComponent"];
 				if (spriteComponent)
 				{
-					auto& mc = deserializedEntity.AddComponent<SpriteComponent>();
-					mc.Color = spriteComponent["Color"].as<glm::vec4>();
-					mc.TexturePath = spriteComponent["TexturePath"].as<std::string>();
+					auto& sc = deserializedEntity.AddComponent<SpriteComponent>();
+					sc.Color = spriteComponent["Color"].as<glm::vec4>();
+					sc.TexturePath = spriteComponent["TexturePath"].as<std::string>();
 
-					if (spriteComponent["TextureHandle"])
-						mc.Texture = spriteComponent["TextureHandle"].as<AssetHandle>();
+					sc.Texture = spriteComponent["TextureHandle"].as<AssetHandle>();
 
-					mc.IsSubTexture = spriteComponent["IsSubTexture"].as<bool>();
+					sc.IsSubTexture = spriteComponent["IsSubTexture"].as<bool>();
 
-					if (mc.IsSubTexture)
+					if (sc.IsSubTexture)
 					{
-						mc.TileSize = spriteComponent["TileSize"].as<glm::vec2>();
-						mc.TileCoord = spriteComponent["Coords"].as<glm::vec2>();
-						mc.SpriteSize = spriteComponent["SpriteSize"].as<glm::vec2>();
-
-						//mc.SubTexture = SubTexture2D::CreateFromTexture(AssetManager::GetAsset<Texture2D>(mc.Texture), mc.Coords, mc.TileSize, mc.SpriteSize);
+						sc.TileSize = spriteComponent["TileSize"].as<glm::vec2>();
+						sc.TileCoord = spriteComponent["TileCoord"].as<glm::vec2>();
+						sc.SpriteSize = spriteComponent["SpriteSize"].as<glm::vec2>();
 					}
 				}
 
@@ -484,7 +481,7 @@ namespace Uneye
 		return true;
 	}
 
-	bool SceneSerializer::DeserializeRuntime(const std::string& filepath)
+	bool SceneSerializer::DeserializeRuntime(const std::filesystem::path& filepath)
 	{
 		UNEYE_PROFILE_FUNCTION();
 

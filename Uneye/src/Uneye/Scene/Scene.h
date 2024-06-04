@@ -1,5 +1,6 @@
 #pragma once
 
+#include "Uneye/Asset/Asset.h"
 #include "Uneye/Core/Timestep.h"
 #include "Uneye/Core/UUID.h"
 #include "Uneye/Renderer/EditorCamera.h"
@@ -21,13 +22,16 @@ namespace Uneye
 	class SceneHierarchyPanel;
 	class SceneSerializer;
 
-	class Scene
+	class Scene : public Asset
 	{
 		public:
 			Scene();
 			~Scene();
 			
 			static Ref<Scene> Copy(Ref<Scene> other);
+
+			static AssetType GetStaticType() { return AssetType::Scene; }
+			virtual AssetType GetType() const { return GetStaticType(); }
 
 			Entity CreateEntity(const std::string& name = std::string());
 			Entity CreateEntityWithUUID(UUID uuid, const std::string& name = std::string());

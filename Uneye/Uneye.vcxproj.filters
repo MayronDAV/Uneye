@@ -1472,6 +1472,7 @@
     <ClInclude Include="src\Uneye\Asset\RuntimeAssetManager.h" />
     <ClInclude Include="src\Uneye\Asset\EditorAssetManager.h" />
     <ClInclude Include="src\Uneye\Asset\AssetImporter.h" />
+    <ClInclude Include="src\Uneye\Asset\SceneImporter.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Platform\OpenGL\OpenGLBuffer.cpp">
@@ -1646,5 +1647,6 @@
     <ClCompile Include="src\Uneye\Asset\RuntimeAssetManager.cpp" />
     <ClCompile Include="src\Uneye\Asset\EditorAssetManager.cpp" />
     <ClCompile Include="src\Uneye\Asset\AssetImporter.cpp" />
+    <ClCompile Include="src\Uneye\Asset\SceneImporter.cpp" />
   </ItemGroup>
 </Project>

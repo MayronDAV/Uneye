@@ -1,6 +1,5 @@
 #pragma once
 
-
 namespace Uneye
 {
 	enum class ShaderDataType

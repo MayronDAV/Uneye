@@ -19,6 +19,7 @@ namespace Uneye
 		AssetHandle StartScene;
 
 		std::filesystem::path AssetDirectory;
+		std::filesystem::path CacheDirectory;
 		std::filesystem::path AssetRegistryPath;
 		std::filesystem::path ScriptModulePath;
 
@@ -35,12 +36,21 @@ namespace Uneye
 			{
 				return GetProjectDirectory() / s_ActiveProject->m_Config.AssetDirectory;
 			}
+			std::filesystem::path GetCacheDirectory()
+			{
+				return GetAssetDirectory() / s_ActiveProject->m_Config.CacheDirectory;
+			}
 			std::filesystem::path GetAssetRegistryPath()
 			{
 				return GetAssetDirectory() / s_ActiveProject->m_Config.AssetRegistryPath;
 			}
 			// TODO: Move to Asset manager
 			std::filesystem::path GetAssetFileSystemPath(const std::filesystem::path& path) { return GetAssetDirectory() / path; }
+
+			std::filesystem::path GetAssetAbsolutePath(const std::filesystem::path& path)
+			{
+				return GetAssetDirectory() / path;
+			}
 
 			static const std::filesystem::path& GetActiveProjectDirectory()
 			{
@@ -58,6 +68,12 @@ namespace Uneye
 			{
 				UNEYE_CORE_ASSERT(!s_ActiveProject);
 				return s_ActiveProject->GetAssetDirectory();
+			}
+
+			static std::filesystem::path GetActiveCacheDirectory()
+			{
+				UNEYE_CORE_ASSERT(!s_ActiveProject);
+				return s_ActiveProject->GetCacheDirectory();
 			}
 
 			static std::filesystem::path GetActiveAssetRegistryPath()

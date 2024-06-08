@@ -16,7 +16,6 @@ extern Uneye::Application* Uneye::CreateApplication(ApplicationCommandLineArgs a
 int main(int argc, char** argv)
 {
 	Uneye::Log::Init();
-	UNEYE_CORE_INFO("Initialized Application!");
 
 	UNEYE_PROFILE_BEGIN_SESSION("Startup", "UneyeStartup.json");
 	auto app = Uneye::CreateApplication({ argc, argv });

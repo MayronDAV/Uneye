@@ -188,10 +188,6 @@ namespace Uneye
 			UNEYE_CORE_INFO("Serializing AssetRegistry");
 			for (const auto& [handle, metadata] : m_AssetRegistry)
 			{
-				UNEYE_CORE_INFO(" - Handle: {}", handle);
-				UNEYE_CORE_INFO("	Filepath: {}", metadata.FilePath);
-				UNEYE_CORE_INFO("	Type: {}", AssetTypeToString(metadata.Type));
-
 				out << YAML::BeginMap;
 				out << YAML::Key << "Handle" << YAML::Value << (uint64_t)handle;
 				std::string filepathStr = metadata.FilePath.generic_string();
@@ -236,10 +232,6 @@ namespace Uneye
 			metadata.Type = AssetTypeFromString(node["Type"].as<std::string>());
 
 			s_FilePathAssetRegistry[metadata.FilePath] = std::make_pair(handle, metadata);
-
-			UNEYE_CORE_INFO(" - Handle: {}", handle);
-			UNEYE_CORE_INFO("	Filepath: {}", metadata.FilePath);
-			UNEYE_CORE_INFO("	Type: {}", AssetTypeToString(metadata.Type));
 		}
 
 		return true;

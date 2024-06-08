@@ -16,9 +16,14 @@ namespace Uneye
 			virtual ~OpenGLTexture2D();
 
 			virtual void SetData(Buffer data) override;
-
 			virtual uint32_t GetRendererID() override { return m_RendererID; }
+
+			virtual uint64_t GetEstimatedSize() const override { return m_Width * m_Height * 4; }
+
+			virtual void ChangeSize(uint32_t p_width, uint32_t p_height) override;
+
 			virtual const TextureSpecification& GetSpecification() const override { return m_Specification; }
+			virtual Buffer* GetData() override { return &m_Data; }
 
 			virtual uint32_t GetWidth() const override { return m_Width;  }
 			virtual uint32_t GetHeight() const override { return m_Height; }
@@ -32,6 +37,8 @@ namespace Uneye
 			}
 
 		private:
+			Buffer m_Data;
+
 			TextureSpecification m_Specification;
 
 			uint32_t m_Width			= NULL;

@@ -48,43 +48,36 @@ namespace Uneye
 	{
 		ImGui::Begin("Log");
 
-		//UNEYE_INFO("DESENHANDO");
-
-		/*if (ImGui::BeginTable("##LogTable", 2))
-
-		for (auto [type, message] : Log::GetLoggerMessage()->GetMessages())
-		{
-			ImGui::Text("{}", Utils::LogTypeToString(type));
-			ImGui::NextColumn();
-			ImGui::Text("{}", message);
-			ImGui::NextColumn();
-		}
-
-		ImGui::EndTable();*/
-
 		if (ImGui::BeginTable("##LogTabel", 2, ImGuiTableFlags_BordersInner))
 		{
+			const auto& messages = Log::GetLoggerMessage()->GetMessages();
+
 			ImGui::TableSetupColumn("Level", ImGuiTableColumnFlags_WidthFixed, 50.0f);
 			ImGui::TableSetupColumn("Message");
 			ImGui::TableHeadersRow();
 
-			ImGui::TableNextRow();
-
-			for (const auto msg : Log::GetLoggerMessage()->GetMessages())
+			ImGuiListClipper clipper;
+			clipper.Begin(messages.size());
+			while (clipper.Step())
 			{
+				for (int row = clipper.DisplayStart; row < clipper.DisplayEnd; row++)
+				{
+					auto msg = messages.at(row);
 
-				ImGui::PushStyleColor(ImGuiCol_Text, { Utils::LogTypeColor(msg.Type).x, Utils::LogTypeColor(msg.Type).y, Utils::LogTypeColor(msg.Type).z, Utils::LogTypeColor(msg.Type).w });
-				ImGui::TableSetColumnIndex(0);
+					ImGui::TableNextRow();
+					ImGui::TableSetColumnIndex(0);
 
-				ImGui::Text(Utils::LogTypeToString(msg.Type).c_str());
+					auto color = Utils::LogTypeColor(msg.Type);
+					ImGui::PushStyleColor(ImGuiCol_Text, { color.x, color.y, color.z, color.w });
 
-				ImGui::TableSetColumnIndex(1);
+					ImGui::Text(Utils::LogTypeToString(msg.Type).c_str());
 
-				ImGui::Text(msg.Message.c_str());
+					ImGui::TableSetColumnIndex(1);
 
-				ImGui::PopStyleColor();
+					ImGui::Text(msg.Message.c_str());
 
-				ImGui::TableNextRow();
+					ImGui::PopStyleColor();
+				}
 			}
 
 			ImGui::EndTable();

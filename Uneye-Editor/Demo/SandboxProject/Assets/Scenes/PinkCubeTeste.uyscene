@@ -1,0 +1,80 @@
+Scene: Untitled
+Entities:
+  - Entity: 14186432237343820709
+    TagComponent:
+      Tag: Left
+    TransformComponent:
+      Translation: [-0.358976185, -0.00205361843, -0.355713516]
+      Rotation: [0, 0.786358297, 0]
+      Scale: [1, 1, 1]
+    SpriteComponent:
+      Color: [0.549019635, 0, 0.588235319, 1]
+      TexturePath: " "
+      TextureHandle: 0
+      IsSubTexture: false
+  - Entity: 6877465466317961139
+    TagComponent:
+      Tag: Back
+    TransformComponent:
+      Translation: [0.350284785, 0.00445604324, -0.341516137]
+      Rotation: [0, -0.77724576, 0]
+      Scale: [0.99999994, 1, 0.99999994]
+    SpriteComponent:
+      Color: [0.549019635, 0, 0.588235319, 1]
+      TexturePath: " "
+      TextureHandle: 0
+      IsSubTexture: false
+  - Entity: 3297948303290230697
+    TagComponent:
+      Tag: Front
+    TransformComponent:
+      Translation: [-0.354999989, 0, 0.349999994]
+      Rotation: [0, -0.785398245, 0]
+      Scale: [1, 1, 1]
+    SpriteComponent:
+      Color: [1, 0, 0.949807167, 1]
+      TexturePath: " "
+      TextureHandle: 0
+      IsSubTexture: false
+  - Entity: 13732926541490023714
+    TagComponent:
+      Tag: Right
+    TransformComponent:
+      Translation: [0.351999998, 0, 0.349999994]
+      Rotation: [0, 0.785398245, 0]
+      Scale: [1, 1, 1]
+    SpriteComponent:
+      Color: [0.54842025, 0, 0.586872578, 1]
+      TexturePath: " "
+      TextureHandle: 0
+      IsSubTexture: false
+  - Entity: 13685016332045031465
+    TagComponent:
+      Tag: Camera
+    TransformComponent:
+      Translation: [0, 1.70000005, 4]
+      Rotation: [-0.404916406, 0, 0]
+      Scale: [1, 1, 1]
+    CameraComponent:
+      Camera:
+        ProjectionType: 0
+        PerspectiveFOV: 0.52359879
+        PerspectiveNear: 0.00999999978
+        PerspectiveFar: 1000
+        OrthographicSize: 10
+        OrthographicNear: -1
+        OrthographicFar: 1
+      Primary: true
+      FixedAspectRatio: false
+  - Entity: 2906092452320439299
+    TagComponent:
+      Tag: Top
+    TransformComponent:
+      Translation: [0, 0.5, 0]
+      Rotation: [1.57079637, 0.785398185, 0]
+      Scale: [1, 1, 1]
+    SpriteComponent:
+      Color: [0.876447856, 0, 0.834712803, 1]
+      TexturePath: " "
+      TextureHandle: 0
+      IsSubTexture: false

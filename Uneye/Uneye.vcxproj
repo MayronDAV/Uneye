@@ -152,6 +152,7 @@
     <ClInclude Include="src\Platform\OpenGL\OpenGLTexture.h" />
     <ClInclude Include="src\Platform\OpenGL\OpenGLUniformBuffer.h" />
     <ClInclude Include="src\Platform\OpenGL\OpenGLVertexArray.h" />
+    <ClInclude Include="src\Platform\Windows\Resource\resource1.h" />
     <ClInclude Include="src\Platform\Windows\WindowsWindow.h" />
     <ClInclude Include="src\Uneye.h" />
     <ClInclude Include="src\Uneye\Asset\Asset.h" />
@@ -176,6 +177,7 @@
     <ClInclude Include="src\Uneye\Core\Log.h" />
     <ClInclude Include="src\Uneye\Core\Theme.h" />
     <ClInclude Include="src\Uneye\Core\ThemeManager.h" />
+    <ClInclude Include="src\Uneye\Core\ThreadPool.h" />
     <ClInclude Include="src\Uneye\Core\Timer.h" />
     <ClInclude Include="src\Uneye\Core\Timestep.h" />
     <ClInclude Include="src\Uneye\Core\TraitHelpers.h" />
@@ -216,6 +218,7 @@
     <ClInclude Include="src\Uneye\Scripting\ScriptEngine.h" />
     <ClInclude Include="src\Uneye\Scripting\ScriptGlue.h" />
     <ClInclude Include="src\Uneye\Utils\PlatformUtils.h" />
+    <ClInclude Include="src\Uneye\Utils\StringUtils.h" />
     <ClInclude Include="src\Uneye\Utils\YamlTemplates.h" />
     <ClInclude Include="src\uypch.h" />
     <ClInclude Include="vendor\ImGuizmo\ImCurveEdit.h" />
@@ -667,6 +670,7 @@
     <ClCompile Include="src\Uneye\Scene\SceneSerializer.cpp" />
     <ClCompile Include="src\Uneye\Scripting\ScriptEngine.cpp" />
     <ClCompile Include="src\Uneye\Scripting\ScriptGlue.cpp" />
+    <ClCompile Include="src\Uneye\Utils\StringUtils.cpp" />
     <ClCompile Include="src\uypch.cpp">
       <PrecompiledHeader>Create</PrecompiledHeader>
     </ClCompile>

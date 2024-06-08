@@ -1,0 +1,1244 @@
+Scene: Untitled
+Entities:
+  - Entity: 12128180809440536974
+    TagComponent:
+      Tag: Camera B
+    TransformComponent:
+      Translation: [-1.02928627, 5.44264364, 0]
+      Rotation: [0, 0, 0]
+      Scale: [1, 1, 1]
+    CameraComponent:
+      Camera:
+        ProjectionType: 1
+        PerspectiveFOV: 0.785398185
+        PerspectiveNear: 0.00999999978
+        PerspectiveFar: 1000
+        OrthographicSize: 13.3000002
+        OrthographicNear: -1
+        OrthographicFar: 1
+      Primary: false
+      FixedAspectRatio: false
+  - Entity: 3120929504156346797
+    TagComponent:
+      Tag: Camera A
+    TransformComponent:
+      Translation: [4.970716, 5.44264364, 0]
+      Rotation: [0, 0, 0]
+      Scale: [1, 1, 1]
+    CameraComponent:
+      Camera:
+        ProjectionType: 1
+        PerspectiveFOV: 0.785398185
+        PerspectiveNear: 0.00999999978
+        PerspectiveFar: 1000
+        OrthographicSize: 2.4000001
+        OrthographicNear: -1
+        OrthographicFar: 1
+      Primary: true
+      FixedAspectRatio: false
+  - Entity: 10365822286034782344
+    TagComponent:
+      Tag: Tile Square 99
+    TransformComponent:
+      Translation: [5.4000001, 5.69999981, 0]
+      Rotation: [0, 0, 0]
+      Scale: [0.5, 1, 1]
+    SpriteComponent:
+      Color: [1, 1, 1, 1]
+      TexturePath: C:\dev\Uneye\Uneye-Editor\SandboxProject\Assets\Textures\RPGpack_sheet_2X.png
+      TextureHandle: 13052209740581719949
+      IsSubTexture: true
+      TileSize: [128, 128]
+      TileCoord: [0, 1]
+      SpriteSize: [1, 2]
+  - Entity: 8066918700673898951
+    TagComponent:
+      Tag: Tile Square 98
+    TransformComponent:
+      Translation: [4.80000019, 5.4000001, 0]
+      Rotation: [0, 0, 0]
+      Scale: [0.5, 0.5, 1]
+    SpriteComponent:
+      Color: [0.300000012, 0.800000012, 0.200000003, 1]
+      TexturePath: SandboxProject\Assets\Textures\container.jpg
+      TextureHandle: 0
+      IsSubTexture: false
+  - Entity: 10643268903658377607
+    TagComponent:
+      Tag: Tile Square 97
+    TransformComponent:
+      Translation: [4.20000029, 5.69999981, 0]
+      Rotation: [0, 0, 0]
+      Scale: [0.5, 1, 1]
+    SpriteComponent:
+      Color: [1, 1, 1, 1]
+      TexturePath: C:\dev\Uneye\Uneye-Editor\SandboxProject\Assets\Textures\RPGpack_sheet_2X.png
+      TextureHandle: 13052209740581719949
+      IsSubTexture: true
+      TileSize: [128, 128]
+      TileCoord: [2, 1]
+      SpriteSize: [1, 2]
+  - Entity: 11165317878122686931
+    TagComponent:
+      Tag: Tile Square 96
+    TransformComponent:
+      Translation: [3.60000014, 5.4000001, 0]
+      Rotation: [0, 0, 0]
+      Scale: [0.5, 0.5, 1]
+    SpriteComponent:
+      Color: [0.300000012, 0.800000012, 0.200000003, 1]
+      TexturePath: SandboxProject\Assets\Textures\checkerboard.png
+      TextureHandle: 0
+      IsSubTexture: false
+  - Entity: 2932022492227879749
+    TagComponent:
+      Tag: Tile Square 95
+    TransformComponent:
+      Translation: [3, 5.4000001, 0]
+      Rotation: [0, 0, 0]
+      Scale: [0.5, 0.5, 1]
+    SpriteComponent:
+      Color: [0.300000012, 0.800000012, 0.200000003, 1]
+      TexturePath: SandboxProject\Assets\Textures\checkerboard.png
+      TextureHandle: 0
+      IsSubTexture: false
+  - Entity: 8498406093399675413
+    TagComponent:
+      Tag: Tile Square 94
+    TransformComponent:
+      Translation: [2.4000001, 5.4000001, 0]
+      Rotation: [0, 0, 0]
+      Scale: [0.5, 0.5, 1]
+    SpriteComponent:
+      Color: [0.300000012, 0.800000012, 0.200000003, 1]
+      TexturePath: SandboxProject\Assets\Textures\checkerboard.png
+      TextureHandle: 0
+      IsSubTexture: false
+  - Entity: 2984817208480207496
+    TagComponent:
+      Tag: Tile Square 93
+    TransformComponent:
+      Translation: [1.80000007, 5.4000001, 0]
+      Rotation: [0, 0, 0]
+      Scale: [0.5, 0.5, 1]
+    SpriteComponent:
+      Color: [0.300000012, 0.800000012, 0.200000003, 1]
+      TexturePath: SandboxProject\Assets\Textures\checkerboard.png
+      TextureHandle: 0
+      IsSubTexture: false
+  - Entity: 10279495734864137362
+    TagComponent:
+      Tag: Tile Square 92
+    TransformComponent:
+      Translation: [1.20000005, 5.4000001, 0]
+      Rotation: [0, 0, 0]
+      Scale: [0.5, 0.5, 1]
+    SpriteComponent:
+      Color: [0.300000012, 0.800000012, 0.200000003, 1]
+      TexturePath: SandboxProject\Assets\Textures\checkerboard.png
+      TextureHandle: 0
+      IsSubTexture: false
+  - Entity: 372635018649330552
+    TagComponent:
+      Tag: Tile Square 91
+    TransformComponent:
+      Translation: [0.600000024, 5.4000001, 0]
+      Rotation: [0, 0, 0]
+      Scale: [0.5, 0.5, 1]
+    SpriteComponent:
+      Color: [0.300000012, 0.800000012, 0.200000003, 1]
+      TexturePath: SandboxProject\Assets\Textures\checkerboard.png
+      TextureHandle: 0
+      IsSubTexture: false
+  - Entity: 12054670008414740467
+    TagComponent:
+      Tag: Tile Square 90
+    TransformComponent:
+      Translation: [0, 5.4000001, 0]
+      Rotation: [0, 0, 0]
+      Scale: [0.5, 0.5, 1]
+    SpriteComponent:
+      Color: [0.300000012, 0.800000012, 0.200000003, 1]
+      TexturePath: SandboxProject\Assets\Textures\checkerboard.png
+      TextureHandle: 0
+      IsSubTexture: false
+  - Entity: 15912184372134797414
+    TagComponent:
+      Tag: Tile Square 89
+    TransformComponent:
+      Translation: [5.4000001, 4.80000019, 0]
+      Rotation: [0, 0, 0]
+      Scale: [0.5, 0.5, 1]
+    SpriteComponent:
+      Color: [0.300000012, 0.800000012, 0.200000003, 1]
+      TexturePath: SandboxProject\Assets\Textures\checkerboard.png
+      TextureHandle: 0
+      IsSubTexture: false
+  - Entity: 12019969338610399629
+    TagComponent:
+      Tag: Tile Square 88
+    TransformComponent:
+      Translation: [4.80000019, 4.80000019, 0]
+      Rotation: [0, 0, 0]
+      Scale: [0.5, 0.5, 1]
+    SpriteComponent:
+      Color: [0.300000012, 0.800000012, 0.200000003, 1]
+      TexturePath: SandboxProject\Assets\Textures\checkerboard.png
+      TextureHandle: 0
+      IsSubTexture: false
+  - Entity: 12790045233908059254
+    TagComponent:
+      Tag: Tile Square 87
+    TransformComponent:
+      Translation: [4.20000029, 4.80000019, 0]
+      Rotation: [0, 0, 0]
+      Scale: [0.5, 0.5, 1]
+    SpriteComponent:
+      Color: [0.300000012, 0.800000012, 0.200000003, 1]
+      TexturePath: SandboxProject\Assets\Textures\checkerboard.png
+      TextureHandle: 0
+      IsSubTexture: false
+  - Entity: 12923168189652591655
+    TagComponent:
+      Tag: Tile Square 86
+    TransformComponent:
+      Translation: [3.60000014, 4.80000019, 0]
+      Rotation: [0, 0, 0]
+      Scale: [0.5, 0.5, 1]
+    SpriteComponent:
+      Color: [0.300000012, 0.800000012, 0.200000003, 1]
+      TexturePath: SandboxProject\Assets\Textures\checkerboard.png
+      TextureHandle: 0
+      IsSubTexture: false
+  - Entity: 2933825740806218873
+    TagComponent:
+      Tag: Tile Square 85
+    TransformComponent:
+      Translation: [3, 4.80000019, 0]
+      Rotation: [0, 0, 0]
+      Scale: [0.5, 0.5, 1]
+    SpriteComponent:
+      Color: [0.300000012, 0.800000012, 0.200000003, 1]
+      TexturePath: SandboxProject\Assets\Textures\checkerboard.png
+      TextureHandle: 0
+      IsSubTexture: false
+  - Entity: 6862013409705012005
+    TagComponent:
+      Tag: Tile Square 84
+    TransformComponent:
+      Translation: [2.4000001, 4.80000019, 0]
+      Rotation: [0, 0, 0]
+      Scale: [0.5, 0.5, 1]
+    SpriteComponent:
+      Color: [0.300000012, 0.800000012, 0.200000003, 1]
+      TexturePath: SandboxProject\Assets\Textures\checkerboard.png
+      TextureHandle: 0
+      IsSubTexture: false
+  - Entity: 949172901907739775
+    TagComponent:
+      Tag: Tile Square 83
+    TransformComponent:
+      Translation: [1.80000007, 4.80000019, 0]
+      Rotation: [0, 0, 0]
+      Scale: [0.5, 0.5, 1]
+    SpriteComponent:
+      Color: [0.300000012, 0.800000012, 0.200000003, 1]
+      TexturePath: SandboxProject\Assets\Textures\checkerboard.png
+      TextureHandle: 0
+      IsSubTexture: false
+  - Entity: 14962879467772609529
+    TagComponent:
+      Tag: Tile Square 82
+    TransformComponent:
+      Translation: [1.20000005, 4.80000019, 0]
+      Rotation: [0, 0, 0]
+      Scale: [0.5, 0.5, 1]
+    SpriteComponent:
+      Color: [0.300000012, 0.800000012, 0.200000003, 1]
+      TexturePath: SandboxProject\Assets\Textures\checkerboard.png
+      TextureHandle: 0
+      IsSubTexture: false
+  - Entity: 9640590239354368778
+    TagComponent:
+      Tag: Tile Square 81
+    TransformComponent:
+      Translation: [0.600000024, 4.80000019, 0]
+      Rotation: [0, 0, 0]
+      Scale: [0.5, 0.5, 1]
+    SpriteComponent:
+      Color: [0.300000012, 0.800000012, 0.200000003, 1]
+      TexturePath: SandboxProject\Assets\Textures\checkerboard.png
+      TextureHandle: 0
+      IsSubTexture: false
+  - Entity: 7952253535753902682
+    TagComponent:
+      Tag: Tile Square 80
+    TransformComponent:
+      Translation: [0, 4.80000019, 0]
+      Rotation: [0, 0, 0]
+      Scale: [0.5, 0.5, 1]
+    SpriteComponent:
+      Color: [0.300000012, 0.800000012, 0.200000003, 1]
+      TexturePath: SandboxProject\Assets\Textures\checkerboard.png
+      TextureHandle: 0
+      IsSubTexture: false
+  - Entity: 15328759888153233708
+    TagComponent:
+      Tag: Tile Square 79
+    TransformComponent:
+      Translation: [5.4000001, 4.20000029, 0]
+      Rotation: [0, 0, 0]
+      Scale: [0.5, 0.5, 1]
+    SpriteComponent:
+      Color: [0.300000012, 0.800000012, 0.200000003, 1]
+      TexturePath: SandboxProject\Assets\Textures\checkerboard.png
+      TextureHandle: 0
+      IsSubTexture: false
+  - Entity: 8858960005597712499
+    TagComponent:
+      Tag: Tile Square 78
+    TransformComponent:
+      Translation: [4.80000019, 4.20000029, 0]
+      Rotation: [0, 0, 0]
+      Scale: [0.5, 0.5, 1]
+    SpriteComponent:
+      Color: [0.300000012, 0.800000012, 0.200000003, 1]
+      TexturePath: SandboxProject\Assets\Textures\checkerboard.png
+      TextureHandle: 0
+      IsSubTexture: false
+  - Entity: 1078753651085377255
+    TagComponent:
+      Tag: Tile Square 77
+    TransformComponent:
+      Translation: [4.20000029, 4.20000029, 0]
+      Rotation: [0, 0, 0]
+      Scale: [0.5, 0.5, 1]
+    SpriteComponent:
+      Color: [0.300000012, 0.800000012, 0.200000003, 1]
+      TexturePath: SandboxProject\Assets\Textures\checkerboard.png
+      TextureHandle: 0
+      IsSubTexture: false
+  - Entity: 1804154940769065160
+    TagComponent:
+      Tag: Tile Square 76
+    TransformComponent:
+      Translation: [3.60000014, 4.20000029, 0]
+      Rotation: [0, 0, 0]
+      Scale: [0.5, 0.5, 1]
+    SpriteComponent:
+      Color: [0.300000012, 0.800000012, 0.200000003, 1]
+      TexturePath: SandboxProject\Assets\Textures\checkerboard.png
+      TextureHandle: 0
+      IsSubTexture: false
+  - Entity: 12725201570286764176
+    TagComponent:
+      Tag: Tile Square 75
+    TransformComponent:
+      Translation: [3, 4.20000029, 0]
+      Rotation: [0, 0, 0]
+      Scale: [0.5, 0.5, 1]
+    SpriteComponent:
+      Color: [0.300000012, 0.800000012, 0.200000003, 1]
+      TexturePath: SandboxProject\Assets\Textures\checkerboard.png
+      TextureHandle: 0
+      IsSubTexture: false
+  - Entity: 1459545475935049669
+    TagComponent:
+      Tag: Tile Square 74
+    TransformComponent:
+      Translation: [2.4000001, 4.20000029, 0]
+      Rotation: [0, 0, 0]
+      Scale: [0.5, 0.5, 1]
+    SpriteComponent:
+      Color: [0.300000012, 0.800000012, 0.200000003, 1]
+      TexturePath: SandboxProject\Assets\Textures\checkerboard.png
+      TextureHandle: 0
+      IsSubTexture: false
+  - Entity: 10963672493511442528
+    TagComponent:
+      Tag: Tile Square 73
+    TransformComponent:
+      Translation: [1.80000007, 4.20000029, 0]
+      Rotation: [0, 0, 0]
+      Scale: [0.5, 0.5, 1]
+    SpriteComponent:
+      Color: [0.300000012, 0.800000012, 0.200000003, 1]
+      TexturePath: SandboxProject\Assets\Textures\checkerboard.png
+      TextureHandle: 0
+      IsSubTexture: false
+  - Entity: 15502586981788337550
+    TagComponent:
+      Tag: Tile Square 72
+    TransformComponent:
+      Translation: [1.20000005, 4.20000029, 0]
+      Rotation: [0, 0, 0]
+      Scale: [0.5, 0.5, 1]
+    SpriteComponent:
+      Color: [0.300000012, 0.800000012, 0.200000003, 1]
+      TexturePath: SandboxProject\Assets\Textures\checkerboard.png
+      TextureHandle: 0
+      IsSubTexture: false
+  - Entity: 12842081043707855176
+    TagComponent:
+      Tag: Tile Square 71
+    TransformComponent:
+      Translation: [0.600000024, 4.20000029, 0]
+      Rotation: [0, 0, 0]
+      Scale: [0.5, 0.5, 1]
+    SpriteComponent:
+      Color: [0.300000012, 0.800000012, 0.200000003, 1]
+      TexturePath: SandboxProject\Assets\Textures\checkerboard.png
+      TextureHandle: 0
+      IsSubTexture: false
+  - Entity: 16238103100404096070
+    TagComponent:
+      Tag: Tile Square 70
+    TransformComponent:
+      Translation: [0, 4.20000029, 0]
+      Rotation: [0, 0, 0]
+      Scale: [0.5, 0.5, 1]
+    SpriteComponent:
+      Color: [0.300000012, 0.800000012, 0.200000003, 1]
+      TexturePath: SandboxProject\Assets\Textures\checkerboard.png
+      TextureHandle: 0
+      IsSubTexture: false
+  - Entity: 14619609436854984865
+    TagComponent:
+      Tag: Tile Square 69
+    TransformComponent:
+      Translation: [5.4000001, 3.60000014, 0]
+      Rotation: [0, 0, 0]
+      Scale: [0.5, 0.5, 1]
+    SpriteComponent:
+      Color: [0.300000012, 0.800000012, 0.200000003, 1]
+      TexturePath: SandboxProject\Assets\Textures\checkerboard.png
+      TextureHandle: 0
+      IsSubTexture: false
+  - Entity: 9971511479442579165
+    TagComponent:
+      Tag: Tile Square 68
+    TransformComponent:
+      Translation: [4.80000019, 3.60000014, 0]
+      Rotation: [0, 0, 0]
+      Scale: [0.5, 0.5, 1]
+    SpriteComponent:
+      Color: [0.300000012, 0.800000012, 0.200000003, 1]
+      TexturePath: SandboxProject\Assets\Textures\checkerboard.png
+      TextureHandle: 0
+      IsSubTexture: false
+  - Entity: 3176733864826306409
+    TagComponent:
+      Tag: Tile Square 67
+    TransformComponent:
+      Translation: [4.20000029, 3.60000014, 0]
+      Rotation: [0, 0, 0]
+      Scale: [0.5, 0.5, 1]
+    SpriteComponent:
+      Color: [0.300000012, 0.800000012, 0.200000003, 1]
+      TexturePath: SandboxProject\Assets\Textures\checkerboard.png
+      TextureHandle: 0
+      IsSubTexture: false
+  - Entity: 12702766888547055502
+    TagComponent:
+      Tag: Tile Square 66
+    TransformComponent:
+      Translation: [3.60000014, 3.60000014, 0]
+      Rotation: [0, 0, 0]
+      Scale: [0.5, 0.5, 1]
+    SpriteComponent:
+      Color: [0.300000012, 0.800000012, 0.200000003, 1]
+      TexturePath: SandboxProject\Assets\Textures\checkerboard.png
+      TextureHandle: 0
+      IsSubTexture: false
+  - Entity: 4657555258259939643
+    TagComponent:
+      Tag: Tile Square 65
+    TransformComponent:
+      Translation: [3, 3.60000014, 0]
+      Rotation: [0, 0, 0]
+      Scale: [0.5, 0.5, 1]
+    SpriteComponent:
+      Color: [0.300000012, 0.800000012, 0.200000003, 1]
+      TexturePath: SandboxProject\Assets\Textures\checkerboard.png
+      TextureHandle: 0
+      IsSubTexture: false
+  - Entity: 2651250834597905365
+    TagComponent:
+      Tag: Tile Square 64
+    TransformComponent:
+      Translation: [2.4000001, 3.60000014, 0]
+      Rotation: [0, 0, 0]
+      Scale: [0.5, 0.5, 1]
+    SpriteComponent:
+      Color: [0.300000012, 0.800000012, 0.200000003, 1]
+      TexturePath: SandboxProject\Assets\Textures\checkerboard.png
+      TextureHandle: 0
+      IsSubTexture: false
+  - Entity: 15788846934137843041
+    TagComponent:
+      Tag: Tile Square 63
+    TransformComponent:
+      Translation: [1.80000007, 3.60000014, 0]
+      Rotation: [0, 0, 0]
+      Scale: [0.5, 0.5, 1]
+    SpriteComponent:
+      Color: [0.300000012, 0.800000012, 0.200000003, 1]
+      TexturePath: SandboxProject\Assets\Textures\checkerboard.png
+      TextureHandle: 0
+      IsSubTexture: false
+  - Entity: 1745640036726003577
+    TagComponent:
+      Tag: Tile Square 62
+    TransformComponent:
+      Translation: [1.20000005, 3.60000014, 0]
+      Rotation: [0, 0, 0]
+      Scale: [0.5, 0.5, 1]
+    SpriteComponent:
+      Color: [0.300000012, 0.800000012, 0.200000003, 1]
+      TexturePath: SandboxProject\Assets\Textures\checkerboard.png
+      TextureHandle: 0
+      IsSubTexture: false
+  - Entity: 15619785183838637653
+    TagComponent:
+      Tag: Tile Square 61
+    TransformComponent:
+      Translation: [0.600000024, 3.60000014, 0]
+      Rotation: [0, 0, 0]
+      Scale: [0.5, 0.5, 1]
+    SpriteComponent:
+      Color: [0.300000012, 0.800000012, 0.200000003, 1]
+      TexturePath: SandboxProject\Assets\Textures\checkerboard.png
+      TextureHandle: 0
+      IsSubTexture: false
+  - Entity: 5292067980884766316
+    TagComponent:
+      Tag: Tile Square 60
+    TransformComponent:
+      Translation: [0, 3.60000014, 0]
+      Rotation: [0, 0, 0]
+      Scale: [0.5, 0.5, 1]
+    SpriteComponent:
+      Color: [0.300000012, 0.800000012, 0.200000003, 1]
+      TexturePath: SandboxProject\Assets\Textures\checkerboard.png
+      TextureHandle: 0
+      IsSubTexture: false
+  - Entity: 3563180374848646463
+    TagComponent:
+      Tag: Tile Square 59
+    TransformComponent:
+      Translation: [5.4000001, 3, 0]
+      Rotation: [0, 0, 0]
+      Scale: [0.5, 0.5, 1]
+    SpriteComponent:
+      Color: [0.300000012, 0.800000012, 0.200000003, 1]
+      TexturePath: SandboxProject\Assets\Textures\checkerboard.png
+      TextureHandle: 0
+      IsSubTexture: false
+  - Entity: 7235413620983230648
+    TagComponent:
+      Tag: Tile Square 58
+    TransformComponent:
+      Translation: [4.80000019, 3, 0]
+      Rotation: [0, 0, 0]
+      Scale: [0.5, 0.5, 1]
+    SpriteComponent:
+      Color: [0.300000012, 0.800000012, 0.200000003, 1]
+      TexturePath: SandboxProject\Assets\Textures\checkerboard.png
+      TextureHandle: 0
+      IsSubTexture: false
+  - Entity: 8506716769473211653
+    TagComponent:
+      Tag: Tile Square 57
+    TransformComponent:
+      Translation: [4.20000029, 3, 0]
+      Rotation: [0, 0, 0]
+      Scale: [0.5, 0.5, 1]
+    SpriteComponent:
+      Color: [0.300000012, 0.800000012, 0.200000003, 1]
+      TexturePath: SandboxProject\Assets\Textures\checkerboard.png
+      TextureHandle: 0
+      IsSubTexture: false
+  - Entity: 10874865042549764264
+    TagComponent:
+      Tag: Tile Square 56
+    TransformComponent:
+      Translation: [3.60000014, 3, 0]
+      Rotation: [0, 0, 0]
+      Scale: [0.5, 0.5, 1]
+    SpriteComponent:
+      Color: [0.300000012, 0.800000012, 0.200000003, 1]
+      TexturePath: SandboxProject\Assets\Textures\checkerboard.png
+      TextureHandle: 0
+      IsSubTexture: false
+  - Entity: 18257141838338278924
+    TagComponent:
+      Tag: Tile Square 55
+    TransformComponent:
+      Translation: [3, 3, 0]
+      Rotation: [0, 0, 0]
+      Scale: [0.5, 0.5, 1]
+    SpriteComponent:
+      Color: [0.300000012, 0.800000012, 0.200000003, 1]
+      TexturePath: SandboxProject\Assets\Textures\checkerboard.png
+      TextureHandle: 0
+      IsSubTexture: false
+  - Entity: 3110632715908507650
+    TagComponent:
+      Tag: Tile Square 54
+    TransformComponent:
+      Translation: [2.4000001, 3, 0]
+      Rotation: [0, 0, 0]
+      Scale: [0.5, 0.5, 1]
+    SpriteComponent:
+      Color: [0.300000012, 0.800000012, 0.200000003, 1]
+      TexturePath: SandboxProject\Assets\Textures\checkerboard.png
+      TextureHandle: 0
+      IsSubTexture: false
+  - Entity: 8853155509823992723
+    TagComponent:
+      Tag: Tile Square 53
+    TransformComponent:
+      Translation: [1.80000007, 3, 0]
+      Rotation: [0, 0, 0]
+      Scale: [0.5, 0.5, 1]
+    SpriteComponent:
+      Color: [0.300000012, 0.800000012, 0.200000003, 1]
+      TexturePath: SandboxProject\Assets\Textures\checkerboard.png
+      TextureHandle: 0
+      IsSubTexture: false
+  - Entity: 4545167350723935195
+    TagComponent:
+      Tag: Tile Square 52
+    TransformComponent:
+      Translation: [1.20000005, 3, 0]
+      Rotation: [0, 0, 0]
+      Scale: [0.5, 0.5, 1]
+    SpriteComponent:
+      Color: [0.300000012, 0.800000012, 0.200000003, 1]
+      TexturePath: SandboxProject\Assets\Textures\checkerboard.png
+      TextureHandle: 0
+      IsSubTexture: false
+  - Entity: 15367605567895501072
+    TagComponent:
+      Tag: Tile Square 51
+    TransformComponent:
+      Translation: [0.600000024, 3, 0]
+      Rotation: [0, 0, 0]
+      Scale: [0.5, 0.5, 1]
+    SpriteComponent:
+      Color: [0.300000012, 0.800000012, 0.200000003, 1]
+      TexturePath: SandboxProject\Assets\Textures\checkerboard.png
+      TextureHandle: 0
+      IsSubTexture: false
+  - Entity: 12849023911199905542
+    TagComponent:
+      Tag: Tile Square 50
+    TransformComponent:
+      Translation: [0, 3, 0]
+      Rotation: [0, 0, 0]
+      Scale: [0.5, 0.5, 1]
+    SpriteComponent:
+      Color: [0.300000012, 0.800000012, 0.200000003, 1]
+      TexturePath: SandboxProject\Assets\Textures\checkerboard.png
+      TextureHandle: 0
+      IsSubTexture: false
+  - Entity: 17840820825235615218
+    TagComponent:
+      Tag: Tile Square 49
+    TransformComponent:
+      Translation: [5.4000001, 2.4000001, 0]
+      Rotation: [0, 0, 0]
+      Scale: [0.5, 0.5, 1]
+    SpriteComponent:
+      Color: [0.300000012, 0.800000012, 0.200000003, 1]
+      TexturePath: SandboxProject\Assets\Textures\checkerboard.png
+      TextureHandle: 0
+      IsSubTexture: false
+  - Entity: 12749914574411973702
+    TagComponent:
+      Tag: Tile Square 48
+    TransformComponent:
+      Translation: [4.80000019, 2.4000001, 0]
+      Rotation: [0, 0, 0]
+      Scale: [0.5, 0.5, 1]
+    SpriteComponent:
+      Color: [0.300000012, 0.800000012, 0.200000003, 1]
+      TexturePath: SandboxProject\Assets\Textures\checkerboard.png
+      TextureHandle: 0
+      IsSubTexture: false
+  - Entity: 1485091968020236710
+    TagComponent:
+      Tag: Tile Square 47
+    TransformComponent:
+      Translation: [4.20000029, 2.4000001, 0]
+      Rotation: [0, 0, 0]
+      Scale: [0.5, 0.5, 1]
+    SpriteComponent:
+      Color: [0.300000012, 0.800000012, 0.200000003, 1]
+      TexturePath: SandboxProject\Assets\Textures\checkerboard.png
+      TextureHandle: 0
+      IsSubTexture: false
+  - Entity: 6508153171582843636
+    TagComponent:
+      Tag: Tile Square 46
+    TransformComponent:
+      Translation: [3.60000014, 2.4000001, 0]
+      Rotation: [0, 0, 0]
+      Scale: [0.5, 0.5, 1]
+    SpriteComponent:
+      Color: [0.300000012, 0.800000012, 0.200000003, 1]
+      TexturePath: SandboxProject\Assets\Textures\checkerboard.png
+      TextureHandle: 0
+      IsSubTexture: false
+  - Entity: 12534552955629912269
+    TagComponent:
+      Tag: Tile Square 45
+    TransformComponent:
+      Translation: [3, 2.4000001, 0]
+      Rotation: [0, 0, 0]
+      Scale: [0.5, 0.5, 1]
+    SpriteComponent:
+      Color: [0.300000012, 0.800000012, 0.200000003, 1]
+      TexturePath: SandboxProject\Assets\Textures\checkerboard.png
+      TextureHandle: 0
+      IsSubTexture: false
+  - Entity: 885069922365161474
+    TagComponent:
+      Tag: Tile Square 44
+    TransformComponent:
+      Translation: [2.4000001, 2.4000001, 0]
+      Rotation: [0, 0, 0]
+      Scale: [0.5, 0.5, 1]
+    SpriteComponent:
+      Color: [0.300000012, 0.800000012, 0.200000003, 1]
+      TexturePath: SandboxProject\Assets\Textures\checkerboard.png
+      TextureHandle: 0
+      IsSubTexture: false
+  - Entity: 5492268412549377380
+    TagComponent:
+      Tag: Tile Square 43
+    TransformComponent:
+      Translation: [1.80000007, 2.4000001, 0]
+      Rotation: [0, 0, 0]
+      Scale: [0.5, 0.5, 1]
+    SpriteComponent:
+      Color: [0.300000012, 0.800000012, 0.200000003, 1]
+      TexturePath: SandboxProject\Assets\Textures\checkerboard.png
+      TextureHandle: 0
+      IsSubTexture: false
+  - Entity: 15518164569515977766
+    TagComponent:
+      Tag: Tile Square 42
+    TransformComponent:
+      Translation: [1.20000005, 2.4000001, 0]
+      Rotation: [0, 0, 0]
+      Scale: [0.5, 0.5, 1]
+    SpriteComponent:
+      Color: [0.300000012, 0.800000012, 0.200000003, 1]
+      TexturePath: SandboxProject\Assets\Textures\checkerboard.png
+      TextureHandle: 0
+      IsSubTexture: false
+  - Entity: 11979204393759204752
+    TagComponent:
+      Tag: Tile Square 41
+    TransformComponent:
+      Translation: [0.600000024, 2.4000001, 0]
+      Rotation: [0, 0, 0]
+      Scale: [0.5, 0.5, 1]
+    SpriteComponent:
+      Color: [0.300000012, 0.800000012, 0.200000003, 1]
+      TexturePath: SandboxProject\Assets\Textures\checkerboard.png
+      TextureHandle: 0
+      IsSubTexture: false
+  - Entity: 8020230258478496080
+    TagComponent:
+      Tag: Tile Square 40
+    TransformComponent:
+      Translation: [0, 2.4000001, 0]
+      Rotation: [0, 0, 0]
+      Scale: [0.5, 0.5, 1]
+    SpriteComponent:
+      Color: [0.300000012, 0.800000012, 0.200000003, 1]
+      TexturePath: SandboxProject\Assets\Textures\checkerboard.png
+      TextureHandle: 0
+      IsSubTexture: false
+  - Entity: 3587320611294657383
+    TagComponent:
+      Tag: Tile Square 39
+    TransformComponent:
+      Translation: [5.4000001, 1.80000007, 0]
+      Rotation: [0, 0, 0]
+      Scale: [0.5, 0.5, 1]
+    SpriteComponent:
+      Color: [0.300000012, 0.800000012, 0.200000003, 1]
+      TexturePath: SandboxProject\Assets\Textures\checkerboard.png
+      TextureHandle: 0
+      IsSubTexture: false
+  - Entity: 2982109444193159900
+    TagComponent:
+      Tag: Tile Square 38
+    TransformComponent:
+      Translation: [4.80000019, 1.80000007, 0]
+      Rotation: [0, 0, 0]
+      Scale: [0.5, 0.5, 1]
+    SpriteComponent:
+      Color: [0.300000012, 0.800000012, 0.200000003, 1]
+      TexturePath: SandboxProject\Assets\Textures\checkerboard.png
+      TextureHandle: 0
+      IsSubTexture: false
+  - Entity: 5905562303819253661
+    TagComponent:
+      Tag: Tile Square 37
+    TransformComponent:
+      Translation: [4.20000029, 1.80000007, 0]
+      Rotation: [0, 0, 0]
+      Scale: [0.5, 0.5, 1]
+    SpriteComponent:
+      Color: [0.300000012, 0.800000012, 0.200000003, 1]
+      TexturePath: SandboxProject\Assets\Textures\checkerboard.png
+      TextureHandle: 0
+      IsSubTexture: false
+  - Entity: 11657152212144502088
+    TagComponent:
+      Tag: Tile Square 36
+    TransformComponent:
+      Translation: [3.60000014, 1.80000007, 0]
+      Rotation: [0, 0, 0]
+      Scale: [0.5, 0.5, 1]
+    SpriteComponent:
+      Color: [0.300000012, 0.800000012, 0.200000003, 1]
+      TexturePath: SandboxProject\Assets\Textures\checkerboard.png
+      TextureHandle: 0
+      IsSubTexture: false
+  - Entity: 6303563109475248267
+    TagComponent:
+      Tag: Tile Square 35
+    TransformComponent:
+      Translation: [3, 1.80000007, 0]
+      Rotation: [0, 0, 0]
+      Scale: [0.5, 0.5, 1]
+    SpriteComponent:
+      Color: [0.300000012, 0.800000012, 0.200000003, 1]
+      TexturePath: SandboxProject\Assets\Textures\checkerboard.png
+      TextureHandle: 0
+      IsSubTexture: false
+  - Entity: 7686835665033984455
+    TagComponent:
+      Tag: Tile Square 34
+    TransformComponent:
+      Translation: [2.4000001, 1.80000007, 0]
+      Rotation: [0, 0, 0]
+      Scale: [0.5, 0.5, 1]
+    SpriteComponent:
+      Color: [0.300000012, 0.800000012, 0.200000003, 1]
+      TexturePath: SandboxProject\Assets\Textures\checkerboard.png
+      TextureHandle: 0
+      IsSubTexture: false
+  - Entity: 2480669401385002602
+    TagComponent:
+      Tag: Tile Square 33
+    TransformComponent:
+      Translation: [1.80000007, 1.80000007, 0]
+      Rotation: [0, 0, 0]
+      Scale: [0.5, 0.5, 1]
+    SpriteComponent:
+      Color: [0.300000012, 0.800000012, 0.200000003, 1]
+      TexturePath: SandboxProject\Assets\Textures\checkerboard.png
+      TextureHandle: 0
+      IsSubTexture: false
+  - Entity: 17921095665051864098
+    TagComponent:
+      Tag: Tile Square 32
+    TransformComponent:
+      Translation: [1.20000005, 1.80000007, 0]
+      Rotation: [0, 0, 0]
+      Scale: [0.5, 0.5, 1]
+    SpriteComponent:
+      Color: [0.300000012, 0.800000012, 0.200000003, 1]
+      TexturePath: SandboxProject\Assets\Textures\checkerboard.png
+      TextureHandle: 0
+      IsSubTexture: false
+  - Entity: 10628547068947483448
+    TagComponent:
+      Tag: Tile Square 31
+    TransformComponent:
+      Translation: [0.600000024, 1.80000007, 0]
+      Rotation: [0, 0, 0]
+      Scale: [0.5, 0.5, 1]
+    SpriteComponent:
+      Color: [0.300000012, 0.800000012, 0.200000003, 1]
+      TexturePath: SandboxProject\Assets\Textures\checkerboard.png
+      TextureHandle: 0
+      IsSubTexture: false
+  - Entity: 16078440781044805012
+    TagComponent:
+      Tag: Tile Square 30
+    TransformComponent:
+      Translation: [0, 1.80000007, 0]
+      Rotation: [0, 0, 0]
+      Scale: [0.5, 0.5, 1]
+    SpriteComponent:
+      Color: [0.300000012, 0.800000012, 0.200000003, 1]
+      TexturePath: SandboxProject\Assets\Textures\checkerboard.png
+      TextureHandle: 0
+      IsSubTexture: false
+  - Entity: 18305435185415269004
+    TagComponent:
+      Tag: Tile Square 29
+    TransformComponent:
+      Translation: [5.4000001, 1.20000005, 0]
+      Rotation: [0, 0, 0]
+      Scale: [0.5, 0.5, 1]
+    SpriteComponent:
+      Color: [0.300000012, 0.800000012, 0.200000003, 1]
+      TexturePath: SandboxProject\Assets\Textures\checkerboard.png
+      TextureHandle: 0
+      IsSubTexture: false
+  - Entity: 827673091436216915
+    TagComponent:
+      Tag: Tile Square 28
+    TransformComponent:
+      Translation: [4.80000019, 1.20000005, 0]
+      Rotation: [0, 0, 0]
+      Scale: [0.5, 0.5, 1]
+    SpriteComponent:
+      Color: [0.300000012, 0.800000012, 0.200000003, 1]
+      TexturePath: SandboxProject\Assets\Textures\checkerboard.png
+      TextureHandle: 0
+      IsSubTexture: false
+  - Entity: 6530206059696409152
+    TagComponent:
+      Tag: Tile Square 27
+    TransformComponent:
+      Translation: [4.20000029, 1.20000005, 0]
+      Rotation: [0, 0, 0]
+      Scale: [0.5, 0.5, 1]
+    SpriteComponent:
+      Color: [0.300000012, 0.800000012, 0.200000003, 1]
+      TexturePath: SandboxProject\Assets\Textures\checkerboard.png
+      TextureHandle: 0
+      IsSubTexture: false
+  - Entity: 869178259818791397
+    TagComponent:
+      Tag: Tile Square 26
+    TransformComponent:
+      Translation: [3.60000014, 1.20000005, 0]
+      Rotation: [0, 0, 0]
+      Scale: [0.5, 0.5, 1]
+    SpriteComponent:
+      Color: [0.300000012, 0.800000012, 0.200000003, 1]
+      TexturePath: SandboxProject\Assets\Textures\checkerboard.png
+      TextureHandle: 0
+      IsSubTexture: false
+  - Entity: 18240536426776488629
+    TagComponent:
+      Tag: Tile Square 25
+    TransformComponent:
+      Translation: [3, 1.20000005, 0]
+      Rotation: [0, 0, 0]
+      Scale: [0.5, 0.5, 1]
+    SpriteComponent:
+      Color: [0.300000012, 0.800000012, 0.200000003, 1]
+      TexturePath: SandboxProject\Assets\Textures\checkerboard.png
+      TextureHandle: 0
+      IsSubTexture: false
+  - Entity: 1484051701011407627
+    TagComponent:
+      Tag: Tile Square 24
+    TransformComponent:
+      Translation: [2.4000001, 1.20000005, 0]
+      Rotation: [0, 0, 0]
+      Scale: [0.5, 0.5, 1]
+    SpriteComponent:
+      Color: [0.300000012, 0.800000012, 0.200000003, 1]
+      TexturePath: SandboxProject\Assets\Textures\checkerboard.png
+      TextureHandle: 0
+      IsSubTexture: false
+  - Entity: 4695044038469103816
+    TagComponent:
+      Tag: Tile Square 23
+    TransformComponent:
+      Translation: [1.80000007, 1.20000005, 0]
+      Rotation: [0, 0, 0]
+      Scale: [0.5, 0.5, 1]
+    SpriteComponent:
+      Color: [0.300000012, 0.800000012, 0.200000003, 1]
+      TexturePath: SandboxProject\Assets\Textures\checkerboard.png
+      TextureHandle: 0
+      IsSubTexture: false
+  - Entity: 4671001699488319072
+    TagComponent:
+      Tag: Tile Square 22
+    TransformComponent:
+      Translation: [1.20000005, 1.20000005, 0]
+      Rotation: [0, 0, 0]
+      Scale: [0.5, 0.5, 1]
+    SpriteComponent:
+      Color: [0.300000012, 0.800000012, 0.200000003, 1]
+      TexturePath: SandboxProject\Assets\Textures\checkerboard.png
+      TextureHandle: 0
+      IsSubTexture: false
+  - Entity: 5833017360867081868
+    TagComponent:
+      Tag: Tile Square 21
+    TransformComponent:
+      Translation: [0.600000024, 1.20000005, 0]
+      Rotation: [0, 0, 0]
+      Scale: [0.5, 0.5, 1]
+    SpriteComponent:
+      Color: [0.300000012, 0.800000012, 0.200000003, 1]
+      TexturePath: SandboxProject\Assets\Textures\checkerboard.png
+      TextureHandle: 0
+      IsSubTexture: false
+  - Entity: 8817454200359518410
+    TagComponent:
+      Tag: Tile Square 20
+    TransformComponent:
+      Translation: [0, 1.20000005, 0]
+      Rotation: [0, 0, 0]
+      Scale: [0.5, 0.5, 1]
+    SpriteComponent:
+      Color: [0.300000012, 0.800000012, 0.200000003, 1]
+      TexturePath: SandboxProject\Assets\Textures\checkerboard.png
+      TextureHandle: 0
+      IsSubTexture: false
+  - Entity: 5311620745928953266
+    TagComponent:
+      Tag: Tile Square 19
+    TransformComponent:
+      Translation: [5.4000001, 0.600000024, 0]
+      Rotation: [0, 0, 0]
+      Scale: [0.5, 0.5, 1]
+    SpriteComponent:
+      Color: [0.300000012, 0.800000012, 0.200000003, 1]
+      TexturePath: SandboxProject\Assets\Textures\checkerboard.png
+      TextureHandle: 0
+      IsSubTexture: false
+  - Entity: 2581424606464149633
+    TagComponent:
+      Tag: Tile Square 18
+    TransformComponent:
+      Translation: [4.80000019, 0.600000024, 0]
+      Rotation: [0, 0, 0]
+      Scale: [0.5, 0.5, 1]
+    SpriteComponent:
+      Color: [0.300000012, 0.800000012, 0.200000003, 1]
+      TexturePath: SandboxProject\Assets\Textures\checkerboard.png
+      TextureHandle: 0
+      IsSubTexture: false
+  - Entity: 18273820881653453820
+    TagComponent:
+      Tag: Tile Square 17
+    TransformComponent:
+      Translation: [4.20000029, 0.600000024, 0]
+      Rotation: [0, 0, 0]
+      Scale: [0.5, 0.5, 1]
+    SpriteComponent:
+      Color: [0.300000012, 0.800000012, 0.200000003, 1]
+      TexturePath: SandboxProject\Assets\Textures\checkerboard.png
+      TextureHandle: 0
+      IsSubTexture: false
+  - Entity: 3334730239912149614
+    TagComponent:
+      Tag: Tile Square 16
+    TransformComponent:
+      Translation: [3.60000014, 0.600000024, 0]
+      Rotation: [0, 0, 0]
+      Scale: [0.5, 0.5, 1]
+    SpriteComponent:
+      Color: [0.300000012, 0.800000012, 0.200000003, 1]
+      TexturePath: SandboxProject\Assets\Textures\checkerboard.png
+      TextureHandle: 0
+      IsSubTexture: false
+  - Entity: 10357013133601555060
+    TagComponent:
+      Tag: Tile Square 15
+    TransformComponent:
+      Translation: [3, 0.600000024, 0]
+      Rotation: [0, 0, 0]
+      Scale: [0.5, 0.5, 1]
+    SpriteComponent:
+      Color: [0.300000012, 0.800000012, 0.200000003, 1]
+      TexturePath: SandboxProject\Assets\Textures\checkerboard.png
+      TextureHandle: 0
+      IsSubTexture: false
+  - Entity: 13386649057607879388
+    TagComponent:
+      Tag: Tile Square 14
+    TransformComponent:
+      Translation: [2.4000001, 0.600000024, 0]
+      Rotation: [0, 0, 0]
+      Scale: [0.5, 0.5, 1]
+    SpriteComponent:
+      Color: [0.300000012, 0.800000012, 0.200000003, 1]
+      TexturePath: SandboxProject\Assets\Textures\checkerboard.png
+      TextureHandle: 0
+      IsSubTexture: false
+  - Entity: 11114946714598144131
+    TagComponent:
+      Tag: Tile Square 13
+    TransformComponent:
+      Translation: [1.80000007, 0.600000024, 0]
+      Rotation: [0, 0, 0]
+      Scale: [0.5, 0.5, 1]
+    SpriteComponent:
+      Color: [0.300000012, 0.800000012, 0.200000003, 1]
+      TexturePath: SandboxProject\Assets\Textures\checkerboard.png
+      TextureHandle: 0
+      IsSubTexture: false
+  - Entity: 6273535197396351969
+    TagComponent:
+      Tag: Tile Square 12
+    TransformComponent:
+      Translation: [1.20000005, 0.600000024, 0]
+      Rotation: [0, 0, 0]
+      Scale: [0.5, 0.5, 1]
+    SpriteComponent:
+      Color: [0.300000012, 0.800000012, 0.200000003, 1]
+      TexturePath: SandboxProject\Assets\Textures\checkerboard.png
+      TextureHandle: 0
+      IsSubTexture: false
+  - Entity: 4112206697590973396
+    TagComponent:
+      Tag: Tile Square 11
+    TransformComponent:
+      Translation: [0.600000024, 0.600000024, 0]
+      Rotation: [0, 0, 0]
+      Scale: [0.5, 0.5, 1]
+    SpriteComponent:
+      Color: [0.300000012, 0.800000012, 0.200000003, 1]
+      TexturePath: SandboxProject\Assets\Textures\checkerboard.png
+      TextureHandle: 0
+      IsSubTexture: false
+  - Entity: 1991011060939206481
+    TagComponent:
+      Tag: Tile Square 10
+    TransformComponent:
+      Translation: [0, 0.600000024, 0]
+      Rotation: [0, 0, 0]
+      Scale: [0.5, 0.5, 1]
+    SpriteComponent:
+      Color: [0.300000012, 0.800000012, 0.200000003, 1]
+      TexturePath: SandboxProject\Assets\Textures\checkerboard.png
+      TextureHandle: 0
+      IsSubTexture: false
+  - Entity: 4776515028447670621
+    TagComponent:
+      Tag: Tile Square 9
+    TransformComponent:
+      Translation: [5.4000001, 0, 0]
+      Rotation: [0, 0, 0]
+      Scale: [0.5, 0.5, 1]
+    SpriteComponent:
+      Color: [0.300000012, 0.800000012, 0.200000003, 1]
+      TexturePath: SandboxProject\Assets\Textures\checkerboard.png
+      TextureHandle: 0
+      IsSubTexture: false
+  - Entity: 14031340822530475024
+    TagComponent:
+      Tag: Tile Square 8
+    TransformComponent:
+      Translation: [4.80000019, 0, 0]
+      Rotation: [0, 0, 0]
+      Scale: [0.5, 0.5, 1]
+    SpriteComponent:
+      Color: [0.300000012, 0.800000012, 0.200000003, 1]
+      TexturePath: SandboxProject\Assets\Textures\checkerboard.png
+      TextureHandle: 0
+      IsSubTexture: false
+  - Entity: 14528273207036955603
+    TagComponent:
+      Tag: Tile Square 7
+    TransformComponent:
+      Translation: [4.20000029, 0, 0]
+      Rotation: [0, 0, 0]
+      Scale: [0.5, 0.5, 1]
+    SpriteComponent:
+      Color: [0.300000012, 0.800000012, 0.200000003, 1]
+      TexturePath: SandboxProject\Assets\Textures\checkerboard.png
+      TextureHandle: 0
+      IsSubTexture: false
+  - Entity: 18173569079470957787
+    TagComponent:
+      Tag: Tile Square 6
+    TransformComponent:
+      Translation: [3.60000014, 0, 0]
+      Rotation: [0, 0, 0]
+      Scale: [0.5, 0.5, 1]
+    SpriteComponent:
+      Color: [0.300000012, 0.800000012, 0.200000003, 1]
+      TexturePath: SandboxProject\Assets\Textures\checkerboard.png
+      TextureHandle: 0
+      IsSubTexture: false
+  - Entity: 11077608757682125280
+    TagComponent:
+      Tag: Tile Square 5
+    TransformComponent:
+      Translation: [3, 0, 0]
+      Rotation: [0, 0, 0]
+      Scale: [0.5, 0.5, 1]
+    SpriteComponent:
+      Color: [0.300000012, 0.800000012, 0.200000003, 1]
+      TexturePath: SandboxProject\Assets\Textures\checkerboard.png
+      TextureHandle: 0
+      IsSubTexture: false
+  - Entity: 9115088381851413642
+    TagComponent:
+      Tag: Tile Square 4
+    TransformComponent:
+      Translation: [2.4000001, 0, 0]
+      Rotation: [0, 0, 0]
+      Scale: [0.5, 0.5, 1]
+    SpriteComponent:
+      Color: [0.300000012, 0.800000012, 0.200000003, 1]
+      TexturePath: SandboxProject\Assets\Textures\checkerboard.png
+      TextureHandle: 0
+      IsSubTexture: false
+  - Entity: 506057731041574577
+    TagComponent:
+      Tag: Tile Square 3
+    TransformComponent:
+      Translation: [1.80000007, 0, 0]
+      Rotation: [0, 0, 0]
+      Scale: [0.5, 0.5, 1]
+    SpriteComponent:
+      Color: [0.300000012, 0.800000012, 0.200000003, 1]
+      TexturePath: SandboxProject\Assets\Textures\checkerboard.png
+      TextureHandle: 0
+      IsSubTexture: false
+  - Entity: 10512369239294155136
+    TagComponent:
+      Tag: Tile Square 2
+    TransformComponent:
+      Translation: [1.20000005, 0, 0]
+      Rotation: [0, 0, 0]
+      Scale: [0.5, 0.5, 1]
+    SpriteComponent:
+      Color: [0.300000012, 0.800000012, 0.200000003, 1]
+      TexturePath: SandboxProject\Assets\Textures\checkerboard.png
+      TextureHandle: 0
+      IsSubTexture: false
+  - Entity: 6598892923522865664
+    TagComponent:
+      Tag: Tile Square 1
+    TransformComponent:
+      Translation: [0.600000024, 0, 0]
+      Rotation: [0, 0, 0]
+      Scale: [0.5, 0.5, 1]
+    SpriteComponent:
+      Color: [0.300000012, 0.800000012, 0.200000003, 1]
+      TexturePath: SandboxProject\Assets\Textures\checkerboard.png
+      TextureHandle: 0
+      IsSubTexture: false
+  - Entity: 17943709421372295463
+    TagComponent:
+      Tag: Tile Square 0
+    TransformComponent:
+      Translation: [0, 0, 0]
+      Rotation: [0, 0, 0]
+      Scale: [0.5, 0.5, 1]
+    SpriteComponent:
+      Color: [0.300000012, 0.800000012, 0.200000003, 1]
+      TexturePath: SandboxProject\Assets\Textures\checkerboard.png
+      TextureHandle: 0
+      IsSubTexture: false

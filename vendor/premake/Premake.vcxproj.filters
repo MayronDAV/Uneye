@@ -4,9 +4,6 @@
     <Filter Include="..">
       <UniqueIdentifier>{61705900-4DFC-870B-B6AA-880BA255880B}</UniqueIdentifier>
     </Filter>
-    <Filter Include="..\Sandbox">
-      <UniqueIdentifier>{3F7B6B1D-2B33-AD6A-943A-86C68011485B}</UniqueIdentifier>
-    </Filter>
     <Filter Include="..\Uneye">
       <UniqueIdentifier>{D61C6138-C2E9-BB43-EB02-AAEBD72EF1D1}</UniqueIdentifier>
     </Filter>
@@ -37,25 +34,25 @@
     <Filter Include="..\Uneye-Editor">
       <UniqueIdentifier>{CA53CFC3-36DF-3C88-3FF0-BF7CABFA9888}</UniqueIdentifier>
     </Filter>
-    <Filter Include="..\Uneye-Editor\SandboxProject">
-      <UniqueIdentifier>{9F19F231-8B3F-BC98-7485-4164604AE164}</UniqueIdentifier>
+    <Filter Include="..\Uneye-Editor\Demo">
+      <UniqueIdentifier>{9EC706F4-8A56-90BD-3375-A4B81FE3A063}</UniqueIdentifier>
     </Filter>
-    <Filter Include="..\Uneye-Editor\SandboxProject\Assets">
-      <UniqueIdentifier>{A177513A-0D3C-502A-D6A1-80F44225EC5F}</UniqueIdentifier>
+    <Filter Include="..\Uneye-Editor\Demo\SandboxProject">
+      <UniqueIdentifier>{F38A5081-5F44-BB2B-E8A3-D505545C719B}</UniqueIdentifier>
     </Filter>
-    <Filter Include="..\Uneye-Editor\SandboxProject\Assets\Scripts">
-      <UniqueIdentifier>{D86F8C5A-44E0-8ED3-0DFF-085C792EC7D4}</UniqueIdentifier>
+    <Filter Include="..\Uneye-Editor\Demo\SandboxProject\Assets">
+      <UniqueIdentifier>{75A28068-610A-4736-CA75-5B4CB6FC5D22}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="..\Uneye-Editor\Demo\SandboxProject\Assets\Scripts">
+      <UniqueIdentifier>{AC2E5329-98C2-48D1-0187-A285ED3983C3}</UniqueIdentifier>
     </Filter>
     <Filter Include="..\Uneye-ScriptCore">
       <UniqueIdentifier>{8185CFC5-EDE6-ACD3-7654-F385E2B4E392}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\..\Sandbox\premake5.lua">
-      <Filter>..\Sandbox</Filter>
-    </None>
-    <None Include="..\..\Uneye-Editor\SandboxProject\Assets\Scripts\premake5.lua">
-      <Filter>..\Uneye-Editor\SandboxProject\Assets\Scripts</Filter>
+    <None Include="..\..\Uneye-Editor\Demo\SandboxProject\Assets\Scripts\premake5.lua">
+      <Filter>..\Uneye-Editor\Demo\SandboxProject\Assets\Scripts</Filter>
     </None>
     <None Include="..\..\Uneye-Editor\premake5.lua">
       <Filter>..\Uneye-Editor</Filter>

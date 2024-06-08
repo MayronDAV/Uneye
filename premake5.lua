@@ -50,7 +50,3 @@ group ""
 group "Tools"
 	include "Uneye-Editor"
 group ""
-
-group "Misc"
-	include "Sandbox"
-group ""

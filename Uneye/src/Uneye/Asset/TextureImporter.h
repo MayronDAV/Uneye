@@ -18,6 +18,8 @@ namespace Uneye
 			// Reads file directly from filesystem
 			// (i.e. path has to be relative / absolute to working directory)
 			static Ref<Texture2D> LoadTexture2D(const std::filesystem::path& p_path);
+
+			static Ref<Texture2D> LoadTexture2D(const Buffer& p_data) {};
 	};
 }
 

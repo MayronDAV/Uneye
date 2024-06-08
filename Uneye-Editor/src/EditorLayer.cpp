@@ -96,15 +96,16 @@ namespace Uneye
 	{
 		UNEYE_PROFILE_FUNCTION();
 
+		m_ActiveScene->OnViewportResize((uint32_t)m_ViewportSize.x, (uint32_t)m_ViewportSize.y);
+
+		if (m_SceneState != SceneState::Play)
+			m_EditorCamera.SetViewportSize(m_ViewportSize.x, m_ViewportSize.y);
+
 		if (Uneye::FramebufferSpecification spec = m_Framebuffer->GetSpecification();
 			m_ViewportSize.x > 0.0f && m_ViewportSize.y > 0.0f && // zero sized is invalid
 			(spec.Width != m_ViewportSize.x || spec.Height != m_ViewportSize.y))
 		{
 			m_Framebuffer->Resize((uint32_t)m_ViewportSize.x, (uint32_t)m_ViewportSize.y);
-
-			m_EditorCamera.SetViewportSize(m_ViewportSize.x, m_ViewportSize.y);
-
-			m_ActiveScene->OnViewportResize((uint32_t)m_ViewportSize.x, (uint32_t)m_ViewportSize.y);
 		}
 
 		Renderer2D::ResetStats();
@@ -250,6 +251,7 @@ namespace Uneye
 
 			if (ImGui::BeginMenu("Tools"))
 			{
+
 				if (ImGui::MenuItem("Set Default Scene"))
 					Project::SetStartScene(AssetManager::ImportAsset(m_EditScenePath));
 
@@ -324,7 +326,7 @@ namespace Uneye
 			{
 				const wchar_t* path = (const wchar_t*)payload->Data;
 				std::filesystem::path filepath = Project::GetActiveAssetFileSystemPath(path);
-				OpenScene(AssetManager::ImportAsset(filepath));
+				if (filepath.extension() == ".uyscene") OpenScene(AssetManager::ImportAsset(filepath));
 			}
 			ImGui::EndDragDropTarget();
 		}
@@ -683,6 +685,7 @@ namespace Uneye
 		if (filepath.empty())
 			return false;
 
+
 		OpenProject(filepath);
 		return true;
 	}
@@ -696,7 +699,7 @@ namespace Uneye
 			AssetHandle startScene = Project::GetActive()->GetConfig().StartScene;
 			if (startScene)
 				OpenScene(startScene);
-			m_ContentBrowserPanel = CreateScope<ContentBrowserPanel>();
+			m_ContentBrowserPanel = CreateScope<ContentBrowserPanel>(Project::GetActive());
 		}
 	}
 
@@ -733,6 +736,12 @@ namespace Uneye
 			OnSceneStop();
 
 		Ref<Scene> readOnlyScene = AssetManager::GetAsset<Scene>(handle);
+		if (!readOnlyScene)
+		{
+			UNEYE_CORE_CRITICAL("Do you have a registry for this scene?");
+			return;
+		}
+
 		Ref<Scene> newScene = Scene::Copy(readOnlyScene);
 
 		m_EditorScene = newScene;

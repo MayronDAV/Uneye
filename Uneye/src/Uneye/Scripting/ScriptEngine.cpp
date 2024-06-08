@@ -204,6 +204,7 @@ namespace Uneye
 		UNEYE_PROFILE_FUNCTION();
 
 		mono_domain_set(mono_get_root_domain(), false);
+
 		mono_domain_unload(s_Data->AppDomain);
 		s_Data->AppDomain = nullptr;
 

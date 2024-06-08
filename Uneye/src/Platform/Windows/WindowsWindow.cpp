@@ -5,11 +5,18 @@
 #include "Uneye/Events/MouseEvent.h"
 #include "Uneye/Events/KeyEvent.h"
 
-#include <glad/glad.h>
-#include "Uneye/Renderer/Texture.h"
+#include "Uneye/Asset/TextureImporter.h"
+
 #include "Uneye/Renderer/Renderer.h"
 
+#include <glad/glad.h>
+#include <stb_image.h>
 #include <random>
+
+#define GLFW_EXPOSE_NATIVE_WIN32
+#include <GLFW/glfw3native.h>
+
+#include "Platform/Windows/Resource/resource1.h"
 
 
 
@@ -51,13 +58,20 @@ namespace Uneye {
 		m_Data.Width = props.Width;
 		m_Data.Height = props.Height;
 
+		WNDCLASS wc = { 0 };
+		wc.lpfnWndProc = DefWindowProc;
+		wc.hInstance = GetModuleHandle(NULL);
+		wc.lpszClassName = L"MyWindowClass";
+		wc.hIcon = LoadIcon(wc.hInstance, MAKEINTRESOURCE(IDI_MYICON));
+
+		RegisterClassW(&wc);
+
 		if (!s_GLFWInitialized)
 		{
 			UNEYE_PROFILE_SCOPE("glfwInit");
 
 			int success = glfwInit();
 			UNEYE_CORE_ASSERT(!success, "Could not intialize GLFW!");
-			UNEYE_CORE_INFO("GLFW has been initialized!");
 			glfwSetErrorCallback(GLFWErrorCallback);
 			s_GLFWInitialized = true;
 		}
@@ -72,7 +86,13 @@ namespace Uneye {
 			m_Window = glfwCreateWindow((int)props.Width, (int)props.Height, m_Data.Title.c_str(), nullptr, nullptr);
 
 		}
+
 		UNEYE_CORE_ASSERT(m_Window == nullptr, "An error has ocurred on window create");
+
+
+		HWND hwnd = glfwGetWin32Window(m_Window);
+		SetClassLongPtrW(hwnd, GCLP_HICON, (LONG_PTR)LoadIcon(GetModuleHandle(NULL), MAKEINTRESOURCE(IDI_MYICON)));
+
 		UNEYE_CORE_INFO("Window {0} was created with ({1}, {2})", props.Title, props.Width, props.Height);
 		m_Context = new OpenGLContext(m_Window);
 		m_Context->Init();
@@ -91,7 +111,6 @@ namespace Uneye {
 			WindowResizeEvent event(width, height);
 			data.EventCallback(event);
 		});
-		UNEYE_CORE_INFO("Setted window size callback");
 
 		glfwSetWindowCloseCallback(m_Window, [](GLFWwindow* window)
 		{
@@ -99,7 +118,6 @@ namespace Uneye {
 			WindowCloseEvent event;
 			data.EventCallback(event);
 		});
-		UNEYE_CORE_INFO("Setted window close callback");
 
 		glfwSetKeyCallback(m_Window, [](GLFWwindow* window, int key, int scancode, int action, int mods)
 		{
@@ -127,7 +145,6 @@ namespace Uneye {
 				}
 			}
 		});
-		UNEYE_CORE_INFO("Setted key callback");
 
 		glfwSetCharCallback(m_Window, [](GLFWwindow* window, unsigned int keycode)
 		{
@@ -136,7 +153,6 @@ namespace Uneye {
 				KeyTypedEvent event(keycode);
 				data.EventCallback(event);
 		});
-		UNEYE_CORE_INFO("Setted char callback");
 
 		glfwSetMouseButtonCallback(m_Window, [](GLFWwindow* window, int button, int action, int mods)
 		{
@@ -158,7 +174,6 @@ namespace Uneye {
 				}
 			}
 		});
-		UNEYE_CORE_INFO("Setted mouse button callback");
 
 		glfwSetScrollCallback(m_Window, [](GLFWwindow* window, double xOffset, double yOffset)
 		{
@@ -167,7 +182,6 @@ namespace Uneye {
 			MouseScrolledEvent event((float)xOffset, (float)yOffset);
 			data.EventCallback(event);
 		});
-		UNEYE_CORE_INFO("Setted scroll callback");
 
 		glfwSetCursorPosCallback(m_Window, [](GLFWwindow* window, double xPos, double yPos)
 		{
@@ -176,7 +190,6 @@ namespace Uneye {
 			MouseMovedEvent event((float)xPos, (float)yPos);
 			data.EventCallback(event);
 		});
-		UNEYE_CORE_INFO("Setted cursor pos callback");
 
 		glfwSetDropCallback(m_Window, [](GLFWwindow* window, int pathCount, const char* paths[])
 		{
@@ -189,7 +202,6 @@ namespace Uneye {
 				WindowDropEvent event(std::move(filepaths));
 				data.EventCallback(event);
 		});
-		UNEYE_CORE_INFO("Setted drop callback");
 	}
 
 	void WindowsWindow::Shutdown()

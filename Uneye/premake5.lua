@@ -14,6 +14,8 @@ project "Uneye"
 	{
 		"src/**.h",
 		"src/**.cpp",
+		"src/**.rc",
+		"src/**.aps",
 		"vendor/stb/src/**.c",
 		"vendor/stb/src/**.cpp",
 		"vendor/stb/include/**.h",

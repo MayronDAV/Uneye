@@ -15,15 +15,19 @@ namespace Uneye {
 	{
 		public:
 			EditorCamera() = default;
-			EditorCamera(float fov, float aspectRatio, float nearClip, float farClip);
+			EditorCamera(float p_fov, float p_aspectRatio, float p_nearClip, float p_farClip);
 
-			void OnUpdate(Timestep ts);
-			void OnEvent(Event& e);
+			void OnUpdate(Timestep p_ts);
+			void OnEvent(Event& p_e);
 
 			inline float GetDistance() const { return m_Distance; }
-			inline void SetDistance(float distance) { m_Distance = distance; }
+			inline void SetDistance(float p_distance) { m_Distance = p_distance; }
 
-			inline void SetViewportSize(float width, float height) { m_ViewportWidth = width; m_ViewportHeight = height; UpdateProjection(); }
+			inline void SetViewportSize(float p_width, float p_height) 
+			{ 
+				if ((p_width > 0 && p_height > 0) && (m_ViewportWidth != p_width && m_ViewportHeight != p_height))
+					m_ViewportWidth = p_width; m_ViewportHeight = p_height; UpdateProjection();
+			}
 
 			const glm::mat4& GetViewMatrix() const { return m_ViewMatrix; }
 			glm::mat4 GetViewProjection() const { return m_Projection * m_ViewMatrix; }

@@ -7,13 +7,15 @@
 #include "Uneye/Events/Event.h"
 #include "Uneye/Events/ApplicationEvent.h"
 
-#include "Uneye/ImGui/ImGuiLayer.h"
 
 #include "Uneye/Renderer/Shader.h"
 #include "Uneye/Renderer/Buffer.h"
 #include "Uneye/Renderer/VertexArray.h"
 
 #include "Uneye/Core/Timestep.h"
+
+
+#include "Uneye/ImGui/ImGuiLayer.h"
 
 
 namespace Uneye {
@@ -54,13 +56,14 @@ namespace Uneye {
 			void Close() { m_Running = false; }
 
 			inline Window& GetWindow() { return *m_Window; }
-			inline ImGuiLayer* GetImGuiLayer() { return m_ImGuiLayer;  }
 
 			inline static Application& Get() { return *s_Instance; }
 
 			const ApplicationSpecification& GetSpecification() const { return m_Specification; }
 		
 			void SubmitToMainThread(const std::function<void()>& func);
+
+			inline ImGuiLayer* GetImGuiLayer() { return m_ImGuiLayer;  }
 
 			void ReloadImGui() { 
 				m_ReloadImGui = true;
@@ -82,7 +85,6 @@ namespace Uneye {
 		private:
 			ApplicationSpecification m_Specification;
 			Scope<Window> m_Window;
-			ImGuiLayer* m_ImGuiLayer;
 			bool m_Running = true;
 			bool m_Minimized = false;
 			LayerStack m_LayerStack;
@@ -91,10 +93,11 @@ namespace Uneye {
 			std::vector<std::function<void()>> m_MainThreadQueue;
 			std::mutex m_MainThreadQueueMutex;
 
+			ImGuiLayer* m_ImGuiLayer;
 			bool m_ReloadImGui = false;
 			bool m_ImGuiIsReloaded = false;
-
 			std::string m_Theme = "Dark";
+
 		private:
 			static Application* s_Instance;
 	};

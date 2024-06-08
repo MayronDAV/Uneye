@@ -87,6 +87,10 @@
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
+    <ResourceCompile>
+      <PreprocessorDefinitions>_SILENCE_STDEXT_ARR_ITERS_DEPRECATION_WARNING;_SILENCE_ALL_MS_EXT_DEPRECATION_WARNINGS;UNEYE_PLATFORM_WINDOWS;UNEYE_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>src;..\Uneye\vendor\spdlog\include;..\Uneye\src;..\Uneye\vendor;..\Uneye\vendor\entt\include;..\Uneye\vendor\filewatch;..\Uneye\vendor\glm;..\Uneye\vendor\ImGuizmo;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ResourceCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
@@ -107,6 +111,10 @@
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
+    <ResourceCompile>
+      <PreprocessorDefinitions>_SILENCE_STDEXT_ARR_ITERS_DEPRECATION_WARNING;_SILENCE_ALL_MS_EXT_DEPRECATION_WARNINGS;UNEYE_PLATFORM_WINDOWS;UNEYE_RELEASE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>src;..\Uneye\vendor\spdlog\include;..\Uneye\src;..\Uneye\vendor;..\Uneye\vendor\entt\include;..\Uneye\vendor\filewatch;..\Uneye\vendor\glm;..\Uneye\vendor\ImGuizmo;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ResourceCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
@@ -128,6 +136,10 @@
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
+    <ResourceCompile>
+      <PreprocessorDefinitions>_SILENCE_STDEXT_ARR_ITERS_DEPRECATION_WARNING;_SILENCE_ALL_MS_EXT_DEPRECATION_WARNINGS;UNEYE_PLATFORM_WINDOWS;UNEYE_DIST;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>src;..\Uneye\vendor\spdlog\include;..\Uneye\src;..\Uneye\vendor;..\Uneye\vendor\entt\include;..\Uneye\vendor\filewatch;..\Uneye\vendor\glm;..\Uneye\vendor\ImGuizmo;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ResourceCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
@@ -140,6 +152,7 @@
     <ClInclude Include="src\Panels\ContentBrowserPanel.h" />
     <ClInclude Include="src\Panels\LogPanel.h" />
     <ClInclude Include="src\Panels\SceneHierarchyPanel.h" />
+    <ClInclude Include="src\Panels\ThumbnailCache.h" />
     <ClInclude Include="src\UI\UI.h" />
   </ItemGroup>
   <ItemGroup>
@@ -148,8 +161,12 @@
     <ClCompile Include="src\Panels\ContentBrowserPanel.cpp" />
     <ClCompile Include="src\Panels\LogPanel.cpp" />
     <ClCompile Include="src\Panels\SceneHierarchyPanel.cpp" />
+    <ClCompile Include="src\Panels\ThumbnailCache.cpp" />
     <ClCompile Include="src\UI\UI.cpp" />
     <ClCompile Include="src\UneyeEditorApp.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="src\Resource.rc" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Uneye\Uneye.vcxproj">

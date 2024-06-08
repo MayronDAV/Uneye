@@ -10,11 +10,14 @@
 #include "Uneye/Renderer/Camera.h"
 #include "Uneye/Utils/PlatformUtils.h"
 
-#include "Uneye/Core/ThemeManager.h"
 
 #include <filesystem>
+
+
+#include "Uneye/Core/ThemeManager.h"
 #include <backends/imgui_impl_glfw.h>
 #include <backends/imgui_impl_opengl3.h>
+
 
 
 
@@ -44,6 +47,7 @@ namespace Uneye {
 
 		Renderer::Init();
 		
+
 		m_ImGuiLayer = new ImGuiLayer();
 		PushOverlay(m_ImGuiLayer);
 
@@ -119,7 +123,6 @@ namespace Uneye {
 				m_ReloadImGui = false;
 				m_ImGuiIsReloaded = true;
 			}
-
 
 			ExecuteMainThreadQueue();
 

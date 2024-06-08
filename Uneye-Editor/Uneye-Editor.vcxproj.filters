@@ -10,31 +10,48 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\EditorLayer.h" />
+    <ClInclude Include="src\Panels\AssetImporterPanel.h">
+      <Filter>Panels</Filter>
+    </ClInclude>
     <ClInclude Include="src\Panels\ContentBrowserPanel.h">
+      <Filter>Panels</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Panels\LogPanel.h">
       <Filter>Panels</Filter>
     </ClInclude>
     <ClInclude Include="src\Panels\SceneHierarchyPanel.h">
       <Filter>Panels</Filter>
     </ClInclude>
+    <ClInclude Include="src\Panels\ThumbnailCache.h">
+      <Filter>Panels</Filter>
+    </ClInclude>
     <ClInclude Include="src\UI\UI.h">
       <Filter>UI</Filter>
     </ClInclude>
-    <ClInclude Include="src\Panels\AssetImporterPanel.h" />
-    <ClInclude Include="src\Panels\LogPanel.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\EditorLayer.cpp" />
+    <ClCompile Include="src\Panels\AssetImporterPanel.cpp">
+      <Filter>Panels</Filter>
+    </ClCompile>
     <ClCompile Include="src\Panels\ContentBrowserPanel.cpp">
       <Filter>Panels</Filter>
     </ClCompile>
+    <ClCompile Include="src\Panels\LogPanel.cpp">
+      <Filter>Panels</Filter>
+    </ClCompile>
     <ClCompile Include="src\Panels\SceneHierarchyPanel.cpp">
+      <Filter>Panels</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Panels\ThumbnailCache.cpp">
       <Filter>Panels</Filter>
     </ClCompile>
     <ClCompile Include="src\UI\UI.cpp">
       <Filter>UI</Filter>
     </ClCompile>
     <ClCompile Include="src\UneyeEditorApp.cpp" />
-    <ClCompile Include="src\Panels\AssetImporterPanel.cpp" />
-    <ClCompile Include="src\Panels\LogPanel.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="src\Resource.rc" />
   </ItemGroup>
 </Project>

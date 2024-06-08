@@ -6,19 +6,9 @@
 #include "Uneye/Events/KeyEvent.h"
 #include "Uneye/Events/MouseEvent.h"
 
-struct ImVec4;
-
 
 
 namespace Uneye {
-
-	enum ImGuiThemes
-	{
-		PurpleThemeDefault,
-		DeepDarkThemeDefault,
-		DarkThemeDefault,
-		LightThemeDefault
-	};
 
 	class ImGuiLayer : public Layer
 	{

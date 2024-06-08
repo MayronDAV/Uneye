@@ -354,7 +354,7 @@ namespace Uneye
 	{
 		UNEYE_PROFILE_FUNCTION();
 
-		if (width > 0 && height > 0)
+		if ((width > 0 && height > 0) && (m_ViewportWidth != width && m_ViewportHeight != height))
 		{
 			m_ViewportWidth = width;
 			m_ViewportHeight = height;

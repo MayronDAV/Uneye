@@ -1,6 +1,0 @@
-Project:
-  Name: SandboxProject
-  StartScene: 4476373200970668791
-  AssetDirectory: Assets
-  AssetRegistryPath: Registry.uyreg
-  ScriptModulePath: Scripts\\Binaries\\Sandbox.dll

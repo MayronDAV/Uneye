@@ -41,6 +41,7 @@ namespace Uneye {
 		IMGUI_CHECKVERSION();
 		ImGui::CreateContext();
 		ImGuiIO& io = ImGui::GetIO(); (void)io;
+		io.IniFilename = "Resources/imgui.ini";
 		io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;       // Enable Keyboard Controls
 		//io.ConfigFlags |= ImGuiConfigFlags_NavEnableGamepad;      // Enable Gamepad Controls
 		io.ConfigFlags |= ImGuiConfigFlags_DockingEnable;           // Enable Docking
@@ -50,7 +51,7 @@ namespace Uneye {
 		io.ConfigFlags |= ImGuiConfigFlags_DpiEnableScaleViewports; // Habilita escala de DPI em viewports
 
 		for (const auto& entry : std::filesystem::recursive_directory_iterator("Themes")) {
-			if (entry.is_regular_file() && entry.path().extension() == ".uythm")
+			if (entry.is_regular_file() && entry.path().extension() == ".uythm") 
 				ThemeManager::LoadTheme(entry.path().string());
 		}
 

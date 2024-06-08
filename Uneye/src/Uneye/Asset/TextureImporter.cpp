@@ -26,8 +26,7 @@ namespace Uneye
 		{
 			UNEYE_PROFILE_SCOPE("stbi_load - TextureImporter::ImportTexture2D");
 			std::string pathStr = p_path.string();
-			data.Data = stbi_load(pathStr.c_str(), &width, &height, &channels, 4);
-			channels = 4;
+			data.Data = stbi_load(pathStr.c_str(), &width, &height, &channels, 0);
 		}
 
 		if (data.Data == nullptr)
@@ -36,20 +35,20 @@ namespace Uneye
 			return nullptr;
 		}
 
-		// TODO: think about this
-		data.Size = width * height * channels;
+		//auto bytes_per_channel = sizeof(data.Data) / 8;
+		data.Size = width * height * channels * 1;
 
 		TextureSpecification spec;
 		spec.Width = width;
 		spec.Height = height;
 		switch (channels)
 		{
-		case 3:
-			spec.Format = ImageFormat::RGB8;
-			break;
-		case 4:
-			spec.Format = ImageFormat::RGBA8;
-			break;
+			case 3:
+				spec.Format = ImageFormat::RGB8;
+				break;
+			case 4:
+				spec.Format = ImageFormat::RGBA8;
+				break;
 		}
 
 		Ref<Texture2D> texture = Texture2D::Create(spec, data);

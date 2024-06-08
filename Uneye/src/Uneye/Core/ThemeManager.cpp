@@ -100,7 +100,7 @@ namespace Uneye
 		if (it == s_ThemesFunc.end())
 		{
 			UNEYE_CORE_WARN("This theme not exists!!!");
-			return NULL;
+			return nullptr;
 		}
 
 		return it->second;

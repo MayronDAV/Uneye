@@ -13,8 +13,14 @@
     <Filter Include="src\Platform\Windows">
       <UniqueIdentifier>{5B054582-4794-CE4B-F0B2-E246DC20DFF1}</UniqueIdentifier>
     </Filter>
+    <Filter Include="src\Platform\Windows\Resource">
+      <UniqueIdentifier>{D21D8107-3E36-6831-07E3-F7CA73BAFCCA}</UniqueIdentifier>
+    </Filter>
     <Filter Include="src\Uneye">
       <UniqueIdentifier>{A240FCB3-0EAB-B02A-57E9-61D0C3928E7F}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\Uneye\Asset">
+      <UniqueIdentifier>{B1660279-1DF2-6F3D-2603-F331920DCC3D}</UniqueIdentifier>
     </Filter>
     <Filter Include="src\Uneye\Core">
       <UniqueIdentifier>{3A1A0159-26E8-F45E-0F7C-6585FBE8D0C3}</UniqueIdentifier>
@@ -111,11 +117,41 @@
     <ClInclude Include="src\Platform\OpenGL\OpenGLVertexArray.h">
       <Filter>src\Platform\OpenGL</Filter>
     </ClInclude>
+    <ClInclude Include="src\Platform\Windows\Resource\resource1.h">
+      <Filter>src\Platform\Windows\Resource</Filter>
+    </ClInclude>
     <ClInclude Include="src\Platform\Windows\WindowsWindow.h">
       <Filter>src\Platform\Windows</Filter>
     </ClInclude>
     <ClInclude Include="src\Uneye.h">
       <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Uneye\Asset\Asset.h">
+      <Filter>src\Uneye\Asset</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Uneye\Asset\AssetImporter.h">
+      <Filter>src\Uneye\Asset</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Uneye\Asset\AssetManager.h">
+      <Filter>src\Uneye\Asset</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Uneye\Asset\AssetManagerBase.h">
+      <Filter>src\Uneye\Asset</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Uneye\Asset\AssetMetadata.h">
+      <Filter>src\Uneye\Asset</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Uneye\Asset\EditorAssetManager.h">
+      <Filter>src\Uneye\Asset</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Uneye\Asset\RuntimeAssetManager.h">
+      <Filter>src\Uneye\Asset</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Uneye\Asset\SceneImporter.h">
+      <Filter>src\Uneye\Asset</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Uneye\Asset\TextureImporter.h">
+      <Filter>src\Uneye\Asset</Filter>
     </ClInclude>
     <ClInclude Include="src\Uneye\Core\Application.h">
       <Filter>src\Uneye\Core</Filter>
@@ -154,6 +190,9 @@
       <Filter>src\Uneye\Core</Filter>
     </ClInclude>
     <ClInclude Include="src\Uneye\Core\ThemeManager.h">
+      <Filter>src\Uneye\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Uneye\Core\ThreadPool.h">
       <Filter>src\Uneye\Core</Filter>
     </ClInclude>
     <ClInclude Include="src\Uneye\Core\Timer.h">
@@ -274,6 +313,9 @@
       <Filter>src\Uneye\Scripting</Filter>
     </ClInclude>
     <ClInclude Include="src\Uneye\Utils\PlatformUtils.h">
+      <Filter>src\Uneye\Utils</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Uneye\Utils\StringUtils.h">
       <Filter>src\Uneye\Utils</Filter>
     </ClInclude>
     <ClInclude Include="src\Uneye\Utils\YamlTemplates.h">
@@ -1464,15 +1506,6 @@
     <ClInclude Include="vendor\stb\include\stb_voxel_render.h">
       <Filter>vendor\stb\include</Filter>
     </ClInclude>
-    <ClInclude Include="src\Uneye\Asset\Asset.h" />
-    <ClInclude Include="src\Uneye\Asset\AssetMetadata.h" />
-    <ClInclude Include="src\Uneye\Asset\TextureImporter.h" />
-    <ClInclude Include="src\Uneye\Asset\AssetManagerBase.h" />
-    <ClInclude Include="src\Uneye\Asset\AssetManager.h" />
-    <ClInclude Include="src\Uneye\Asset\RuntimeAssetManager.h" />
-    <ClInclude Include="src\Uneye\Asset\EditorAssetManager.h" />
-    <ClInclude Include="src\Uneye\Asset\AssetImporter.h" />
-    <ClInclude Include="src\Uneye\Asset\SceneImporter.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Platform\OpenGL\OpenGLBuffer.cpp">
@@ -1507,6 +1540,30 @@
     </ClCompile>
     <ClCompile Include="src\Platform\Windows\WindowsWindow.cpp">
       <Filter>src\Platform\Windows</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Uneye\Asset\Asset.cpp">
+      <Filter>src\Uneye\Asset</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Uneye\Asset\AssetImporter.cpp">
+      <Filter>src\Uneye\Asset</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Uneye\Asset\AssetManager.cpp">
+      <Filter>src\Uneye\Asset</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Uneye\Asset\AssetManagerBase.cpp">
+      <Filter>src\Uneye\Asset</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Uneye\Asset\EditorAssetManager.cpp">
+      <Filter>src\Uneye\Asset</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Uneye\Asset\RuntimeAssetManager.cpp">
+      <Filter>src\Uneye\Asset</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Uneye\Asset\SceneImporter.cpp">
+      <Filter>src\Uneye\Asset</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Uneye\Asset\TextureImporter.cpp">
+      <Filter>src\Uneye\Asset</Filter>
     </ClCompile>
     <ClCompile Include="src\Uneye\Core\Application.cpp">
       <Filter>src\Uneye\Core</Filter>
@@ -1610,6 +1667,9 @@
     <ClCompile Include="src\Uneye\Scripting\ScriptGlue.cpp">
       <Filter>src\Uneye\Scripting</Filter>
     </ClCompile>
+    <ClCompile Include="src\Uneye\Utils\StringUtils.cpp">
+      <Filter>src\Uneye\Utils</Filter>
+    </ClCompile>
     <ClCompile Include="src\uypch.cpp">
       <Filter>src</Filter>
     </ClCompile>
@@ -1640,13 +1700,5 @@
     <ClCompile Include="vendor\stb\src\stb_image.cpp">
       <Filter>vendor\stb\src</Filter>
     </ClCompile>
-    <ClCompile Include="src\Uneye\Asset\Asset.cpp" />
-    <ClCompile Include="src\Uneye\Asset\TextureImporter.cpp" />
-    <ClCompile Include="src\Uneye\Asset\AssetManagerBase.cpp" />
-    <ClCompile Include="src\Uneye\Asset\AssetManager.cpp" />
-    <ClCompile Include="src\Uneye\Asset\RuntimeAssetManager.cpp" />
-    <ClCompile Include="src\Uneye\Asset\EditorAssetManager.cpp" />
-    <ClCompile Include="src\Uneye\Asset\AssetImporter.cpp" />
-    <ClCompile Include="src\Uneye\Asset\SceneImporter.cpp" />
   </ItemGroup>
 </Project>

@@ -10,7 +10,8 @@ project "Uneye-Editor"
 	files
 	{
 		"src/**.h",
-		"src/**.cpp"
+		"src/**.cpp",
+		"src/**.rc"
 	}
 
 	includedirs

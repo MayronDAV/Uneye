@@ -35,6 +35,7 @@ namespace Uneye
 
 			virtual uint32_t GetWidth() const = 0;
 			virtual uint32_t GetHeight() const = 0;
+			virtual uint32_t GetChannels() const = 0;
 			virtual uint32_t GetRendererID() = 0;
 
 			virtual uint64_t GetEstimatedSize() const = 0;
@@ -42,7 +43,7 @@ namespace Uneye
 			virtual const TextureSpecification& GetSpecification() const = 0;
 
 
-			virtual Buffer* GetData() = 0;
+			virtual std::vector<unsigned char>& GetData() = 0;
 
 			virtual void SetData(Buffer data) = 0;
 

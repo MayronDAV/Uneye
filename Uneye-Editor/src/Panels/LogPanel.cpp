@@ -44,8 +44,11 @@ namespace Uneye
 	{
 	}
 
+	bool first = true;
+
 	void LogPanel::OnImGuiRender()
 	{
+
 		ImGui::Begin("Log");
 
 		if (ImGui::BeginTable("##LogTabel", 2, ImGuiTableFlags_BordersInner))
@@ -82,6 +85,9 @@ namespace Uneye
 
 			ImGui::EndTable();
 		}
+
+
+
 
 		ImGui::End();
 	}

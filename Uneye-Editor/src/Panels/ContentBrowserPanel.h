@@ -4,7 +4,7 @@
 #include "Uneye/Renderer/Texture.h"
 
 #include <filesystem>
-#include "ThumbnailCache.h"
+#include "Thumbnail/ThumbnailCache.h"
 
 
 namespace Uneye

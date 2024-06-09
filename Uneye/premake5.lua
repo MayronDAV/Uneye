@@ -49,6 +49,7 @@ project "Uneye"
 		"%{IncludeDir.yaml_cpp}",
 		"%{IncludeDir.ImGuizmo}",
 		"%{IncludeDir.VulkanSDK}",
+		"%{IncludeDir.zlib}",
 	}
 
 	links 
@@ -60,6 +61,7 @@ project "Uneye"
 		"Box2D",
 		"yaml-cpp",
 		"opengl32.lib",
+		"zlib",
 
 		"%{Library.mono}"
 	}

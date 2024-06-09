@@ -40,6 +40,7 @@ group "Dependencies"
 	include "Uneye/vendor/imgui"
 	include "Uneye/vendor/Box2D"
 	include "Uneye/vendor/yaml-cpp"
+	include "Uneye/vendor/zlib"
 group ""
 
 group "Core"

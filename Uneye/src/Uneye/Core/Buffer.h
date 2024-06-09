@@ -7,7 +7,7 @@ namespace Uneye
 {
 	struct Buffer
 	{
-		uint8_t* Data = nullptr;
+		unsigned char* Data = nullptr;
 		uint64_t Size = 0;
 
 		Buffer() = default;
@@ -18,7 +18,7 @@ namespace Uneye
 		}
 
 		Buffer(const void* data, uint64_t size)
-			: Data((uint8_t*)data), Size(size)
+			: Data((unsigned char*)data), Size(size)
 		{
 		}
 
@@ -35,7 +35,7 @@ namespace Uneye
 		{
 			Release();
 
-			Data = (uint8_t*)malloc(size);
+			Data = (unsigned char*)malloc(size);
 			Size = size;
 		}
 
@@ -76,7 +76,7 @@ namespace Uneye
 				m_Buffer.Release();
 			}
 
-			uint8_t* Data() { return m_Buffer.Data; }
+			unsigned char* Data() { return m_Buffer.Data; }
 			uint64_t Size() { return m_Buffer.Size; }
 
 			template<typename T>

@@ -37,12 +37,18 @@ namespace Uneye
 	}
 
 	OpenGLTexture2D::OpenGLTexture2D(const TextureSpecification& specification, Buffer data)
-		: m_Specification(specification), m_Width(m_Specification.Width), m_Height(m_Specification.Height), m_Data(data)
+		: m_Specification(specification), m_Width(m_Specification.Width), m_Height(m_Specification.Height), m_Data(&data.Data[0], &data.Data[0] + data.Size)
 	{
 		UNEYE_PROFILE_FUNCTION();
 
 		m_InternalFormat = Utils::ImageFormatToGLInternalFormat(m_Specification.Format);
 		m_Format = Utils::ImageFormatToGLDataFormat(m_Specification.Format);
+
+		switch (m_Specification.Format)
+		{
+			case ImageFormat::RGB8: m_Channels = 3; break;
+			case ImageFormat::RGBA8: m_Channels = 4; break;
+		}
 
 		glCreateTextures(GL_TEXTURE_2D, 1, &m_RendererID);
 		glTextureStorage2D(m_RendererID, 1, m_InternalFormat, m_Width, m_Height);
@@ -106,8 +112,8 @@ namespace Uneye
 		glDeleteFramebuffers(2, fboIDs);
 
 		m_RendererID = newTexID;
-		m_Width = p_width;
-		m_Height = p_height;
+		//m_Width = p_width;
+		//m_Height = p_height;
 	}
 
 	void OpenGLTexture2D::Bind(uint32_t slot)

@@ -22,7 +22,7 @@
     <ClInclude Include="src\Panels\SceneHierarchyPanel.h">
       <Filter>Panels</Filter>
     </ClInclude>
-    <ClInclude Include="src\Panels\ThumbnailCache.h">
+    <ClInclude Include="src\Panels\Thumbnail\ThumbnailCache.h">
       <Filter>Panels</Filter>
     </ClInclude>
     <ClInclude Include="src\UI\UI.h">
@@ -43,7 +43,7 @@
     <ClCompile Include="src\Panels\SceneHierarchyPanel.cpp">
       <Filter>Panels</Filter>
     </ClCompile>
-    <ClCompile Include="src\Panels\ThumbnailCache.cpp">
+    <ClCompile Include="src\Panels\Thumbnail\ThumbnailCache.cpp">
       <Filter>Panels</Filter>
     </ClCompile>
     <ClCompile Include="src\UI\UI.cpp">

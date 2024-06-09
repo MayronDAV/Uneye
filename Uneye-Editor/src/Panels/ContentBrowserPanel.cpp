@@ -238,8 +238,10 @@ namespace Uneye
 			clipper.Begin(rowCount, m_ThumbnailSize + ImGui::GetWindowSize().y * 0.33f);
 
 
+
 			while (clipper.Step())
 			{
+
 				for (int row = clipper.DisplayStart; row < clipper.DisplayEnd; row++)
 				{
 					ImGui::TableNextRow();
@@ -283,19 +285,22 @@ namespace Uneye
 							auto relativePath = fs::relative(entries[index].path(), m_BaseDirectory);
 							const wchar_t* itemPath = relativePath.c_str();
 							ImGui::SetDragDropPayload("CONTENT_BROWSER_ITEM", itemPath, (wcslen(itemPath) + 1) * sizeof(wchar_t));
+
 							ImGui::EndDragDropSource();
 						}
 
 						if (ImGui::IsItemHovered())
 						{
+							ImGui::SetNextWindowSize({250.0f, 0});
+
 							ImGui::BeginTooltip();
 
 							std::string sizeStr = Utils::BytesToString(thumbnail->GetEstimatedSize());
+							ImGui::TextWrapped("%s", filenameString.c_str());
 							ImGui::Text("Mem: %s", sizeStr.c_str());
 							ImGui::Text("Size: %i x %i", thumbnail->GetWidth(), thumbnail->GetHeight());
 
 							ImGui::EndTooltip();
-
 						}
 
 

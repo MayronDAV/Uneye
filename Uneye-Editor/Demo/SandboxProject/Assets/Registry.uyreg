@@ -29,6 +29,9 @@ AssetRegistry:
   - Handle: 9664187816595544330
     FilePath: C:/dev/Uneye/Uneye-Editor/Demo/SandboxProject/Assets/Textures/Tilemap/tilemap-backgrounds_packed.png
     Type: AssetType::Texture2D
+  - Handle: 12253228594092583331
+    FilePath: C:/dev/Uneye/Uneye-Editor/Demo/SandboxProject/Assets/Textures/wall.jpg
+    Type: AssetType::Texture2D
   - Handle: 12505482296585363550
     FilePath: C:/dev/Uneye/Uneye-Editor/Demo/SandboxProject/Assets/Scenes/PinkCubeTeste.uyscene
     Type: AssetType::Scene

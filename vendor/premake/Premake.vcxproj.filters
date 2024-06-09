@@ -31,6 +31,9 @@
     <Filter Include="..\Uneye\vendor\yaml-cpp">
       <UniqueIdentifier>{857ED56A-71A3-24EB-9AEE-097B86722309}</UniqueIdentifier>
     </Filter>
+    <Filter Include="..\Uneye\vendor\zlib">
+      <UniqueIdentifier>{93652563-7FF4-AE2C-2813-C3271481BFD2}</UniqueIdentifier>
+    </Filter>
     <Filter Include="..\Uneye-Editor">
       <UniqueIdentifier>{CA53CFC3-36DF-3C88-3FF0-BF7CABFA9888}</UniqueIdentifier>
     </Filter>
@@ -83,6 +86,9 @@
     </None>
     <None Include="..\..\Uneye\vendor\yaml-cpp\premake5.lua">
       <Filter>..\Uneye\vendor\yaml-cpp</Filter>
+    </None>
+    <None Include="..\..\Uneye\vendor\zlib\premake5.lua">
+      <Filter>..\Uneye\vendor\zlib</Filter>
     </None>
     <None Include="..\..\premake5.lua">
       <Filter>..</Filter>

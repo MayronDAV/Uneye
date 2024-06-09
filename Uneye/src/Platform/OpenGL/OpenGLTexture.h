@@ -23,10 +23,11 @@ namespace Uneye
 			virtual void ChangeSize(uint32_t p_width, uint32_t p_height) override;
 
 			virtual const TextureSpecification& GetSpecification() const override { return m_Specification; }
-			virtual Buffer* GetData() override { return &m_Data; }
+			virtual std::vector<unsigned char>& GetData() override { return m_Data; }
 
 			virtual uint32_t GetWidth() const override { return m_Width;  }
 			virtual uint32_t GetHeight() const override { return m_Height; }
+			virtual uint32_t GetChannels() const override { return m_Channels; }
 
 			virtual void Bind(uint32_t slot) override;
 			virtual void Unbind() override;
@@ -37,12 +38,13 @@ namespace Uneye
 			}
 
 		private:
-			Buffer m_Data;
+			std::vector<unsigned char> m_Data;
 
 			TextureSpecification m_Specification;
 
 			uint32_t m_Width			= NULL;
 			uint32_t m_Height			= NULL;
+			uint32_t m_Channels			= NULL;
 			uint32_t m_RendererID		= NULL;
 
 			uint32_t m_InternalFormat, m_Format;

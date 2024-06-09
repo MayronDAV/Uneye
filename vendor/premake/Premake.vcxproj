@@ -88,6 +88,7 @@
     <None Include="..\..\Uneye\vendor\msdf-atlas-gen\msdfgen\premake5.lua" />
     <None Include="..\..\Uneye\vendor\msdf-atlas-gen\premake5.lua" />
     <None Include="..\..\Uneye\vendor\yaml-cpp\premake5.lua" />
+    <None Include="..\..\Uneye\vendor\zlib\premake5.lua" />
     <None Include="..\..\premake5.lua" />
     <None Include="premake5.lua" />
   </ItemGroup>

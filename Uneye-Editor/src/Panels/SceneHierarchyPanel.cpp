@@ -410,14 +410,15 @@ namespace Uneye
 
 					}, [&]() {
 
-						std::string filepath = FileDialogs::OpenFile("img files (*.png)|*.jpg|All files (*.*)|*.*");
+						std::string filepath = FileDialogs::OpenFile("All files (*.*) | *.*");
 						std::string path = p_sc.TexturePath;
 						if (filepath.empty())
 							p_sc.TexturePath = path;
 						else
 							p_sc.TexturePath = filepath;
 
-						p_sc.Texture = AssetManager::ImportAsset(p_sc.TexturePath);
+						if (!p_sc.TexturePath.empty())
+							p_sc.Texture = AssetManager::ImportAsset(p_sc.TexturePath);
 
 						filename = std::filesystem::path(p_sc.TexturePath).filename().string();
 

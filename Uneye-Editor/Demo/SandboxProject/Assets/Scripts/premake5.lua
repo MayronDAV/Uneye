@@ -1,4 +1,4 @@
-local UneyeRootDir = '../../../..'
+local UneyeRootDir = '../../../../..'
 include (UneyeRootDir .. "/vendor/premake/premake_customization/solution_items.lua")
 
 

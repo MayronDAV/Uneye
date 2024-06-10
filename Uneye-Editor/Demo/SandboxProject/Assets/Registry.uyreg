@@ -1,49 +1,52 @@
 AssetRegistry:
   - Handle: 1623098303741694096
-    FilePath: C:/dev/Uneye/Uneye-Editor/Demo/SandboxProject/Assets/Scenes/Teste.uyscene
+    FilePath: Assets/Scenes/Teste.uyscene
     Type: AssetType::Scene
   - Handle: 2941105540159272654
-    FilePath: C:/dev/Uneye/Uneye-Editor/Demo/SandboxProject/Assets/Textures/container.jpg
+    FilePath: Assets/Textures/container.jpg
     Type: AssetType::Texture2D
   - Handle: 3322893078494907395
-    FilePath: C:/dev/Uneye/Uneye-Editor/Demo/SandboxProject/Assets/Textures/blending_transparent_window.png
+    FilePath: Assets/Textures/blending_transparent_window.png
+    Type: AssetType::Texture2D
+  - Handle: 4105717141637494383
+    FilePath: Assets/Textures/star.png
     Type: AssetType::Texture2D
   - Handle: 4476373200970668791
-    FilePath: C:/dev/Uneye/Uneye-Editor/Demo/SandboxProject/Assets/Scenes/Physics2D.uyscene
+    FilePath: Assets/Scenes/Physics2D.uyscene
     Type: AssetType::Scene
   - Handle: 4967277247570773787
-    FilePath: C:/dev/Uneye/Uneye-Editor/Demo/SandboxProject/Assets/Scenes/PinkCube.uyscene
+    FilePath: Assets/Scenes/PinkCube.uyscene
     Type: AssetType::Scene
   - Handle: 5886822184192042059
-    FilePath: C:/dev/Uneye/Uneye-Editor/Demo/SandboxProject/Assets/Textures/Tilemap/tilemap.png
+    FilePath: Assets/Textures/Tilemap/tilemap.png
     Type: AssetType::Texture2D
   - Handle: 7052243534543025568
-    FilePath: C:/dev/Uneye/Uneye-Editor/Demo/SandboxProject/Assets/Textures/teste/tile_0071.png
+    FilePath: Assets/Textures/teste/tile_0071.png
     Type: AssetType::Texture2D
   - Handle: 7387262268315503134
-    FilePath: C:/dev/Uneye/Uneye-Editor/Demo/SandboxProject/Assets/Textures/grass.png
+    FilePath: Assets/Textures/grass.png
     Type: AssetType::Texture2D
   - Handle: 8505882120905573018
-    FilePath: C:/dev/Uneye/Uneye-Editor/Demo/SandboxProject/Assets/Scenes/Teste2.uyscene
+    FilePath: Assets/Scenes/Teste2.uyscene
     Type: AssetType::Scene
   - Handle: 9664187816595544330
-    FilePath: C:/dev/Uneye/Uneye-Editor/Demo/SandboxProject/Assets/Textures/Tilemap/tilemap-backgrounds_packed.png
-    Type: AssetType::Texture2D
-  - Handle: 12253228594092583331
-    FilePath: C:/dev/Uneye/Uneye-Editor/Demo/SandboxProject/Assets/Textures/wall.jpg
+    FilePath: Assets/Textures/Tilemap/tilemap-backgrounds_packed.png
     Type: AssetType::Texture2D
   - Handle: 12505482296585363550
-    FilePath: C:/dev/Uneye/Uneye-Editor/Demo/SandboxProject/Assets/Scenes/PinkCubeTeste.uyscene
+    FilePath: Assets/Scenes/PinkCubeTeste.uyscene
     Type: AssetType::Scene
   - Handle: 13052209740581719949
-    FilePath: C:/dev/Uneye/Uneye-Editor/Demo/SandboxProject/Assets/Textures/RPGpack_sheet_2X.png
+    FilePath: Assets/Textures/RPGpack_sheet_2X.png
+    Type: AssetType::Texture2D
+  - Handle: 14455413510105257176
+    FilePath: Assets/Textures/wall.jpg
     Type: AssetType::Texture2D
   - Handle: 14957797364841583554
-    FilePath: C:/dev/Uneye/Uneye-Editor/Demo/SandboxProject/Assets/Textures/teste/tile_0002.png
+    FilePath: Assets/Textures/teste/tile_0002.png
     Type: AssetType::Texture2D
   - Handle: 17980665385145227432
-    FilePath: C:/dev/Uneye/Uneye-Editor/Demo/SandboxProject/Assets/Textures/checkerboard.png
+    FilePath: Assets/Textures/checkerboard.png
     Type: AssetType::Texture2D
   - Handle: 18018853759635335219
-    FilePath: C:/dev/Uneye/Uneye-Editor/Demo/SandboxProject/Assets/Scenes/PinkCubeContainer.uyscene
+    FilePath: Assets/Scenes/PinkCubeContainer.uyscene
     Type: AssetType::Scene

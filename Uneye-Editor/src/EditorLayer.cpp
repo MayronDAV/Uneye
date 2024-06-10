@@ -34,6 +34,7 @@ namespace Uneye
 	{
 		UNEYE_PROFILE_FUNCTION();
 
+
 		//Application::Get().GetWindow().SetVSync(false);
 
 		m_IconPlay = TextureImporter::LoadTexture2D("Resources/Icons/PlayButton.png");
@@ -51,7 +52,6 @@ namespace Uneye
 		fbspec.Width = 800;
 		fbspec.Height = 600;
 		m_Framebuffer = Framebuffer::Create(fbspec);
-
 
 
 		m_EditorScene = CreateRef<Scene>();
@@ -84,13 +84,16 @@ namespace Uneye
 
 		Renderer2D::SetLineWidth(4.0f);
 
+
 		m_SceneHierarchyPanel.SetContext(m_ActiveScene);
+
 	}
 
 	void EditorLayer::OnDetach()
 	{
 		UNEYE_PROFILE_FUNCTION();
 	}
+
 
 	void EditorLayer::OnUpdate(Timestep ts)
 	{
@@ -177,7 +180,6 @@ namespace Uneye
 	void EditorLayer::OnImGuiRender()
 	{
 		UNEYE_PROFILE_FUNCTION();
-
 
 		static bool opt_fullscreen = true;
 		static bool opt_padding = false;
@@ -681,7 +683,7 @@ namespace Uneye
 
 	bool EditorLayer::OpenProject()
 	{
-		std::string filepath = FileDialogs::OpenFile("Uneye Project (*.uyroj)\0*.uyproj\0");
+		std::string filepath = FileDialogs::OpenFile("Uneye Project (*.uyproj)\0*.uyproj\0");
 		if (filepath.empty())
 			return false;
 

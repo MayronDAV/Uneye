@@ -21,6 +21,7 @@
 
 
 
+
 namespace Uneye {
 	
 	static bool s_GLFWInitialized = false;
@@ -29,6 +30,21 @@ namespace Uneye {
 	{
 		UNEYE_CORE_ERROR("GLFW Error ({0}): {1}", error, description);
 	}
+
+	static void SetWindowIcon(GLFWwindow* window)
+	{
+		HINSTANCE hInstance = GetModuleHandle(NULL);
+		HICON hIcon = LoadIconW(hInstance, MAKEINTRESOURCE(IDI_MYICON));
+
+		if (hIcon)
+		{
+			HWND hwnd = glfwGetWin32Window(window);
+			SendMessage(hwnd, WM_SETICON, ICON_BIG, (LPARAM)hIcon);
+			SendMessage(hwnd, WM_SETICON, ICON_SMALL, (LPARAM)hIcon);
+			SendMessage(hwnd, WM_SETICON, ICON_SMALL2, (LPARAM)hIcon);
+		}
+	}
+
 
 	Scope<Window> Window::Create(const WindowProps& props)
 	{
@@ -58,14 +74,6 @@ namespace Uneye {
 		m_Data.Width = props.Width;
 		m_Data.Height = props.Height;
 
-		WNDCLASS wc = { 0 };
-		wc.lpfnWndProc = DefWindowProc;
-		wc.hInstance = GetModuleHandle(NULL);
-		wc.lpszClassName = L"MyWindowClass";
-		wc.hIcon = LoadIcon(wc.hInstance, MAKEINTRESOURCE(IDI_MYICON));
-
-		RegisterClassW(&wc);
-
 		if (!s_GLFWInitialized)
 		{
 			UNEYE_PROFILE_SCOPE("glfwInit");
@@ -89,9 +97,7 @@ namespace Uneye {
 
 		UNEYE_CORE_ASSERT(m_Window == nullptr, "An error has ocurred on window create");
 
-
-		HWND hwnd = glfwGetWin32Window(m_Window);
-		SetClassLongPtrW(hwnd, GCLP_HICON, (LONG_PTR)LoadIcon(GetModuleHandle(NULL), MAKEINTRESOURCE(IDI_MYICON)));
+		SetWindowIcon(m_Window);
 
 		UNEYE_CORE_INFO("Window {0} was created with ({1}, {2})", props.Title, props.Width, props.Height);
 		m_Context = new OpenGLContext(m_Window);
@@ -193,14 +199,14 @@ namespace Uneye {
 
 		glfwSetDropCallback(m_Window, [](GLFWwindow* window, int pathCount, const char* paths[])
 		{
-				WindowData& data = *(WindowData*)glfwGetWindowUserPointer(window);
+			WindowData& data = *(WindowData*)glfwGetWindowUserPointer(window);
 
-				std::vector<std::filesystem::path> filepaths(pathCount);
-				for (int i = 0; i < pathCount; i++)
-					filepaths[i] = paths[i];
+			std::vector<std::filesystem::path> filepaths(pathCount);
+			for (int i = 0; i < pathCount; i++)
+				filepaths[i] = paths[i];
 
-				WindowDropEvent event(std::move(filepaths));
-				data.EventCallback(event);
+			WindowDropEvent event(std::move(filepaths));
+			data.EventCallback(event);
 		});
 	}
 

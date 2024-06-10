@@ -1,21 +1,21 @@
 #include <Uneye.h>
 #include <Uneye/Core/EntryPoint.h>
 #include "EditorLayer.h"
-
+#include "Panels/Project/ProjectPanelLayer.h"
 
 
 namespace Uneye
 {
 	class UneyeEditor : public Application
 	{
-	public:
-		UneyeEditor(const ApplicationSpecification& spec)
-			: Application(spec)
-		{
-			PushLayer(new EditorLayer());
-		}
+		public:
+			UneyeEditor(const ApplicationSpecification& p_spec)
+				: Application(p_spec)
+			{
+				PushLayer(new EditorLayer());
+			}
 
-		~UneyeEditor() = default;
+			~UneyeEditor() = default;
 	};
 
 	Application* CreateApplication(ApplicationCommandLineArgs args)

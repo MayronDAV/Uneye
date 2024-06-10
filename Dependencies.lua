@@ -21,6 +21,7 @@ IncludeDir["VulkanSDK"] = "%{VULKAN_SDK}/Include"
 IncludeDir["msdf_atlas_gen"] = "../Uneye/vendor/msdf-atlas-gen/msdf-atlas-gen"
 IncludeDir["msdfgen"] = "../Uneye/vendor/msdf-atlas-gen/msdfgen"
 IncludeDir["zlib"] = "../Uneye/vendor/zlib"
+IncludeDir["tinyxml2"] = "../Uneye/vendor/tinyxml2"
 
 LibraryDir = {}
 

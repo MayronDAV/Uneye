@@ -190,7 +190,7 @@ namespace Uneye
 			{
 				out << YAML::BeginMap;
 				out << YAML::Key << "Handle" << YAML::Value << (uint64_t)handle;
-				std::string filepathStr = metadata.FilePath.generic_string();
+				std::string filepathStr = std::filesystem::relative(metadata.FilePath, Project::GetActiveProjectDirectory()).generic_string();
 				out << YAML::Key << "FilePath" << YAML::Value << filepathStr;
 				out << YAML::Key << "Type" << YAML::Value << AssetTypeToString(metadata.Type).data();
 				out << YAML::EndMap;
@@ -228,7 +228,7 @@ namespace Uneye
 		{
 			AssetHandle handle = node["Handle"].as<uint64_t>();
 			auto& metadata = m_AssetRegistry[handle];
-			metadata.FilePath = node["FilePath"].as<std::string>();
+			metadata.FilePath = Project::GetActiveProjectDirectory() / node["FilePath"].as<std::string>();
 			metadata.Type = AssetTypeFromString(node["Type"].as<std::string>());
 
 			s_FilePathAssetRegistry[metadata.FilePath] = std::make_pair(handle, metadata);

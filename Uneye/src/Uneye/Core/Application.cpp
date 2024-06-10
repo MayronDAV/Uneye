@@ -42,14 +42,15 @@ namespace Uneye {
 		if (!m_Specification.WorkingDirectory.empty())
 			std::filesystem::current_path(m_Specification.WorkingDirectory);
 
+
 		m_Window = Window::Create(WindowProps(m_Specification.Name));
 		m_Window->SetEventCallback(BIND_EVENT_FN(OnEvent));
 
-		Renderer::Init();
-		
 
+		Renderer::Init();
 		m_ImGuiLayer = new ImGuiLayer();
 		PushOverlay(m_ImGuiLayer);
+		
 
 		m_Window->SetVSync(false);
 
@@ -57,7 +58,6 @@ namespace Uneye {
 
 	Application::~Application()
 	{
-
 		ScriptEngine::Shutdown();
 	}
 
@@ -108,6 +108,7 @@ namespace Uneye {
 			Timestep timestep = time - m_LastFrameTime;
 			m_LastFrameTime = time;
 
+			// move this to editor
 			if (m_ReloadImGui)
 			{
 				m_ImGuiLayer->OnDetach();

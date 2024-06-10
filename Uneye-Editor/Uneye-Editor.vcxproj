@@ -151,6 +151,7 @@
     <ClInclude Include="src\Panels\AssetImporterPanel.h" />
     <ClInclude Include="src\Panels\ContentBrowserPanel.h" />
     <ClInclude Include="src\Panels\LogPanel.h" />
+    <ClInclude Include="src\Panels\Project\ProjectPanelLayer.h" />
     <ClInclude Include="src\Panels\SceneHierarchyPanel.h" />
     <ClInclude Include="src\Panels\Thumbnail\ThumbnailCache.h" />
     <ClInclude Include="src\UI\UI.h" />
@@ -160,6 +161,7 @@
     <ClCompile Include="src\Panels\AssetImporterPanel.cpp" />
     <ClCompile Include="src\Panels\ContentBrowserPanel.cpp" />
     <ClCompile Include="src\Panels\LogPanel.cpp" />
+    <ClCompile Include="src\Panels\Project\ProjectPanelLayer.cpp" />
     <ClCompile Include="src\Panels\SceneHierarchyPanel.cpp" />
     <ClCompile Include="src\Panels\Thumbnail\ThumbnailCache.cpp" />
     <ClCompile Include="src\UI\UI.cpp" />

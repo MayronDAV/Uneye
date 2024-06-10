@@ -28,6 +28,9 @@
     <Filter Include="..\Uneye\vendor\msdf-atlas-gen\msdfgen">
       <UniqueIdentifier>{68F1FDF3-5443-D5E3-3D62-12F42953EECC}</UniqueIdentifier>
     </Filter>
+    <Filter Include="..\Uneye\vendor\tinyxml2">
+      <UniqueIdentifier>{89EDC738-7512-17B9-9E5D-FC488AE115D7}</UniqueIdentifier>
+    </Filter>
     <Filter Include="..\Uneye\vendor\yaml-cpp">
       <UniqueIdentifier>{857ED56A-71A3-24EB-9AEE-097B86722309}</UniqueIdentifier>
     </Filter>
@@ -83,6 +86,9 @@
     </None>
     <None Include="..\..\Uneye\vendor\msdf-atlas-gen\premake5.lua">
       <Filter>..\Uneye\vendor\msdf-atlas-gen</Filter>
+    </None>
+    <None Include="..\..\Uneye\vendor\tinyxml2\premake5.lua">
+      <Filter>..\Uneye\vendor\tinyxml2</Filter>
     </None>
     <None Include="..\..\Uneye\vendor\yaml-cpp\premake5.lua">
       <Filter>..\Uneye\vendor\yaml-cpp</Filter>

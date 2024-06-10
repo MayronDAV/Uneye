@@ -50,6 +50,7 @@ project "Uneye"
 		"%{IncludeDir.ImGuizmo}",
 		"%{IncludeDir.VulkanSDK}",
 		"%{IncludeDir.zlib}",
+		"%{IncludeDir.tinyxml2}"
 	}
 
 	links 
@@ -62,6 +63,7 @@ project "Uneye"
 		"yaml-cpp",
 		"opengl32.lib",
 		"zlib",
+		"tinyxml2",
 
 		"%{Library.mono}"
 	}

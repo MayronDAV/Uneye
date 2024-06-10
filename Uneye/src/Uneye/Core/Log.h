@@ -4,6 +4,9 @@
 #include "spdlog/spdlog.h"
 #include "spdlog/fmt/ostr.h"
 
+#include "Uneye/Core/ErrorWindow.h"
+
+
 namespace Uneye 
 {
 
@@ -67,8 +70,11 @@ namespace Uneye
 				fmt::memory_buffer buf;
 				fmt::format_to(buf, fmt, args...);
 				std::string message = std::string(buf.data(), buf.size());
-
+				
 				s_LogMessages.push_back(LogMsg{p_type, message});
+
+				if (p_type == LogType::Critical)
+					ErrorWindow::Show(message);
 			}
 
 			static std::vector<LogMsg> s_LogMessages;

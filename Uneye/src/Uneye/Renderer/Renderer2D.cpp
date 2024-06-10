@@ -642,12 +642,26 @@ namespace Uneye
 
 		if (p_sc.IsSubTexture)
 		{
-			Ref<SubTexture2D> subtexture = SubTexture2D::CreateFromTexture(texture, p_sc.TileSize, p_sc.TileCoord, p_sc.SpriteSize);
-			DrawQuad(p_transform, subtexture, p_sc.Color, p_entityID);
+			try
+			{
+				Ref<SubTexture2D> subtexture = SubTexture2D::CreateFromTexture(texture, p_sc.TileSize, p_sc.TileCoord, p_sc.SpriteSize);
+				DrawQuad(p_transform, subtexture, p_sc.Color, p_entityID);
+			}
+			catch (...)
+			{
+
+			}
 		}
 		else
 		{
-			DrawQuad(p_transform, p_sc.Color, texture, p_entityID);
+			try
+			{
+				DrawQuad(p_transform, p_sc.Color, texture, p_entityID);
+			}
+			catch (...)
+			{
+
+			}
 		}
 	}
 

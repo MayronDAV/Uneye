@@ -149,6 +149,7 @@
   <ItemGroup>
     <ClInclude Include="src\EditorLayer.h" />
     <ClInclude Include="src\Panels\AssetImporterPanel.h" />
+    <ClInclude Include="src\Panels\AssetRegistryPanel.h" />
     <ClInclude Include="src\Panels\ContentBrowserPanel.h" />
     <ClInclude Include="src\Panels\LogPanel.h" />
     <ClInclude Include="src\Panels\Project\ProjectPanelLayer.h" />
@@ -159,6 +160,7 @@
   <ItemGroup>
     <ClCompile Include="src\EditorLayer.cpp" />
     <ClCompile Include="src\Panels\AssetImporterPanel.cpp" />
+    <ClCompile Include="src\Panels\AssetRegistryPanel.cpp" />
     <ClCompile Include="src\Panels\ContentBrowserPanel.cpp" />
     <ClCompile Include="src\Panels\LogPanel.cpp" />
     <ClCompile Include="src\Panels\Project\ProjectPanelLayer.cpp" />

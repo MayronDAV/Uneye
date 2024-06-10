@@ -289,7 +289,9 @@ namespace Uneye
 							ImGui::EndDragDropSource();
 						}
 
-						if (ImGui::IsItemHovered())
+						bool hovered_item = ImGui::IsItemHovered(ImGuiHoveredFlags_DelayNormal | ImGuiHoveredFlags_NoSharedDelay);
+
+						if (hovered_item)
 						{
 							ImGui::SetNextWindowSize({250.0f, 0});
 

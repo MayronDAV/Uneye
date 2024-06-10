@@ -37,6 +37,7 @@
     <ClInclude Include="src\UI\UI.h">
       <Filter>UI</Filter>
     </ClInclude>
+    <ClInclude Include="src\Panels\AssetRegistryPanel.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\EditorLayer.cpp" />
@@ -62,6 +63,7 @@
       <Filter>UI</Filter>
     </ClCompile>
     <ClCompile Include="src\UneyeEditorApp.cpp" />
+    <ClCompile Include="src\Panels\AssetRegistryPanel.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="src\Resource.rc" />

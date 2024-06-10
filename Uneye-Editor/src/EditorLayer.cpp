@@ -295,6 +295,7 @@ namespace Uneye
 			ImGui::EndMenuBar();
 		}
 
+		m_AssetRegistryPanel.OnImGuiRender();
 		m_SceneHierarchyPanel.OnImGuiRender();
 		m_ContentBrowserPanel->OnImGuiRender();
 		m_LogPanel.OnImGuiRender();

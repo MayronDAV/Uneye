@@ -10,7 +10,7 @@ Entities:
     SpriteComponent:
       Color: [1, 0, 0.949807167, 1]
       TexturePath: C:\dev\Uneye\Uneye-Editor\SandboxProject\Assets\Textures\container.jpg
-      TextureHandle: 2941105540159272654
+      TextureHandle: 16871563235402725797
       IsSubTexture: false
   - Entity: 16857551774855182432
     TagComponent:
@@ -22,7 +22,7 @@ Entities:
     SpriteComponent:
       Color: [0.54842025, 0, 0.586872578, 1]
       TexturePath: C:\dev\Uneye\Uneye-Editor\SandboxProject\Assets\Textures\container.jpg
-      TextureHandle: 2941105540159272654
+      TextureHandle: 16871563235402725797
       IsSubTexture: false
   - Entity: 4609828594335698906
     TagComponent:
@@ -52,5 +52,5 @@ Entities:
     SpriteComponent:
       Color: [0.876447856, 0, 0.834712803, 1]
       TexturePath: C:\dev\Uneye\Uneye-Editor\SandboxProject\Assets\Textures\container.jpg
-      TextureHandle: 2941105540159272654
+      TextureHandle: 16871563235402725797
       IsSubTexture: false

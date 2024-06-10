@@ -101,6 +101,28 @@ namespace Uneye
 	}
 
 
+	void EditorAssetManager::RemoveAsset(AssetHandle p_handle)
+	{
+		auto it = m_AssetRegistry.find(p_handle);
+		if (it != m_AssetRegistry.end())
+		{
+			auto& metadata = m_AssetRegistry.at(p_handle);
+			bool isFPAsset = s_FilePathAssetRegistry.find(metadata.FilePath) != s_FilePathAssetRegistry.end();
+			if (isFPAsset) s_FilePathAssetRegistry.erase(metadata.FilePath);
+
+			bool isLoaded = m_LoadedAssets.find(p_handle) != m_LoadedAssets.end();
+			if (isLoaded) m_LoadedAssets.erase(p_handle);
+
+			m_AssetRegistry.erase(p_handle);
+
+			SerializeAssetRegistry();
+		}
+		else
+		{
+			UNEYE_CORE_ERROR("This asset not exists");
+		}
+	}
+
 	AssetHandle EditorAssetManager::ImportAsset(const std::filesystem::path& p_filepath)
 	{
 		AssetHandle handle; // generate new handle

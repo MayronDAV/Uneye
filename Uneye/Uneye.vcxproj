@@ -169,6 +169,7 @@
     <ClInclude Include="src\Uneye\Core\Buffer.h" />
     <ClInclude Include="src\Uneye\Core\CompressionManager.h" />
     <ClInclude Include="src\Uneye\Core\EntryPoint.h" />
+    <ClInclude Include="src\Uneye\Core\ErrorWindow.h" />
     <ClInclude Include="src\Uneye\Core\Filesystem.h" />
     <ClInclude Include="src\Uneye\Core\FontManager.h" />
     <ClInclude Include="src\Uneye\Core\Input.h" />
@@ -626,6 +627,7 @@
     <ClCompile Include="src\Platform\OpenGL\OpenGLTexture.cpp" />
     <ClCompile Include="src\Platform\OpenGL\OpenGLUniformBuffer.cpp" />
     <ClCompile Include="src\Platform\OpenGL\OpenGLVertexArray.cpp" />
+    <ClCompile Include="src\Platform\Windows\ErrorWindow.cpp" />
     <ClCompile Include="src\Platform\Windows\WindowsInput.cpp" />
     <ClCompile Include="src\Platform\Windows\WindowsPlatformUtils.cpp" />
     <ClCompile Include="src\Platform\Windows\WindowsWindow.cpp" />

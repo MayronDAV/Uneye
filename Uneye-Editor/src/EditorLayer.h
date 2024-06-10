@@ -5,6 +5,7 @@
 #include <glm/glm.hpp>
 #include <glm/gtc/type_ptr.hpp>
 
+#include "Panels/AssetRegistryPanel.h"
 #include "Panels/SceneHierarchyPanel.h"
 #include "Panels/ContentBrowserPanel.h"
 #include "Panels/AssetImporterPanel.h"
@@ -93,6 +94,7 @@ namespace Uneye
 			SceneState m_SceneState = SceneState::Edit;
 
 			// Panels
+			AssetRegistryPanel m_AssetRegistryPanel;
 			SceneHierarchyPanel m_SceneHierarchyPanel;
 			Scope<ContentBrowserPanel> m_ContentBrowserPanel;
 			bool m_AssetImporterPanelIsOpen = false;

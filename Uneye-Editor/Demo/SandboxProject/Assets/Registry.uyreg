@@ -1,14 +1,20 @@
 AssetRegistry:
+  - Handle: 817292935591436904
+    FilePath: Assets/Textures/grass.png
+    Type: AssetType::Texture2D
   - Handle: 1623098303741694096
     FilePath: Assets/Scenes/Teste.uyscene
     Type: AssetType::Scene
-  - Handle: 2941105540159272654
-    FilePath: Assets/Textures/container.jpg
-    Type: AssetType::Texture2D
-  - Handle: 3322893078494907395
+  - Handle: 2074638610073373390
     FilePath: Assets/Textures/blending_transparent_window.png
     Type: AssetType::Texture2D
-  - Handle: 4105717141637494383
+  - Handle: 2804218517222267233
+    FilePath: Assets/Textures/wall.jpg
+    Type: AssetType::Texture2D
+  - Handle: 3518043878695392756
+    FilePath: Assets/Scenes/PinkCubeContainer.uyscene
+    Type: AssetType::Scene
+  - Handle: 4379355913277819650
     FilePath: Assets/Textures/star.png
     Type: AssetType::Texture2D
   - Handle: 4476373200970668791
@@ -17,36 +23,24 @@ AssetRegistry:
   - Handle: 4967277247570773787
     FilePath: Assets/Scenes/PinkCube.uyscene
     Type: AssetType::Scene
-  - Handle: 5886822184192042059
-    FilePath: Assets/Textures/Tilemap/tilemap.png
-    Type: AssetType::Texture2D
-  - Handle: 7052243534543025568
-    FilePath: Assets/Textures/teste/tile_0071.png
-    Type: AssetType::Texture2D
-  - Handle: 7387262268315503134
-    FilePath: Assets/Textures/grass.png
-    Type: AssetType::Texture2D
-  - Handle: 8505882120905573018
-    FilePath: Assets/Scenes/Teste2.uyscene
-    Type: AssetType::Scene
-  - Handle: 9664187816595544330
-    FilePath: Assets/Textures/Tilemap/tilemap-backgrounds_packed.png
-    Type: AssetType::Texture2D
-  - Handle: 12505482296585363550
+  - Handle: 6332627649262722061
     FilePath: Assets/Scenes/PinkCubeTeste.uyscene
     Type: AssetType::Scene
-  - Handle: 13052209740581719949
+  - Handle: 7442029795936897665
+    FilePath: Assets/Scenes/Teste2.uyscene
+    Type: AssetType::Scene
+  - Handle: 7870426183788971007
+    FilePath: Assets/Textures/RPGpack_sheet.png
+    Type: AssetType::Texture2D
+  - Handle: 8799705737014580822
     FilePath: Assets/Textures/RPGpack_sheet_2X.png
     Type: AssetType::Texture2D
-  - Handle: 14455413510105257176
-    FilePath: Assets/Textures/wall.jpg
-    Type: AssetType::Texture2D
-  - Handle: 14957797364841583554
-    FilePath: Assets/Textures/teste/tile_0002.png
-    Type: AssetType::Texture2D
-  - Handle: 17980665385145227432
+  - Handle: 12277329504285560586
     FilePath: Assets/Textures/checkerboard.png
     Type: AssetType::Texture2D
-  - Handle: 18018853759635335219
-    FilePath: Assets/Scenes/PinkCubeContainer.uyscene
+  - Handle: 15285725947439956019
+    FilePath: Assets/Scenes/Teste1.uyscene
     Type: AssetType::Scene
+  - Handle: 16871563235402725797
+    FilePath: Assets/Textures/container.jpg
+    Type: AssetType::Texture2D

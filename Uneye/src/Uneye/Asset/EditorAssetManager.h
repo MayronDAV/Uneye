@@ -22,6 +22,7 @@ namespace Uneye
 			virtual bool IsAssetLoaded(AssetHandle p_handle) const override;
 			virtual AssetType GetAssetType(AssetHandle p_handle) const override;
 
+			void RemoveAsset(AssetHandle p_handle);
 			AssetHandle ImportAsset(const std::filesystem::path& p_filepath);
 
 			const AssetMetadata& GetMetadata(AssetHandle p_handle) const;

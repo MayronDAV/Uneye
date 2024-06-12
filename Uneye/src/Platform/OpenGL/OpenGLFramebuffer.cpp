@@ -1,7 +1,9 @@
 #include "uypch.h"
 #include "Platform/OpenGL/OpenGLFramebuffer.h"
 
+
 #include <glad/glad.h>
+#include <glm/gtc/type_ptr.hpp>
 
 
 namespace Uneye
@@ -35,7 +37,7 @@ namespace Uneye
 			}
 			else
 			{
-				glTexImage2D(GL_TEXTURE_2D, 0, internalFormat, width, height, 0, format, GL_UNSIGNED_BYTE, nullptr);
+				glTexImage2D(GL_TEXTURE_2D, 0, internalFormat, width, height, 0, format, GL_UNSIGNED_INT, nullptr);
 				glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 				glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 				glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_R, GL_CLAMP_TO_EDGE);
@@ -89,8 +91,8 @@ namespace Uneye
 		{
 			switch (format)
 			{
-			case FramebufferTextureFormat::RGBA8:       return GL_RGBA8;
-			case FramebufferTextureFormat::RED_INTEGER: return GL_RED_INTEGER;
+				case FramebufferTextureFormat::RGBA8:		 return GL_RGBA8;
+				case FramebufferTextureFormat::RED_INTEGER:  return GL_RED_INTEGER;
 			}
 
 			UNEYE_CORE_ASSERT(true, "");
@@ -201,7 +203,7 @@ namespace Uneye
 				GL_COLOR_ATTACHMENT0,
 				GL_COLOR_ATTACHMENT1,
 				GL_COLOR_ATTACHMENT2,
-				GL_COLOR_ATTACHMENT3
+				GL_COLOR_ATTACHMENT3,
 			};
 			glDrawBuffers(m_ColorAttachments.size(), buffers);
 		}
@@ -256,11 +258,12 @@ namespace Uneye
 	int OpenGLFramebuffer::ReadPixel(uint32_t attachmentIndex, int x, int y)
 	{
 		UNEYE_CORE_ASSERT(attachmentIndex >= m_ColorAttachments.size());
-		
+
 		glReadBuffer(GL_COLOR_ATTACHMENT0 + attachmentIndex);
 
 		int pixelData;
 		glReadPixels(x, y, 1, 1, GL_RED_INTEGER, GL_INT, &pixelData);
+
 		return pixelData;
 	}
 

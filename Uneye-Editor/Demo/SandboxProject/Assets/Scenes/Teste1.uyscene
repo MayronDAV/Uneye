@@ -10,7 +10,7 @@ Entities:
     SpriteComponent:
       Color: [0.300000012, 0.800000012, 0.200000003, 1]
       TexturePath: SandboxProject\Assets\Textures\checkerboard.png
-      TextureHandle: 12277329504285560586
+      TextureHandle: 15630461467591112250
       IsSubTexture: false
   - Entity: 17665449323232097852
     TagComponent:
@@ -22,7 +22,7 @@ Entities:
     SpriteComponent:
       Color: [0.300000012, 0.800000012, 0.200000003, 1]
       TexturePath: SandboxProject\Assets\Textures\checkerboard.png
-      TextureHandle: 12277329504285560586
+      TextureHandle: 15630461467591112250
       IsSubTexture: false
   - Entity: 1894140653759634974
     TagComponent:
@@ -34,7 +34,7 @@ Entities:
     SpriteComponent:
       Color: [0.300000012, 0.800000012, 0.200000003, 1]
       TexturePath: SandboxProject\Assets\Textures\checkerboard.png
-      TextureHandle: 12277329504285560586
+      TextureHandle: 15630461467591112250
       IsSubTexture: false
   - Entity: 888815688091818171
     TagComponent:
@@ -46,7 +46,7 @@ Entities:
     SpriteComponent:
       Color: [0.300000012, 0.800000012, 0.200000003, 1]
       TexturePath: SandboxProject\Assets\Textures\checkerboard.png
-      TextureHandle: 12277329504285560586
+      TextureHandle: 15630461467591112250
       IsSubTexture: false
   - Entity: 4233308001912909262
     TagComponent:
@@ -58,7 +58,7 @@ Entities:
     SpriteComponent:
       Color: [0.300000012, 0.800000012, 0.200000003, 1]
       TexturePath: SandboxProject\Assets\Textures\checkerboard.png
-      TextureHandle: 12277329504285560586
+      TextureHandle: 15630461467591112250
       IsSubTexture: false
   - Entity: 1988794322532798134
     TagComponent:
@@ -70,7 +70,7 @@ Entities:
     SpriteComponent:
       Color: [0.300000012, 0.800000012, 0.200000003, 1]
       TexturePath: SandboxProject\Assets\Textures\checkerboard.png
-      TextureHandle: 12277329504285560586
+      TextureHandle: 15630461467591112250
       IsSubTexture: false
   - Entity: 14880807311102656831
     TagComponent:
@@ -82,7 +82,7 @@ Entities:
     SpriteComponent:
       Color: [0.300000012, 0.800000012, 0.200000003, 1]
       TexturePath: SandboxProject\Assets\Textures\checkerboard.png
-      TextureHandle: 12277329504285560586
+      TextureHandle: 15630461467591112250
       IsSubTexture: false
   - Entity: 11463556826613981770
     TagComponent:
@@ -94,7 +94,7 @@ Entities:
     SpriteComponent:
       Color: [0.300000012, 0.800000012, 0.200000003, 1]
       TexturePath: SandboxProject\Assets\Textures\checkerboard.png
-      TextureHandle: 12277329504285560586
+      TextureHandle: 15630461467591112250
       IsSubTexture: false
   - Entity: 17913056499578532703
     TagComponent:
@@ -106,7 +106,7 @@ Entities:
     SpriteComponent:
       Color: [0.300000012, 0.800000012, 0.200000003, 1]
       TexturePath: SandboxProject\Assets\Textures\checkerboard.png
-      TextureHandle: 12277329504285560586
+      TextureHandle: 15630461467591112250
       IsSubTexture: false
   - Entity: 6660760959476768193
     TagComponent:
@@ -118,7 +118,7 @@ Entities:
     SpriteComponent:
       Color: [0.300000012, 0.800000012, 0.200000003, 1]
       TexturePath: SandboxProject\Assets\Textures\checkerboard.png
-      TextureHandle: 12277329504285560586
+      TextureHandle: 15630461467591112250
       IsSubTexture: false
   - Entity: 2492805742142976393
     TagComponent:
@@ -130,7 +130,7 @@ Entities:
     SpriteComponent:
       Color: [0.300000012, 0.800000012, 0.200000003, 1]
       TexturePath: SandboxProject\Assets\Textures\checkerboard.png
-      TextureHandle: 12277329504285560586
+      TextureHandle: 15630461467591112250
       IsSubTexture: false
   - Entity: 8509781140500965278
     TagComponent:
@@ -142,7 +142,7 @@ Entities:
     SpriteComponent:
       Color: [0.300000012, 0.800000012, 0.200000003, 1]
       TexturePath: SandboxProject\Assets\Textures\checkerboard.png
-      TextureHandle: 12277329504285560586
+      TextureHandle: 15630461467591112250
       IsSubTexture: false
   - Entity: 8784057545937469024
     TagComponent:
@@ -154,7 +154,7 @@ Entities:
     SpriteComponent:
       Color: [0.300000012, 0.800000012, 0.200000003, 1]
       TexturePath: SandboxProject\Assets\Textures\checkerboard.png
-      TextureHandle: 12277329504285560586
+      TextureHandle: 15630461467591112250
       IsSubTexture: false
   - Entity: 16479938206517720252
     TagComponent:
@@ -166,7 +166,7 @@ Entities:
     SpriteComponent:
       Color: [0.300000012, 0.800000012, 0.200000003, 1]
       TexturePath: SandboxProject\Assets\Textures\checkerboard.png
-      TextureHandle: 12277329504285560586
+      TextureHandle: 15630461467591112250
       IsSubTexture: false
   - Entity: 12964119809955907414
     TagComponent:
@@ -178,7 +178,7 @@ Entities:
     SpriteComponent:
       Color: [0.300000012, 0.800000012, 0.200000003, 1]
       TexturePath: SandboxProject\Assets\Textures\checkerboard.png
-      TextureHandle: 12277329504285560586
+      TextureHandle: 15630461467591112250
       IsSubTexture: false
   - Entity: 1902647619909453560
     TagComponent:
@@ -190,7 +190,7 @@ Entities:
     SpriteComponent:
       Color: [0.300000012, 0.800000012, 0.200000003, 1]
       TexturePath: SandboxProject\Assets\Textures\checkerboard.png
-      TextureHandle: 12277329504285560586
+      TextureHandle: 15630461467591112250
       IsSubTexture: false
   - Entity: 9392270120311121945
     TagComponent:
@@ -202,7 +202,7 @@ Entities:
     SpriteComponent:
       Color: [0.300000012, 0.800000012, 0.200000003, 1]
       TexturePath: SandboxProject\Assets\Textures\checkerboard.png
-      TextureHandle: 12277329504285560586
+      TextureHandle: 15630461467591112250
       IsSubTexture: false
   - Entity: 10276140637211487395
     TagComponent:
@@ -214,7 +214,7 @@ Entities:
     SpriteComponent:
       Color: [0.300000012, 0.800000012, 0.200000003, 1]
       TexturePath: SandboxProject\Assets\Textures\checkerboard.png
-      TextureHandle: 12277329504285560586
+      TextureHandle: 15630461467591112250
       IsSubTexture: false
   - Entity: 4750725187612717275
     TagComponent:
@@ -226,7 +226,7 @@ Entities:
     SpriteComponent:
       Color: [0.300000012, 0.800000012, 0.200000003, 1]
       TexturePath: SandboxProject\Assets\Textures\checkerboard.png
-      TextureHandle: 12277329504285560586
+      TextureHandle: 15630461467591112250
       IsSubTexture: false
   - Entity: 16401940374563621744
     TagComponent:
@@ -238,7 +238,7 @@ Entities:
     SpriteComponent:
       Color: [0.300000012, 0.800000012, 0.200000003, 1]
       TexturePath: SandboxProject\Assets\Textures\checkerboard.png
-      TextureHandle: 12277329504285560586
+      TextureHandle: 15630461467591112250
       IsSubTexture: false
   - Entity: 13701140954290376106
     TagComponent:
@@ -250,7 +250,7 @@ Entities:
     SpriteComponent:
       Color: [0.300000012, 0.800000012, 0.200000003, 1]
       TexturePath: SandboxProject\Assets\Textures\checkerboard.png
-      TextureHandle: 12277329504285560586
+      TextureHandle: 15630461467591112250
       IsSubTexture: false
   - Entity: 10079987874150014024
     TagComponent:
@@ -262,7 +262,7 @@ Entities:
     SpriteComponent:
       Color: [0.300000012, 0.800000012, 0.200000003, 1]
       TexturePath: SandboxProject\Assets\Textures\checkerboard.png
-      TextureHandle: 12277329504285560586
+      TextureHandle: 15630461467591112250
       IsSubTexture: false
   - Entity: 13315505473289532982
     TagComponent:
@@ -274,7 +274,7 @@ Entities:
     SpriteComponent:
       Color: [0.300000012, 0.800000012, 0.200000003, 1]
       TexturePath: SandboxProject\Assets\Textures\checkerboard.png
-      TextureHandle: 12277329504285560586
+      TextureHandle: 15630461467591112250
       IsSubTexture: false
   - Entity: 2337908497011953510
     TagComponent:
@@ -286,7 +286,7 @@ Entities:
     SpriteComponent:
       Color: [0.300000012, 0.800000012, 0.200000003, 1]
       TexturePath: SandboxProject\Assets\Textures\checkerboard.png
-      TextureHandle: 12277329504285560586
+      TextureHandle: 15630461467591112250
       IsSubTexture: false
   - Entity: 9011841751856930881
     TagComponent:
@@ -298,7 +298,7 @@ Entities:
     SpriteComponent:
       Color: [0.300000012, 0.800000012, 0.200000003, 1]
       TexturePath: SandboxProject\Assets\Textures\checkerboard.png
-      TextureHandle: 12277329504285560586
+      TextureHandle: 15630461467591112250
       IsSubTexture: false
   - Entity: 4995979692669093735
     TagComponent:
@@ -310,7 +310,7 @@ Entities:
     SpriteComponent:
       Color: [0.300000012, 0.800000012, 0.200000003, 1]
       TexturePath: SandboxProject\Assets\Textures\checkerboard.png
-      TextureHandle: 12277329504285560586
+      TextureHandle: 15630461467591112250
       IsSubTexture: false
   - Entity: 16434654484603458216
     TagComponent:
@@ -322,7 +322,7 @@ Entities:
     SpriteComponent:
       Color: [0.300000012, 0.800000012, 0.200000003, 1]
       TexturePath: SandboxProject\Assets\Textures\checkerboard.png
-      TextureHandle: 12277329504285560586
+      TextureHandle: 15630461467591112250
       IsSubTexture: false
   - Entity: 1026818155951083346
     TagComponent:
@@ -334,7 +334,7 @@ Entities:
     SpriteComponent:
       Color: [0.300000012, 0.800000012, 0.200000003, 1]
       TexturePath: SandboxProject\Assets\Textures\checkerboard.png
-      TextureHandle: 12277329504285560586
+      TextureHandle: 15630461467591112250
       IsSubTexture: false
   - Entity: 8242797743728358405
     TagComponent:
@@ -346,7 +346,7 @@ Entities:
     SpriteComponent:
       Color: [0.300000012, 0.800000012, 0.200000003, 1]
       TexturePath: SandboxProject\Assets\Textures\checkerboard.png
-      TextureHandle: 12277329504285560586
+      TextureHandle: 15630461467591112250
       IsSubTexture: false
   - Entity: 1085832615619981308
     TagComponent:
@@ -358,7 +358,7 @@ Entities:
     SpriteComponent:
       Color: [0.300000012, 0.800000012, 0.200000003, 1]
       TexturePath: SandboxProject\Assets\Textures\checkerboard.png
-      TextureHandle: 12277329504285560586
+      TextureHandle: 15630461467591112250
       IsSubTexture: false
   - Entity: 12988058419899531810
     TagComponent:
@@ -370,7 +370,7 @@ Entities:
     SpriteComponent:
       Color: [0.300000012, 0.800000012, 0.200000003, 1]
       TexturePath: SandboxProject\Assets\Textures\checkerboard.png
-      TextureHandle: 12277329504285560586
+      TextureHandle: 15630461467591112250
       IsSubTexture: false
   - Entity: 17843586960868536465
     TagComponent:
@@ -382,7 +382,7 @@ Entities:
     SpriteComponent:
       Color: [0.300000012, 0.800000012, 0.200000003, 1]
       TexturePath: SandboxProject\Assets\Textures\checkerboard.png
-      TextureHandle: 12277329504285560586
+      TextureHandle: 15630461467591112250
       IsSubTexture: false
   - Entity: 3257555449795123882
     TagComponent:
@@ -394,7 +394,7 @@ Entities:
     SpriteComponent:
       Color: [0.300000012, 0.800000012, 0.200000003, 1]
       TexturePath: SandboxProject\Assets\Textures\checkerboard.png
-      TextureHandle: 12277329504285560586
+      TextureHandle: 15630461467591112250
       IsSubTexture: false
   - Entity: 13037218342733848557
     TagComponent:
@@ -406,7 +406,7 @@ Entities:
     SpriteComponent:
       Color: [0.300000012, 0.800000012, 0.200000003, 1]
       TexturePath: SandboxProject\Assets\Textures\checkerboard.png
-      TextureHandle: 12277329504285560586
+      TextureHandle: 15630461467591112250
       IsSubTexture: false
   - Entity: 2724964778991335375
     TagComponent:
@@ -418,7 +418,7 @@ Entities:
     SpriteComponent:
       Color: [0.300000012, 0.800000012, 0.200000003, 1]
       TexturePath: SandboxProject\Assets\Textures\checkerboard.png
-      TextureHandle: 12277329504285560586
+      TextureHandle: 15630461467591112250
       IsSubTexture: false
   - Entity: 17862158680336323998
     TagComponent:
@@ -430,7 +430,7 @@ Entities:
     SpriteComponent:
       Color: [0.300000012, 0.800000012, 0.200000003, 1]
       TexturePath: SandboxProject\Assets\Textures\checkerboard.png
-      TextureHandle: 12277329504285560586
+      TextureHandle: 15630461467591112250
       IsSubTexture: false
   - Entity: 4202617046241840804
     TagComponent:
@@ -442,7 +442,7 @@ Entities:
     SpriteComponent:
       Color: [0.300000012, 0.800000012, 0.200000003, 1]
       TexturePath: SandboxProject\Assets\Textures\checkerboard.png
-      TextureHandle: 12277329504285560586
+      TextureHandle: 15630461467591112250
       IsSubTexture: false
   - Entity: 7286431262939561680
     TagComponent:
@@ -454,7 +454,7 @@ Entities:
     SpriteComponent:
       Color: [0.300000012, 0.800000012, 0.200000003, 1]
       TexturePath: SandboxProject\Assets\Textures\checkerboard.png
-      TextureHandle: 12277329504285560586
+      TextureHandle: 15630461467591112250
       IsSubTexture: false
   - Entity: 1651895690193043077
     TagComponent:
@@ -466,7 +466,7 @@ Entities:
     SpriteComponent:
       Color: [0.300000012, 0.800000012, 0.200000003, 1]
       TexturePath: SandboxProject\Assets\Textures\checkerboard.png
-      TextureHandle: 12277329504285560586
+      TextureHandle: 15630461467591112250
       IsSubTexture: false
   - Entity: 14976593028087473115
     TagComponent:
@@ -478,7 +478,7 @@ Entities:
     SpriteComponent:
       Color: [0.300000012, 0.800000012, 0.200000003, 1]
       TexturePath: SandboxProject\Assets\Textures\checkerboard.png
-      TextureHandle: 12277329504285560586
+      TextureHandle: 15630461467591112250
       IsSubTexture: false
   - Entity: 2843439952199734135
     TagComponent:
@@ -490,7 +490,7 @@ Entities:
     SpriteComponent:
       Color: [0.300000012, 0.800000012, 0.200000003, 1]
       TexturePath: SandboxProject\Assets\Textures\checkerboard.png
-      TextureHandle: 12277329504285560586
+      TextureHandle: 15630461467591112250
       IsSubTexture: false
   - Entity: 3879597338090460955
     TagComponent:
@@ -502,7 +502,7 @@ Entities:
     SpriteComponent:
       Color: [0.300000012, 0.800000012, 0.200000003, 1]
       TexturePath: SandboxProject\Assets\Textures\checkerboard.png
-      TextureHandle: 12277329504285560586
+      TextureHandle: 15630461467591112250
       IsSubTexture: false
   - Entity: 15483193988041849568
     TagComponent:
@@ -514,7 +514,7 @@ Entities:
     SpriteComponent:
       Color: [0.300000012, 0.800000012, 0.200000003, 1]
       TexturePath: SandboxProject\Assets\Textures\checkerboard.png
-      TextureHandle: 12277329504285560586
+      TextureHandle: 15630461467591112250
       IsSubTexture: false
   - Entity: 18171634351706833845
     TagComponent:
@@ -526,7 +526,7 @@ Entities:
     SpriteComponent:
       Color: [0.300000012, 0.800000012, 0.200000003, 1]
       TexturePath: SandboxProject\Assets\Textures\checkerboard.png
-      TextureHandle: 12277329504285560586
+      TextureHandle: 15630461467591112250
       IsSubTexture: false
   - Entity: 16497896626435013177
     TagComponent:
@@ -538,7 +538,7 @@ Entities:
     SpriteComponent:
       Color: [0.300000012, 0.800000012, 0.200000003, 1]
       TexturePath: SandboxProject\Assets\Textures\checkerboard.png
-      TextureHandle: 12277329504285560586
+      TextureHandle: 15630461467591112250
       IsSubTexture: false
   - Entity: 15690189295841205166
     TagComponent:
@@ -550,7 +550,7 @@ Entities:
     SpriteComponent:
       Color: [0.300000012, 0.800000012, 0.200000003, 1]
       TexturePath: SandboxProject\Assets\Textures\checkerboard.png
-      TextureHandle: 12277329504285560586
+      TextureHandle: 15630461467591112250
       IsSubTexture: false
   - Entity: 13836296876998522338
     TagComponent:
@@ -562,7 +562,7 @@ Entities:
     SpriteComponent:
       Color: [0.300000012, 0.800000012, 0.200000003, 1]
       TexturePath: SandboxProject\Assets\Textures\checkerboard.png
-      TextureHandle: 12277329504285560586
+      TextureHandle: 15630461467591112250
       IsSubTexture: false
   - Entity: 8252964389560532739
     TagComponent:
@@ -574,7 +574,7 @@ Entities:
     SpriteComponent:
       Color: [0.300000012, 0.800000012, 0.200000003, 1]
       TexturePath: SandboxProject\Assets\Textures\checkerboard.png
-      TextureHandle: 12277329504285560586
+      TextureHandle: 15630461467591112250
       IsSubTexture: false
   - Entity: 7173038686871849800
     TagComponent:
@@ -586,7 +586,7 @@ Entities:
     SpriteComponent:
       Color: [0.300000012, 0.800000012, 0.200000003, 1]
       TexturePath: SandboxProject\Assets\Textures\checkerboard.png
-      TextureHandle: 12277329504285560586
+      TextureHandle: 15630461467591112250
       IsSubTexture: false
   - Entity: 15982023079793933135
     TagComponent:
@@ -598,7 +598,7 @@ Entities:
     SpriteComponent:
       Color: [0.300000012, 0.800000012, 0.200000003, 1]
       TexturePath: SandboxProject\Assets\Textures\checkerboard.png
-      TextureHandle: 12277329504285560586
+      TextureHandle: 15630461467591112250
       IsSubTexture: false
   - Entity: 15618932435127134710
     TagComponent:
@@ -610,7 +610,7 @@ Entities:
     SpriteComponent:
       Color: [0.300000012, 0.800000012, 0.200000003, 1]
       TexturePath: SandboxProject\Assets\Textures\checkerboard.png
-      TextureHandle: 12277329504285560586
+      TextureHandle: 15630461467591112250
       IsSubTexture: false
   - Entity: 14331056354718821374
     TagComponent:
@@ -622,7 +622,7 @@ Entities:
     SpriteComponent:
       Color: [0.300000012, 0.800000012, 0.200000003, 1]
       TexturePath: SandboxProject\Assets\Textures\checkerboard.png
-      TextureHandle: 12277329504285560586
+      TextureHandle: 15630461467591112250
       IsSubTexture: false
   - Entity: 13075159747901886090
     TagComponent:
@@ -634,7 +634,7 @@ Entities:
     SpriteComponent:
       Color: [0.300000012, 0.800000012, 0.200000003, 1]
       TexturePath: SandboxProject\Assets\Textures\checkerboard.png
-      TextureHandle: 12277329504285560586
+      TextureHandle: 15630461467591112250
       IsSubTexture: false
   - Entity: 6559415480324653606
     TagComponent:
@@ -646,7 +646,7 @@ Entities:
     SpriteComponent:
       Color: [0.300000012, 0.800000012, 0.200000003, 1]
       TexturePath: SandboxProject\Assets\Textures\checkerboard.png
-      TextureHandle: 12277329504285560586
+      TextureHandle: 15630461467591112250
       IsSubTexture: false
   - Entity: 10315510563977284844
     TagComponent:
@@ -658,7 +658,7 @@ Entities:
     SpriteComponent:
       Color: [0.300000012, 0.800000012, 0.200000003, 1]
       TexturePath: SandboxProject\Assets\Textures\checkerboard.png
-      TextureHandle: 12277329504285560586
+      TextureHandle: 15630461467591112250
       IsSubTexture: false
   - Entity: 6996482297411178496
     TagComponent:
@@ -670,7 +670,7 @@ Entities:
     SpriteComponent:
       Color: [0.300000012, 0.800000012, 0.200000003, 1]
       TexturePath: SandboxProject\Assets\Textures\checkerboard.png
-      TextureHandle: 12277329504285560586
+      TextureHandle: 15630461467591112250
       IsSubTexture: false
   - Entity: 2868287637880409511
     TagComponent:
@@ -682,7 +682,7 @@ Entities:
     SpriteComponent:
       Color: [0.300000012, 0.800000012, 0.200000003, 1]
       TexturePath: SandboxProject\Assets\Textures\checkerboard.png
-      TextureHandle: 12277329504285560586
+      TextureHandle: 15630461467591112250
       IsSubTexture: false
   - Entity: 10106265672821622029
     TagComponent:
@@ -694,7 +694,7 @@ Entities:
     SpriteComponent:
       Color: [0.300000012, 0.800000012, 0.200000003, 1]
       TexturePath: SandboxProject\Assets\Textures\checkerboard.png
-      TextureHandle: 12277329504285560586
+      TextureHandle: 15630461467591112250
       IsSubTexture: false
   - Entity: 1260590065090002403
     TagComponent:
@@ -706,7 +706,7 @@ Entities:
     SpriteComponent:
       Color: [0.300000012, 0.800000012, 0.200000003, 1]
       TexturePath: SandboxProject\Assets\Textures\checkerboard.png
-      TextureHandle: 12277329504285560586
+      TextureHandle: 15630461467591112250
       IsSubTexture: false
   - Entity: 3595163011145395765
     TagComponent:
@@ -718,7 +718,7 @@ Entities:
     SpriteComponent:
       Color: [0.300000012, 0.800000012, 0.200000003, 1]
       TexturePath: SandboxProject\Assets\Textures\checkerboard.png
-      TextureHandle: 12277329504285560586
+      TextureHandle: 15630461467591112250
       IsSubTexture: false
   - Entity: 1453398319504423679
     TagComponent:
@@ -730,7 +730,7 @@ Entities:
     SpriteComponent:
       Color: [0.300000012, 0.800000012, 0.200000003, 1]
       TexturePath: SandboxProject\Assets\Textures\checkerboard.png
-      TextureHandle: 12277329504285560586
+      TextureHandle: 15630461467591112250
       IsSubTexture: false
   - Entity: 4621247086617862726
     TagComponent:
@@ -742,7 +742,7 @@ Entities:
     SpriteComponent:
       Color: [0.300000012, 0.800000012, 0.200000003, 1]
       TexturePath: SandboxProject\Assets\Textures\checkerboard.png
-      TextureHandle: 12277329504285560586
+      TextureHandle: 15630461467591112250
       IsSubTexture: false
   - Entity: 18404978727466535474
     TagComponent:
@@ -754,7 +754,7 @@ Entities:
     SpriteComponent:
       Color: [0.300000012, 0.800000012, 0.200000003, 1]
       TexturePath: SandboxProject\Assets\Textures\checkerboard.png
-      TextureHandle: 12277329504285560586
+      TextureHandle: 15630461467591112250
       IsSubTexture: false
   - Entity: 17229353159912367288
     TagComponent:
@@ -766,7 +766,7 @@ Entities:
     SpriteComponent:
       Color: [0.300000012, 0.800000012, 0.200000003, 1]
       TexturePath: SandboxProject\Assets\Textures\checkerboard.png
-      TextureHandle: 12277329504285560586
+      TextureHandle: 15630461467591112250
       IsSubTexture: false
   - Entity: 5635658862867048027
     TagComponent:
@@ -778,7 +778,7 @@ Entities:
     SpriteComponent:
       Color: [0.300000012, 0.800000012, 0.200000003, 1]
       TexturePath: SandboxProject\Assets\Textures\checkerboard.png
-      TextureHandle: 12277329504285560586
+      TextureHandle: 15630461467591112250
       IsSubTexture: false
   - Entity: 8635400174649172792
     TagComponent:
@@ -790,7 +790,7 @@ Entities:
     SpriteComponent:
       Color: [0.300000012, 0.800000012, 0.200000003, 1]
       TexturePath: SandboxProject\Assets\Textures\checkerboard.png
-      TextureHandle: 12277329504285560586
+      TextureHandle: 15630461467591112250
       IsSubTexture: false
   - Entity: 9510590672897573415
     TagComponent:
@@ -802,7 +802,7 @@ Entities:
     SpriteComponent:
       Color: [0.300000012, 0.800000012, 0.200000003, 1]
       TexturePath: SandboxProject\Assets\Textures\checkerboard.png
-      TextureHandle: 12277329504285560586
+      TextureHandle: 15630461467591112250
       IsSubTexture: false
   - Entity: 6092398296663808961
     TagComponent:
@@ -814,7 +814,7 @@ Entities:
     SpriteComponent:
       Color: [0.300000012, 0.800000012, 0.200000003, 1]
       TexturePath: SandboxProject\Assets\Textures\checkerboard.png
-      TextureHandle: 12277329504285560586
+      TextureHandle: 15630461467591112250
       IsSubTexture: false
   - Entity: 5945171994570882003
     TagComponent:
@@ -826,7 +826,7 @@ Entities:
     SpriteComponent:
       Color: [0.300000012, 0.800000012, 0.200000003, 1]
       TexturePath: SandboxProject\Assets\Textures\checkerboard.png
-      TextureHandle: 12277329504285560586
+      TextureHandle: 15630461467591112250
       IsSubTexture: false
   - Entity: 6240318252250905475
     TagComponent:
@@ -838,7 +838,7 @@ Entities:
     SpriteComponent:
       Color: [0.300000012, 0.800000012, 0.200000003, 1]
       TexturePath: SandboxProject\Assets\Textures\checkerboard.png
-      TextureHandle: 12277329504285560586
+      TextureHandle: 15630461467591112250
       IsSubTexture: false
   - Entity: 14903139408110511287
     TagComponent:
@@ -850,7 +850,7 @@ Entities:
     SpriteComponent:
       Color: [0.300000012, 0.800000012, 0.200000003, 1]
       TexturePath: SandboxProject\Assets\Textures\checkerboard.png
-      TextureHandle: 12277329504285560586
+      TextureHandle: 15630461467591112250
       IsSubTexture: false
   - Entity: 3014221707759370551
     TagComponent:
@@ -862,7 +862,7 @@ Entities:
     SpriteComponent:
       Color: [0.300000012, 0.800000012, 0.200000003, 1]
       TexturePath: SandboxProject\Assets\Textures\checkerboard.png
-      TextureHandle: 12277329504285560586
+      TextureHandle: 15630461467591112250
       IsSubTexture: false
   - Entity: 14511935509735923289
     TagComponent:
@@ -874,7 +874,7 @@ Entities:
     SpriteComponent:
       Color: [0.300000012, 0.800000012, 0.200000003, 1]
       TexturePath: SandboxProject\Assets\Textures\checkerboard.png
-      TextureHandle: 12277329504285560586
+      TextureHandle: 15630461467591112250
       IsSubTexture: false
   - Entity: 11958987296517517531
     TagComponent:
@@ -886,7 +886,7 @@ Entities:
     SpriteComponent:
       Color: [0.300000012, 0.800000012, 0.200000003, 1]
       TexturePath: SandboxProject\Assets\Textures\checkerboard.png
-      TextureHandle: 12277329504285560586
+      TextureHandle: 15630461467591112250
       IsSubTexture: false
   - Entity: 2122906201389537004
     TagComponent:
@@ -898,7 +898,7 @@ Entities:
     SpriteComponent:
       Color: [0.300000012, 0.800000012, 0.200000003, 1]
       TexturePath: SandboxProject\Assets\Textures\checkerboard.png
-      TextureHandle: 12277329504285560586
+      TextureHandle: 15630461467591112250
       IsSubTexture: false
   - Entity: 3691410515684179748
     TagComponent:
@@ -910,7 +910,7 @@ Entities:
     SpriteComponent:
       Color: [0.300000012, 0.800000012, 0.200000003, 1]
       TexturePath: SandboxProject\Assets\Textures\checkerboard.png
-      TextureHandle: 12277329504285560586
+      TextureHandle: 15630461467591112250
       IsSubTexture: false
   - Entity: 5158377790491552480
     TagComponent:
@@ -922,7 +922,7 @@ Entities:
     SpriteComponent:
       Color: [0.300000012, 0.800000012, 0.200000003, 1]
       TexturePath: SandboxProject\Assets\Textures\checkerboard.png
-      TextureHandle: 12277329504285560586
+      TextureHandle: 15630461467591112250
       IsSubTexture: false
   - Entity: 12906906797628557817
     TagComponent:
@@ -934,7 +934,7 @@ Entities:
     SpriteComponent:
       Color: [0.300000012, 0.800000012, 0.200000003, 1]
       TexturePath: SandboxProject\Assets\Textures\checkerboard.png
-      TextureHandle: 12277329504285560586
+      TextureHandle: 15630461467591112250
       IsSubTexture: false
   - Entity: 7444577486101504672
     TagComponent:
@@ -946,7 +946,7 @@ Entities:
     SpriteComponent:
       Color: [0.300000012, 0.800000012, 0.200000003, 1]
       TexturePath: SandboxProject\Assets\Textures\checkerboard.png
-      TextureHandle: 12277329504285560586
+      TextureHandle: 15630461467591112250
       IsSubTexture: false
   - Entity: 2157807225896114225
     TagComponent:
@@ -958,7 +958,7 @@ Entities:
     SpriteComponent:
       Color: [0.300000012, 0.800000012, 0.200000003, 1]
       TexturePath: SandboxProject\Assets\Textures\checkerboard.png
-      TextureHandle: 12277329504285560586
+      TextureHandle: 15630461467591112250
       IsSubTexture: false
   - Entity: 15480881827173311473
     TagComponent:
@@ -970,7 +970,7 @@ Entities:
     SpriteComponent:
       Color: [0.300000012, 0.800000012, 0.200000003, 1]
       TexturePath: SandboxProject\Assets\Textures\checkerboard.png
-      TextureHandle: 12277329504285560586
+      TextureHandle: 15630461467591112250
       IsSubTexture: false
   - Entity: 8991241537979500860
     TagComponent:
@@ -982,7 +982,7 @@ Entities:
     SpriteComponent:
       Color: [0.300000012, 0.800000012, 0.200000003, 1]
       TexturePath: SandboxProject\Assets\Textures\checkerboard.png
-      TextureHandle: 12277329504285560586
+      TextureHandle: 15630461467591112250
       IsSubTexture: false
   - Entity: 16209780980877905288
     TagComponent:
@@ -994,7 +994,7 @@ Entities:
     SpriteComponent:
       Color: [0.300000012, 0.800000012, 0.200000003, 1]
       TexturePath: SandboxProject\Assets\Textures\checkerboard.png
-      TextureHandle: 12277329504285560586
+      TextureHandle: 15630461467591112250
       IsSubTexture: false
   - Entity: 5946140579740499429
     TagComponent:
@@ -1006,7 +1006,7 @@ Entities:
     SpriteComponent:
       Color: [0.300000012, 0.800000012, 0.200000003, 1]
       TexturePath: SandboxProject\Assets\Textures\checkerboard.png
-      TextureHandle: 12277329504285560586
+      TextureHandle: 15630461467591112250
       IsSubTexture: false
   - Entity: 13743899120831992427
     TagComponent:
@@ -1018,7 +1018,7 @@ Entities:
     SpriteComponent:
       Color: [0.300000012, 0.800000012, 0.200000003, 1]
       TexturePath: SandboxProject\Assets\Textures\checkerboard.png
-      TextureHandle: 12277329504285560586
+      TextureHandle: 15630461467591112250
       IsSubTexture: false
   - Entity: 3537055597044706164
     TagComponent:
@@ -1030,7 +1030,7 @@ Entities:
     SpriteComponent:
       Color: [0.300000012, 0.800000012, 0.200000003, 1]
       TexturePath: SandboxProject\Assets\Textures\checkerboard.png
-      TextureHandle: 12277329504285560586
+      TextureHandle: 15630461467591112250
       IsSubTexture: false
   - Entity: 11963783065585090602
     TagComponent:
@@ -1042,7 +1042,7 @@ Entities:
     SpriteComponent:
       Color: [0.300000012, 0.800000012, 0.200000003, 1]
       TexturePath: SandboxProject\Assets\Textures\checkerboard.png
-      TextureHandle: 12277329504285560586
+      TextureHandle: 15630461467591112250
       IsSubTexture: false
   - Entity: 10034479783905245703
     TagComponent:
@@ -1054,7 +1054,7 @@ Entities:
     SpriteComponent:
       Color: [0.300000012, 0.800000012, 0.200000003, 1]
       TexturePath: SandboxProject\Assets\Textures\checkerboard.png
-      TextureHandle: 12277329504285560586
+      TextureHandle: 15630461467591112250
       IsSubTexture: false
   - Entity: 15896240477019856811
     TagComponent:
@@ -1066,7 +1066,7 @@ Entities:
     SpriteComponent:
       Color: [0.300000012, 0.800000012, 0.200000003, 1]
       TexturePath: SandboxProject\Assets\Textures\checkerboard.png
-      TextureHandle: 12277329504285560586
+      TextureHandle: 15630461467591112250
       IsSubTexture: false
   - Entity: 17203641984050848078
     TagComponent:
@@ -1078,7 +1078,7 @@ Entities:
     SpriteComponent:
       Color: [0.300000012, 0.800000012, 0.200000003, 1]
       TexturePath: SandboxProject\Assets\Textures\checkerboard.png
-      TextureHandle: 12277329504285560586
+      TextureHandle: 15630461467591112250
       IsSubTexture: false
   - Entity: 1533727614460833087
     TagComponent:
@@ -1090,7 +1090,7 @@ Entities:
     SpriteComponent:
       Color: [0.300000012, 0.800000012, 0.200000003, 1]
       TexturePath: SandboxProject\Assets\Textures\checkerboard.png
-      TextureHandle: 12277329504285560586
+      TextureHandle: 15630461467591112250
       IsSubTexture: false
   - Entity: 11473057786271050727
     TagComponent:
@@ -1102,7 +1102,7 @@ Entities:
     SpriteComponent:
       Color: [0.300000012, 0.800000012, 0.200000003, 1]
       TexturePath: SandboxProject\Assets\Textures\checkerboard.png
-      TextureHandle: 12277329504285560586
+      TextureHandle: 15630461467591112250
       IsSubTexture: false
   - Entity: 6698396157719185317
     TagComponent:
@@ -1114,7 +1114,7 @@ Entities:
     SpriteComponent:
       Color: [0.300000012, 0.800000012, 0.200000003, 1]
       TexturePath: SandboxProject\Assets\Textures\checkerboard.png
-      TextureHandle: 12277329504285560586
+      TextureHandle: 15630461467591112250
       IsSubTexture: false
   - Entity: 2688770364935318878
     TagComponent:
@@ -1126,7 +1126,7 @@ Entities:
     SpriteComponent:
       Color: [0.300000012, 0.800000012, 0.200000003, 1]
       TexturePath: SandboxProject\Assets\Textures\checkerboard.png
-      TextureHandle: 12277329504285560586
+      TextureHandle: 15630461467591112250
       IsSubTexture: false
   - Entity: 12356427959623187744
     TagComponent:
@@ -1138,7 +1138,7 @@ Entities:
     SpriteComponent:
       Color: [0.300000012, 0.800000012, 0.200000003, 1]
       TexturePath: SandboxProject\Assets\Textures\checkerboard.png
-      TextureHandle: 12277329504285560586
+      TextureHandle: 15630461467591112250
       IsSubTexture: false
   - Entity: 5572619456035346678
     TagComponent:
@@ -1150,7 +1150,7 @@ Entities:
     SpriteComponent:
       Color: [0.300000012, 0.800000012, 0.200000003, 1]
       TexturePath: SandboxProject\Assets\Textures\checkerboard.png
-      TextureHandle: 12277329504285560586
+      TextureHandle: 15630461467591112250
       IsSubTexture: false
   - Entity: 14748064064087922610
     TagComponent:
@@ -1162,7 +1162,7 @@ Entities:
     SpriteComponent:
       Color: [0.300000012, 0.800000012, 0.200000003, 1]
       TexturePath: SandboxProject\Assets\Textures\checkerboard.png
-      TextureHandle: 12277329504285560586
+      TextureHandle: 15630461467591112250
       IsSubTexture: false
   - Entity: 2899446735516430700
     TagComponent:
@@ -1174,7 +1174,7 @@ Entities:
     SpriteComponent:
       Color: [0.300000012, 0.800000012, 0.200000003, 1]
       TexturePath: SandboxProject\Assets\Textures\checkerboard.png
-      TextureHandle: 12277329504285560586
+      TextureHandle: 15630461467591112250
       IsSubTexture: false
   - Entity: 16388846592897230516
     TagComponent:
@@ -1186,7 +1186,7 @@ Entities:
     SpriteComponent:
       Color: [0.300000012, 0.800000012, 0.200000003, 1]
       TexturePath: SandboxProject\Assets\Textures\checkerboard.png
-      TextureHandle: 12277329504285560586
+      TextureHandle: 15630461467591112250
       IsSubTexture: false
   - Entity: 10578394720997214328
     TagComponent:

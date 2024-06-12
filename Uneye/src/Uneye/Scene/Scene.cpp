@@ -15,6 +15,8 @@
 #include <glm/glm.hpp>
 #include <chrono>
 
+#include "Uneye/Scene/SceneManager.h"
+
 // Box2D
 #include "box2d/b2_world.h"
 #include "box2d/b2_body.h"
@@ -203,17 +205,17 @@ namespace Uneye
 				}
 
 				m_Registry.view<NativeScriptComponent>().each([=](auto entity, auto& nsc)
+				{
+					// TODO: Move to Scene::OnScenePlay
+					if (!nsc.Instance)
 					{
-						// TODO: Move to Scene::OnScenePlay
-						if (!nsc.Instance)
-						{
-							nsc.Instance = nsc.InstantiateScript();
-							nsc.Instance->m_Entity = Entity{ entity, this };
-							nsc.Instance->OnCreate();
-						}
+						nsc.Instance = nsc.InstantiateScript();
+						nsc.Instance->m_Entity = Entity{ entity, this };
+						nsc.Instance->OnCreate();
+					}
 
-						nsc.Instance->OnUpdate(ts);
-					});
+					nsc.Instance->OnUpdate(ts);
+				});
 			}
 
 			// Physics
@@ -271,7 +273,6 @@ namespace Uneye
 				for (auto entity : group)
 				{
 					auto [transform, sprite] = group.get<TransformComponent, SpriteComponent>(entity);
-
 
 					Renderer2D::DrawSprite(transform.GetTransform(), sprite, (int)entity);
 				}
@@ -381,6 +382,7 @@ namespace Uneye
 
 	Entity Scene::FindFirstEntityByName(std::string_view name)
 	{
+
 		auto view = m_Registry.view<TagComponent>();
 		for (auto entity : view)
 		{
@@ -388,6 +390,7 @@ namespace Uneye
 			if (tc.Tag == name)
 				return Entity{ entity, this };
 		}
+
 
 		return {};
 	}

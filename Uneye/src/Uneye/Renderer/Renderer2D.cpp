@@ -154,7 +154,7 @@ namespace Uneye
 			{ ShaderDataType::Float4, "a_Color"	   },
 			{ ShaderDataType::Float2, "a_TexCoord" },
 			{ ShaderDataType::Float , "a_TexIndex" },
-			{ ShaderDataType::Int	, "a_EntityID" }
+			{ ShaderDataType::Int,	  "a_EntityID" },
 		});
 		s_Data.QuadVertexArray->AddVertexBuffer(s_Data.QuadVertexBuffer);
 
@@ -200,7 +200,7 @@ namespace Uneye
 			{ ShaderDataType::Float4, "a_Color"			 },
 			{ ShaderDataType::Float	, "a_Thickness"		 },
 			{ ShaderDataType::Float	, "a_Fade"			 },
-			{ ShaderDataType::Int	, "a_EntityID"		 }
+			{ ShaderDataType::Int,	  "a_EntityID" },
 		});
 		s_Data.CircleVertexArray->AddVertexBuffer(s_Data.CircleVertexBuffer);
 		s_Data.CircleVertexArray->SetIndexBuffer(quadIB); // Use quadIB
@@ -217,7 +217,7 @@ namespace Uneye
 		s_Data.LineVertexBuffer->SetLayout({
 			{ ShaderDataType::Float3, "a_Position"  },
 			{ ShaderDataType::Float4, "a_Color"	    },
-			{ ShaderDataType::Int	, "a_EntityID"	}
+			{ ShaderDataType::Int,	  "a_EntityID" },
 			});
 		s_Data.LineVertexArray->AddVertexBuffer(s_Data.LineVertexBuffer);
 		s_Data.LineVertexBufferBase = new LineVertex[s_Data.MaxVertices];
@@ -234,7 +234,7 @@ namespace Uneye
 			{ ShaderDataType::Float3, "a_Position"     },
 			{ ShaderDataType::Float4, "a_Color"        },
 			{ ShaderDataType::Float2, "a_TexCoord"     },
-			{ ShaderDataType::Int,    "a_EntityID"     }
+			{ ShaderDataType::Int,	  "a_EntityID" },
 			});
 		s_Data.TextVertexArray->AddVertexBuffer(s_Data.TextVertexBuffer);
 		s_Data.TextVertexArray->SetIndexBuffer(quadIB);
@@ -379,7 +379,7 @@ namespace Uneye
 	void Renderer2D::DrawQuad(const glm::vec2& p_position, const glm::vec2& p_size, 
 		const glm::vec4& p_color, const Ref<Texture2D>& p_texture, int p_entityID)
 	{
-		DrawQuad({ p_position.x, p_position.y, 0.0f }, p_size, p_color, p_texture);
+		DrawQuad({ p_position.x, p_position.y, 0.0f }, p_size, p_color, p_texture, p_entityID);
 	}
 
 	void Renderer2D::DrawQuad(const glm::vec3& p_position, const glm::vec2& p_size,
@@ -507,7 +507,7 @@ namespace Uneye
 		DrawQuad(glm::vec3(p_position, 0.0f), p_size, p_subtexture, p_color);
 	}
 
-	void Renderer2D::DrawQuad(const glm::vec3& p_position, const glm::vec2& p_size, 
+	void Renderer2D::DrawQuad(const glm::vec3& p_position, const glm::vec2& p_size,
 		const Ref<SubTexture2D>& p_subtexture, const glm::vec4& p_color, int p_entityID)
 	{
 		UNEYE_PROFILE_FUNCTION();
@@ -534,7 +534,7 @@ namespace Uneye
 		{
 			for (uint32_t i = 1; i < s_Data.TextureSlotIndex; i++)
 			{
-				if (*s_Data.TextureSlots[i].get() == *(p_subtexture->GetTexture().get()) )
+				if (*s_Data.TextureSlots[i].get() == *(p_subtexture->GetTexture().get()))
 				{
 					textureIndex = (float)i;
 					break;
@@ -599,7 +599,7 @@ namespace Uneye
 		{
 			for (uint32_t i = 1; i < s_Data.TextureSlotIndex; i++)
 			{
-				if (*(s_Data.TextureSlots[i].get()) == *(p_subtexture->GetTexture().get()) )
+				if (*(s_Data.TextureSlots[i].get()) == *(p_subtexture->GetTexture().get()))
 				{
 					textureIndex = (float)i;
 					break;
@@ -712,10 +712,10 @@ namespace Uneye
 		glm::vec3 p2 = glm::vec3(p_position.x + p_size.x * 0.5f, p_position.y + p_size.y * 0.5f, p_position.z);
 		glm::vec3 p3 = glm::vec3(p_position.x - p_size.x * 0.5f, p_position.y + p_size.y * 0.5f, p_position.z);
 
-		DrawLine(p0, p1,p_color, p_entityID);
-		DrawLine(p1, p2,p_color, p_entityID);
-		DrawLine(p2, p3,p_color, p_entityID);
-		DrawLine(p3, p0,p_color, p_entityID);
+		DrawLine(p0, p1, p_color, p_entityID);
+		DrawLine(p1, p2, p_color, p_entityID);
+		DrawLine(p2, p3, p_color, p_entityID);
+		DrawLine(p3, p0, p_color, p_entityID);
 	}
 
 	void Renderer2D::DrawRect(const glm::mat4& p_transform, const glm::vec4& p_color, int p_entityID)
@@ -847,7 +847,7 @@ namespace Uneye
 		}
 	}
 
-	void Renderer2D::DrawString(const std::string& string, const glm::mat4& p_transform, 
+	void Renderer2D::DrawString(const std::string& string, const glm::mat4& p_transform,
 		const TextComponent& component, int p_entityID)
 	{
 		DrawString(string, component.FontAsset, p_transform, { component.Color, component.Kerning, component.LineSpacing }, p_entityID);

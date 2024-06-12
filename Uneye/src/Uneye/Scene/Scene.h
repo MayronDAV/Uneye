@@ -26,6 +26,7 @@ namespace Uneye
 	{
 		public:
 			Scene();
+			Scene(const Scene&) = default;
 			~Scene();
 			
 			static Ref<Scene> Copy(Ref<Scene> other);

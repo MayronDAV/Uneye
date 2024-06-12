@@ -22,7 +22,9 @@ namespace Uneye
 
 		Ref<Scene> scene = CreateRef<Scene>();
 		SceneSerializer serializer(scene);
-		serializer.Deserialize(path);
+		if (!serializer.Deserialize(path))
+			return nullptr;
+
 		return scene;
 	}
 

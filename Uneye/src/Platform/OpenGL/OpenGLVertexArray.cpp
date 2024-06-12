@@ -15,6 +15,8 @@ namespace Uneye
 			case Uneye::ShaderDataType::Float4:		return GL_FLOAT;
 			case Uneye::ShaderDataType::Mat3:		return GL_FLOAT;
 			case Uneye::ShaderDataType::Mat4:		return GL_FLOAT;
+			case Uneye::ShaderDataType::UInt32:		return GL_UNSIGNED_INT;
+			case Uneye::ShaderDataType::UInt64:		return GL_UNSIGNED_INT64_ARB;
 			case Uneye::ShaderDataType::Int:		return GL_INT;
 			case Uneye::ShaderDataType::Int2:		return GL_INT;
 			case Uneye::ShaderDataType::Int3:		return GL_INT;
@@ -83,6 +85,21 @@ namespace Uneye
 				m_VertexBufferIndex++;
 				break;
 			}
+			case ShaderDataType::UInt32:
+				glEnableVertexAttribArray(m_VertexBufferIndex);
+				glVertexAttribPointer(m_VertexBufferIndex,
+					element.GetComponentCount(),
+					ShaderDataTypeToOpenGLBaseType(element.Type),
+					element.Normalized ? GL_TRUE : GL_FALSE,
+					layout.GetStride(),
+					(const void*)(const uint64_t)element.Offset);
+				m_VertexBufferIndex++;
+				break;
+			case ShaderDataType::UInt64:
+				glEnableVertexAttribArray(m_VertexBufferIndex);
+				glVertexAttribL1ui64ARB(m_VertexBufferIndex, (GLuint64EXT)element.Offset);
+				break;
+
 			case ShaderDataType::Int:
 			case ShaderDataType::Int2:
 			case ShaderDataType::Int3:

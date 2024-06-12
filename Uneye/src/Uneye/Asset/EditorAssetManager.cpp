@@ -189,6 +189,7 @@ namespace Uneye
 				// import failed
 				UNEYE_CORE_ERROR("EditorAssetManager::GetAsset - asset import failed!");
 			}
+			asset->Handle = p_handle;
 			m_LoadedAssets[p_handle] = asset;
 		}
 		// 3. return asset

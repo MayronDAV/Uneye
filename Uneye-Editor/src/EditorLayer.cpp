@@ -14,6 +14,8 @@
 #include "Uneye/Asset/TextureImporter.h"
 #include "Uneye/Asset/SceneImporter.h"
 
+#include "Uneye/Scene/SceneManager.h"
+
 #include <imgui/imgui.h>
 #include <ImGuizmo.h>
 
@@ -46,16 +48,14 @@ namespace Uneye
 		FramebufferSpecification fbspec;
 		fbspec.Attachments = {
 			FramebufferTextureFormat::RGBA8, 
-			FramebufferTextureFormat::RED_INTEGER,
-			FramebufferTextureFormat::Depth
+			//FramebufferTextureFormat::RED_INTEGER, // ID
+			FramebufferTextureFormat::Depth,
 		};
 		fbspec.Width = 800;
 		fbspec.Height = 600;
 		m_Framebuffer = Framebuffer::Create(fbspec);
 
-
-		m_EditorScene = CreateRef<Scene>();
-		m_ActiveScene = m_EditorScene;
+		SceneManager::Init();
 
 		// Move this to another place
 		bool useCommandLineArgs = false;
@@ -80,29 +80,36 @@ namespace Uneye
 				Application::Get().Close();
 		}
 
-		m_EditorCamera = EditorCamera(45.0f, 1.677, 0.1f, 1000.0f);
-
 		Renderer2D::SetLineWidth(4.0f);
 
 
-		m_SceneHierarchyPanel.SetContext(m_ActiveScene);
+		//m_SceneHierarchyPanel.SetContext(SceneManager::GetActiveScene());
 
 	}
 
 	void EditorLayer::OnDetach()
 	{
 		UNEYE_PROFILE_FUNCTION();
+
+		SceneManager::Shutdown();
 	}
 
-
+	bool first = true;
 	void EditorLayer::OnUpdate(Timestep ts)
 	{
 		UNEYE_PROFILE_FUNCTION();
 
-		m_ActiveScene->OnViewportResize((uint32_t)m_ViewportSize.x, (uint32_t)m_ViewportSize.y);
+		if (first)
+		{
+			std::filesystem::path path = (Project::GetActiveAssetDirectory() / "Scenes/PinkCubeContainer.uyscene");
+			SceneManager::LoadScene(path.string(), LoadMode::Additive);
 
-		if (m_SceneState != SceneState::Play)
-			m_EditorCamera.SetViewportSize(m_ViewportSize.x, m_ViewportSize.y);
+			// TODO:
+			//m_SceneHierarchyPanel.SetContext(  SceneManager::GetEditorScene());
+			first = false;
+		}
+
+		SceneManager::Resize((uint32_t)m_ViewportSize.x, (uint32_t)m_ViewportSize.y);
 
 		if (Uneye::FramebufferSpecification spec = m_Framebuffer->GetSpecification();
 			m_ViewportSize.x > 0.0f && m_ViewportSize.y > 0.0f && // zero sized is invalid
@@ -116,33 +123,11 @@ namespace Uneye
 		//RenderCommand::Clear(glm::vec4(1.0f));
 		RenderCommand::Clear(glm::vec4(0.1f, 0.1f, 0.1f, 1.0f));
 
-		m_Framebuffer->ClearAttachment(1, -1);
+		//m_Framebuffer->ClearAttachment(1, -1);
 
-		switch (m_SceneState)
-		{
-			case SceneState::Edit:
-			{
+		SceneManager::OnUpdate(ts);
 
-				m_EditorCamera.OnUpdate(ts);
-
-				m_ActiveScene->OnUpdateEditor(ts, m_EditorCamera);
-				break;
-			}
-			case SceneState::Simulate:
-			{
-
-				m_EditorCamera.OnUpdate(ts);
-
-				m_ActiveScene->OnUpdateSimulation(ts, m_EditorCamera);
-				break;
-			}
-			case SceneState::Play:
-			{
-				m_ActiveScene->OnUpdateRuntime(ts);
-				break;
-			}
-		}
-
+#if 0
 		auto [mx, my] = ImGui::GetMousePos();
 		mx -= m_ViewportBounds[0].x;
 		my -= m_ViewportBounds[0].y;
@@ -155,9 +140,13 @@ namespace Uneye
 		if (mouseX >= 0 && mouseY >= 0 &&
 			mouseX < (int)viewportSize.x && mouseY < (int)viewportSize.y)
 		{
-			int pixelData = m_Framebuffer->ReadPixel(1, mouseX, mouseY);
-			m_HoveredEntity = pixelData == -1 ? Entity() : Entity((entt::entity)pixelData, m_ActiveScene.get());
+			int enttID = m_Framebuffer->ReadPixel(1, mouseX, mouseY);
+
+			UNEYE_CORE_INFO("Entity ID: {}", enttID);
+
+			m_HoveredEntity = enttID == -1 ? Entity() : Entity((entt::entity)enttID, SceneManager::GetEditorScene().get());
 		}
+#endif
 
 		OnOverlayRender();
 
@@ -166,10 +155,7 @@ namespace Uneye
 
 	void EditorLayer::OnEvent(Event& e)
 	{
-		if (m_SceneState == SceneState::Edit)
-		{
-			m_EditorCamera.OnEvent(e);
-		}
+		SceneManager::OnEditorCameraEvent(e);
 
 		EventDispatcher dispatcher(e);
 		dispatcher.Dispatch<KeyPressedEvent>(UNEYE_BIND_EVENT_FN(EditorLayer::OnKeyPressed));
@@ -236,13 +222,13 @@ namespace Uneye
 				ImGui::Separator();
 
 				if (ImGui::MenuItem("New", "Ctrl+N"))
-					NewScene();
+					SceneManager::NewScene();
 
 				if (ImGui::MenuItem("Save", "Ctrl+S"))
-					SaveScene();
+					SceneManager::SaveScene();
 
-				if (ImGui::MenuItem("Save As...", "Ctrl+Shift+S"))
-					SaveSceneAs();
+				//if (ImGui::MenuItem("Save As...", "Ctrl+Shift+S"))
+					//SaveSceneAs();
 
 				ImGui::Separator();
 
@@ -255,7 +241,7 @@ namespace Uneye
 			{
 
 				if (ImGui::MenuItem("Set Default Scene"))
-					Project::SetStartScene(AssetManager::ImportAsset(m_EditScenePath));
+					Project::SetStartScene(AssetManager::ImportAsset(SceneManager::GetCurrentScenePath()));
 
 				ImGui::Separator();
 
@@ -296,7 +282,7 @@ namespace Uneye
 		}
 
 		m_AssetRegistryPanel.OnImGuiRender();
-		m_SceneHierarchyPanel.OnImGuiRender();
+		//m_SceneHierarchyPanel.OnImGuiRender();
 		m_ContentBrowserPanel->OnImGuiRender();
 		m_LogPanel.OnImGuiRender();
 
@@ -329,12 +315,13 @@ namespace Uneye
 			{
 				const wchar_t* path = (const wchar_t*)payload->Data;
 				std::filesystem::path filepath = Project::GetActiveAssetFileSystemPath(path);
-				if (filepath.extension() == ".uyscene") OpenScene(AssetManager::ImportAsset(filepath));
+				if (filepath.extension() == ".uyscene") SceneManager::LoadScene(filepath.string());
 			}
 			ImGui::EndDragDropTarget();
 		}
 
 		// Gizmos
+#if 0 
 		Entity selectedEntity = m_SceneHierarchyPanel.GetSelectedEntity();
 		if (selectedEntity && m_GuizmoType != -1)
 		{
@@ -351,8 +338,9 @@ namespace Uneye
 			//glm::mat4 cameraView = glm::inverse(cameraEntity.GetComponent<TransformComponent>().GetTransform());
 
 			//Editor Camera
-			const glm::mat4& cameraProjection = m_EditorCamera.GetProjection();
-			glm::mat4 cameraView = m_EditorCamera.GetViewMatrix();
+			auto editorCamera = SceneManager::GetEditorCamera();
+			const glm::mat4& cameraProjection = editorCamera.GetProjection();
+			glm::mat4 cameraView = editorCamera.GetViewMatrix();
 
 
 			// Entity
@@ -386,7 +374,7 @@ namespace Uneye
 			}
 
 		}
-		
+#endif
 		
 		ImGui::End();
 		ImGui::PopStyleVar();
@@ -420,7 +408,7 @@ namespace Uneye
 
 		ImGui::Begin("##toolbar", nullptr, ImGuiWindowFlags_NoDecoration | ImGuiWindowFlags_NoScrollbar | ImGuiWindowFlags_NoScrollWithMouse);
 
-		bool toolbarEnabled = (bool)m_ActiveScene;
+		bool toolbarEnabled = (bool)SceneManager::GetActiveScene();
 
 		ImVec4 tintColor = ImVec4(1, 1, 1, 1);
 		if (!toolbarEnabled)
@@ -429,19 +417,17 @@ namespace Uneye
 		float size = ImGui::GetWindowHeight() - 4.0f;
 		ImGui::SetCursorPosX((ImGui::GetWindowContentRegionMax().x * 0.5f) - (size * 0.5f));
 
-		bool hasPlayButton = m_SceneState == SceneState::Edit || m_SceneState == SceneState::Play;
-		bool hasSimulateButton = m_SceneState == SceneState::Edit || m_SceneState == SceneState::Simulate;
-		bool hasPauseButton = m_SceneState != SceneState::Edit;
+		auto sceneState = SceneManager::GetState();
+		bool hasPlayButton = sceneState == SceneState::Edit || sceneState == SceneState::Play;
+		bool hasSimulateButton = sceneState == SceneState::Edit || sceneState == SceneState::Simulate;
+		bool hasPauseButton = sceneState != SceneState::Edit;
 
 		if (hasPlayButton)
 		{
-			Ref<Texture2D> icon = (m_SceneState == SceneState::Edit || m_SceneState == SceneState::Simulate) ? m_IconPlay : m_IconStop;
+			Ref<Texture2D> icon = (sceneState == SceneState::Edit || sceneState == SceneState::Simulate) ? m_IconPlay : m_IconStop;
 			if (ImGui::ImageButton((ImTextureID)(uint64_t)icon->GetRendererID(), ImVec2(size, size), ImVec2(0, 0), ImVec2(1, 1), 0, ImVec4(0.0f, 0.0f, 0.0f, 0.0f), tintColor) && toolbarEnabled)
 			{
-				if (m_SceneState == SceneState::Edit || m_SceneState == SceneState::Simulate)
-					OnScenePlay();
-				else if (m_SceneState == SceneState::Play)
-					OnSceneStop();
+				SceneManager::Play();
 			}
 		}
 
@@ -450,24 +436,22 @@ namespace Uneye
 			if (hasPlayButton)
 				ImGui::SameLine();
 
-			Ref<Texture2D> icon = (m_SceneState == SceneState::Edit || m_SceneState == SceneState::Play) ? m_IconSimulate : m_IconStop;
+			Ref<Texture2D> icon = (sceneState == SceneState::Edit || sceneState == SceneState::Play) ? m_IconSimulate : m_IconStop;
 			if (ImGui::ImageButton((ImTextureID)(uint64_t)icon->GetRendererID(), ImVec2(size, size), ImVec2(0, 0), ImVec2(1, 1), 0, ImVec4(0.0f, 0.0f, 0.0f, 0.0f), tintColor) && toolbarEnabled)
 			{
-				if (m_SceneState == SceneState::Edit || m_SceneState == SceneState::Play)
-					OnSceneSimulate();
-				else if (m_SceneState == SceneState::Simulate)
-					OnSceneStop();
+				SceneManager::Simulate();
 			}
 		}
 		if (hasPauseButton)
 		{
-			bool isPaused = m_ActiveScene->IsPaused();
+			auto activeScene = SceneManager::GetActiveScene();
+			bool isPaused = activeScene->IsPaused();
 			ImGui::SameLine();
 			{
 				Ref<Texture2D> icon = m_IconPause;
 				if (ImGui::ImageButton((ImTextureID)(uint64_t)icon->GetRendererID(), ImVec2(size, size), ImVec2(0, 0), ImVec2(1, 1), 0, ImVec4(0.0f, 0.0f, 0.0f, 0.0f), tintColor) && toolbarEnabled)
 				{
-					m_ActiveScene->SetPaused(!isPaused);
+					SceneManager::Pause(!isPaused);
 				}
 			}
 
@@ -477,11 +461,10 @@ namespace Uneye
 				ImGui::SameLine();
 				{
 					Ref<Texture2D> icon = m_IconStep;
-					bool isPaused = m_ActiveScene->IsPaused();
+					bool isPaused = activeScene->IsPaused();
 					if (ImGui::ImageButton((ImTextureID)(uint64_t)icon->GetRendererID(), ImVec2(size, size), ImVec2(0, 0), ImVec2(1, 1), 0, ImVec4(0.0f, 0.0f, 0.0f, 0.0f), tintColor) && toolbarEnabled)
 					{
-						// maybe make it adjustable
-						m_ActiveScene->Step(60);
+						SceneManager::Step(60);
 					}
 				}
 			}
@@ -503,7 +486,7 @@ namespace Uneye
 			case Key::N:
 			{
 				if (control)
-					NewScene();
+					SceneManager::NewScene();
 
 				break;
 			}
@@ -516,11 +499,8 @@ namespace Uneye
 			}
 			case Key::S:
 			{
-				if (control && shift)
-					SaveSceneAs();
-
 				if (control)
-					SaveScene();
+					SceneManager::SaveScene();
 
 				break;
 			}
@@ -559,8 +539,8 @@ namespace Uneye
 			{
 				if (control)
 				{
-					if (m_SceneState != SceneState::Edit)
-						OnSceneStop();
+					if (SceneManager::GetState() != SceneState::Edit)
+						SceneManager::Stop();
 
 					ScriptEngine::ReloadAssembly();
 				}
@@ -586,7 +566,9 @@ namespace Uneye
 		if (e.GetMouseButton() == Mouse::Button_Left)
 		{
 			if (m_ViewportHovered && !ImGuizmo::IsOver() && !Input::IsKeyPressed(Key::LeftAlt))
-				m_SceneHierarchyPanel.SetSelectedEntity(m_HoveredEntity);
+			{
+				//m_SceneHierarchyPanel.SetSelectedEntity(m_HoveredEntity);
+			}
 		}
 		return false;
 	}
@@ -602,9 +584,11 @@ namespace Uneye
 
 	void EditorLayer::OnOverlayRender()
 	{
-		if (m_SceneState == SceneState::Play)
+		auto sceneState = SceneManager::GetState();
+		auto activeScene = SceneManager::GetActiveScene();
+		if (sceneState == SceneState::Play)
 		{
-			Entity camera = m_ActiveScene->GetPrimaryCameraEntity();
+			Entity camera = activeScene->GetPrimaryCameraEntity();
 			if (!camera)
 				return;
 
@@ -612,14 +596,14 @@ namespace Uneye
 		}
 		else
 		{
-			Renderer2D::BeginScene(m_EditorCamera);
+			Renderer2D::BeginScene(SceneManager::GetEditorCamera());
 		}
 
 		if (m_ShowPhysicsColliders)
 		{
 			// Box Colliders
 			{
-				auto view = m_ActiveScene->GetAllEntitiesWith<TransformComponent, BoxCollider2DComponent>();
+				auto view = activeScene->GetAllEntitiesWith<TransformComponent, BoxCollider2DComponent>();
 				for (auto entity : view)
 				{
 					auto [tc, bc2d] = view.get<TransformComponent, BoxCollider2DComponent>(entity);
@@ -637,7 +621,7 @@ namespace Uneye
 
 			// Circle Colliders
 			{
-				auto view = m_ActiveScene->GetAllEntitiesWith<TransformComponent, CircleCollider2DComponent>();
+				auto view = activeScene->GetAllEntitiesWith<TransformComponent, CircleCollider2DComponent>();
 				for (auto entity : view)
 				{
 					auto [tc, cc2d] = view.get<TransformComponent, CircleCollider2DComponent>(entity);
@@ -653,12 +637,11 @@ namespace Uneye
 			}
 		}
 
-		if (Entity selectedEntity = m_SceneHierarchyPanel.GetSelectedEntity()) {
-			TransformComponent transform = selectedEntity.GetComponent<TransformComponent>();
+		//if (Entity selectedEntity = m_SceneHierarchyPanel.GetSelectedEntity()) {
+		//	TransformComponent transform = selectedEntity.GetComponent<TransformComponent>();
 
-			//Red
-			Renderer2D::DrawRect(transform.GetTransform(), glm::vec4(1.0f, 0.5f, 0.0f, 1.0f));
-		}
+		//	Renderer2D::DrawRect(transform.GetTransform(), glm::vec4(1.0f, 0.5f, 0.0f, 1.0f));
+		//}
 
 
 		Renderer2D::EndScene();
@@ -666,11 +649,11 @@ namespace Uneye
 
 	void EditorLayer::ReloadAssembly()
 	{
-		if (m_SceneState != SceneState::Edit)
+		if (SceneManager::GetState() != SceneState::Edit)
 		{
 			UNEYE_CORE_ERROR("Scene is running!!!");
 			UNEYE_CORE_WARN("Stopping the scene... Remember to stop the scene before reloading assembly");
-			OnSceneStop();
+			SceneManager::Stop();
 		}
 
 		// TODO: a way to reload assembly while scene is running.
@@ -701,7 +684,7 @@ namespace Uneye
 
 			AssetHandle startScene = Project::GetActive()->GetConfig().StartScene;
 			if (startScene)
-				OpenScene(startScene);
+				SceneManager::LoadScene(startScene);
 			m_ContentBrowserPanel = CreateScope<ContentBrowserPanel>(Project::GetActive());
 		}
 	}
@@ -711,7 +694,7 @@ namespace Uneye
 		Project::SaveActive(Project::GetActiveProjectFile());
 	}
 
-
+#if 0
 	void EditorLayer::NewScene()
 	{
 		m_ActiveScene = CreateRef<Scene>();
@@ -828,32 +811,32 @@ namespace Uneye
 
 		m_SceneHierarchyPanel.SetContext(m_ActiveScene);
 	}
-
+#endif
 
 	void EditorLayer::OnDuplicateEntity()
 	{
-		if (m_SceneState != SceneState::Edit)
+		if (SceneManager::GetState() != SceneState::Edit)
 			return;
 
-		Entity selectedEntt = m_SceneHierarchyPanel.GetSelectedEntity();
-		if (selectedEntt)
-		{
-			Entity newEntity = m_EditorScene->DuplicateEntity(selectedEntt);
-			m_SceneHierarchyPanel.SetSelectedEntity(newEntity);
-		}
+		//Entity selectedEntt = m_SceneHierarchyPanel.GetSelectedEntity();
+		//if (selectedEntt)
+		//{
+		//	Entity newEntity = SceneManager::GetEditorScene()->DuplicateEntity(selectedEntt);
+		//	m_SceneHierarchyPanel.SetSelectedEntity(newEntity);
+		//}
 	}
 
 	void EditorLayer::OnDestroyEntity()
 	{
-		if (m_SceneState != SceneState::Edit)
+		if (SceneManager::GetState() != SceneState::Edit)
 			return;
 
-		Entity selectedEntt = m_SceneHierarchyPanel.GetSelectedEntity();
-		if (selectedEntt)
-		{
-			m_SceneHierarchyPanel.SetSelectedEntity({});
-			m_EditorScene->DestroyEntity(selectedEntt);
-		}
+		//Entity selectedEntt = m_SceneHierarchyPanel.GetSelectedEntity();
+		//if (selectedEntt)
+		//{
+		//	m_SceneHierarchyPanel.SetSelectedEntity({});
+		//	SceneManager::GetEditorScene()->DestroyEntity(selectedEntt);
+		//}
 	}
 
 }

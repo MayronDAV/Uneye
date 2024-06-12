@@ -10,7 +10,7 @@ Entities:
     SpriteComponent:
       Color: [0.876447856, 0, 0.834712803, 1]
       TexturePath: C:\dev\Uneye\Uneye-Editor\SandboxProject\Assets\Textures\checkerboard.png
-      TextureHandle: 12277329504285560586
+      TextureHandle: 15630461467591112250
       IsSubTexture: false
   - Entity: 6760434249954998043
     TagComponent:
@@ -48,7 +48,7 @@ Entities:
     SpriteComponent:
       Color: [0.54842025, 0, 0.586872578, 1]
       TexturePath: C:\dev\Uneye\Uneye-Editor\SandboxProject\Assets\Textures\checkerboard.png
-      TextureHandle: 12277329504285560586
+      TextureHandle: 15630461467591112250
       IsSubTexture: false
   - Entity: 13635232174674205793
     TagComponent:
@@ -60,5 +60,5 @@ Entities:
     SpriteComponent:
       Color: [1, 0, 0.949807167, 1]
       TexturePath: C:\dev\Uneye\Uneye-Editor\SandboxProject\Assets\Textures\checkerboard.png
-      TextureHandle: 12277329504285560586
+      TextureHandle: 15630461467591112250
       IsSubTexture: false

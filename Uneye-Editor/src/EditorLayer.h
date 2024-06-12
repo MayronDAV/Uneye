@@ -13,6 +13,8 @@
 
 #include "Uneye/Renderer/EditorCamera.h"
 
+#include "Uneye/Scene/SceneManager.h"
+
 
 
 namespace Uneye
@@ -44,20 +46,6 @@ namespace Uneye
 			void OpenProject(const std::filesystem::path& path);
 			void SaveProject();
 
-			void NewScene();
-			void OpenScene();
-			void OpenScene(AssetHandle handle);
-			void SaveScene();
-			void SaveSceneAs();
-
-			void SerializeScene(Ref<Scene> scene, const std::filesystem::path& path);
-
-			void OnScenePlay();
-			void OnScenePause();
-			void OnSceneStop();
-
-			void OnSceneSimulate();
-
 			void OnDuplicateEntity();
 			void OnDestroyEntity();
 
@@ -73,11 +61,6 @@ namespace Uneye
 
 			Ref<Framebuffer> m_Framebuffer;
 
-			Ref<Scene> m_ActiveScene;
-			Ref<Scene> m_EditorScene;
-			std::filesystem::path m_EditScenePath;
-
-			EditorCamera m_EditorCamera;
 
 			bool m_ViewportFocused = false, m_ViewportHovered = false;
 			glm::vec2 m_ViewportSize{ 0.0f, 0.0f };
@@ -86,12 +69,6 @@ namespace Uneye
 			int m_GuizmoType = -1;
 
 			bool m_ShowPhysicsColliders = false;
-
-			enum class SceneState
-			{
-				Edit = 0, Play = 1, Simulate = 2
-			};
-			SceneState m_SceneState = SceneState::Edit;
 
 			// Panels
 			AssetRegistryPanel m_AssetRegistryPanel;

@@ -17,6 +17,7 @@ namespace Uneye
 	{
 		public:
 			virtual Ref<Asset> GetAsset(AssetHandle p_handle) override;
+			virtual const std::pair<AssetHandle, AssetMetadata>& GetHandleByPath(const std::filesystem::path& p_filepath) const override { return s_FilePathAssetRegistry[p_filepath]; }
 
 			virtual bool IsAssetHandleValid(AssetHandle p_handle) const override;
 			virtual bool IsAssetLoaded(AssetHandle p_handle) const override;

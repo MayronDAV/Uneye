@@ -17,6 +17,11 @@ namespace Uneye
 				return std::static_pointer_cast<T>(asset);
 			}
 
+			static const std::pair<AssetHandle, AssetMetadata>& GetHandleByPath(const std::filesystem::path& p_filepath)
+			{
+				return Project::GetActive()->GetAssetManager()->GetHandleByPath(p_filepath);
+			}
+
 			static std::map<AssetHandle, AssetMetadata> GetAssetRegistry()
 			{
 				return Project::GetActive()->GetEditorAssetManager()->GetAssetRegistry();

@@ -40,7 +40,7 @@ namespace Uneye
 					if (it == assetRegistry.end())
 						break;
 
-					auto asset = *it;
+					std::pair<AssetHandle, AssetMetadata> asset = *it;
 
 					ImGui::TableNextRow();
 					ImGui::TableSetColumnIndex(0);
@@ -99,7 +99,8 @@ namespace Uneye
 				{
 					for (const auto& id : assetsRemoved)
 					{
-						AssetManager::RemoveAsset(id);
+						if (AssetManager::IsAssetHandleValid(id))
+							AssetManager::RemoveAsset(id);
 					}
 
 					assetsRemoved.clear();

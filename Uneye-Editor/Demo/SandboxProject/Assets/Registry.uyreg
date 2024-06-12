@@ -32,15 +32,15 @@ AssetRegistry:
   - Handle: 7870426183788971007
     FilePath: Assets/Textures/RPGpack_sheet.png
     Type: AssetType::Texture2D
+  - Handle: 8625201426625394623
+    FilePath: Assets/Textures/container.jpg
+    Type: AssetType::Texture2D
   - Handle: 8799705737014580822
     FilePath: Assets/Textures/RPGpack_sheet_2X.png
-    Type: AssetType::Texture2D
-  - Handle: 12277329504285560586
-    FilePath: Assets/Textures/checkerboard.png
     Type: AssetType::Texture2D
   - Handle: 15285725947439956019
     FilePath: Assets/Scenes/Teste1.uyscene
     Type: AssetType::Scene
-  - Handle: 16871563235402725797
-    FilePath: Assets/Textures/container.jpg
+  - Handle: 15630461467591112250
+    FilePath: Assets/Textures/checkerboard.png
     Type: AssetType::Texture2D

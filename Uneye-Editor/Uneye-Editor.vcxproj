@@ -27,6 +27,7 @@
     <UseDebugLibraries>true</UseDebugLibraries>
     <CharacterSet>Unicode</CharacterSet>
     <PlatformToolset>v143</PlatformToolset>
+    <EnableASAN>false</EnableASAN>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
@@ -148,11 +149,13 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="src\EditorLayer.h" />
+    <ClInclude Include="src\Panels.h" />
     <ClInclude Include="src\Panels\AssetImporterPanel.h" />
     <ClInclude Include="src\Panels\AssetRegistryPanel.h" />
     <ClInclude Include="src\Panels\ContentBrowserPanel.h" />
     <ClInclude Include="src\Panels\LogPanel.h" />
     <ClInclude Include="src\Panels\Project\ProjectPanelLayer.h" />
+    <ClInclude Include="src\Panels\PropertiesPanel.h" />
     <ClInclude Include="src\Panels\SceneHierarchyPanel.h" />
     <ClInclude Include="src\Panels\Thumbnail\ThumbnailCache.h" />
     <ClInclude Include="src\UI\UI.h" />
@@ -164,6 +167,7 @@
     <ClCompile Include="src\Panels\ContentBrowserPanel.cpp" />
     <ClCompile Include="src\Panels\LogPanel.cpp" />
     <ClCompile Include="src\Panels\Project\ProjectPanelLayer.cpp" />
+    <ClCompile Include="src\Panels\PropertiesPanel.cpp" />
     <ClCompile Include="src\Panels\SceneHierarchyPanel.cpp" />
     <ClCompile Include="src\Panels\Thumbnail\ThumbnailCache.cpp" />
     <ClCompile Include="src\UI\UI.cpp" />

@@ -38,6 +38,8 @@
       <Filter>UI</Filter>
     </ClInclude>
     <ClInclude Include="src\Panels\AssetRegistryPanel.h" />
+    <ClInclude Include="src\Panels.h" />
+    <ClInclude Include="src\Panels\PropertiesPanel.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\EditorLayer.cpp" />
@@ -64,6 +66,7 @@
     </ClCompile>
     <ClCompile Include="src\UneyeEditorApp.cpp" />
     <ClCompile Include="src\Panels\AssetRegistryPanel.cpp" />
+    <ClCompile Include="src\Panels\PropertiesPanel.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="src\Resource.rc" />

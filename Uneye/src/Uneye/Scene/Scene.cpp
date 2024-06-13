@@ -126,8 +126,8 @@ namespace Uneye
 
 	void Scene::DestroyEntity(Entity entity)
 	{
-		m_Registry.destroy(entity);
 		m_EntityMap.erase(entity.GetUUID());
+		m_Registry.destroy(entity);
 	}
 
 	void Scene::OnRuntimeStart()
@@ -138,16 +138,12 @@ namespace Uneye
 
 		// Scripting
 		{
-			ScriptEngine::OnRuntimeStart(this);
-			// Instantiate all script entts
-
 			auto view = m_Registry.view<ScriptComponent>();
 			for (auto entt : view)
 			{
 				Entity entity = { entt, this };
 				ScriptEngine::OnCreateEntity(entity);
 			}
-
 		}
 	}
 

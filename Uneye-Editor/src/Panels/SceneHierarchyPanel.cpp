@@ -10,6 +10,7 @@
 #include "Uneye/Project/Project.h"
 #include "Uneye/Asset/TextureImporter.h"
 #include "Uneye/Asset/AssetManager.h"
+#include "Uneye/Scene/SceneManager.h"
 
 #include <imgui/imgui.h>
 #include <imgui/imgui_internal.h>
@@ -25,12 +26,12 @@
 
 namespace Uneye
 {
-	SceneHierarchyPanel::SceneHierarchyPanel(const Ref<Scene>& context)
+	SceneHierarchyPanel::SceneHierarchyPanel(const ScenesMap& context)
 	{
 		SetContext(context);
 	}
 
-	void SceneHierarchyPanel::SetContext(const Ref<Scene>& context)
+	void SceneHierarchyPanel::SetContext(const ScenesMap& context)
 	{
 		m_Context = context;
 		m_SelectionContext = {};
@@ -40,23 +41,34 @@ namespace Uneye
 	{
 		ImGui::Begin("Scene Hierarchy");
 
-		if (m_Context)
+		if (!m_Context.empty())
 		{
-			m_Context->m_Registry.each([&](auto entt)
-				{
-					Entity entity{ entt, m_Context.get() };
-					DrawEntityNode(entity);
-				});
-
-			// Right click on blank space
-			if (ImGui::BeginPopupContextWindow(0, 1 | ImGuiPopupFlags_NoOpenOverItems))
+			for (const auto& [path, scene] : m_Context)
 			{
-				if (ImGui::MenuItem("Create Empty Entity"))
-					m_Context->CreateEntity("Empty Entity");
 
-				ImGui::EndPopup();
+				if (ImGui::CollapsingHeader(path.stem().generic_string().c_str()))
+				{
+					auto idView = scene->m_Registry.view<TagComponent>();
+					for (auto e : idView)
+					{
+						Entity entity{ e, scene.get() };
+						DrawEntityNode(entity);
+					}
+
+					// Right click on blank space
+					ImGui::PushID(path.string().c_str());
+					if (ImGui::BeginPopupContextWindow(0, 1 | ImGuiPopupFlags_NoOpenOverItems))
+					{
+						if (ImGui::MenuItem("Create Empty Entity"))
+						{
+							scene->CreateEntity("Empty Entity");
+						}
+
+						ImGui::EndPopup();
+					}
+					ImGui::PopID();
+				}
 			}
-
 		}
 
 		ImGui::End();
@@ -76,7 +88,15 @@ namespace Uneye
 
 		ImGui::Begin("Stats");
 
-		UI::DrawTextArgs("FPS on editor ", " %.3f", m_Context->GetFPS());
+		double sum = 0;
+		int count = m_Context.size();
+		for (const auto& [path, scene] : m_Context)
+		{
+			sum += scene->GetFPS();
+		}
+		double fps = sum / count;
+
+		UI::DrawTextArgs("FPS on editor ", " %.3f", fps);
 		ImGui::Spacing();
 		auto stats = Uneye::Renderer2D::GetStats();
 		ImGui::Text("Renderer2D Stats");
@@ -105,19 +125,17 @@ namespace Uneye
 		bool opened = ImGui::TreeNodeEx((void*)(uint64_t)(uint32_t)entt, flags, tag.c_str());
 
 		if (ImGui::IsItemClicked())
-		{
-			if (m_SelectionContext == entt)
-				m_SelectionContext = {};
-			else
-				m_SelectionContext = entt;
-		}
+			m_SelectionContext = (m_SelectionContext == entt) ? Entity{} : entt;
 
 		// Right click on item
 		bool enttDeleted = false;
 		if (ImGui::BeginPopupContextItem())
 		{
 			if (ImGui::MenuItem("Delete Entity"))
+			{
+				m_SelectionContext = entt;
 				enttDeleted = true;
+			}
 
 			ImGui::EndPopup();
 		}
@@ -129,9 +147,8 @@ namespace Uneye
 
 		if (enttDeleted)
 		{
-			if (m_SelectionContext == entt)
-				m_SelectionContext = {};
-			m_Context->DestroyEntity(entt);
+			SceneManager::DestroyEntity(&m_SelectionContext);
+			m_SelectionContext = {};		
 		}
 	}
 
@@ -323,7 +340,7 @@ namespace Uneye
 
 				}, true);
 
-			DrawComponentUI<ScriptComponent>(entt, "Script", [&, scene = m_Context](auto& p_sc)
+			DrawComponentUI<ScriptComponent>(entt, "Script", [&](auto& p_sc)
 			{
 				bool scriptClassExists = ScriptEngine::EntitySubClassExists(p_sc.Name);
 
@@ -335,7 +352,7 @@ namespace Uneye
 					p_sc.Name = std::string(buffer);
 				}
 
-				bool sceneRunning = scene->IsRunning();
+				bool sceneRunning = (SceneManager::GetState() == SceneState::Play);
 				if (sceneRunning)
 				{
 					Ref<ScriptInstance> scriptInstance = ScriptEngine::GetEntityScriptInstance(entt.GetUUID());

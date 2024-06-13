@@ -264,7 +264,6 @@ namespace Uneye
 
 			static void ReloadAssembly();
 
-			static void OnRuntimeStart(Scene* scene);
 			static void OnRuntimeStop();
 
 			static void LoadAssemblyClasses();
@@ -274,8 +273,6 @@ namespace Uneye
 
 			static void OnCreateEntity(Entity entt);
 			static void OnUpdateEntity(Entity entt, Timestep ts);
-
-			static Scene* GetSceneContext();
 
 			static Ref<ScriptInstance> GetEntityScriptInstance(UUID enttID);
 

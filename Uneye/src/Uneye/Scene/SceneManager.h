@@ -7,6 +7,8 @@
 #include "Uneye/Asset/SceneImporter.h"
 #include "Uneye/Events/Event.h"
 
+#include <map>
+
 // TODO: Make a way to serialize this SceneManager in editor/runtime mode.
 
 
@@ -24,6 +26,8 @@ namespace Uneye
 		Edit = 0, Play = 1, Simulate = 2
 	};
 
+	class Entity;
+
 	class SceneManager
 	{
 		public:
@@ -40,7 +44,9 @@ namespace Uneye
 			
 			static const std::filesystem::path& GetCurrentScenePath();
 			static Ref<Scene> GetActiveScene();
-			static std::unordered_map<std::filesystem::path, Ref<Scene>> GetAllActiveScenes();
+			static const std::map<std::filesystem::path, Ref<Scene>>& GetScenes();
+
+			static void DestroyEntity(Entity* p_entt);
 
 			// Runtime only
 
@@ -59,6 +65,8 @@ namespace Uneye
 			static void SaveScene();
 			static void SaveScene(const AssetHandle& p_handle);
 			static void SaveAllScenes();
+
+			static bool IsPaused();
 
 			static void Play();
 			static void Simulate();

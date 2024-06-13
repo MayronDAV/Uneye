@@ -2,6 +2,7 @@
 #include "ScriptGlue.h"
 #include "ScriptEngine.h"
 #include "Uneye/Core/UUID.h"
+#include "Uneye/Scene/SceneManager.h"
 
 #include "Uneye/Core/KeyCodes.h"
 #include "Uneye/Core/Input.h"
@@ -85,32 +86,39 @@ namespace Uneye
 
 		static bool Entity_HasComponent(UUID enttID, MonoReflectionType* componentType)
 		{
-			Scene* scene = ScriptEngine::GetSceneContext();
-			UNEYE_CORE_ASSERT(scene == nullptr);
+			for (const auto& [path, scene] : SceneManager::GetScenes())
+			{
+				Entity entt = scene->GetEntityByUUID(enttID);
+				if (!entt)
+					continue;
 
-			Entity entt = scene->GetEntityByUUID(enttID);
-			UNEYE_CORE_ASSERT(!entt);
+				MonoType* managedType = mono_reflection_type_get_type(componentType);
+				UNEYE_CORE_ASSERT(s_EntityHasComponentsFuncs.find(managedType) == s_EntityHasComponentsFuncs.end());
 
-			MonoType* managedType = mono_reflection_type_get_type(componentType);
-			UNEYE_CORE_ASSERT(s_EntityHasComponentsFuncs.find(managedType) == s_EntityHasComponentsFuncs.end());
+				return s_EntityHasComponentsFuncs.at(managedType)(entt);
+			}
 
-			return s_EntityHasComponentsFuncs.at(managedType)(entt);
+			UNEYE_CORE_ERROR("Unkwnown entity ID");
+			return false;
 		}
 
 		static uint64_t Entity_FindFirstEntityByName(MonoString* name)
 		{
 			char* name_c_str = mono_string_to_utf8(name);
 
-			Scene* scene = ScriptEngine::GetSceneContext();
-			UNEYE_CORE_ASSERT(scene == nullptr);
+			for (const auto& [path, scene] : SceneManager::GetScenes())
+			{
+				Entity entt = scene->FindFirstEntityByName(name_c_str);
+				mono_free(name_c_str);
 
-			Entity entt = scene->FindFirstEntityByName(name_c_str);
-			mono_free(name_c_str);
+				if (!entt)
+					continue;
 
-			if (!entt)
-				return 0;
+				return entt.GetUUID();
+			}
 
-			return entt.GetUUID();
+			UNEYE_CORE_ERROR("Unkwnown entity ID");
+			return 0;
 		}
 
 		static MonoObject* GetScriptInstance(UUID entityID)
@@ -124,24 +132,32 @@ namespace Uneye
 
 		static void TransformComponent_GetTranslation(UUID enttID, glm::vec3* outTranslation)
 		{
-			Scene* scene = ScriptEngine::GetSceneContext();
-			UNEYE_CORE_ASSERT(scene == nullptr);
+			for (const auto& [path, scene] : SceneManager::GetScenes())
+			{
+				Entity entt = scene->GetEntityByUUID(enttID);
+				if (!entt)
+					continue;
 
-			Entity entt = scene->GetEntityByUUID(enttID);
-			UNEYE_CORE_ASSERT(!entt);
+				*outTranslation = entt.GetComponent<TransformComponent>().Translation;
+				return;
+			}
 
-			*outTranslation = entt.GetComponent<TransformComponent>().Translation;
+			UNEYE_CORE_ERROR("Unkwnown entity ID");
 		}
 
 		static void TransformComponent_SetTranslation(UUID enttID,  glm::vec3* translation)
 		{
-			Scene* scene = ScriptEngine::GetSceneContext();
-			UNEYE_CORE_ASSERT(scene == nullptr);
+			for (const auto& [path, scene] : SceneManager::GetScenes())
+			{
+				Entity entt = scene->GetEntityByUUID(enttID);		
+				if (!entt)
+					continue;
 
-			Entity entt = scene->GetEntityByUUID(enttID);		
-			UNEYE_CORE_ASSERT(!entt);
+				entt.GetComponent<TransformComponent>().Translation = *translation;
+				return;
+			}
 
-			entt.GetComponent<TransformComponent>().Translation = *translation;
+			UNEYE_CORE_ERROR("Unkwnown entity ID");
 		}
 
 		#pragma endregion
@@ -150,101 +166,127 @@ namespace Uneye
 
 		static void Rigidbody2DComponent_GetTranslation(UUID enttID, glm::vec2* outTranslation)
 		{
-			Scene* scene = ScriptEngine::GetSceneContext();
-			UNEYE_CORE_ASSERT(scene == nullptr);
+			for (const auto& [path, scene] : SceneManager::GetScenes())
+			{
+				Entity entt = scene->GetEntityByUUID(enttID);
+				if (!entt)
+					continue;
 
-			Entity entt = scene->GetEntityByUUID(enttID);
-			UNEYE_CORE_ASSERT(!entt);
+				auto& rb2d = entt.GetComponent<Rigidbody2DComponent>();
+				b2Body* body = (b2Body*)rb2d.RuntimeBody;
 
-			auto& rb2d = entt.GetComponent<Rigidbody2DComponent>();
-			b2Body* body = (b2Body*)rb2d.RuntimeBody;
+				*outTranslation = glm::vec2(body->GetTransform().p.x, body->GetTransform().p.y);
+				return;
+			}
 
-			*outTranslation = glm::vec2(body->GetTransform().p.x, body->GetTransform().p.y);
+			UNEYE_CORE_ERROR("Unkwnown entity ID");
 		}
 
 		static void Rigidbody2DComponent_SetTransform(UUID enttID, glm::vec2* position, float angle)
 		{
-			Scene* scene = ScriptEngine::GetSceneContext();
-			UNEYE_CORE_ASSERT(scene == nullptr);
+			for (const auto& [path, scene] : SceneManager::GetScenes())
+			{
+				Entity entt = scene->GetEntityByUUID(enttID);
+				if (!entt)
+					continue;
 
-			Entity entt = scene->GetEntityByUUID(enttID);
-			UNEYE_CORE_ASSERT(!entt);
+				auto& rb2d = entt.GetComponent<Rigidbody2DComponent>();
+				b2Body* body = (b2Body*)rb2d.RuntimeBody;
 
-			auto& rb2d = entt.GetComponent<Rigidbody2DComponent>();
-			b2Body* body = (b2Body*)rb2d.RuntimeBody;
+				body->SetTransform(b2Vec2(position->x, position->y), angle);
+				return;
+			}
 
-			body->SetTransform(b2Vec2(position->x, position->y), angle);
+			UNEYE_CORE_ERROR("Unkwnown entity ID");
 		}
 
 		static void Rigidbody2DComponent_ApplyLinearImpulse(UUID enttID, glm::vec2* impulse, glm::vec2* point, bool wake)
 		{
-			Scene* scene = ScriptEngine::GetSceneContext();
-			UNEYE_CORE_ASSERT(scene == nullptr);
+			for (const auto& [path, scene] : SceneManager::GetScenes())
+			{
+				Entity entt = scene->GetEntityByUUID(enttID);
+				if (!entt)
+					continue;
 
-			Entity entt = scene->GetEntityByUUID(enttID);
-			UNEYE_CORE_ASSERT(!entt);
+				auto& rb2d = entt.GetComponent<Rigidbody2DComponent>();
+				b2Body* body = (b2Body*)rb2d.RuntimeBody;
 
-			auto& rb2d = entt.GetComponent<Rigidbody2DComponent>();
-			b2Body* body = (b2Body*)rb2d.RuntimeBody;
+				b2Vec2 b2_impulse(impulse->x, impulse->y);
+				b2Vec2 b2_point(point->x, point->y);
+				body->ApplyLinearImpulse(b2_impulse, b2_point, wake);
+				return;
+			}
 
-			b2Vec2 b2_impulse(impulse->x, impulse->y);
-			b2Vec2 b2_point(point->x, point->y);
-			body->ApplyLinearImpulse(b2_impulse, b2_point, wake);
+			UNEYE_CORE_ERROR("Unkwnown entity ID");
 		}
 
 		static void Rigidbody2DComponent_ApplyLinearImpulseToCenter(UUID enttID, glm::vec2* impulse, bool wake)
 		{
-			Scene* scene = ScriptEngine::GetSceneContext();
-			UNEYE_CORE_ASSERT(scene == nullptr);
+			for (const auto& [path, scene] : SceneManager::GetScenes())
+			{
+				Entity entt = scene->GetEntityByUUID(enttID);
+				if (!entt)
+					continue;
 
-			Entity entt = scene->GetEntityByUUID(enttID);
-			UNEYE_CORE_ASSERT(!entt);
+				auto& rb2d = entt.GetComponent<Rigidbody2DComponent>();
+				b2Body* body = (b2Body*)rb2d.RuntimeBody;
 
-			auto& rb2d = entt.GetComponent<Rigidbody2DComponent>();
-			b2Body* body = (b2Body*)rb2d.RuntimeBody;
+				b2Vec2 b2_impulse(impulse->x, impulse->y);
+				body->ApplyLinearImpulseToCenter(b2_impulse, wake);
+				return;
+			}
 
-			b2Vec2 b2_impulse(impulse->x, impulse->y);
-			body->ApplyLinearImpulseToCenter(b2_impulse, wake);
+			UNEYE_CORE_ERROR("Unkwnown entity ID");
 		}
 
 		static void Rigidbody2DComponent_GetLinearVelocity(UUID enttID, glm::vec2* outLinearVelocity)
 		{
-			Scene* scene = ScriptEngine::GetSceneContext();
-			UNEYE_CORE_ASSERT(scene == nullptr);
+			for (const auto& [path, scene] : SceneManager::GetScenes())
+			{
+				Entity entt = scene->GetEntityByUUID(enttID);
+				if (!entt)
+					continue;
 
-			Entity entt = scene->GetEntityByUUID(enttID);
-			UNEYE_CORE_ASSERT(!entt);
+				auto& rb2d = entt.GetComponent<Rigidbody2DComponent>();
+				b2Body* body = (b2Body*)rb2d.RuntimeBody;
+				const b2Vec2& linearVelocity = body->GetLinearVelocity();
+				*outLinearVelocity = glm::vec2(linearVelocity.x, linearVelocity.y);
+				return;
+			}
 
-			auto& rb2d = entt.GetComponent<Rigidbody2DComponent>();
-			b2Body* body = (b2Body*)rb2d.RuntimeBody;
-			const b2Vec2& linearVelocity = body->GetLinearVelocity();
-			*outLinearVelocity = glm::vec2(linearVelocity.x, linearVelocity.y);
+			UNEYE_CORE_ERROR("Unkwnown entity ID");
 		}
 
 		static Rigidbody2DComponent::BodyType Rigidbody2DComponent_GetType(UUID enttID)
 		{
-			Scene* scene = ScriptEngine::GetSceneContext();
-			UNEYE_CORE_ASSERT(scene == nullptr);
+			for (const auto& [path, scene] : SceneManager::GetScenes())
+			{
+				Entity entt = scene->GetEntityByUUID(enttID);
+				if (!entt)
+					continue;
 
-			Entity entt = scene->GetEntityByUUID(enttID);
-			UNEYE_CORE_ASSERT(!entt);
+				auto& rb2d = entt.GetComponent<Rigidbody2DComponent>();
+				b2Body* body = (b2Body*)rb2d.RuntimeBody;
+				return Utils::Rigidbody2DTypeFromBox2DBody(body->GetType());
+			}
 
-			auto& rb2d = entt.GetComponent<Rigidbody2DComponent>();
-			b2Body* body = (b2Body*)rb2d.RuntimeBody;
-			return Utils::Rigidbody2DTypeFromBox2DBody(body->GetType());
+			UNEYE_CORE_ERROR("Unkwnown entity ID");
+			return Rigidbody2DComponent::BodyType::Static;
 		}
 
 		static void Rigidbody2DComponent_SetType(UUID enttID, Rigidbody2DComponent::BodyType bodyType)
 		{
-			Scene* scene = ScriptEngine::GetSceneContext();
-			UNEYE_CORE_ASSERT(scene == nullptr);
+			for (const auto& [path, scene] : SceneManager::GetScenes())
+			{
+				Entity entt = scene->GetEntityByUUID(enttID);
+				if (!entt)
+					continue;
 
-			Entity entt = scene->GetEntityByUUID(enttID);
-			UNEYE_CORE_ASSERT(!entt);
-
-			auto& rb2d = entt.GetComponent<Rigidbody2DComponent>();
-			b2Body* body = (b2Body*)rb2d.RuntimeBody;
-			body->SetType(Utils::Rigidbody2DTypeToBox2DBody(bodyType));
+				auto& rb2d = entt.GetComponent<Rigidbody2DComponent>();
+				b2Body* body = (b2Body*)rb2d.RuntimeBody;
+				body->SetType(Utils::Rigidbody2DTypeToBox2DBody(bodyType));
+				return;
+			}
 		}
 
 		#pragma endregion
@@ -253,114 +295,146 @@ namespace Uneye
 
 		static MonoString* TextComponent_GetText(UUID enttID)
 		{
-			Scene* scene = ScriptEngine::GetSceneContext();
-			UNEYE_CORE_ASSERT(scene == nullptr);
+			for (const auto& [path, scene] : SceneManager::GetScenes())
+			{
+				Entity entt = scene->GetEntityByUUID(enttID);
+				if (!entt)
+					continue;
 
-			Entity entt = scene->GetEntityByUUID(enttID);
-			UNEYE_CORE_ASSERT(!entt);
+				UNEYE_CORE_ASSERT(!entt.HasComponent<TextComponent>());
 
-			UNEYE_CORE_ASSERT(!entt.HasComponent<TextComponent>());
+				auto& tc = entt.GetComponent<TextComponent>();
+				return ScriptEngine::CreateString(tc.TextString.c_str());
+			}
 
-			auto& tc = entt.GetComponent<TextComponent>();
-			return ScriptEngine::CreateString(tc.TextString.c_str());
+			UNEYE_CORE_ERROR("Unkwnown entity ID");
+			return ScriptEngine::CreateString("Null");
 		}
 
 		static void TextComponent_SetText(UUID enttID, MonoString* textString)
 		{
-			Scene* scene = ScriptEngine::GetSceneContext();
-			UNEYE_CORE_ASSERT(scene == nullptr);
+			for (const auto& [path, scene] : SceneManager::GetScenes())
+			{
+				Entity entt = scene->GetEntityByUUID(enttID);
+				if (!entt)
+					continue;
 
-			Entity entt = scene->GetEntityByUUID(enttID);
-			UNEYE_CORE_ASSERT(!entt);
+				UNEYE_CORE_ASSERT(!entt.HasComponent<TextComponent>());
 
-			UNEYE_CORE_ASSERT(!entt.HasComponent<TextComponent>());
+				auto& tc = entt.GetComponent<TextComponent>();
+				tc.TextString = MonoStringToString(textString);
+				return;
+			}
 
-			auto& tc = entt.GetComponent<TextComponent>();
-			tc.TextString = MonoStringToString(textString);
+			UNEYE_CORE_ERROR("Unkwnown entity ID");
 		}
 
 		static void TextComponent_GetColor(UUID enttID, glm::vec4* color)
 		{
-			Scene* scene = ScriptEngine::GetSceneContext();
-			UNEYE_CORE_ASSERT(scene == nullptr);
+			for (const auto& [path, scene] : SceneManager::GetScenes())
+			{
+				Entity entt = scene->GetEntityByUUID(enttID);
+				if (!entt)
+					continue;
 
-			Entity entt = scene->GetEntityByUUID(enttID);
-			UNEYE_CORE_ASSERT(!entt);
+				UNEYE_CORE_ASSERT(!entt.HasComponent<TextComponent>());
 
-			UNEYE_CORE_ASSERT(!entt.HasComponent<TextComponent>());
+				auto& tc = entt.GetComponent<TextComponent>();
+				*color = tc.Color;
+				return;
+			}
 
-			auto& tc = entt.GetComponent<TextComponent>();
-			*color = tc.Color;
+			UNEYE_CORE_ERROR("Unkwnown entity ID");
 		}
 
 		static void TextComponent_SetColor(UUID enttID, glm::vec4* color)
 		{
-			Scene* scene = ScriptEngine::GetSceneContext();
-			UNEYE_CORE_ASSERT(scene == nullptr);
+			for (const auto& [path, scene] : SceneManager::GetScenes())
+			{
+				Entity entt = scene->GetEntityByUUID(enttID);
+				if (!entt)
+					continue;
 
-			Entity entt = scene->GetEntityByUUID(enttID);
-			UNEYE_CORE_ASSERT(!entt);
+				UNEYE_CORE_ASSERT(!entt.HasComponent<TextComponent>());
 
-			UNEYE_CORE_ASSERT(!entt.HasComponent<TextComponent>());
+				auto& tc = entt.GetComponent<TextComponent>();
+				tc.Color = *color;
+				return;
+			}
 
-			auto& tc = entt.GetComponent<TextComponent>();
-			tc.Color = *color;
+			UNEYE_CORE_ERROR("Unkwnown entity ID");
 		}
 
 		static float TextComponent_GetKerning(UUID enttID)
 		{
-			Scene* scene = ScriptEngine::GetSceneContext();
-			UNEYE_CORE_ASSERT(scene == nullptr);
+			for (const auto& [path, scene] : SceneManager::GetScenes())
+			{
+				Entity entt = scene->GetEntityByUUID(enttID);
+				if (!entt)
+					continue;
 
-			Entity entt = scene->GetEntityByUUID(enttID);
-			UNEYE_CORE_ASSERT(!entt);
+				UNEYE_CORE_ASSERT(!entt.HasComponent<TextComponent>());
 
-			UNEYE_CORE_ASSERT(!entt.HasComponent<TextComponent>());
+				auto& tc = entt.GetComponent<TextComponent>();
+				return tc.Kerning;
+			}
 
-			auto& tc = entt.GetComponent<TextComponent>();
-			return tc.Kerning;
+			UNEYE_CORE_ERROR("Unkwnown entity ID");
+			return 0.0f;
 		}
 
 		static void TextComponent_SetKerning(UUID enttID, float kerning)
 		{
-			Scene* scene = ScriptEngine::GetSceneContext();
-			UNEYE_CORE_ASSERT(scene == nullptr);
+			for (const auto& [path, scene] : SceneManager::GetScenes())
+			{
+				Entity entt = scene->GetEntityByUUID(enttID);
+				if (!entt)
+					continue;
 
-			Entity entt = scene->GetEntityByUUID(enttID);
-			UNEYE_CORE_ASSERT(!entt);
+				UNEYE_CORE_ASSERT(!entt.HasComponent<TextComponent>());
 
-			UNEYE_CORE_ASSERT(!entt.HasComponent<TextComponent>());
+				auto& tc = entt.GetComponent<TextComponent>();
+				tc.Kerning = kerning;
+				return;
+			}
 
-			auto& tc = entt.GetComponent<TextComponent>();
-			tc.Kerning = kerning;
+			UNEYE_CORE_ERROR("Unkwnown entity ID");
 		}
 
 		static float TextComponent_GetLineSpacing(UUID enttID)
 		{
-			Scene* scene = ScriptEngine::GetSceneContext();
-			UNEYE_CORE_ASSERT(scene == nullptr);
+			for (const auto& [path, scene] : SceneManager::GetScenes())
+			{
+				Entity entt = scene->GetEntityByUUID(enttID);
+				if (!entt)
+					continue;
 
-			Entity entt = scene->GetEntityByUUID(enttID);
-			UNEYE_CORE_ASSERT(!entt);
+				UNEYE_CORE_ASSERT(entt.HasComponent<TextComponent>());
 
-			UNEYE_CORE_ASSERT(entt.HasComponent<TextComponent>());
+				auto& tc = entt.GetComponent<TextComponent>();
+				return tc.LineSpacing;
+			}
 
-			auto& tc = entt.GetComponent<TextComponent>();
-			return tc.LineSpacing;
+			UNEYE_CORE_ERROR("Unkwnown entity ID");
+			return 0.0f;
 		}
 
 		static void TextComponent_SetLineSpacing(UUID enttID, float lineSpacing)
 		{
-			Scene* scene = ScriptEngine::GetSceneContext();
-			UNEYE_CORE_ASSERT(scene == nullptr);
+			for (const auto& [path, scene] : SceneManager::GetScenes())
+			{
+				Entity entt = scene->GetEntityByUUID(enttID);
+				if (!entt)
+					continue;
 
-			Entity entt = scene->GetEntityByUUID(enttID);
-			UNEYE_CORE_ASSERT(!entt);
+				UNEYE_CORE_ASSERT(!entt.HasComponent<TextComponent>());
 
-			UNEYE_CORE_ASSERT(!entt.HasComponent<TextComponent>());
+				auto& tc = entt.GetComponent<TextComponent>();
+				tc.LineSpacing = lineSpacing;
+				return;
+			}
 
-			auto& tc = entt.GetComponent<TextComponent>();
-			tc.LineSpacing = lineSpacing;
+			UNEYE_CORE_ERROR("Unkwnown entity ID");
 		}
 
 		#pragma endregion

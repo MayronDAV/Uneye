@@ -83,7 +83,7 @@ namespace Uneye
 		Renderer2D::SetLineWidth(4.0f);
 
 
-		//m_SceneHierarchyPanel.SetContext(SceneManager::GetActiveScene());
+		m_SceneHierarchyPanel.SetContext(SceneManager::GetScenes());
 
 	}
 
@@ -105,7 +105,7 @@ namespace Uneye
 			SceneManager::LoadScene(path.string(), LoadMode::Additive);
 
 			// TODO:
-			//m_SceneHierarchyPanel.SetContext(  SceneManager::GetEditorScene());
+			m_SceneHierarchyPanel.SetContext(SceneManager::GetScenes());
 			first = false;
 		}
 
@@ -282,7 +282,7 @@ namespace Uneye
 		}
 
 		m_AssetRegistryPanel.OnImGuiRender();
-		//m_SceneHierarchyPanel.OnImGuiRender();
+		m_SceneHierarchyPanel.OnImGuiRender();
 		m_ContentBrowserPanel->OnImGuiRender();
 		m_LogPanel.OnImGuiRender();
 
@@ -321,7 +321,6 @@ namespace Uneye
 		}
 
 		// Gizmos
-#if 0 
 		Entity selectedEntity = m_SceneHierarchyPanel.GetSelectedEntity();
 		if (selectedEntity && m_GuizmoType != -1)
 		{
@@ -374,7 +373,6 @@ namespace Uneye
 			}
 
 		}
-#endif
 		
 		ImGui::End();
 		ImGui::PopStyleVar();
@@ -408,7 +406,7 @@ namespace Uneye
 
 		ImGui::Begin("##toolbar", nullptr, ImGuiWindowFlags_NoDecoration | ImGuiWindowFlags_NoScrollbar | ImGuiWindowFlags_NoScrollWithMouse);
 
-		bool toolbarEnabled = (bool)SceneManager::GetActiveScene();
+		bool toolbarEnabled = !SceneManager::GetScenes().empty();
 
 		ImVec4 tintColor = ImVec4(1, 1, 1, 1);
 		if (!toolbarEnabled)
@@ -444,14 +442,14 @@ namespace Uneye
 		}
 		if (hasPauseButton)
 		{
-			auto activeScene = SceneManager::GetActiveScene();
-			bool isPaused = activeScene->IsPaused();
+			bool isPaused = SceneManager::IsPaused();
 			ImGui::SameLine();
 			{
 				Ref<Texture2D> icon = m_IconPause;
 				if (ImGui::ImageButton((ImTextureID)(uint64_t)icon->GetRendererID(), ImVec2(size, size), ImVec2(0, 0), ImVec2(1, 1), 0, ImVec4(0.0f, 0.0f, 0.0f, 0.0f), tintColor) && toolbarEnabled)
 				{
-					SceneManager::Pause(!isPaused);
+					isPaused = !isPaused;
+					SceneManager::Pause(isPaused);
 				}
 			}
 
@@ -459,13 +457,10 @@ namespace Uneye
 			if (isPaused)
 			{
 				ImGui::SameLine();
+				Ref<Texture2D> icon = m_IconStep;
+				if (ImGui::ImageButton((ImTextureID)(uint64_t)icon->GetRendererID(), ImVec2(size, size), ImVec2(0, 0), ImVec2(1, 1), 0, ImVec4(0.0f, 0.0f, 0.0f, 0.0f), tintColor) && toolbarEnabled)
 				{
-					Ref<Texture2D> icon = m_IconStep;
-					bool isPaused = activeScene->IsPaused();
-					if (ImGui::ImageButton((ImTextureID)(uint64_t)icon->GetRendererID(), ImVec2(size, size), ImVec2(0, 0), ImVec2(1, 1), 0, ImVec4(0.0f, 0.0f, 0.0f, 0.0f), tintColor) && toolbarEnabled)
-					{
-						SceneManager::Step(60);
-					}
+					SceneManager::Step(60);
 				}
 			}
 		}
@@ -584,67 +579,72 @@ namespace Uneye
 
 	void EditorLayer::OnOverlayRender()
 	{
-		auto sceneState = SceneManager::GetState();
-		auto activeScene = SceneManager::GetActiveScene();
-		if (sceneState == SceneState::Play)
+		for (const auto& [path, scene] : SceneManager::GetScenes())
 		{
-			Entity camera = activeScene->GetPrimaryCameraEntity();
-			if (!camera)
-				return;
-
-			Renderer2D::BeginScene(camera.GetComponent<CameraComponent>().Camera, camera.GetComponent<TransformComponent>().GetTransform());
-		}
-		else
-		{
-			Renderer2D::BeginScene(SceneManager::GetEditorCamera());
-		}
-
-		if (m_ShowPhysicsColliders)
-		{
-			// Box Colliders
+			if (SceneManager::GetState() == SceneState::Play)
 			{
-				auto view = activeScene->GetAllEntitiesWith<TransformComponent, BoxCollider2DComponent>();
-				for (auto entity : view)
+				Entity camera = scene->GetPrimaryCameraEntity();
+				if (!camera)
+					return;
+
+				Renderer2D::BeginScene(camera.GetComponent<CameraComponent>().Camera, camera.GetComponent<TransformComponent>().GetTransform());
+			}
+			else
+			{
+				Renderer2D::BeginScene(SceneManager::GetEditorCamera());
+			}
+
+			if (m_ShowPhysicsColliders)
+			{
+
 				{
-					auto [tc, bc2d] = view.get<TransformComponent, BoxCollider2DComponent>(entity);
+					// Box Colliders
+					{
+						auto view = scene->GetAllEntitiesWith<TransformComponent, BoxCollider2DComponent>();
+						for (auto entity : view)
+						{
+							auto [tc, bc2d] = view.get<TransformComponent, BoxCollider2DComponent>(entity);
 
-					glm::vec3 translation = tc.Translation + glm::vec3(bc2d.Offset, 0.001f);
-					glm::vec3 scale = tc.Scale * glm::vec3(bc2d.Size * 2.0f, 1.0f);
+							glm::vec3 translation = tc.Translation + glm::vec3(bc2d.Offset, 0.001f);
+							glm::vec3 scale = tc.Scale * glm::vec3(bc2d.Size * 2.0f, 1.0f);
 
-					glm::mat4 transform = glm::translate(glm::mat4(1.0f), translation)
-						* glm::rotate(glm::mat4(1.0f), tc.Rotation.z, glm::vec3(0.0f, 0.0f, 1.0f))
-						* glm::scale(glm::mat4(1.0f), scale);
+							glm::mat4 transform = glm::translate(glm::mat4(1.0f), translation)
+								* glm::rotate(glm::mat4(1.0f), tc.Rotation.z, glm::vec3(0.0f, 0.0f, 1.0f))
+								* glm::scale(glm::mat4(1.0f), scale);
 
-					Renderer2D::DrawRect(transform, glm::vec4(0, 0, 1, 1));
+							Renderer2D::DrawRect(transform, glm::vec4(0, 0, 1, 1));
+						}
+					}
+
+					// Circle Colliders
+					{
+						auto view = scene->GetAllEntitiesWith<TransformComponent, CircleCollider2DComponent>();
+						for (auto entity : view)
+						{
+							auto [tc, cc2d] = view.get<TransformComponent, CircleCollider2DComponent>(entity);
+
+							glm::vec3 translation = tc.Translation + glm::vec3(cc2d.Offset, 0.001f);
+							glm::vec3 scale = tc.Scale * glm::vec3(cc2d.Radius * 2.0f);
+
+							glm::mat4 transform = glm::translate(glm::mat4(1.0f), translation)
+								* glm::scale(glm::mat4(1.0f), scale);
+
+							Renderer2D::DrawCircle(transform, glm::vec4(0, 0, 1, 1), 0.01f);
+						}
+					}
 				}
 			}
 
-			// Circle Colliders
-			{
-				auto view = activeScene->GetAllEntitiesWith<TransformComponent, CircleCollider2DComponent>();
-				for (auto entity : view)
-				{
-					auto [tc, cc2d] = view.get<TransformComponent, CircleCollider2DComponent>(entity);
+			if (Entity selectedEntity = m_SceneHierarchyPanel.GetSelectedEntity()) {
+				TransformComponent transform = selectedEntity.GetComponent<TransformComponent>();
 
-					glm::vec3 translation = tc.Translation + glm::vec3(cc2d.Offset, 0.001f);
-					glm::vec3 scale = tc.Scale * glm::vec3(cc2d.Radius * 2.0f);
-
-					glm::mat4 transform = glm::translate(glm::mat4(1.0f), translation)
-						* glm::scale(glm::mat4(1.0f), scale);
-
-					Renderer2D::DrawCircle(transform, glm::vec4(0, 0, 1, 1), 0.01f);
-				}
+				Renderer2D::DrawRect(transform.GetTransform(), glm::vec4(1.0f, 0.5f, 0.0f, 1.0f));
 			}
+
+
+			Renderer2D::EndScene();
 		}
 
-		//if (Entity selectedEntity = m_SceneHierarchyPanel.GetSelectedEntity()) {
-		//	TransformComponent transform = selectedEntity.GetComponent<TransformComponent>();
-
-		//	Renderer2D::DrawRect(transform.GetTransform(), glm::vec4(1.0f, 0.5f, 0.0f, 1.0f));
-		//}
-
-
-		Renderer2D::EndScene();
 	}
 
 	void EditorLayer::ReloadAssembly()
@@ -818,12 +818,12 @@ namespace Uneye
 		if (SceneManager::GetState() != SceneState::Edit)
 			return;
 
-		//Entity selectedEntt = m_SceneHierarchyPanel.GetSelectedEntity();
-		//if (selectedEntt)
-		//{
-		//	Entity newEntity = SceneManager::GetEditorScene()->DuplicateEntity(selectedEntt);
-		//	m_SceneHierarchyPanel.SetSelectedEntity(newEntity);
-		//}
+		Entity selectedEntt = m_SceneHierarchyPanel.GetSelectedEntity();
+		if (selectedEntt)
+		{
+			Entity newEntity = SceneManager::GetEditorScene()->DuplicateEntity(selectedEntt);
+			m_SceneHierarchyPanel.SetSelectedEntity(newEntity);
+		}
 	}
 
 	void EditorLayer::OnDestroyEntity()
@@ -831,12 +831,12 @@ namespace Uneye
 		if (SceneManager::GetState() != SceneState::Edit)
 			return;
 
-		//Entity selectedEntt = m_SceneHierarchyPanel.GetSelectedEntity();
-		//if (selectedEntt)
-		//{
-		//	m_SceneHierarchyPanel.SetSelectedEntity({});
-		//	SceneManager::GetEditorScene()->DestroyEntity(selectedEntt);
-		//}
+		Entity selectedEntt = m_SceneHierarchyPanel.GetSelectedEntity();
+		if (selectedEntt)
+		{
+			m_SceneHierarchyPanel.SetSelectedEntity({});
+			SceneManager::GetEditorScene()->DestroyEntity(selectedEntt);
+		}
 	}
 
 }

@@ -6,17 +6,22 @@
 
 #include <entt/entt.hpp>
 
+#include <map>
 
 
 namespace Uneye
 {
+	using ScenesMap = std::map<std::filesystem::path, Ref<Scene>>;
+
 	class SceneHierarchyPanel
 	{
+
 		public:
 			SceneHierarchyPanel() = default;
-			SceneHierarchyPanel(const Ref<Scene>& context);
+			SceneHierarchyPanel(const ScenesMap& p_context);
+			~SceneHierarchyPanel() = default;
 
-			void SetContext(const Ref<Scene>& context);
+			void SetContext(const ScenesMap& p_context);
 			
 			void OnImGuiRender();
 
@@ -34,7 +39,7 @@ namespace Uneye
 			void DrawComponentUI(Entity entt, const std::string& name, const Func& func, bool settings = false);
 
 		private:
-			Ref<Scene> m_Context;
-			Entity m_SelectionContext;
+			ScenesMap m_Context = { {} };
+			Entity m_SelectionContext = {};
 	};
 }

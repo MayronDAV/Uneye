@@ -117,9 +117,6 @@ namespace Uneye
 		bool AssemblyReloadPending = false;
 
 		bool EnableDebugging = false;
-
-		// Runtime
-		Scene* SceneContext = nullptr;
 	};
 
 	static ScriptEngineData* s_Data = nullptr;
@@ -300,21 +297,9 @@ namespace Uneye
 	}
 
 
-	void ScriptEngine::OnRuntimeStart(Scene* scene)
-	{
-		s_Data->SceneContext = scene;
-	}
-
 	void ScriptEngine::OnRuntimeStop()
 	{
-		s_Data->SceneContext = nullptr;
-
 		s_Data->EntityInstances.clear();
-	}
-
-	Scene* ScriptEngine::GetSceneContext()
-	{
-		return s_Data->SceneContext;
 	}
 
 	Ref<ScriptInstance> ScriptEngine::GetEntityScriptInstance(UUID enttID)

@@ -19,6 +19,9 @@
     <Filter Include="..\Uneye\vendor\Glad">
       <UniqueIdentifier>{3A6D0963-26FC-922C-CF1A-A727BB88A3D2}</UniqueIdentifier>
     </Filter>
+    <Filter Include="..\Uneye\vendor\ImGuizmo">
+      <UniqueIdentifier>{338A5862-1FAF-A7E2-48FA-8C72347EA600}</UniqueIdentifier>
+    </Filter>
     <Filter Include="..\Uneye\vendor\imgui">
       <UniqueIdentifier>{1DFE9EC6-896A-5AC1-525E-F21EBE897C29}</UniqueIdentifier>
     </Filter>
@@ -28,8 +31,8 @@
     <Filter Include="..\Uneye\vendor\msdf-atlas-gen\msdfgen">
       <UniqueIdentifier>{68F1FDF3-5443-D5E3-3D62-12F42953EECC}</UniqueIdentifier>
     </Filter>
-    <Filter Include="..\Uneye\vendor\tinyxml2">
-      <UniqueIdentifier>{89EDC738-7512-17B9-9E5D-FC488AE115D7}</UniqueIdentifier>
+    <Filter Include="..\Uneye\vendor\stb">
+      <UniqueIdentifier>{4BE68412-B747-6220-40B5-A8D2AC1599DF}</UniqueIdentifier>
     </Filter>
     <Filter Include="..\Uneye\vendor\yaml-cpp">
       <UniqueIdentifier>{857ED56A-71A3-24EB-9AEE-097B86722309}</UniqueIdentifier>
@@ -78,6 +81,9 @@
     <None Include="..\..\Uneye\vendor\Glad\premake5.lua">
       <Filter>..\Uneye\vendor\Glad</Filter>
     </None>
+    <None Include="..\..\Uneye\vendor\ImGuizmo\premake5.lua">
+      <Filter>..\Uneye\vendor\ImGuizmo</Filter>
+    </None>
     <None Include="..\..\Uneye\vendor\imgui\premake5.lua">
       <Filter>..\Uneye\vendor\imgui</Filter>
     </None>
@@ -87,8 +93,8 @@
     <None Include="..\..\Uneye\vendor\msdf-atlas-gen\premake5.lua">
       <Filter>..\Uneye\vendor\msdf-atlas-gen</Filter>
     </None>
-    <None Include="..\..\Uneye\vendor\tinyxml2\premake5.lua">
-      <Filter>..\Uneye\vendor\tinyxml2</Filter>
+    <None Include="..\..\Uneye\vendor\stb\premake5.lua">
+      <Filter>..\Uneye\vendor\stb</Filter>
     </None>
     <None Include="..\..\Uneye\vendor\yaml-cpp\premake5.lua">
       <Filter>..\Uneye\vendor\yaml-cpp</Filter>

@@ -4,7 +4,7 @@
 VULKAN_SDK = os.getenv("VULKAN_SDK")
 
 IncludeDir = {}
-IncludeDir["stb"] = "../Uneye/vendor/stb/include"
+IncludeDir["stb"] = "../Uneye/vendor/stb"
 IncludeDir["yaml_cpp"] = "../Uneye/vendor/yaml-cpp/include"
 IncludeDir["GLFW"] = "../Uneye/vendor/GLFW/include"
 IncludeDir["Glad"] = "../Uneye/vendor/Glad/include"
@@ -21,7 +21,6 @@ IncludeDir["VulkanSDK"] = "%{VULKAN_SDK}/Include"
 IncludeDir["msdf_atlas_gen"] = "../Uneye/vendor/msdf-atlas-gen/msdf-atlas-gen"
 IncludeDir["msdfgen"] = "../Uneye/vendor/msdf-atlas-gen/msdfgen"
 IncludeDir["zlib"] = "../Uneye/vendor/zlib"
-IncludeDir["tinyxml2"] = "../Uneye/vendor/tinyxml2"
 
 LibraryDir = {}
 

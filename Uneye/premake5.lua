@@ -16,11 +16,11 @@ project "Uneye"
 		"src/**.cpp",
 		"src/**.rc",
 		"src/**.aps",
-		"vendor/stb/src/**.c",
-		"vendor/stb/src/**.cpp",
-		"vendor/stb/include/**.h",
+		
 		"vendor/glm/glm/**.hpp",
 		"vendor/glm/glm/**.inl",
+
+		"vendor/stb/*.h",
 
 		"vendor/ImGuizmo/**.h",
 		"vendor/ImGuizmo/**.cpp"
@@ -49,8 +49,7 @@ project "Uneye"
 		"%{IncludeDir.yaml_cpp}",
 		"%{IncludeDir.ImGuizmo}",
 		"%{IncludeDir.VulkanSDK}",
-		"%{IncludeDir.zlib}",
-		"%{IncludeDir.tinyxml2}"
+		"%{IncludeDir.zlib}"
 	}
 
 	links 
@@ -63,7 +62,7 @@ project "Uneye"
 		"yaml-cpp",
 		"opengl32.lib",
 		"zlib",
-		"tinyxml2",
+		"stb",
 
 		"%{Library.mono}"
 	}

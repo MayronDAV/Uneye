@@ -23,7 +23,8 @@ project "Uneye-Editor"
 		"%{IncludeDir.entt}",
 		"%{IncludeDir.filewatch}",
 		"%{IncludeDir.glm}",
-		"%{IncludeDir.ImGuizmo}"
+		"%{IncludeDir.ImGuizmo}",
+		"%{IncludeDir.stb}"
 	}
 
 	links "Uneye"

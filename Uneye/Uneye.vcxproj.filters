@@ -85,12 +85,6 @@
     <Filter Include="vendor\stb">
       <UniqueIdentifier>{8BD3C5A8-778B-07F6-E092-E051CC69A2E6}</UniqueIdentifier>
     </Filter>
-    <Filter Include="vendor\stb\include">
-      <UniqueIdentifier>{FE550769-EA39-C8BE-539A-C2113F9DB240}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="vendor\stb\src">
-      <UniqueIdentifier>{225F6677-0E2D-5A7D-F7C0-CAA3E32D36E2}</UniqueIdentifier>
-    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Platform\OpenGL\OpenGLBuffer.h">
@@ -166,6 +160,9 @@
       <Filter>src\Uneye\Core</Filter>
     </ClInclude>
     <ClInclude Include="src\Uneye\Core\EntryPoint.h">
+      <Filter>src\Uneye\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Uneye\Core\ErrorWindow.h">
       <Filter>src\Uneye\Core</Filter>
     </ClInclude>
     <ClInclude Include="src\Uneye\Core\Filesystem.h">
@@ -301,6 +298,9 @@
       <Filter>src\Uneye\Scene</Filter>
     </ClInclude>
     <ClInclude Include="src\Uneye\Scene\SceneCamera.h">
+      <Filter>src\Uneye\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Uneye\Scene\SceneManager.h">
       <Filter>src\Uneye\Scene</Filter>
     </ClInclude>
     <ClInclude Include="src\Uneye\Scene\SceneSerializer.h">
@@ -1449,68 +1449,66 @@
     <ClInclude Include="vendor\glm\glm\vector_relational.hpp">
       <Filter>vendor\glm\glm</Filter>
     </ClInclude>
-    <ClInclude Include="vendor\stb\include\stb_c_lexer.h">
-      <Filter>vendor\stb\include</Filter>
+    <ClInclude Include="vendor\stb\stb_c_lexer.h">
+      <Filter>vendor\stb</Filter>
     </ClInclude>
-    <ClInclude Include="vendor\stb\include\stb_connected_components.h">
-      <Filter>vendor\stb\include</Filter>
+    <ClInclude Include="vendor\stb\stb_connected_components.h">
+      <Filter>vendor\stb</Filter>
     </ClInclude>
-    <ClInclude Include="vendor\stb\include\stb_divide.h">
-      <Filter>vendor\stb\include</Filter>
+    <ClInclude Include="vendor\stb\stb_divide.h">
+      <Filter>vendor\stb</Filter>
     </ClInclude>
-    <ClInclude Include="vendor\stb\include\stb_ds.h">
-      <Filter>vendor\stb\include</Filter>
+    <ClInclude Include="vendor\stb\stb_ds.h">
+      <Filter>vendor\stb</Filter>
     </ClInclude>
-    <ClInclude Include="vendor\stb\include\stb_dxt.h">
-      <Filter>vendor\stb\include</Filter>
+    <ClInclude Include="vendor\stb\stb_dxt.h">
+      <Filter>vendor\stb</Filter>
     </ClInclude>
-    <ClInclude Include="vendor\stb\include\stb_easy_font.h">
-      <Filter>vendor\stb\include</Filter>
+    <ClInclude Include="vendor\stb\stb_easy_font.h">
+      <Filter>vendor\stb</Filter>
     </ClInclude>
-    <ClInclude Include="vendor\stb\include\stb_herringbone_wang_tile.h">
-      <Filter>vendor\stb\include</Filter>
+    <ClInclude Include="vendor\stb\stb_herringbone_wang_tile.h">
+      <Filter>vendor\stb</Filter>
     </ClInclude>
-    <ClInclude Include="vendor\stb\include\stb_hexwave.h">
-      <Filter>vendor\stb\include</Filter>
+    <ClInclude Include="vendor\stb\stb_hexwave.h">
+      <Filter>vendor\stb</Filter>
     </ClInclude>
-    <ClInclude Include="vendor\stb\include\stb_image.h">
-      <Filter>vendor\stb\include</Filter>
+    <ClInclude Include="vendor\stb\stb_image.h">
+      <Filter>vendor\stb</Filter>
     </ClInclude>
-    <ClInclude Include="vendor\stb\include\stb_image_resize2.h">
-      <Filter>vendor\stb\include</Filter>
+    <ClInclude Include="vendor\stb\stb_image_resize2.h">
+      <Filter>vendor\stb</Filter>
     </ClInclude>
-    <ClInclude Include="vendor\stb\include\stb_image_write.h">
-      <Filter>vendor\stb\include</Filter>
+    <ClInclude Include="vendor\stb\stb_image_write.h">
+      <Filter>vendor\stb</Filter>
     </ClInclude>
-    <ClInclude Include="vendor\stb\include\stb_include.h">
-      <Filter>vendor\stb\include</Filter>
+    <ClInclude Include="vendor\stb\stb_include.h">
+      <Filter>vendor\stb</Filter>
     </ClInclude>
-    <ClInclude Include="vendor\stb\include\stb_leakcheck.h">
-      <Filter>vendor\stb\include</Filter>
+    <ClInclude Include="vendor\stb\stb_leakcheck.h">
+      <Filter>vendor\stb</Filter>
     </ClInclude>
-    <ClInclude Include="vendor\stb\include\stb_perlin.h">
-      <Filter>vendor\stb\include</Filter>
+    <ClInclude Include="vendor\stb\stb_perlin.h">
+      <Filter>vendor\stb</Filter>
     </ClInclude>
-    <ClInclude Include="vendor\stb\include\stb_rect_pack.h">
-      <Filter>vendor\stb\include</Filter>
+    <ClInclude Include="vendor\stb\stb_rect_pack.h">
+      <Filter>vendor\stb</Filter>
     </ClInclude>
-    <ClInclude Include="vendor\stb\include\stb_sprintf.h">
-      <Filter>vendor\stb\include</Filter>
+    <ClInclude Include="vendor\stb\stb_sprintf.h">
+      <Filter>vendor\stb</Filter>
     </ClInclude>
-    <ClInclude Include="vendor\stb\include\stb_textedit.h">
-      <Filter>vendor\stb\include</Filter>
+    <ClInclude Include="vendor\stb\stb_textedit.h">
+      <Filter>vendor\stb</Filter>
     </ClInclude>
-    <ClInclude Include="vendor\stb\include\stb_tilemap_editor.h">
-      <Filter>vendor\stb\include</Filter>
+    <ClInclude Include="vendor\stb\stb_tilemap_editor.h">
+      <Filter>vendor\stb</Filter>
     </ClInclude>
-    <ClInclude Include="vendor\stb\include\stb_truetype.h">
-      <Filter>vendor\stb\include</Filter>
+    <ClInclude Include="vendor\stb\stb_truetype.h">
+      <Filter>vendor\stb</Filter>
     </ClInclude>
-    <ClInclude Include="vendor\stb\include\stb_voxel_render.h">
-      <Filter>vendor\stb\include</Filter>
+    <ClInclude Include="vendor\stb\stb_voxel_render.h">
+      <Filter>vendor\stb</Filter>
     </ClInclude>
-    <ClInclude Include="src\Uneye\Core\ErrorWindow.h" />
-    <ClInclude Include="src\Uneye\Scene\SceneManager.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Platform\OpenGL\OpenGLBuffer.cpp">
@@ -1536,6 +1534,9 @@
     </ClCompile>
     <ClCompile Include="src\Platform\OpenGL\OpenGLVertexArray.cpp">
       <Filter>src\Platform\OpenGL</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Platform\Windows\ErrorWindow.cpp">
+      <Filter>src\Platform\Windows</Filter>
     </ClCompile>
     <ClCompile Include="src\Platform\Windows\WindowsInput.cpp">
       <Filter>src\Platform\Windows</Filter>
@@ -1666,6 +1667,9 @@
     <ClCompile Include="src\Uneye\Scene\SceneCamera.cpp">
       <Filter>src\Uneye\Scene</Filter>
     </ClCompile>
+    <ClCompile Include="src\Uneye\Scene\SceneManager.cpp">
+      <Filter>src\Uneye\Scene</Filter>
+    </ClCompile>
     <ClCompile Include="src\Uneye\Scene\SceneSerializer.cpp">
       <Filter>src\Uneye\Scene</Filter>
     </ClCompile>
@@ -1705,10 +1709,5 @@
     <ClCompile Include="vendor\ImGuizmo\example\main.cpp">
       <Filter>vendor\ImGuizmo\example</Filter>
     </ClCompile>
-    <ClCompile Include="vendor\stb\src\stb_image.cpp">
-      <Filter>vendor\stb\src</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Platform\Windows\ErrorWindow.cpp" />
-    <ClCompile Include="src\Uneye\Scene\SceneManager.cpp" />
   </ItemGroup>
 </Project>

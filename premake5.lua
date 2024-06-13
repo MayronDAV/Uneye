@@ -41,7 +41,7 @@ group "Dependencies"
 	include "Uneye/vendor/Box2D"
 	include "Uneye/vendor/yaml-cpp"
 	include "Uneye/vendor/zlib"
-	include "Uneye/vendor/tinyxml2"
+	include "Uneye/vendor/stb"
 group ""
 
 group "Core"

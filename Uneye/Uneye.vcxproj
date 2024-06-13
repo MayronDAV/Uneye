@@ -77,7 +77,7 @@
       <PrecompiledHeaderFile>uypch.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>_SILENCE_STDEXT_ARR_ITERS_DEPRECATION_WARNING;_SILENCE_ALL_MS_EXT_DEPRECATION_WARNINGS;_CRT_SECURE_NO_WARNINGS;UNEYE_PLATFORM_WINDOWS;GLFW_INCLUDE_NONE;UNEYE_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>src;vendor\spdlog\include;vendor\GLFW\include;vendor\Glad\include;vendor\imgui;vendor\msdf-atlas-gen\msdfgen;vendor\msdf-atlas-gen\msdf-atlas-gen;vendor\glm;vendor\Box2D\include;vendor\filewatch;vendor\stb\include;vendor\entt\include;vendor\mono\include;vendor\yaml-cpp\include;vendor\ImGuizmo;C:\VulkanSDK\1.3.216.0\Include;vendor\zlib;vendor\tinyxml2;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>src;vendor\spdlog\include;vendor\GLFW\include;vendor\Glad\include;vendor\imgui;vendor\msdf-atlas-gen\msdfgen;vendor\msdf-atlas-gen\msdf-atlas-gen;vendor\glm;vendor\Box2D\include;vendor\filewatch;vendor\stb;vendor\entt\include;vendor\mono\include;vendor\yaml-cpp\include;vendor\ImGuizmo;C:\VulkanSDK\1.3.216.0\Include;vendor\zlib;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
       <Optimization>Disabled</Optimization>
       <MinimalRebuild>false</MinimalRebuild>
@@ -99,7 +99,7 @@
       <PrecompiledHeaderFile>uypch.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>_SILENCE_STDEXT_ARR_ITERS_DEPRECATION_WARNING;_SILENCE_ALL_MS_EXT_DEPRECATION_WARNINGS;_CRT_SECURE_NO_WARNINGS;UNEYE_PLATFORM_WINDOWS;GLFW_INCLUDE_NONE;UNEYE_RELEASE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>src;vendor\spdlog\include;vendor\GLFW\include;vendor\Glad\include;vendor\imgui;vendor\msdf-atlas-gen\msdfgen;vendor\msdf-atlas-gen\msdf-atlas-gen;vendor\glm;vendor\Box2D\include;vendor\filewatch;vendor\stb\include;vendor\entt\include;vendor\mono\include;vendor\yaml-cpp\include;vendor\ImGuizmo;C:\VulkanSDK\1.3.216.0\Include;vendor\zlib;vendor\tinyxml2;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>src;vendor\spdlog\include;vendor\GLFW\include;vendor\Glad\include;vendor\imgui;vendor\msdf-atlas-gen\msdfgen;vendor\msdf-atlas-gen\msdf-atlas-gen;vendor\glm;vendor\Box2D\include;vendor\filewatch;vendor\stb;vendor\entt\include;vendor\mono\include;vendor\yaml-cpp\include;vendor\ImGuizmo;C:\VulkanSDK\1.3.216.0\Include;vendor\zlib;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <Optimization>Full</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
@@ -124,7 +124,7 @@
       <PrecompiledHeaderFile>uypch.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>_SILENCE_STDEXT_ARR_ITERS_DEPRECATION_WARNING;_SILENCE_ALL_MS_EXT_DEPRECATION_WARNINGS;_CRT_SECURE_NO_WARNINGS;UNEYE_PLATFORM_WINDOWS;GLFW_INCLUDE_NONE;UNEYE_DIST;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>src;vendor\spdlog\include;vendor\GLFW\include;vendor\Glad\include;vendor\imgui;vendor\msdf-atlas-gen\msdfgen;vendor\msdf-atlas-gen\msdf-atlas-gen;vendor\glm;vendor\Box2D\include;vendor\filewatch;vendor\stb\include;vendor\entt\include;vendor\mono\include;vendor\yaml-cpp\include;vendor\ImGuizmo;C:\VulkanSDK\1.3.216.0\Include;vendor\zlib;vendor\tinyxml2;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>src;vendor\spdlog\include;vendor\GLFW\include;vendor\Glad\include;vendor\imgui;vendor\msdf-atlas-gen\msdfgen;vendor\msdf-atlas-gen\msdf-atlas-gen;vendor\glm;vendor\Box2D\include;vendor\filewatch;vendor\stb;vendor\entt\include;vendor\mono\include;vendor\yaml-cpp\include;vendor\ImGuizmo;C:\VulkanSDK\1.3.216.0\Include;vendor\zlib;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <Optimization>Full</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
@@ -598,26 +598,26 @@
     <ClInclude Include="vendor\glm\glm\vec3.hpp" />
     <ClInclude Include="vendor\glm\glm\vec4.hpp" />
     <ClInclude Include="vendor\glm\glm\vector_relational.hpp" />
-    <ClInclude Include="vendor\stb\include\stb_c_lexer.h" />
-    <ClInclude Include="vendor\stb\include\stb_connected_components.h" />
-    <ClInclude Include="vendor\stb\include\stb_divide.h" />
-    <ClInclude Include="vendor\stb\include\stb_ds.h" />
-    <ClInclude Include="vendor\stb\include\stb_dxt.h" />
-    <ClInclude Include="vendor\stb\include\stb_easy_font.h" />
-    <ClInclude Include="vendor\stb\include\stb_herringbone_wang_tile.h" />
-    <ClInclude Include="vendor\stb\include\stb_hexwave.h" />
-    <ClInclude Include="vendor\stb\include\stb_image.h" />
-    <ClInclude Include="vendor\stb\include\stb_image_resize2.h" />
-    <ClInclude Include="vendor\stb\include\stb_image_write.h" />
-    <ClInclude Include="vendor\stb\include\stb_include.h" />
-    <ClInclude Include="vendor\stb\include\stb_leakcheck.h" />
-    <ClInclude Include="vendor\stb\include\stb_perlin.h" />
-    <ClInclude Include="vendor\stb\include\stb_rect_pack.h" />
-    <ClInclude Include="vendor\stb\include\stb_sprintf.h" />
-    <ClInclude Include="vendor\stb\include\stb_textedit.h" />
-    <ClInclude Include="vendor\stb\include\stb_tilemap_editor.h" />
-    <ClInclude Include="vendor\stb\include\stb_truetype.h" />
-    <ClInclude Include="vendor\stb\include\stb_voxel_render.h" />
+    <ClInclude Include="vendor\stb\stb_c_lexer.h" />
+    <ClInclude Include="vendor\stb\stb_connected_components.h" />
+    <ClInclude Include="vendor\stb\stb_divide.h" />
+    <ClInclude Include="vendor\stb\stb_ds.h" />
+    <ClInclude Include="vendor\stb\stb_dxt.h" />
+    <ClInclude Include="vendor\stb\stb_easy_font.h" />
+    <ClInclude Include="vendor\stb\stb_herringbone_wang_tile.h" />
+    <ClInclude Include="vendor\stb\stb_hexwave.h" />
+    <ClInclude Include="vendor\stb\stb_image.h" />
+    <ClInclude Include="vendor\stb\stb_image_resize2.h" />
+    <ClInclude Include="vendor\stb\stb_image_write.h" />
+    <ClInclude Include="vendor\stb\stb_include.h" />
+    <ClInclude Include="vendor\stb\stb_leakcheck.h" />
+    <ClInclude Include="vendor\stb\stb_perlin.h" />
+    <ClInclude Include="vendor\stb\stb_rect_pack.h" />
+    <ClInclude Include="vendor\stb\stb_sprintf.h" />
+    <ClInclude Include="vendor\stb\stb_textedit.h" />
+    <ClInclude Include="vendor\stb\stb_tilemap_editor.h" />
+    <ClInclude Include="vendor\stb\stb_truetype.h" />
+    <ClInclude Include="vendor\stb\stb_voxel_render.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Platform\OpenGL\OpenGLBuffer.cpp" />
@@ -704,7 +704,6 @@
     <ClCompile Include="vendor\ImGuizmo\example\main.cpp">
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
     </ClCompile>
-    <ClCompile Include="vendor\stb\src\stb_image.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="vendor\GLFW\GLFW.vcxproj">
@@ -728,8 +727,8 @@
     <ProjectReference Include="vendor\zlib\zlib.vcxproj">
       <Project>{16CFA17C-0206-A30D-ABF2-881097081F0F}</Project>
     </ProjectReference>
-    <ProjectReference Include="vendor\tinyxml2\tinyxml2.vcxproj">
-      <Project>{8C609325-782D-EE30-A146-DCD88D7223BF}</Project>
+    <ProjectReference Include="vendor\stb\stb.vcxproj">
+      <Project>{6EAB880B-DAB4-887C-6330-9F7CCF38947C}</Project>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

@@ -270,7 +270,7 @@ namespace Uneye
 				{
 					auto [transform, sprite] = group.get<TransformComponent, SpriteComponent>(entity);
 
-					Renderer2D::DrawSprite(transform.GetTransform(), sprite, (int)entity);
+					Renderer2D::DrawSprite(transform.GetTransform(), sprite, (int)entity, Handle);
 				}
 			}
 
@@ -282,7 +282,7 @@ namespace Uneye
 					auto [transform, circle] = view.get<TransformComponent, CircleComponent>(entity);
 
 
-					Renderer2D::DrawCircle(transform.GetTransform(), circle.Color, circle.Thickness, circle.Fade, (int)entity);
+					Renderer2D::DrawCircle(transform.GetTransform(), circle.Color, circle.Thickness, circle.Fade, (int)entity, Handle);
 				}
 			}
 
@@ -293,7 +293,7 @@ namespace Uneye
 				{
 					auto [transform, text] = view.get<TransformComponent, TextComponent>(entity);
 
-					Renderer2D::DrawString(text.TextString, transform.GetTransform(), text, (int)entity);
+					Renderer2D::DrawString(text.TextString, transform.GetTransform(), text, (int)entity, Handle);
 				}
 			}
 
@@ -495,7 +495,7 @@ namespace Uneye
 				auto [transform, sprite] = group.get<TransformComponent, SpriteComponent>(entity);
 
 
-				Renderer2D::DrawSprite(transform.GetTransform(), sprite, (int)entity);
+				Renderer2D::DrawSprite(transform.GetTransform(), sprite, (int)entity, Handle);
 			}
 		}
 
@@ -507,7 +507,7 @@ namespace Uneye
 				auto [transform, circle] = view.get<TransformComponent, CircleComponent>(entity);
 
 
-				Renderer2D::DrawCircle(transform.GetTransform(), circle.Color, circle.Thickness, circle.Fade, (int)entity);
+				Renderer2D::DrawCircle(transform.GetTransform(), circle.Color, circle.Thickness, circle.Fade, (int)entity, Handle);
 			}
 		}
 
@@ -517,7 +517,7 @@ namespace Uneye
 			for (auto entity : view)
 			{
 				auto [transform, text] = view.get<TransformComponent, TextComponent>(entity);
-				Renderer2D::DrawString(text.TextString, transform.GetTransform(), text, (int)entity);
+				Renderer2D::DrawString(text.TextString, transform.GetTransform(), text, (int)entity, Handle);
 			}
 		}
 

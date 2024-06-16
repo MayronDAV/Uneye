@@ -18,9 +18,14 @@ namespace Uneye
 				s_RendererAPI->SetViewport(x, y, width, height);
 			}
 
-			static void Clear(const glm::vec4& color)
+			static void ClearColor(const glm::vec4& color)
 			{
-				s_RendererAPI->Clear(color);
+				s_RendererAPI->ClearColor(color);
+			}
+
+			static void ClearDepth()
+			{
+				s_RendererAPI->ClearDepth();
 			}
 
 			static void DrawIndexed(const Ref<VertexArray>& vertexArray, uint32_t indexCount = 0)

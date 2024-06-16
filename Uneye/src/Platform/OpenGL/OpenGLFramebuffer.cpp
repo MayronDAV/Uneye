@@ -27,6 +27,47 @@ namespace Uneye
 			glBindTexture(TextureTarget(multisampled), id);
 		}
 
+		static GLenum UneyeFBTextureInternalFormatToGL(FramebufferTextureFormat internalFormat)
+		{
+			switch (internalFormat)
+			{
+				case FramebufferTextureFormat::RGBA8:	return GL_RGBA8;
+				case FramebufferTextureFormat::RGBA32F:	return GL_RGBA32F;
+				case FramebufferTextureFormat::R32I:	return GL_R32I;
+				case FramebufferTextureFormat::RG32UI:	return GL_RG32UI;
+			}
+
+			UNEYE_CORE_ASSERT(true);
+			return 0;
+		}
+
+		static GLenum UneyeFBTextureFormatToGL(FramebufferTextureFormat format)
+		{
+			switch (format)
+			{
+				case FramebufferTextureFormat::RGBA8:	return GL_RGBA;
+				case FramebufferTextureFormat::RGBA32F:	return GL_RGBA;
+				case FramebufferTextureFormat::R32I:	return GL_RED_INTEGER;
+				case FramebufferTextureFormat::RG32UI:	return GL_RG_INTEGER;
+			}
+
+			UNEYE_CORE_ASSERT(true);
+			return 0;
+		}
+
+		static GLenum GLToType(GLenum internalFormat)
+		{
+			switch (internalFormat)
+			{
+				case GL_RGBA32F:	  return GL_FLOAT;
+				case GL_RGBA8:		  return GL_UNSIGNED_BYTE;
+				case GL_R32I:		  return GL_INT;
+				case GL_RG32UI:		  return GL_UNSIGNED_INT;
+
+				default:			  return GL_UNSIGNED_BYTE;
+			}
+		}
+
 		static void AttachColorTexture(uint32_t id, int samples, GLenum internalFormat, GLenum format,
 			uint32_t width, uint32_t height, int index)
 		{
@@ -37,7 +78,9 @@ namespace Uneye
 			}
 			else
 			{
-				glTexImage2D(GL_TEXTURE_2D, 0, internalFormat, width, height, 0, format, GL_UNSIGNED_INT, nullptr);
+				GLenum type = GLToType(internalFormat);			
+				glTexImage2D(GL_TEXTURE_2D, 0, internalFormat, width, height, 0, format, type, nullptr);
+
 				glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 				glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 				glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_R, GL_CLAMP_TO_EDGE);
@@ -85,18 +128,6 @@ namespace Uneye
 			}	
 
 			return false;
-		}
-
-		static GLenum UneyeFBTextureFormatToGL(FramebufferTextureFormat format)
-		{
-			switch (format)
-			{
-				case FramebufferTextureFormat::RGBA8:		 return GL_RGBA8;
-				case FramebufferTextureFormat::RED_INTEGER:  return GL_RED_INTEGER;
-			}
-
-			UNEYE_CORE_ASSERT(true, "");
-			return 0;
 		}
 	}
 
@@ -156,22 +187,10 @@ namespace Uneye
 			{
 				Utils::BindTexture(multisample, m_ColorAttachments[i]);
 
-				switch (m_ColorAttachmentSpecs[i].TextureFormat)
-				{
-					case FramebufferTextureFormat::RGBA8:
-					{
-						Utils::AttachColorTexture(m_ColorAttachments[i], m_Specification.Samples,
-							GL_RGBA8, GL_RGBA, m_Specification.Width, m_Specification.Height, i);
-
-						break;
-					}
-					case FramebufferTextureFormat::RED_INTEGER:
-					{
-						Utils::AttachColorTexture(m_ColorAttachments[i], m_Specification.Samples,
-							GL_R32I, GL_RED_INTEGER, m_Specification.Width, m_Specification.Height, i);
-						break;
-					}
-				}
+				Utils::AttachColorTexture(m_ColorAttachments[i], m_Specification.Samples,
+					Utils::UneyeFBTextureInternalFormatToGL(m_ColorAttachmentSpecs[i].TextureFormat),
+					Utils::UneyeFBTextureFormatToGL(m_ColorAttachmentSpecs[i].TextureFormat),
+					m_Specification.Width, m_Specification.Height, i);
 
 				Utils::BindTexture(multisample, 0);
 			}
@@ -197,24 +216,21 @@ namespace Uneye
 
 		if (m_ColorAttachments.size() > 1)
 		{
-			UNEYE_CORE_ASSERT(m_ColorAttachments.size() >= 4, "Currently only support 4 color attachment!");
+			UNEYE_CORE_ASSERT(m_ColorAttachments.size() >= 32, "Only support 32 color attachment!");
 
-			GLenum  buffers[4] = {
-				GL_COLOR_ATTACHMENT0,
-				GL_COLOR_ATTACHMENT1,
-				GL_COLOR_ATTACHMENT2,
-				GL_COLOR_ATTACHMENT3,
-			};
-			glDrawBuffers(m_ColorAttachments.size(), buffers);
+			std::vector<GLenum> buffers;
+			for (int i = 0; i < m_ColorAttachments.size(); i++)
+			{
+				buffers.push_back(GL_COLOR_ATTACHMENT0 + i);
+			}
+
+			glDrawBuffers(m_ColorAttachments.size(), buffers.data());
 		}
 		else if (m_ColorAttachments.empty())
 		{
 			// Only depth-buffer
 			glDrawBuffer(GL_NONE);
 		}
-
-
-
 
 		UNEYE_CORE_ASSERT(
 			glCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE, 
@@ -255,25 +271,29 @@ namespace Uneye
 		Invalidate();
 	}
 
-	int OpenGLFramebuffer::ReadPixel(uint32_t attachmentIndex, int x, int y)
+	void OpenGLFramebuffer::ReadPixel(uint32_t attachmentIndex, int x, int y, int w, int h, void* data)
 	{
 		UNEYE_CORE_ASSERT(attachmentIndex >= m_ColorAttachments.size());
 
 		glReadBuffer(GL_COLOR_ATTACHMENT0 + attachmentIndex);
 
-		int pixelData;
-		glReadPixels(x, y, 1, 1, GL_RED_INTEGER, GL_INT, &pixelData);
+		auto& spec = m_ColorAttachmentSpecs[attachmentIndex];
+		GLenum internalFormat = Utils::UneyeFBTextureInternalFormatToGL(spec.TextureFormat);
+		GLenum format = Utils::UneyeFBTextureFormatToGL(spec.TextureFormat);
 
-		return pixelData;
+		glReadPixels(x, y, w, h, format, Utils::GLToType(internalFormat), data);
 	}
 
-	void OpenGLFramebuffer::ClearAttachment(uint32_t attachmentIndex, int value)
+	void OpenGLFramebuffer::ClearAttachment(uint32_t attachmentIndex, void* value)
 	{
 		UNEYE_CORE_ASSERT(attachmentIndex >= m_ColorAttachments.size());
 
 		auto& spec = m_ColorAttachmentSpecs[attachmentIndex];
+		GLenum internalFormat = Utils::UneyeFBTextureInternalFormatToGL(spec.TextureFormat);
+		GLenum format = Utils::UneyeFBTextureFormatToGL(spec.TextureFormat);
+
 		glClearTexImage(m_ColorAttachments[attachmentIndex], 0,
-			Utils::UneyeFBTextureFormatToGL(spec.TextureFormat), GL_INT, &value);
+			format, Utils::GLToType(internalFormat), value);
 	}
 
 }

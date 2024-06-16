@@ -15,7 +15,7 @@
 	url = https://github.com/MayronDAV/stb
 [submodule "Uneye/vendor/ImGuizmo"]
 	path = Uneye/vendor/ImGuizmo
-	url = https://github.com/thecherno/ImGuizmo
+	url = https://github.com/MayronDAV/ImGuizmo
 [submodule "Uneye/vendor/shaderc"]
 	path = Uneye/vendor/shaderc
 	url = https://github.com/google/shaderc.git

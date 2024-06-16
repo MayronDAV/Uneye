@@ -11,6 +11,7 @@ layout(location = 2) in vec4 a_Color;
 layout(location = 3) in float a_Thickness;
 layout(location = 4) in float a_Fade;
 layout(location = 5) in int a_EntityID;
+layout(location = 6) in uvec2 a_SceneHandle;
 
 layout(std140, binding = 0) uniform Camera
 {
@@ -27,6 +28,7 @@ struct VertexOutput
 
 layout (location = 0) out VertexOutput Output;
 layout (location = 4) out flat int v_EntityID;
+layout (location = 5) out flat uvec2 v_SceneHandle;
 
 void main()
 {
@@ -36,6 +38,7 @@ void main()
 	Output.Fade = a_Fade;
 
 	v_EntityID = a_EntityID;
+	v_SceneHandle = a_SceneHandle;
 
 	gl_Position = u_ViewProjection * vec4(a_WorldPosition, 1.0);
 }
@@ -45,6 +48,7 @@ void main()
 
 layout(location = 0) out vec4 o_Color;
 layout(location = 1) out int o_EntityID;
+layout(location = 2) out uvec2 o_SceneHandle;
 
 struct VertexOutput
 {
@@ -56,6 +60,7 @@ struct VertexOutput
 
 layout (location = 0) in VertexOutput Input;
 layout (location = 4) in flat int v_EntityID;
+layout (location = 5) in flat uvec2 v_SceneHandle;
 
 void main()
 {
@@ -72,4 +77,5 @@ void main()
 	o_Color.a *= circle;
 
 	o_EntityID = v_EntityID;
+	o_SceneHandle = v_SceneHandle;
 }

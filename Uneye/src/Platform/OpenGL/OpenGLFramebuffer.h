@@ -20,8 +20,8 @@ namespace Uneye
 			virtual void Unbind() override;
 
 			virtual void Resize(uint32_t width, uint32_t height) override;
-			virtual int ReadPixel(uint32_t attachmentIndex, int x, int y) override;
-			virtual void ClearAttachment(uint32_t attachmentIndex, int value) override;
+			virtual void ReadPixel(uint32_t attachmentIndex, int x, int y, int w, int h, void* data) override;
+			virtual void ClearAttachment(uint32_t attachmentIndex, void* value) override;
 
 			virtual uint32_t GetColorAttachmentRendererID(uint32_t index) const override {
 				UNEYE_CORE_ASSERT(index >= m_ColorAttachments.size(), "Index must be less than size of m_ColorAttachments");

@@ -25,6 +25,7 @@ namespace Uneye
 
 		// Editor only
 		int EntityID;
+		glm::uvec2 SceneHandle;
 	};
 
 	struct CircleVertex
@@ -37,6 +38,7 @@ namespace Uneye
 
 		// Editor only
 		int EntityID;
+		glm::uvec2 SceneHandle;
 	};
 
 	struct LineVertex
@@ -46,6 +48,7 @@ namespace Uneye
 
 		// Editor only
 		int EntityID;
+		glm::uvec2 SceneHandle;
 	};
 
 	struct TextVertex
@@ -58,6 +61,7 @@ namespace Uneye
 
 		// Editor-only
 		int EntityID;
+		glm::uvec2 SceneHandle;
 	};
 
 	struct Renderer2Ddata
@@ -155,6 +159,7 @@ namespace Uneye
 			{ ShaderDataType::Float2, "a_TexCoord" },
 			{ ShaderDataType::Float , "a_TexIndex" },
 			{ ShaderDataType::Int,	  "a_EntityID" },
+			{ ShaderDataType::UInt2, "a_SceneHandle" },
 		});
 		s_Data.QuadVertexArray->AddVertexBuffer(s_Data.QuadVertexBuffer);
 
@@ -201,6 +206,7 @@ namespace Uneye
 			{ ShaderDataType::Float	, "a_Thickness"		 },
 			{ ShaderDataType::Float	, "a_Fade"			 },
 			{ ShaderDataType::Int,	  "a_EntityID" },
+			{ ShaderDataType::UInt2, "a_SceneHandle" },
 		});
 		s_Data.CircleVertexArray->AddVertexBuffer(s_Data.CircleVertexBuffer);
 		s_Data.CircleVertexArray->SetIndexBuffer(quadIB); // Use quadIB
@@ -218,6 +224,7 @@ namespace Uneye
 			{ ShaderDataType::Float3, "a_Position"  },
 			{ ShaderDataType::Float4, "a_Color"	    },
 			{ ShaderDataType::Int,	  "a_EntityID" },
+			{ ShaderDataType::UInt2, "a_SceneHandle" },
 			});
 		s_Data.LineVertexArray->AddVertexBuffer(s_Data.LineVertexBuffer);
 		s_Data.LineVertexBufferBase = new LineVertex[s_Data.MaxVertices];
@@ -235,6 +242,7 @@ namespace Uneye
 			{ ShaderDataType::Float4, "a_Color"        },
 			{ ShaderDataType::Float2, "a_TexCoord"     },
 			{ ShaderDataType::Int,	  "a_EntityID" },
+			{ ShaderDataType::UInt2, "a_SceneHandle" },
 			});
 		s_Data.TextVertexArray->AddVertexBuffer(s_Data.TextVertexBuffer);
 		s_Data.TextVertexArray->SetIndexBuffer(quadIB);
@@ -377,13 +385,13 @@ namespace Uneye
 
 
 	void Renderer2D::DrawQuad(const glm::vec2& p_position, const glm::vec2& p_size, 
-		const glm::vec4& p_color, const Ref<Texture2D>& p_texture, int p_entityID)
+		const glm::vec4& p_color, const Ref<Texture2D>& p_texture, int p_entityID, uint64_t p_sceneHandle)
 	{
-		DrawQuad({ p_position.x, p_position.y, 0.0f }, p_size, p_color, p_texture, p_entityID);
+		DrawQuad({ p_position.x, p_position.y, 0.0f }, p_size, p_color, p_texture, p_entityID, p_sceneHandle);
 	}
 
 	void Renderer2D::DrawQuad(const glm::vec3& p_position, const glm::vec2& p_size,
-		const glm::vec4& p_color, const Ref<Texture2D>& p_texture, int p_entityID)
+		const glm::vec4& p_color, const Ref<Texture2D>& p_texture, int p_entityID, uint64_t p_sceneHandle)
 	{
 		UNEYE_PROFILE_FUNCTION();
 		UNEYE_CORE_VERIFY(!p_texture);
@@ -425,6 +433,8 @@ namespace Uneye
 		glm::mat4 transform = glm::translate(glm::mat4(1.0f), p_position);
 		transform = glm::scale(transform, { p_size.x, p_size.y, 1.0f });
 
+		uint32_t highPart = static_cast<uint32_t>(p_sceneHandle >> 32);
+		uint32_t lowPart = static_cast<uint32_t>(p_sceneHandle);
 		for (int i = 0; i < quadVertexCount; i++)
 		{
 			s_Data.QuadVertexBufferPtr->Position = transform * s_Data.QuadVertexPositions[i];
@@ -432,6 +442,7 @@ namespace Uneye
 			s_Data.QuadVertexBufferPtr->TexCoord = QuadTexCoords[i];
 			s_Data.QuadVertexBufferPtr->TexIndex = textureIndex;
 			s_Data.QuadVertexBufferPtr->EntityID = p_entityID;
+			s_Data.QuadVertexBufferPtr->SceneHandle = glm::uvec2(highPart, lowPart);
 			s_Data.QuadVertexBufferPtr++;
 		}
 
@@ -443,7 +454,7 @@ namespace Uneye
 	}
 
 	void Renderer2D::DrawQuad(const glm::mat4& p_transform, const glm::vec4& p_color,
-		const Ref<Texture2D>& p_texture, int p_entityID)
+		const Ref<Texture2D>& p_texture, int p_entityID, uint64_t p_sceneHandle)
 	{
 		UNEYE_PROFILE_FUNCTION();
 
@@ -481,6 +492,8 @@ namespace Uneye
 			}
 		}
 
+		uint32_t highPart = static_cast<uint32_t>(p_sceneHandle >> 32);
+		uint32_t lowPart = static_cast<uint32_t>(p_sceneHandle);
 		for (int i = 0; i < quadVertexCount; i++)
 		{
 			s_Data.QuadVertexBufferPtr->Position = p_transform * s_Data.QuadVertexPositions[i];
@@ -488,6 +501,7 @@ namespace Uneye
 			s_Data.QuadVertexBufferPtr->TexCoord = QuadTexCoords[i];
 			s_Data.QuadVertexBufferPtr->TexIndex = textureIndex;
 			s_Data.QuadVertexBufferPtr->EntityID = p_entityID;
+			s_Data.QuadVertexBufferPtr->SceneHandle = glm::uvec2(highPart, lowPart);
 			s_Data.QuadVertexBufferPtr++;
 		}
 
@@ -502,13 +516,13 @@ namespace Uneye
 
 
 	void Renderer2D::DrawQuad(const glm::vec2& p_position, const glm::vec2& p_size,
-		const Ref<SubTexture2D>& p_subtexture, const glm::vec4& p_color, int p_entityID)
+		const Ref<SubTexture2D>& p_subtexture, const glm::vec4& p_color, int p_entityID, uint64_t p_sceneHandle)
 	{
 		DrawQuad(glm::vec3(p_position, 0.0f), p_size, p_subtexture, p_color);
 	}
 
 	void Renderer2D::DrawQuad(const glm::vec3& p_position, const glm::vec2& p_size,
-		const Ref<SubTexture2D>& p_subtexture, const glm::vec4& p_color, int p_entityID)
+		const Ref<SubTexture2D>& p_subtexture, const glm::vec4& p_color, int p_entityID, uint64_t p_sceneHandle)
 	{
 		UNEYE_PROFILE_FUNCTION();
 
@@ -555,6 +569,8 @@ namespace Uneye
 		glm::mat4 transform = glm::translate(glm::mat4(1.0f), p_position);
 		transform = glm::scale(transform, { p_size.x, p_size.y, 1.0f });
 
+		uint32_t highPart = static_cast<uint32_t>(p_sceneHandle >> 32);
+		uint32_t lowPart = static_cast<uint32_t>(p_sceneHandle);
 		for (int i = 0; i < quadVertexCount; i++)
 		{
 			s_Data.QuadVertexBufferPtr->Position = transform * s_Data.QuadVertexPositions[i];
@@ -562,6 +578,7 @@ namespace Uneye
 			s_Data.QuadVertexBufferPtr->TexCoord = texcoord[i];
 			s_Data.QuadVertexBufferPtr->TexIndex = textureIndex;
 			s_Data.QuadVertexBufferPtr->EntityID = p_entityID;
+			s_Data.QuadVertexBufferPtr->SceneHandle = glm::uvec2(highPart, lowPart);
 			s_Data.QuadVertexBufferPtr++;
 		}
 
@@ -573,7 +590,7 @@ namespace Uneye
 	}
 
 	void Renderer2D::DrawQuad(const glm::mat4& p_transform, const Ref<SubTexture2D>& p_subtexture,
-		const glm::vec4& p_color, int p_entityID)
+		const glm::vec4& p_color, int p_entityID, uint64_t p_sceneHandle)
 	{
 		UNEYE_PROFILE_FUNCTION();
 
@@ -617,6 +634,8 @@ namespace Uneye
 			}
 		}
 
+		uint32_t highPart = static_cast<uint32_t>(p_sceneHandle >> 32);
+		uint32_t lowPart = static_cast<uint32_t>(p_sceneHandle);
 		for (int i = 0; i < quadVertexCount; i++)
 		{
 			s_Data.QuadVertexBufferPtr->Position = p_transform * s_Data.QuadVertexPositions[i];
@@ -624,6 +643,7 @@ namespace Uneye
 			s_Data.QuadVertexBufferPtr->TexCoord = texcoord[i];
 			s_Data.QuadVertexBufferPtr->TexIndex = textureIndex;
 			s_Data.QuadVertexBufferPtr->EntityID = p_entityID;
+			s_Data.QuadVertexBufferPtr->SceneHandle = glm::uvec2(highPart, lowPart);
 			s_Data.QuadVertexBufferPtr++;
 		}
 
@@ -636,7 +656,7 @@ namespace Uneye
 
 
 
-	void Renderer2D::DrawSprite(const glm::mat4& p_transform, SpriteComponent& p_sc, int p_entityID)
+	void Renderer2D::DrawSprite(const glm::mat4& p_transform, SpriteComponent& p_sc, int p_entityID, uint64_t p_sceneHandle)
 	{
 		Ref<Texture2D> texture = AssetManager::GetAsset<Texture2D>(p_sc.Texture);
 
@@ -645,7 +665,7 @@ namespace Uneye
 			try
 			{
 				Ref<SubTexture2D> subtexture = SubTexture2D::CreateFromTexture(texture, p_sc.TileSize, p_sc.TileCoord, p_sc.SpriteSize);
-				DrawQuad(p_transform, subtexture, p_sc.Color, p_entityID);
+				DrawQuad(p_transform, subtexture, p_sc.Color, p_entityID, p_sceneHandle);
 			}
 			catch (...)
 			{
@@ -656,7 +676,7 @@ namespace Uneye
 		{
 			try
 			{
-				DrawQuad(p_transform, p_sc.Color, texture, p_entityID);
+				DrawQuad(p_transform, p_sc.Color, texture, p_entityID, p_sceneHandle);
 			}
 			catch (...)
 			{
@@ -665,7 +685,7 @@ namespace Uneye
 		}
 	}
 
-	void Renderer2D::DrawCircle(const glm::mat4& p_transform, const glm::vec4& p_color, float p_thickness, float p_fade, int p_entityID)
+	void Renderer2D::DrawCircle(const glm::mat4& p_transform, const glm::vec4& p_color, float p_thickness, float p_fade, int p_entityID, uint64_t p_sceneHandle)
 	{
 		UNEYE_PROFILE_FUNCTION();
 
@@ -674,6 +694,8 @@ namespace Uneye
 		//	FlushAndReset();
 
 
+		uint32_t highPart = static_cast<uint32_t>(p_sceneHandle >> 32);
+		uint32_t lowPart = static_cast<uint32_t>(p_sceneHandle);
 		for (size_t i = 0; i < 4; i++)
 		{
 			s_Data.CircleVertexBufferPtr->WorldPosition = p_transform * s_Data.QuadVertexPositions[i];
@@ -682,6 +704,7 @@ namespace Uneye
 			s_Data.CircleVertexBufferPtr->Thickness = p_thickness;
 			s_Data.CircleVertexBufferPtr->Fade = p_fade;
 			s_Data.CircleVertexBufferPtr->EntityID = p_entityID;
+			s_Data.CircleVertexBufferPtr->SceneHandle = glm::uvec2(highPart, lowPart);
 			s_Data.CircleVertexBufferPtr++;
 		}
 
@@ -690,48 +713,52 @@ namespace Uneye
 		s_Data.Stats.QuadCount++;
 	}
 
-	void Renderer2D::DrawLine(const glm::vec3& p_p0, const glm::vec3& p_p1, const glm::vec4& p_color, int p_entityID)
+	void Renderer2D::DrawLine(const glm::vec3& p_p0, const glm::vec3& p_p1, const glm::vec4& p_color, int p_entityID, uint64_t p_sceneHandle)
 	{
+		uint32_t highPart = static_cast<uint32_t>(p_sceneHandle >> 32);
+		uint32_t lowPart = static_cast<uint32_t>(p_sceneHandle);
 		s_Data.LineVertexBufferPtr->Position = p_p0;
 		s_Data.LineVertexBufferPtr->Color = p_color;
 		s_Data.LineVertexBufferPtr->EntityID = p_entityID;
+		s_Data.LineVertexBufferPtr->SceneHandle = glm::uvec2(highPart, lowPart);
 		s_Data.LineVertexBufferPtr++;
 
 		s_Data.LineVertexBufferPtr->Position = p_p1;
 		s_Data.LineVertexBufferPtr->Color = p_color;
 		s_Data.LineVertexBufferPtr->EntityID = p_entityID;
+		s_Data.LineVertexBufferPtr->SceneHandle = glm::uvec2(highPart, lowPart);
 		s_Data.LineVertexBufferPtr++;
 
 		s_Data.LineVertexCount += 2;
 	}
 
-	void Renderer2D::DrawRect(const glm::vec3& p_position, const glm::vec2& p_size, const glm::vec4& p_color, int p_entityID)
+	void Renderer2D::DrawRect(const glm::vec3& p_position, const glm::vec2& p_size, const glm::vec4& p_color, int p_entityID, uint64_t p_sceneHandle)
 	{
 		glm::vec3 p0 = glm::vec3(p_position.x - p_size.x * 0.5f, p_position.y - p_size.y * 0.5f, p_position.z);
 		glm::vec3 p1 = glm::vec3(p_position.x + p_size.x * 0.5f, p_position.y - p_size.y * 0.5f, p_position.z);
 		glm::vec3 p2 = glm::vec3(p_position.x + p_size.x * 0.5f, p_position.y + p_size.y * 0.5f, p_position.z);
 		glm::vec3 p3 = glm::vec3(p_position.x - p_size.x * 0.5f, p_position.y + p_size.y * 0.5f, p_position.z);
 
-		DrawLine(p0, p1, p_color, p_entityID);
-		DrawLine(p1, p2, p_color, p_entityID);
-		DrawLine(p2, p3, p_color, p_entityID);
-		DrawLine(p3, p0, p_color, p_entityID);
+		DrawLine(p0, p1, p_color, p_entityID, p_sceneHandle);
+		DrawLine(p1, p2, p_color, p_entityID, p_sceneHandle);
+		DrawLine(p2, p3, p_color, p_entityID, p_sceneHandle);
+		DrawLine(p3, p0, p_color, p_entityID, p_sceneHandle);
 	}
 
-	void Renderer2D::DrawRect(const glm::mat4& p_transform, const glm::vec4& p_color, int p_entityID)
+	void Renderer2D::DrawRect(const glm::mat4& p_transform, const glm::vec4& p_color, int p_entityID, uint64_t p_sceneHandle)
 	{
 		glm::vec3 lineVertices[4];
 		for (size_t i = 0; i < 4; i++)
 			lineVertices[i] = p_transform * s_Data.QuadVertexPositions[i];
 
-		DrawLine(lineVertices[0], lineVertices[1], p_color, p_entityID);
-		DrawLine(lineVertices[1], lineVertices[2], p_color, p_entityID);
-		DrawLine(lineVertices[2], lineVertices[3], p_color, p_entityID);
-		DrawLine(lineVertices[3], lineVertices[0], p_color, p_entityID);
+		DrawLine(lineVertices[0], lineVertices[1], p_color, p_entityID, p_sceneHandle);
+		DrawLine(lineVertices[1], lineVertices[2], p_color, p_entityID, p_sceneHandle);
+		DrawLine(lineVertices[2], lineVertices[3], p_color, p_entityID, p_sceneHandle);
+		DrawLine(lineVertices[3], lineVertices[0], p_color, p_entityID, p_sceneHandle);
 	}
 
 	void Renderer2D::DrawString(const std::string& p_string, Ref<Font> p_font, const glm::mat4& p_transform,
-		const TextParams& p_textParams, int p_entityID)
+		const TextParams& p_textParams, int p_entityID, uint64_t p_sceneHandle)
 	{
 		const auto& fontGeometry = p_font->GetMSDFData()->FontGeometry;
 		const auto& metrics = fontGeometry.getMetrics();
@@ -807,29 +834,36 @@ namespace Uneye
 			texCoordMin *= glm::vec2(texelWidth, texelHeight);
 			texCoordMax *= glm::vec2(texelWidth, texelHeight);
 
+			uint32_t highPart = static_cast<uint32_t>(p_sceneHandle >> 32);
+			uint32_t lowPart = static_cast<uint32_t>(p_sceneHandle);
+
 			// render here
 			s_Data.TextVertexBufferPtr->Position = p_transform * glm::vec4(quadMin, 0.0f, 1.0f);
 			s_Data.TextVertexBufferPtr->Color = p_textParams.Color;
 			s_Data.TextVertexBufferPtr->TexCoord = texCoordMin;
 			s_Data.TextVertexBufferPtr->EntityID = p_entityID;
+			s_Data.QuadVertexBufferPtr->SceneHandle = glm::uvec2(highPart, lowPart);
 			s_Data.TextVertexBufferPtr++;
 
 			s_Data.TextVertexBufferPtr->Position = p_transform * glm::vec4(quadMin.x, quadMax.y, 0.0f, 1.0f);
 			s_Data.TextVertexBufferPtr->Color = p_textParams.Color;
 			s_Data.TextVertexBufferPtr->TexCoord = { texCoordMin.x, texCoordMax.y };
 			s_Data.TextVertexBufferPtr->EntityID = p_entityID;
+			s_Data.QuadVertexBufferPtr->SceneHandle = glm::uvec2(highPart, lowPart);
 			s_Data.TextVertexBufferPtr++;
 
 			s_Data.TextVertexBufferPtr->Position = p_transform * glm::vec4(quadMax, 0.0f, 1.0f);
 			s_Data.TextVertexBufferPtr->Color = p_textParams.Color;
 			s_Data.TextVertexBufferPtr->TexCoord = texCoordMax;
 			s_Data.TextVertexBufferPtr->EntityID = p_entityID;
+			s_Data.QuadVertexBufferPtr->SceneHandle = glm::uvec2(highPart, lowPart);
 			s_Data.TextVertexBufferPtr++;
 
 			s_Data.TextVertexBufferPtr->Position = p_transform * glm::vec4(quadMax.x, quadMin.y, 0.0f, 1.0f);
 			s_Data.TextVertexBufferPtr->Color = p_textParams.Color;
 			s_Data.TextVertexBufferPtr->TexCoord = { texCoordMax.x, texCoordMin.y };
 			s_Data.TextVertexBufferPtr->EntityID = p_entityID;
+			s_Data.QuadVertexBufferPtr->SceneHandle = glm::uvec2(highPart, lowPart);
 			s_Data.TextVertexBufferPtr++;
 
 			s_Data.TextIndexCount += 6;
@@ -848,9 +882,9 @@ namespace Uneye
 	}
 
 	void Renderer2D::DrawString(const std::string& string, const glm::mat4& p_transform,
-		const TextComponent& component, int p_entityID)
+		const TextComponent& component, int p_entityID, uint64_t p_sceneHandle)
 	{
-		DrawString(string, component.FontAsset, p_transform, { component.Color, component.Kerning, component.LineSpacing }, p_entityID);
+		DrawString(string, component.FontAsset, p_transform, { component.Color, component.Kerning, component.LineSpacing }, p_entityID, p_sceneHandle);
 	}
 
 

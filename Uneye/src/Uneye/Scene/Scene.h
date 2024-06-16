@@ -21,6 +21,7 @@ namespace Uneye
 	class Entity;
 	class SceneHierarchyPanel;
 	class SceneSerializer;
+	class RayPicking;
 
 	class Scene : public Asset
 	{
@@ -108,6 +109,7 @@ namespace Uneye
 			friend class Entity;
 			friend class SceneHierarchyPanel;
 			friend class SceneSerializer;
+			friend class RayPicking;
 	};
 
 

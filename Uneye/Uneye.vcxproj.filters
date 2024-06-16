@@ -1509,6 +1509,7 @@
     <ClInclude Include="vendor\stb\stb_voxel_render.h">
       <Filter>vendor\stb</Filter>
     </ClInclude>
+    <ClInclude Include="src\Uneye\Renderer\RayPicking\RayPicking.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Platform\OpenGL\OpenGLBuffer.cpp">
@@ -1709,5 +1710,6 @@
     <ClCompile Include="vendor\ImGuizmo\example\main.cpp">
       <Filter>vendor\ImGuizmo\example</Filter>
     </ClCompile>
+    <ClCompile Include="src\Uneye\Renderer\RayPicking\RayPicking.cpp" />
   </ItemGroup>
 </Project>

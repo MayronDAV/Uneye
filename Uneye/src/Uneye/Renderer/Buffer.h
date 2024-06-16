@@ -6,7 +6,7 @@ namespace Uneye
 	{
 		None = 0, Float, Float2, Float3, Float4,
 		Mat3, Mat4,
-		UInt32, UInt64,
+		UInt, UInt2,
 		Int, Int2, Int3, Int4,
 		Bool
 	};
@@ -25,8 +25,8 @@ namespace Uneye
 			case Uneye::ShaderDataType::Mat3:		return 4 * 3 * 3;
 			case Uneye::ShaderDataType::Mat4:		return 4 * 4 * 4;
 
-			case Uneye::ShaderDataType::UInt32:		return 4;
-			case Uneye::ShaderDataType::UInt64:		return 4 * 2;
+			case Uneye::ShaderDataType::UInt:		return 4;
+			case Uneye::ShaderDataType::UInt2:		return 4 * 2;
 
 			case Uneye::ShaderDataType::Int:		return 4;
 			case Uneye::ShaderDataType::Int2:		return 4 * 2;
@@ -60,18 +60,23 @@ namespace Uneye
 			switch (Type)
 			{
 				case Uneye::ShaderDataType::None:		return 0;
+
 				case Uneye::ShaderDataType::Float:		return 1;
 				case Uneye::ShaderDataType::Float2:		return 2;
 				case Uneye::ShaderDataType::Float3:		return 3;
 				case Uneye::ShaderDataType::Float4:		return 4;
+
 				case Uneye::ShaderDataType::Mat3:		return 3 * 3;
 				case Uneye::ShaderDataType::Mat4:		return 4 * 4;
-				case Uneye::ShaderDataType::UInt32:		return 1;
-				case Uneye::ShaderDataType::UInt64:		return 1;
+
+				case Uneye::ShaderDataType::UInt:		return 1;
+				case Uneye::ShaderDataType::UInt2:		return 2;
+
 				case Uneye::ShaderDataType::Int:		return 1;
 				case Uneye::ShaderDataType::Int2:		return 2;
 				case Uneye::ShaderDataType::Int3:		return 3;
 				case Uneye::ShaderDataType::Int4:		return 4;
+
 				case Uneye::ShaderDataType::Bool:		return 1;
 			}
 

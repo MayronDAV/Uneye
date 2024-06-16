@@ -201,6 +201,7 @@
     <ClInclude Include="src\Uneye\Renderer\Font.h" />
     <ClInclude Include="src\Uneye\Renderer\Framebuffer.h" />
     <ClInclude Include="src\Uneye\Renderer\GraphicsContext.h" />
+    <ClInclude Include="src\Uneye\Renderer\RayPicking\RayPicking.h" />
     <ClInclude Include="src\Uneye\Renderer\MSDFData.h" />
     <ClInclude Include="src\Uneye\Renderer\RenderCommand.h" />
     <ClInclude Include="src\Uneye\Renderer\Renderer.h" />
@@ -660,6 +661,7 @@
     <ClCompile Include="src\Uneye\Renderer\EditorCamera.cpp" />
     <ClCompile Include="src\Uneye\Renderer\Font.cpp" />
     <ClCompile Include="src\Uneye\Renderer\Framebuffer.cpp" />
+    <ClCompile Include="src\Uneye\Renderer\RayPicking\RayPicking.cpp" />
     <ClCompile Include="src\Uneye\Renderer\RenderCommand.cpp" />
     <ClCompile Include="src\Uneye\Renderer\Renderer.cpp" />
     <ClCompile Include="src\Uneye\Renderer\Renderer2D.cpp" />

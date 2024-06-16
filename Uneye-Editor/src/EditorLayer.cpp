@@ -47,8 +47,9 @@ namespace Uneye
 
 		FramebufferSpecification fbspec;
 		fbspec.Attachments = {
-			FramebufferTextureFormat::RGBA8, 
-			//FramebufferTextureFormat::RED_INTEGER, // ID
+			FramebufferTextureFormat::RGBA8,
+			FramebufferTextureFormat::R32I,
+			FramebufferTextureFormat::RG32UI,
 			FramebufferTextureFormat::Depth,
 		};
 		fbspec.Width = 800;
@@ -80,11 +81,15 @@ namespace Uneye
 				Application::Get().Close();
 		}
 
+		std::filesystem::path path = (Project::GetActiveAssetDirectory() / "Scenes/PinkCubeContainer.uyscene");
+		SceneManager::LoadScene(path.string(), LoadMode::Additive);
+
 		Renderer2D::SetLineWidth(4.0f);
 
 
 		m_SceneHierarchyPanel.SetContext(SceneManager::GetScenes());
 
+		m_RayPicking.Init();
 	}
 
 	void EditorLayer::OnDetach()
@@ -101,13 +106,11 @@ namespace Uneye
 
 		if (first)
 		{
-			std::filesystem::path path = (Project::GetActiveAssetDirectory() / "Scenes/PinkCubeContainer.uyscene");
-			SceneManager::LoadScene(path.string(), LoadMode::Additive);
-
 			// TODO:
 			m_SceneHierarchyPanel.SetContext(SceneManager::GetScenes());
 			first = false;
 		}
+
 
 		SceneManager::Resize((uint32_t)m_ViewportSize.x, (uint32_t)m_ViewportSize.y);
 
@@ -121,13 +124,16 @@ namespace Uneye
 		Renderer2D::ResetStats();
 		m_Framebuffer->Bind();
 		//RenderCommand::Clear(glm::vec4(1.0f));
-		RenderCommand::Clear(glm::vec4(0.1f, 0.1f, 0.1f, 1.0f));
+		RenderCommand::ClearColor(glm::vec4(0.1f, 0.1f, 0.1f, 1.0f));
+		RenderCommand::ClearDepth();
 
-		//m_Framebuffer->ClearAttachment(1, -1);
+		int value = -1;
+		m_Framebuffer->ClearAttachment(1, &value);
+		std::vector<uint32_t> uvalue = { 0, 0 };
+		m_Framebuffer->ClearAttachment(2, uvalue.data());
 
 		SceneManager::OnUpdate(ts);
 
-#if 0
 		auto [mx, my] = ImGui::GetMousePos();
 		mx -= m_ViewportBounds[0].x;
 		my -= m_ViewportBounds[0].y;
@@ -140,15 +146,15 @@ namespace Uneye
 		if (mouseX >= 0 && mouseY >= 0 &&
 			mouseX < (int)viewportSize.x && mouseY < (int)viewportSize.y)
 		{
-			int enttID = m_Framebuffer->ReadPixel(1, mouseX, mouseY);
-
-			UNEYE_CORE_INFO("Entity ID: {}", enttID);
-
-			m_HoveredEntity = enttID == -1 ? Entity() : Entity((entt::entity)enttID, SceneManager::GetEditorScene().get());
+			m_RayPicking.SetTarget(glm::vec3(mouseX, mouseY, 0.0f));
 		}
-#endif
+		m_RayPicking.SetFocus(m_ViewportHovered);
+		m_RayPicking.SetFramebuffer(m_Framebuffer);
+		m_HoveredEntity = m_RayPicking.GetHoveredEntity();
 
 		OnOverlayRender();
+
+		m_RayPicking.OnUpdate();
 
 		m_Framebuffer->Unbind();
 	}
@@ -562,7 +568,7 @@ namespace Uneye
 		{
 			if (m_ViewportHovered && !ImGuizmo::IsOver() && !Input::IsKeyPressed(Key::LeftAlt))
 			{
-				//m_SceneHierarchyPanel.SetSelectedEntity(m_HoveredEntity);
+				m_SceneHierarchyPanel.SetSelectedEntity(m_HoveredEntity);
 			}
 		}
 		return false;

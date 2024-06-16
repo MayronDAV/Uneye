@@ -15,6 +15,9 @@
 
 #include "Uneye/Scene/SceneManager.h"
 
+#include "Uneye/Renderer/RayPicking/RayPicking.h"
+
+
 
 
 namespace Uneye
@@ -69,6 +72,8 @@ namespace Uneye
 			int m_GuizmoType = -1;
 
 			bool m_ShowPhysicsColliders = false;
+
+			RayPicking m_RayPicking;
 
 			// Panels
 			AssetRegistryPanel m_AssetRegistryPanel;

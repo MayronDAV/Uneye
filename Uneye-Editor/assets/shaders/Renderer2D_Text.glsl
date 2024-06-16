@@ -7,6 +7,7 @@ layout(location = 0) in vec3 a_Position;
 layout(location = 1) in vec4 a_Color;
 layout(location = 2) in vec2 a_TexCoord;
 layout(location = 3) in int a_EntityID;
+layout(location = 4) in uvec2 a_SceneHandle;
 
 layout(std140, binding = 0) uniform Camera
 {
@@ -21,12 +22,14 @@ struct VertexOutput
 
 layout (location = 0) out VertexOutput Output;
 layout (location = 2) out flat int v_EntityID;
+layout (location = 3) out flat uvec2 v_SceneHandle;
 
 void main()
 {
 	Output.Color = a_Color;
 	Output.TexCoord = a_TexCoord;
 	v_EntityID = a_EntityID;
+	v_SceneHandle = a_SceneHandle;
 
 	gl_Position = u_ViewProjection * vec4(a_Position, 1.0);
 }
@@ -36,6 +39,7 @@ void main()
 
 layout(location = 0) out vec4 o_Color;
 layout(location = 1) out int o_EntityID;
+layout(location = 2) out uvec2 o_SceneHandle;
 
 struct VertexOutput
 {
@@ -45,6 +49,7 @@ struct VertexOutput
 
 layout (location = 0) in VertexOutput Input;
 layout (location = 2) in flat int v_EntityID;
+layout (location = 3) in flat uvec2 v_SceneHandle;
 
 layout (binding = 0) uniform sampler2D u_FontAtlas;
 
@@ -76,4 +81,5 @@ void main()
 		discard;
 	
 	o_EntityID = v_EntityID;
+	o_SceneHandle = v_SceneHandle;
 }

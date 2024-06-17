@@ -10,6 +10,8 @@
 
 #include "Uneye/Asset/TextureImporter.h"
 
+#include <entt/entt.hpp>
+
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 #define GLM_ENABLE_EXPERIMENTAL
@@ -20,6 +22,18 @@
 
 namespace Uneye
 {
+	#define UPDATE_TRANSFORM(p_oldparent, p_curparent, p_cur)\
+	{\
+		glm::vec3 relative;\
+		relative.x = std::abs(p_cur.x - p_oldparent.x);\
+		relative.y = std::abs(p_cur.y - p_oldparent.y);\
+		relative.z = std::abs(p_cur.z - p_oldparent.z);\
+		p_cur.x = (p_oldparent.x <= p_cur.x) ? p_curparent.x + relative.x : p_curparent.x - relative.x;\
+		p_cur.y = (p_oldparent.y <= p_cur.y) ? p_curparent.y + relative.y : p_curparent.y - relative.y;\
+		p_cur.z = (p_oldparent.z <= p_cur.z) ? p_curparent.z + relative.z : p_curparent.z - relative.z;\
+	}
+
+
 	struct IDComponent
 	{
 		UUID ID;
@@ -61,6 +75,62 @@ namespace Uneye
 				rotation * glm::scale(glm::mat4(1.0f), Scale);
 		}
 
+	};
+
+	struct RelationshipComponent
+	{
+		entt::entity Parent = entt::null;
+		std::vector<entt::entity> Childs = {};
+
+		RelationshipComponent() = default;
+		RelationshipComponent(const RelationshipComponent&) = default;
+
+		void AddChild(entt::registry& p_registry, entt::entity p_parent, entt::entity p_child)
+		{
+			auto& parentRelationship = p_registry.get<RelationshipComponent>(p_parent);
+
+			auto& childRelationship = p_registry.get<RelationshipComponent>(p_child);
+			childRelationship.Parent = p_parent;
+
+			auto& parentTC = p_registry.get<TransformComponent>(p_parent);
+
+			childRelationship.m_OldParentPosition = parentTC.Translation;
+			childRelationship.m_OldParentRotation = parentTC.Rotation;
+			childRelationship.m_OldParentScale = parentTC.Scale;
+
+			parentRelationship.Childs.push_back(p_child);
+		}
+
+		void UpdateTransforms(entt::registry& p_registry, entt::entity p_entity) {
+
+			auto& rc = p_registry.get<RelationshipComponent>(p_entity);
+			if (rc.Parent != entt::null)
+			{
+				auto& transform = p_registry.get<TransformComponent>(p_entity);
+				auto& parentTransform = p_registry.get<TransformComponent>(rc.Parent);
+
+				UPDATE_TRANSFORM(rc.m_OldParentPosition, parentTransform.Translation, transform.Translation);
+				UPDATE_TRANSFORM(rc.m_OldParentRotation, parentTransform.Rotation,	  transform.Rotation);
+				UPDATE_TRANSFORM(rc.m_OldParentScale,	 parentTransform.Scale,		  transform.Scale);
+				
+				rc.m_OldParentPosition = parentTransform.Translation;
+				rc.m_OldParentRotation = parentTransform.Rotation;
+				rc.m_OldParentScale = parentTransform.Scale;
+			}
+
+			if (rc.Childs.empty())
+				return;
+
+			for (auto child : rc.Childs) 
+			{
+				UpdateTransforms(p_registry, child);
+			}
+		}
+
+		private:
+			glm::vec3 m_OldParentPosition;
+			glm::vec3 m_OldParentRotation;
+			glm::vec3 m_OldParentScale;
 	};
 
 	struct SpriteComponent
@@ -202,7 +272,7 @@ namespace Uneye
 	};
 
 	using AllComponents =
-		ComponentGroup<TransformComponent, SpriteComponent,
+		ComponentGroup<RelationshipComponent,TransformComponent, SpriteComponent,
 		CircleComponent, CameraComponent, NativeScriptComponent,
 		Rigidbody2DComponent, BoxCollider2DComponent, CircleCollider2DComponent, TextComponent, ScriptComponent>;
 }

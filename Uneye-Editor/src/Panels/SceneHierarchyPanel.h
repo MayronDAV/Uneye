@@ -43,6 +43,7 @@ namespace Uneye
 			ScenesMap m_Context = { {} };
 			Entity m_SelectionContext = {};
 			bool m_OpenedDueToNewEntity = false;
+			bool m_OpenedEnttDueToNewEntity = false;
 			Ref<Scene> m_SelectedScene = nullptr;
 	};
 }

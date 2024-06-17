@@ -62,7 +62,7 @@ namespace Uneye
 
 			UUID GetUUID() { return GetComponent<IDComponent>().ID; }
 			const std::string& GetName() { return GetComponent<TagComponent>().Tag; }
-			const Scene* GetScene() const { return m_Scene; }
+			Scene* GetScene() const { return m_Scene; }
 
 			bool operator==(const Entity& other) const 
 			{

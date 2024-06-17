@@ -83,7 +83,11 @@ namespace Uneye
 			for (auto e : idView)
 			{
 				Entity entity{ e, p_scene.get() };
-				DrawEntityNode(entity);
+				auto& rc = entity.GetComponent<RelationshipComponent>();
+				if (rc.Parent == entt::null)
+				{
+					DrawEntityNode(entity);
+				}
 			}
 
 			ImGui::TreePop();
@@ -185,6 +189,12 @@ namespace Uneye
 
 		flags |= ImGuiTreeNodeFlags_SpanAvailWidth;
 
+		if (m_OpenedEnttDueToNewEntity && (m_SelectionContext == entt))
+		{
+			ImGui::SetNextItemOpen(true);
+			m_OpenedEnttDueToNewEntity = false;
+		}
+
 		bool opened = ImGui::TreeNodeEx((void*)(uint64_t)(uint32_t)entt, flags, tag.c_str());
 
 		if (ImGui::IsItemClicked())
@@ -194,9 +204,18 @@ namespace Uneye
 		bool enttDeleted = false;
 		if (ImGui::BeginPopupContextItem())
 		{
+			m_SelectionContext = entt;
+
+			if (ImGui::MenuItem("Add empty child"))
+			{
+				m_OpenedEnttDueToNewEntity = true;
+				auto& rc = entt.GetComponent<RelationshipComponent>();
+				Entity emptyEntt = entt.GetScene()->CreateEntity("Empty Entity");
+				rc.AddChild(entt.GetScene()->GetRegistry(), (entt::entity)entt, (entt::entity)emptyEntt);
+			}
+
 			if (ImGui::MenuItem("Delete Entity"))
 			{
-				m_SelectionContext = entt;
 				enttDeleted = true;
 			}
 
@@ -205,6 +224,15 @@ namespace Uneye
 
 		if (opened)
 		{
+			auto& rc = entt.GetComponent<RelationshipComponent>();
+			if (!rc.Childs.empty())
+			{
+				for (auto& child : rc.Childs)
+				{
+					DrawEntityNode(Entity(child, entt.GetScene()));
+				}
+			}
+
 			ImGui::TreePop();
 		}
 
@@ -331,13 +359,19 @@ namespace Uneye
 
 			DrawComponentUI<TransformComponent>(entt, "Transform", [&](auto& tc) {
 
-				UI::DrawFloat3Control("Translation", tc.Translation);
+				bool hasChange = UI::DrawFloat3Control("Translation", tc.Translation);
 				glm::vec3 rotation = glm::degrees(tc.Rotation);
-				UI::DrawFloat3Control("Rotation", rotation);
+				hasChange = hasChange || UI::DrawFloat3Control("Rotation", rotation);
 				tc.Rotation = glm::radians(rotation);
-				UI::DrawFloat3Control("Scale", tc.Scale, 1.0f);
+				hasChange = hasChange || UI::DrawFloat3Control("Scale", tc.Scale, 1.0f);
 
-				});
+				if (hasChange)
+				{
+					auto& rc = entt.GetComponent<RelationshipComponent>();
+					rc.UpdateTransforms(entt.GetScene()->GetRegistry(), (entt::entity)entt);
+				}
+
+			});
 
 			DrawComponentUI<CameraComponent>(entt, "Camera", [&](auto& cameraComponent) {
 

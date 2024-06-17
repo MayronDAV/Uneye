@@ -73,6 +73,7 @@ namespace Uneye
 				return m_Registry.view<Components...>();
 			}
 
+			entt::registry& GetRegistry() { return m_Registry; }
 
 		private:
 			template<typename T>

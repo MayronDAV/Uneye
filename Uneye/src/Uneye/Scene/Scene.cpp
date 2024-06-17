@@ -115,6 +115,7 @@ namespace Uneye
 	Entity Scene::CreateEntityWithUUID(UUID uuid, const std::string& name)
 	{
 		Entity entity = { m_Registry.create(), this };
+		entity.AddComponent<RelationshipComponent>();
 		entity.AddComponent<IDComponent>(uuid);
 		entity.AddComponent<TransformComponent>();
 		entity.AddComponent<TagComponent>((name.empty()) ? "Entity" : name);
@@ -126,6 +127,16 @@ namespace Uneye
 
 	void Scene::DestroyEntity(Entity entity)
 	{
+		auto& rc = entity.GetComponent<RelationshipComponent>();
+		if (rc.Parent != entt::null)
+		{
+			auto& parentRC = m_Registry.get<RelationshipComponent>(rc.Parent);
+			auto it = std::find(parentRC.Childs.begin(), parentRC.Childs.end(), (entt::entity)entity);
+			if (it != parentRC.Childs.end())
+				parentRC.Childs.erase(it);
+			rc.Parent = entt::null;
+		}
+
 		m_EntityMap.erase(entity.GetUUID());
 		m_Registry.destroy(entity);
 	}
@@ -228,6 +239,7 @@ namespace Uneye
 					Entity entity = { entt, this };
 					auto& tc = entity.GetComponent<TransformComponent>();
 					auto& rb2d = entity.GetComponent<Rigidbody2DComponent>();
+					auto& rc = entity.GetComponent<RelationshipComponent>();
 
 					b2Body* body = (b2Body*)rb2d.RuntimeBody;
 
@@ -235,7 +247,8 @@ namespace Uneye
 					tc.Translation.x = position.x;
 					tc.Translation.y = position.y;
 					tc.Rotation.z = body->GetAngle();
-
+					
+					rc.UpdateTransforms(m_Registry, (entt::entity)entity);
 				}
 			}
 		}
@@ -329,6 +342,7 @@ namespace Uneye
 					Entity entity = { entt, this };
 					auto& tc = entity.GetComponent<TransformComponent>();
 					auto& rb2d = entity.GetComponent<Rigidbody2DComponent>();
+					auto& rc = entity.GetComponent<RelationshipComponent>();
 
 					b2Body* body = (b2Body*)rb2d.RuntimeBody;
 
@@ -337,6 +351,7 @@ namespace Uneye
 					tc.Translation.y = position.y;
 					tc.Rotation.z = body->GetAngle();
 
+					rc.UpdateTransforms(m_Registry, (entt::entity)entity);
 				}
 			}
 		}

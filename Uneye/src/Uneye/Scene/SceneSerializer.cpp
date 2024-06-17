@@ -256,7 +256,8 @@ namespace Uneye
 
 		YAML::Emitter out;
 		out << YAML::BeginMap;
-		out << YAML::Key << "Scene" << YAML::Value << "Untitled";
+		auto filename = filepath.filename().generic_string();
+		out << YAML::Key << "Scene" << YAML::Value << filename;
 		out << YAML::Key << "Entities" << YAML::Value << YAML::BeginSeq;
 		m_Scene->m_Registry.each([&](auto entityID)
 			{

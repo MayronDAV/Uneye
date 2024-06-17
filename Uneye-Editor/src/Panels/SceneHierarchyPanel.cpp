@@ -36,6 +36,64 @@ namespace Uneye
 		m_Context = context;
 		m_SelectionContext = {};
 	}
+	
+	void SceneHierarchyPanel::DrawSceneHierarchy(const std::filesystem::path& p_path, const Ref<Scene>& p_scene)
+	{
+		auto filename = p_path.stem().generic_string();
+
+		ImGuiTreeNodeFlags flags = ((m_SelectedScene == p_scene) ? ImGuiTreeNodeFlags_Selected : 0)
+			| ImGuiTreeNodeFlags_OpenOnArrow;
+
+		flags |= ImGuiTreeNodeFlags_SpanAvailWidth;
+
+		if (m_OpenedDueToNewEntity && (m_SelectedScene == p_scene)) {
+			flags |= ImGuiTreeNodeFlags_DefaultOpen;
+			ImGui::SetNextItemOpen(true);
+			m_OpenedDueToNewEntity = false;
+		}
+
+		bool opened = ImGui::TreeNodeEx((void*)(uint64_t)p_scene->Handle, flags, filename.c_str());
+
+		if (ImGui::IsItemClicked())
+			m_SelectedScene = (m_SelectedScene == p_scene) ? nullptr : p_scene;
+
+		// Right click on item
+		bool sceneUnloaded = false;
+		if (ImGui::BeginPopupContextItem())
+		{
+			m_SelectedScene = p_scene;
+
+			if (ImGui::MenuItem("Create Empty Entity"))
+			{
+				m_OpenedDueToNewEntity = true;
+				p_scene->CreateEntity("Empty Entity");
+			}
+
+			if (ImGui::MenuItem("Save Scene"))
+			{
+				//UNEYE_CORE_ERROR("Not Implemented for {}", filename);
+			}
+
+			ImGui::EndPopup();
+		}
+
+		if (opened)
+		{
+			auto idView = p_scene->m_Registry.view<TagComponent>();
+			for (auto e : idView)
+			{
+				Entity entity{ e, p_scene.get() };
+				DrawEntityNode(entity);
+			}
+
+			ImGui::TreePop();
+		}
+
+		if (sceneUnloaded)
+		{
+			m_SelectedScene = nullptr;
+		}
+	}
 
 	void SceneHierarchyPanel::OnImGuiRender()
 	{
@@ -43,32 +101,37 @@ namespace Uneye
 
 		if (!m_Context.empty())
 		{
+			bool isopen = false;
+			Ref<Scene> curScene = nullptr;
+
 			for (const auto& [path, scene] : m_Context)
 			{
+				DrawSceneHierarchy(path, scene);
+			}
 
-				if (ImGui::CollapsingHeader(path.stem().generic_string().c_str()))
+		}
+
+		if (ImGui::BeginPopupContextWindow(0, 1 | ImGuiPopupFlags_NoOpenOverItems))
+		{
+			if (ImGui::MenuItem("Load scene..."))
+			{
+				std::string filepath = FileDialogs::OpenFile("Uneye Scene (*.uyscene)\0*.uyscene\0");
+				if (!filepath.empty())
 				{
-					auto idView = scene->m_Registry.view<TagComponent>();
-					for (auto e : idView)
-					{
-						Entity entity{ e, scene.get() };
-						DrawEntityNode(entity);
-					}
-
-					// Right click on blank space
-					ImGui::PushID(path.string().c_str());
-					if (ImGui::BeginPopupContextWindow(0, 1 | ImGuiPopupFlags_NoOpenOverItems))
-					{
-						if (ImGui::MenuItem("Create Empty Entity"))
-						{
-							scene->CreateEntity("Empty Entity");
-						}
-
-						ImGui::EndPopup();
-					}
-					ImGui::PopID();
+					SceneManager::LoadScene(filepath, LoadMode::Single);
 				}
 			}
+
+			if (ImGui::MenuItem("Add new scene..."))
+			{
+				std::string filepath = FileDialogs::OpenFile("Uneye Scene (*.uyscene)\0*.uyscene\0");
+				if (!filepath.empty())
+				{
+					SceneManager::LoadScene(filepath, LoadMode::Additive);
+				}
+			}
+
+			ImGui::EndPopup();
 		}
 
 		ImGui::End();

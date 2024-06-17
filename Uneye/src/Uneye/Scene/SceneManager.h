@@ -28,6 +28,7 @@ namespace Uneye
 
 	class Entity;
 
+
 	class SceneManager
 	{
 		public:
@@ -54,6 +55,11 @@ namespace Uneye
 
 
 			// Editor only
+			// ------------------------
+			
+			static bool HasChanged();
+			static void ChangeTreated();
+
 			static void OnEditorCameraEvent(Event& e);
 			static const EditorCamera& GetEditorCamera();
 			static SceneState GetState();
@@ -75,6 +81,8 @@ namespace Uneye
 			static void Stop();
 
 			static void OnUpdate(Timestep p_ts);
+
+			// ------------------------
 
 		private:
 			static void OnScenePlay();

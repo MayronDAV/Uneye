@@ -33,7 +33,11 @@ namespace Uneye
 	ThumbnailCache::~ThumbnailCache()
 	{
 		{
-			std::lock_guard<std::mutex> lock(m_Mutex);
+			std::unique_lock<std::mutex> lock1(m_CachedImagesMutex);
+			std::unique_lock<std::mutex> lock2(m_QueueMutex);
+			std::unique_lock<std::mutex> lock3(m_ProcessedMutex);
+			std::unique_lock<std::mutex> lock4(m_SaveLoadMutex);
+			std::unique_lock<std::mutex> lock5(m_SaveTimerMutex);
 			m_StopThread = true;
 		}
 
@@ -266,7 +270,7 @@ namespace Uneye
 	void ThumbnailCache::AddToQueue(const std::filesystem::path& path, uint64_t timestamp)
 	{
 		{
-			std::lock_guard<std::mutex> lock(m_Mutex);
+			std::lock_guard<std::mutex> lock(m_QueueMutex);
 			if (m_QueuedItems.find(path) == m_QueuedItems.end())
 			{
 				m_Queue.push({ path, timestamp });
@@ -279,7 +283,7 @@ namespace Uneye
 	void ThumbnailCache::AddToSaveLoadQueue(const std::function<void()>& task)
 	{
 		{
-			std::lock_guard<std::mutex> lock(m_Mutex);
+			std::lock_guard<std::mutex> lock(m_SaveLoadMutex);
 			m_SaveLoadQueue.push(task);
 		}
 		m_SaveLoadCondition.notify_one();
@@ -287,7 +291,7 @@ namespace Uneye
 
 	Ref<Texture2D> ThumbnailCache::GetCachedImage(const std::filesystem::path& path, uint64_t timestamp)
 	{
-		std::lock_guard<std::mutex> lock(m_Mutex);
+		std::lock_guard<std::mutex> lock(m_CachedImagesMutex);
 		if (m_CachedImages.find(path) != m_CachedImages.end())
 		{
 			auto& cachedImage = m_CachedImages.at(path);
@@ -301,13 +305,13 @@ namespace Uneye
 	{
 		while (true)
 		{
-			std::unique_lock<std::mutex> lock(m_Mutex);
+			std::unique_lock<std::mutex> lock(m_QueueMutex);
 			m_Condition.wait(lock, [this] { return !m_Queue.empty() || m_StopThread; });
 
 			if (m_StopThread && m_Queue.empty())
 				break;
 
-			if (!m_Queue.empty())
+			if (!m_Queue.empty() && m_Queue.size() > 0)
 			{
 				auto [path, timestamp] = m_Queue.front();
 				m_Queue.pop();
@@ -330,12 +334,12 @@ namespace Uneye
 						spec.Height = height;
 						switch (channels)
 						{
-							case 3:
-								spec.Format = ImageFormat::RGB8;
-								break;
-							case 4:
-								spec.Format = ImageFormat::RGBA8;
-								break;
+						case 3:
+							spec.Format = ImageFormat::RGB8;
+							break;
+						case 4:
+							spec.Format = ImageFormat::RGBA8;
+							break;
 						}
 
 						float aspectratioW = (float)width / (float)height;
@@ -359,13 +363,13 @@ namespace Uneye
 	{
 		while (true)
 		{
-			std::unique_lock<std::mutex> lock(m_Mutex);
+			std::unique_lock<std::mutex> lock(m_SaveLoadMutex);
 			m_SaveLoadCondition.wait(lock, [this] { return !m_SaveLoadQueue.empty() || m_StopThread; });
 
 			if (m_StopThread && m_SaveLoadQueue.empty())
 				break;
 
-			if (!m_SaveLoadQueue.empty())
+			if (!m_SaveLoadQueue.empty() && m_SaveLoadQueue.size() > 0)
 			{
 				auto task = std::move(m_SaveLoadQueue.front());
 				m_SaveLoadQueue.pop();
@@ -378,9 +382,9 @@ namespace Uneye
 
 	void ThumbnailCache::PeriodicSave()
 	{
-		std::unique_lock<std::mutex> lock(m_SaveTimerMutex);
 		while (true)
 		{
+			std::unique_lock<std::mutex> lock(m_SaveTimerMutex);
 			if (m_SaveTimerCondition.wait_for(lock, std::chrono::minutes(m_PeriodicSaveTime), [this] { return m_StopThread; }))
 				break;
 

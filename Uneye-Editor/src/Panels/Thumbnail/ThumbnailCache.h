@@ -64,12 +64,12 @@ namespace Uneye
 
 			void PeriodicSave();
 
-
 		private:
 
-			std::mutex m_Mutex;
+			std::mutex m_CachedImagesMutex;
+			std::mutex m_QueueMutex;
 			std::mutex m_ProcessedMutex;
-			std::mutex m_LoadImagesMutex;
+			std::mutex m_SaveLoadMutex;
 			std::mutex m_SaveTimerMutex;
 			std::condition_variable m_Condition;
 			std::condition_variable m_SaveLoadCondition;

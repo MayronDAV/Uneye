@@ -25,6 +25,8 @@ namespace Uneye
 		std::vector<Ref<Scene>> ScenesNotLoaded;
 
 		EditorCamera EditorCamera;
+
+		bool HasChange;
 	};
 
 	static Data s_Data;
@@ -48,6 +50,8 @@ namespace Uneye
 		s_Data.LoadMode = LoadMode::Single;
 
 		s_Data.EditorCamera = EditorCamera(45.0f, 1.677, 0.1f, 1000.0f);
+
+		s_Data.HasChange = false;
 	}
 
 	void SceneManager::Shutdown()
@@ -94,15 +98,17 @@ namespace Uneye
 
 		s_Data.LoadMode = p_mode;
 
-
 		if (s_Data.LoadMode == LoadMode::Single)
 		{
 			s_Data.CurrentScenePath = p_path;
 			s_Data.EditorScenesByPath.clear();
+			s_Data.ActiveScenesByPath.clear();
 		}
 
 		s_Data.EditorScenesByPath[p_path] = scene;
 		s_Data.EditorScenesByPath[p_path]->Handle = handle;
+
+		s_Data.HasChange = true;
 
 		return true;
 	}
@@ -114,9 +120,9 @@ namespace Uneye
 
 	Ref<Scene> SceneManager::GetActiveScene()
 	{
-		if (s_Data.LoadMode != LoadMode::Single)
+		if (s_Data.State == SceneState::Edit)
 		{
-			UNEYE_CORE_ERROR("Call GetAllActiveScenes in LoadMode::Additive");
+			UNEYE_CORE_ERROR("Call GetScenes, active scene list is empty in editor mode");
 			return Ref<Scene>();
 		}
 
@@ -125,19 +131,24 @@ namespace Uneye
 
 	const std::map<std::filesystem::path, Ref<Scene>>& SceneManager::GetScenes()
 	{
-		switch (s_Data.LoadMode)
+		switch (s_Data.State)
 		{
-			case LoadMode::Single:	 return s_Data.ActiveScenesByPath;
-			case LoadMode::Additive: return s_Data.EditorScenesByPath;
+			case SceneState::Play:
+			case SceneState::Simulate:
+			{
+				return s_Data.ActiveScenesByPath;
+			}
+			case SceneState::Edit: return s_Data.EditorScenesByPath;
 		}
 
-		UNEYE_CORE_CRITICAL("Unknown LoadMode!");
+		UNEYE_CORE_CRITICAL("Unknown State!");
 		return std::map<std::filesystem::path, Ref<Scene>>();
 	}
 
 	void SceneManager::DestroyEntity(Entity* p_entt)
 	{
 		auto scenesMap = GetScenes();
+		s_Data.HasChange = true;
 
 		for (const auto& [path, scene] : scenesMap)
 		{
@@ -147,6 +158,7 @@ namespace Uneye
 				return;
 			}
 		}
+
 	}
 
 
@@ -159,9 +171,8 @@ namespace Uneye
 
 		for (const auto& [path, editorScene] : s_Data.EditorScenesByPath)
 		{
-			auto scene = Scene::Copy(editorScene);
-			s_Data.ActiveScenesByPath[path] = scene;
-			scene->OnRuntimeStart();
+			s_Data.ActiveScenesByPath[path] = Scene::Copy(editorScene);
+			s_Data.ActiveScenesByPath[path]->OnRuntimeStart();
 		}
 
 		//TODO::
@@ -174,6 +185,8 @@ namespace Uneye
 		// Revisit this
 
 		UNEYE_ASSERT(s_Data.State != SceneState::Play && s_Data.State != SceneState::Simulate, "Unknown state!");
+		
+		s_Data.State = SceneState::Edit;
 
 		for (const auto& [path, scene] : s_Data.ActiveScenesByPath)
 		{
@@ -182,7 +195,6 @@ namespace Uneye
 			else if (s_Data.State == SceneState::Simulate)
 				scene->OnSimulationStop();
 
-			s_Data.State = SceneState::Edit;
 			s_Data.ActiveScenesByPath[path] = s_Data.EditorScenesByPath[path];
 		}
 
@@ -217,6 +229,16 @@ namespace Uneye
 
 		// TODOD:
 		//m_SceneHierarchyPanel.SetContext(m_ActiveScene);
+	}
+
+	bool SceneManager::HasChanged()
+	{
+		return s_Data.HasChange;
+	}
+
+	void SceneManager::ChangeTreated()
+	{
+		s_Data.HasChange = false;
 	}
 
 	void SceneManager::OnEditorCameraEvent(Event& e)
@@ -255,9 +277,9 @@ namespace Uneye
 
 	const Ref<Scene>& SceneManager::GetEditorScene()
 	{
-		if (s_Data.LoadMode != LoadMode::Single)
+		if (s_Data.State != SceneState::Edit)
 		{
-			UNEYE_CORE_ERROR("Call GetAllEditorScenes in LoadMode::Additive");
+			UNEYE_CORE_ERROR("Call GetScenes, editor scene list is empty in play or simulate mode");
 			return nullptr;
 		}
 

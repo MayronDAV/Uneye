@@ -32,6 +32,7 @@ namespace Uneye
 			template<typename T>
 			void DisplayAddComponentEntry(const std::string& entryName);
 
+			void DrawSceneHierarchy(const std::filesystem::path& p_path, const Ref<Scene>& p_scene);
 			void DrawEntityNode(Entity entt);
 			void DrawComponents(Entity entt);
 
@@ -41,5 +42,7 @@ namespace Uneye
 		private:
 			ScenesMap m_Context = { {} };
 			Entity m_SelectionContext = {};
+			bool m_OpenedDueToNewEntity = false;
+			Ref<Scene> m_SelectedScene = nullptr;
 	};
 }

@@ -81,8 +81,8 @@ namespace Uneye
 				Application::Get().Close();
 		}
 
-		std::filesystem::path path = (Project::GetActiveAssetDirectory() / "Scenes/PinkCubeContainer.uyscene");
-		SceneManager::LoadScene(path.string(), LoadMode::Additive);
+		//std::filesystem::path path = (Project::GetActiveAssetDirectory() / "Scenes/PinkCubeContainer.uyscene");
+		//SceneManager::LoadScene(path.string(), LoadMode::Additive);
 
 		Renderer2D::SetLineWidth(4.0f);
 
@@ -99,16 +99,14 @@ namespace Uneye
 		SceneManager::Shutdown();
 	}
 
-	bool first = true;
 	void EditorLayer::OnUpdate(Timestep ts)
 	{
 		UNEYE_PROFILE_FUNCTION();
 
-		if (first)
+		if (SceneManager::HasChanged())
 		{
-			// TODO:
 			m_SceneHierarchyPanel.SetContext(SceneManager::GetScenes());
-			first = false;
+			SceneManager::ChangeTreated();
 		}
 
 
@@ -142,7 +140,7 @@ namespace Uneye
 
 		int mouseX = (int)mx;
 		int mouseY = (int)my;
-
+		
 		if (mouseX >= 0 && mouseY >= 0 &&
 			mouseX < (int)viewportSize.x && mouseY < (int)viewportSize.y)
 		{
@@ -248,6 +246,24 @@ namespace Uneye
 
 				if (ImGui::MenuItem("Set Default Scene"))
 					Project::SetStartScene(AssetManager::ImportAsset(SceneManager::GetCurrentScenePath()));
+
+				if (ImGui::MenuItem("Load scene..."))
+				{
+					std::string filepath = FileDialogs::OpenFile("Uneye Scene (*.uyscene)\0*.uyscene\0");
+					if (!filepath.empty())
+					{
+						SceneManager::LoadScene(filepath);
+					}
+				}
+
+				if (ImGui::MenuItem("Load new scene..."))
+				{
+					std::string filepath = FileDialogs::OpenFile("Uneye Scene (*.uyscene)\0*.uyscene\0");
+					if (!filepath.empty())
+					{
+						SceneManager::LoadScene(filepath, LoadMode::Additive);
+					}
+				}
 
 				ImGui::Separator();
 

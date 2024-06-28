@@ -201,8 +201,8 @@
     <ClInclude Include="src\Uneye\Renderer\Font.h" />
     <ClInclude Include="src\Uneye\Renderer\Framebuffer.h" />
     <ClInclude Include="src\Uneye\Renderer\GraphicsContext.h" />
-    <ClInclude Include="src\Uneye\Renderer\RayPicking\RayPicking.h" />
     <ClInclude Include="src\Uneye\Renderer\MSDFData.h" />
+    <ClInclude Include="src\Uneye\Renderer\RayPicking\RayPicking.h" />
     <ClInclude Include="src\Uneye\Renderer\RenderCommand.h" />
     <ClInclude Include="src\Uneye\Renderer\Renderer.h" />
     <ClInclude Include="src\Uneye\Renderer\Renderer2D.h" />
@@ -225,10 +225,12 @@
     <ClInclude Include="src\Uneye\Utils\StringUtils.h" />
     <ClInclude Include="src\Uneye\Utils\YamlTemplates.h" />
     <ClInclude Include="src\uypch.h" />
+    <ClInclude Include="vendor\ImGuizmo\GraphEditor.h" />
     <ClInclude Include="vendor\ImGuizmo\ImCurveEdit.h" />
     <ClInclude Include="vendor\ImGuizmo\ImGradient.h" />
     <ClInclude Include="vendor\ImGuizmo\ImGuizmo.h" />
     <ClInclude Include="vendor\ImGuizmo\ImSequencer.h" />
+    <ClInclude Include="vendor\ImGuizmo\ImZoomSlider.h" />
     <ClInclude Include="vendor\ImGuizmo\example\ImApp.h" />
     <ClInclude Include="vendor\ImGuizmo\example\imconfig.h" />
     <ClInclude Include="vendor\ImGuizmo\example\imgui.h" />
@@ -682,6 +684,9 @@
     <ClCompile Include="src\uypch.cpp">
       <PrecompiledHeader>Create</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="vendor\ImGuizmo\GraphEditor.cpp">
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+    </ClCompile>
     <ClCompile Include="vendor\ImGuizmo\ImCurveEdit.cpp">
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
     </ClCompile>
@@ -697,7 +702,13 @@
     <ClCompile Include="vendor\ImGuizmo\example\imgui.cpp">
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="vendor\ImGuizmo\example\imgui_demo.cpp">
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+    </ClCompile>
     <ClCompile Include="vendor\ImGuizmo\example\imgui_draw.cpp">
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="vendor\ImGuizmo\example\imgui_tables.cpp">
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="vendor\ImGuizmo\example\imgui_widgets.cpp">

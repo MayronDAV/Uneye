@@ -46,6 +46,9 @@
     <Filter Include="src\Uneye\Renderer">
       <UniqueIdentifier>{885AFF98-743E-C0EE-DD9E-BA41C9A1AA70}</UniqueIdentifier>
     </Filter>
+    <Filter Include="src\Uneye\Renderer\RayPicking">
+      <UniqueIdentifier>{C882C5CB-349B-ACF5-FD47-3C8F691F418F}</UniqueIdentifier>
+    </Filter>
     <Filter Include="src\Uneye\Scene">
       <UniqueIdentifier>{3F1F3F7A-ABAA-AC3E-B4BB-2F3320C6083F}</UniqueIdentifier>
     </Filter>
@@ -261,6 +264,9 @@
     <ClInclude Include="src\Uneye\Renderer\MSDFData.h">
       <Filter>src\Uneye\Renderer</Filter>
     </ClInclude>
+    <ClInclude Include="src\Uneye\Renderer\RayPicking\RayPicking.h">
+      <Filter>src\Uneye\Renderer\RayPicking</Filter>
+    </ClInclude>
     <ClInclude Include="src\Uneye\Renderer\RenderCommand.h">
       <Filter>src\Uneye\Renderer</Filter>
     </ClInclude>
@@ -327,6 +333,9 @@
     <ClInclude Include="src\uypch.h">
       <Filter>src</Filter>
     </ClInclude>
+    <ClInclude Include="vendor\ImGuizmo\GraphEditor.h">
+      <Filter>vendor\ImGuizmo</Filter>
+    </ClInclude>
     <ClInclude Include="vendor\ImGuizmo\ImCurveEdit.h">
       <Filter>vendor\ImGuizmo</Filter>
     </ClInclude>
@@ -337,6 +346,9 @@
       <Filter>vendor\ImGuizmo</Filter>
     </ClInclude>
     <ClInclude Include="vendor\ImGuizmo\ImSequencer.h">
+      <Filter>vendor\ImGuizmo</Filter>
+    </ClInclude>
+    <ClInclude Include="vendor\ImGuizmo\ImZoomSlider.h">
       <Filter>vendor\ImGuizmo</Filter>
     </ClInclude>
     <ClInclude Include="vendor\ImGuizmo\example\ImApp.h">
@@ -1509,7 +1521,6 @@
     <ClInclude Include="vendor\stb\stb_voxel_render.h">
       <Filter>vendor\stb</Filter>
     </ClInclude>
-    <ClInclude Include="src\Uneye\Renderer\RayPicking\RayPicking.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Platform\OpenGL\OpenGLBuffer.cpp">
@@ -1632,6 +1643,9 @@
     <ClCompile Include="src\Uneye\Renderer\Framebuffer.cpp">
       <Filter>src\Uneye\Renderer</Filter>
     </ClCompile>
+    <ClCompile Include="src\Uneye\Renderer\RayPicking\RayPicking.cpp">
+      <Filter>src\Uneye\Renderer\RayPicking</Filter>
+    </ClCompile>
     <ClCompile Include="src\Uneye\Renderer\RenderCommand.cpp">
       <Filter>src\Uneye\Renderer</Filter>
     </ClCompile>
@@ -1686,6 +1700,9 @@
     <ClCompile Include="src\uypch.cpp">
       <Filter>src</Filter>
     </ClCompile>
+    <ClCompile Include="vendor\ImGuizmo\GraphEditor.cpp">
+      <Filter>vendor\ImGuizmo</Filter>
+    </ClCompile>
     <ClCompile Include="vendor\ImGuizmo\ImCurveEdit.cpp">
       <Filter>vendor\ImGuizmo</Filter>
     </ClCompile>
@@ -1701,7 +1718,13 @@
     <ClCompile Include="vendor\ImGuizmo\example\imgui.cpp">
       <Filter>vendor\ImGuizmo\example</Filter>
     </ClCompile>
+    <ClCompile Include="vendor\ImGuizmo\example\imgui_demo.cpp">
+      <Filter>vendor\ImGuizmo\example</Filter>
+    </ClCompile>
     <ClCompile Include="vendor\ImGuizmo\example\imgui_draw.cpp">
+      <Filter>vendor\ImGuizmo\example</Filter>
+    </ClCompile>
+    <ClCompile Include="vendor\ImGuizmo\example\imgui_tables.cpp">
       <Filter>vendor\ImGuizmo\example</Filter>
     </ClCompile>
     <ClCompile Include="vendor\ImGuizmo\example\imgui_widgets.cpp">
@@ -1710,6 +1733,5 @@
     <ClCompile Include="vendor\ImGuizmo\example\main.cpp">
       <Filter>vendor\ImGuizmo\example</Filter>
     </ClCompile>
-    <ClCompile Include="src\Uneye\Renderer\RayPicking\RayPicking.cpp" />
   </ItemGroup>
 </Project>

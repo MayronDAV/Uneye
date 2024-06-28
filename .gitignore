@@ -16,3 +16,8 @@ Scripts/__pycache__
 **.vcxproj.user
 **.csproj
 
+Uneye.sln
+Uneye/Uneye.vcxproj
+Uneye/Uneye.vcxproj.filters
+vendor/premake/Premake.vcxproj
+vendor/premake/Premake.vcxproj.filters

@@ -19,9 +19,6 @@
     <Filter Include="..\Uneye\vendor\Glad">
       <UniqueIdentifier>{3A6D0963-26FC-922C-CF1A-A727BB88A3D2}</UniqueIdentifier>
     </Filter>
-    <Filter Include="..\Uneye\vendor\ImGuizmo">
-      <UniqueIdentifier>{338A5862-1FAF-A7E2-48FA-8C72347EA600}</UniqueIdentifier>
-    </Filter>
     <Filter Include="..\Uneye\vendor\imgui">
       <UniqueIdentifier>{1DFE9EC6-896A-5AC1-525E-F21EBE897C29}</UniqueIdentifier>
     </Filter>
@@ -80,9 +77,6 @@
     </None>
     <None Include="..\..\Uneye\vendor\Glad\premake5.lua">
       <Filter>..\Uneye\vendor\Glad</Filter>
-    </None>
-    <None Include="..\..\Uneye\vendor\ImGuizmo\premake5.lua">
-      <Filter>..\Uneye\vendor\ImGuizmo</Filter>
     </None>
     <None Include="..\..\Uneye\vendor\imgui\premake5.lua">
       <Filter>..\Uneye\vendor\imgui</Filter>

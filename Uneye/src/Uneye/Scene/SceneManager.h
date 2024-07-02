@@ -41,17 +41,17 @@ namespace Uneye
 			static void SetLoadMode(LoadMode p_mode);
 
 			static bool LoadScene(const AssetHandle& p_handle, LoadMode p_mode = LoadMode::Single);
-			static bool LoadScene(const std::string& p_path, LoadMode p_mode = LoadMode::Single);
+			static bool LoadScene(const std::filesystem::path& p_path, LoadMode p_mode = LoadMode::Single);
 			
 			static const std::filesystem::path& GetCurrentScenePath();
 			static Ref<Scene> GetActiveScene();
 			static const std::map<std::filesystem::path, Ref<Scene>>& GetScenes();
 
-			static void DestroyEntity(Entity* p_entt);
+			static void DestroyEntity(const Entity* p_entt);
 
 			// Runtime only
 
-			static void SetTimerscale(int p_scale);
+			static void SetTimerscale(float p_scale);
 
 
 			// Editor only
@@ -61,7 +61,7 @@ namespace Uneye
 			static void ChangeTreated();
 
 			static void OnEditorCameraEvent(Event& e);
-			static const EditorCamera& GetEditorCamera();
+			static EditorCamera& GetEditorCamera();
 			static SceneState GetState();
 			static void Resize(uint32_t width, uint32_t height);
 

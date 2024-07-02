@@ -21,6 +21,11 @@ namespace Uneye {
 		}
 	};
 
+	enum class CursorMode
+	{
+		HIDDEN = 0, DISABLED, NORMAL
+	};
+
 	// Interface representing a desktop system based Window
 	class Window
 	{
@@ -40,6 +45,8 @@ namespace Uneye {
 			virtual bool IsVSync() const = 0;
 
 			virtual void* GetNativeWindow() const = 0;
+
+			virtual void SetCursorMode(CursorMode p_mode) = 0;
 
 			static Scope<Window> Create(const WindowProps& props = WindowProps());
 	};

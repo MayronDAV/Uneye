@@ -24,6 +24,22 @@
 
 namespace Uneye {
 	
+	namespace Utils
+	{
+		int CursorModeToGLFWCursorMode(CursorMode p_mode)
+		{
+			switch (p_mode)
+			{
+				case Uneye::CursorMode::HIDDEN:   return GLFW_CURSOR_HIDDEN;
+				case Uneye::CursorMode::DISABLED: return GLFW_CURSOR_DISABLED;
+				case Uneye::CursorMode::NORMAL:   return GLFW_CURSOR_NORMAL;
+			}
+
+			UNEYE_CORE_ERROR("Unknown cursor mode!");
+			return 0;
+		}
+	}
+
 	static bool s_GLFWInitialized = false;
 
 	static void GLFWErrorCallback(int error, const char* description)
@@ -64,6 +80,13 @@ namespace Uneye {
 
 		Shutdown();
 		glfwTerminate();
+	}
+
+	void WindowsWindow::SetCursorMode(CursorMode p_mode)
+	{
+		int mode = Utils::CursorModeToGLFWCursorMode(p_mode);
+		if (mode != 0)
+			glfwSetInputMode(m_Window, GLFW_CURSOR, mode);
 	}
 
 	void WindowsWindow::Init(const WindowProps& props)
@@ -233,10 +256,7 @@ namespace Uneye {
 	{
 		UNEYE_PROFILE_FUNCTION();
 
-		if (enabled)
-			glfwSwapInterval(1);
-		else
-			glfwSwapInterval(0);
+		glfwSwapInterval(enabled ? 1 : 0);
 
 		m_Data.VSync = enabled;
 		UNEYE_CORE_INFO("Vsync has setted to {0}", enabled);

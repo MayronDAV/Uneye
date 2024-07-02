@@ -114,14 +114,13 @@ namespace Uneye
 
 		if (Uneye::FramebufferSpecification spec = m_Framebuffer->GetSpecification();
 			m_ViewportSize.x > 0.0f && m_ViewportSize.y > 0.0f && // zero sized is invalid
-			(spec.Width != m_ViewportSize.x || spec.Height != m_ViewportSize.y))
+			(spec.Width != (uint32_t)m_ViewportSize.x || spec.Height != (uint32_t)m_ViewportSize.y))
 		{
 			m_Framebuffer->Resize((uint32_t)m_ViewportSize.x, (uint32_t)m_ViewportSize.y);
 		}
 
 		Renderer2D::ResetStats();
 		m_Framebuffer->Bind();
-		//RenderCommand::Clear(glm::vec4(1.0f));
 		RenderCommand::ClearColor(glm::vec4(0.1f, 0.1f, 0.1f, 1.0f));
 		RenderCommand::ClearDepth();
 
@@ -129,6 +128,8 @@ namespace Uneye
 		m_Framebuffer->ClearAttachment(1, &value);
 		std::vector<uint32_t> uvalue = { 0, 0 };
 		m_Framebuffer->ClearAttachment(2, uvalue.data());
+
+		SceneManager::GetEditorCamera().SetFocus(m_ViewportFocused);
 
 		SceneManager::OnUpdate(ts);
 
@@ -311,7 +312,10 @@ namespace Uneye
 		ImGui::Begin("Settings");
 		ImGui::Checkbox("Show physics colliders", &m_ShowPhysicsColliders);
 
-		ImGui::Image((ImTextureID)s_Font->GetAtlasTexture()->GetRendererID(), { 512,512 }, { 0, 1 }, { 1, 0 });
+		bool isfixed2d = SceneManager::GetEditorCamera().IsFixed2D();
+		if (ImGui::Checkbox("Fix camera 2D", &isfixed2d))
+			SceneManager::GetEditorCamera().SetFix2D(isfixed2d);
+
 		ImGui::End();
 
 
@@ -430,7 +434,7 @@ namespace Uneye
 
 		bool toolbarEnabled = !SceneManager::GetScenes().empty();
 
-		ImVec4 tintColor = ImVec4(1, 1, 1, 1);
+		auto tintColor = ImVec4(1, 1, 1, 1);
 		if (!toolbarEnabled)
 			tintColor.w = 0.5f;
 

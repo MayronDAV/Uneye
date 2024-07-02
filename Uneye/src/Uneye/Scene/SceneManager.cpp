@@ -15,7 +15,7 @@ namespace Uneye
 
 		SceneState State;
 
-		int Timerscale;
+		float Timerscale;
 		LoadMode LoadMode;
 
 		std::filesystem::path CurrentScenePath;
@@ -32,7 +32,7 @@ namespace Uneye
 	static Data s_Data;
 
 
-	void SceneManager::SetTimerscale(int p_scale)
+	void SceneManager::SetTimerscale(float p_scale)
 	{
 		s_Data.Timerscale = p_scale;
 	}
@@ -49,7 +49,7 @@ namespace Uneye
 		s_Data.Timerscale = 1;
 		s_Data.LoadMode = LoadMode::Single;
 
-		s_Data.EditorCamera = EditorCamera(45.0f, 1.677, 0.1f, 1000.0f);
+		s_Data.EditorCamera = EditorCamera(45.0f, 1.677f, 0.1f, 1000.0f);
 
 		s_Data.HasChange = false;
 	}
@@ -84,11 +84,11 @@ namespace Uneye
 		return LoadScene(metadata.FilePath.string(), p_mode);
 	}
 
-	bool SceneManager::LoadScene(const std::string& p_path, LoadMode p_mode)
+	bool SceneManager::LoadScene(const std::filesystem::path& p_path, LoadMode p_mode)
 	{
 		UNEYE_PROFILE_FUNCTION();
 
-		auto [handle, metadata] = AssetManager::GetHandleByPath(p_path);
+		auto& [handle, metadata] = AssetManager::GetHandleByPath(p_path);
 		auto scene = AssetManager::GetAsset<Scene>(handle);
 		if (!scene)
 		{
@@ -145,12 +145,11 @@ namespace Uneye
 		return std::map<std::filesystem::path, Ref<Scene>>();
 	}
 
-	void SceneManager::DestroyEntity(Entity* p_entt)
+	void SceneManager::DestroyEntity(const Entity* p_entt)
 	{
-		auto scenesMap = GetScenes();
 		s_Data.HasChange = true;
 
-		for (const auto& [path, scene] : scenesMap)
+		for (const auto& [path, scene] : GetScenes())
 		{
 			if (p_entt->GetScene() == scene.get())
 			{
@@ -174,17 +173,13 @@ namespace Uneye
 			s_Data.ActiveScenesByPath[path] = Scene::Copy(editorScene);
 			s_Data.ActiveScenesByPath[path]->OnRuntimeStart();
 		}
-
-		//TODO::
-		//m_SceneHierarchyPanel.SetContext(m_ActiveScene);
-
 	}
 
 	void SceneManager::OnSceneStop()
 	{
 		// Revisit this
 
-		UNEYE_ASSERT(s_Data.State != SceneState::Play && s_Data.State != SceneState::Simulate, "Unknown state!");
+		UNEYE_CORE_ASSERT(s_Data.State != SceneState::Play && s_Data.State != SceneState::Simulate, "Unknown state!");
 		
 		s_Data.State = SceneState::Edit;
 
@@ -197,9 +192,6 @@ namespace Uneye
 
 			s_Data.ActiveScenesByPath[path] = s_Data.EditorScenesByPath[path];
 		}
-
-		// TODO:
-		//m_SceneHierarchyPanel.SetContext(m_ActiveScene);
 	}
 
 	void SceneManager::OnScenePause(bool pause)
@@ -226,9 +218,6 @@ namespace Uneye
 			s_Data.ActiveScenesByPath[path] = scene;
 			scene->OnSimulationStart();
 		}
-
-		// TODOD:
-		//m_SceneHierarchyPanel.SetContext(m_ActiveScene);
 	}
 
 	bool SceneManager::HasChanged()
@@ -247,7 +236,7 @@ namespace Uneye
 			s_Data.EditorCamera.OnEvent(e);
 	}
 
-	const EditorCamera& SceneManager::GetEditorCamera()
+	EditorCamera& SceneManager::GetEditorCamera()
 	{
 		return s_Data.EditorCamera;
 	}
@@ -264,11 +253,11 @@ namespace Uneye
 			scene->OnViewportResize(width, height);
 		}
 
-		if (width > 0 && height > 0 && 
-			width != s_Data.ViewportSize.x && height != s_Data.ViewportSize.y)
+		if ((width > 0 && height > 0) &&
+			(width != (uint32_t)s_Data.ViewportSize.x || height != (uint32_t)s_Data.ViewportSize.y))
 		{
-			s_Data.ViewportSize.x = width;
-			s_Data.ViewportSize.y = height;
+			s_Data.ViewportSize.x = (float)width;
+			s_Data.ViewportSize.y = (float)height;
 
 
 			s_Data.EditorCamera.SetViewportSize(s_Data.ViewportSize.x, s_Data.ViewportSize.y);
@@ -288,6 +277,7 @@ namespace Uneye
 
 	const AssetHandle& SceneManager::NewScene()
 	{
+		// TODO:
 		// Revisit this
 
 		auto scene = CreateRef<Scene>();
@@ -295,8 +285,6 @@ namespace Uneye
 		s_Data.EditorScenesByPath["Not Loaded"] = scene;
 		
 		return scene->Handle;
-		// TODO: 
-		//m_SceneHierarchyPanel.SetContext(m_ActiveScene);
 	}
 
 	void SceneManager::SaveScene()
@@ -331,13 +319,10 @@ namespace Uneye
 
 	bool SceneManager::IsPaused()
 	{
-		for (const auto& [path, scene] : GetScenes())
-		{
-			if (scene->IsPaused())
-				return true;
-		}
-
-		return false;
+		return std::any_of(GetScenes().begin(), GetScenes().end(), [](const auto& pair) {
+			const auto& scene = pair.second;
+			return scene->IsPaused();
+			});
 	}
 
 	void SceneManager::Play()

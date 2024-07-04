@@ -210,6 +210,7 @@
     <ClInclude Include="src\Uneye\Renderer\Shader.h" />
     <ClInclude Include="src\Uneye\Renderer\SubTexture.h" />
     <ClInclude Include="src\Uneye\Renderer\Texture.h" />
+    <ClInclude Include="src\Uneye\Renderer\TileMap.h" />
     <ClInclude Include="src\Uneye\Renderer\UniformBuffer.h" />
     <ClInclude Include="src\Uneye\Renderer\VertexArray.h" />
     <ClInclude Include="src\Uneye\Scene\Components.h" />

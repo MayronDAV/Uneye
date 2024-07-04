@@ -9,6 +9,7 @@
 #include "Uneye/Renderer/Font.h"
 
 #include "Uneye/Asset/TextureImporter.h"
+#include "Uneye/Renderer/TileMap.h"
 
 #include <entt/entt.hpp>
 
@@ -146,13 +147,21 @@ namespace Uneye
 		SpriteComponent() = default;
 		SpriteComponent(const SpriteComponent&) = default;
 		SpriteComponent(const glm::vec4& p_color, const std::string& p_texturepath = "assets/textures/checkerboard.png")
-			:Color(p_color), TexturePath(p_texturepath), IsSubTexture(false) {}
+			:Color(p_color), TexturePath(p_texturepath) {}
 
 		SpriteComponent(const glm::vec4& p_color, const std::string& p_texturepath, glm::vec2 p_tileSize,
 			glm::vec2 p_tilecoord = glm::vec2(0, 0), glm::vec2 p_spriteSize = glm::vec2(1, 1))
 			:Color(p_color), TileSize(p_tileSize), TileCoord(p_tileSize), SpriteSize(p_spriteSize), IsSubTexture(true),
 			TexturePath(p_texturepath) {}
 
+	};
+
+	struct TileMapRendererComponent
+	{
+		TileMap Tilemap;
+
+		TileMapRendererComponent() = default;
+		TileMapRendererComponent(const TileMapRendererComponent&) = default;
 	};
 
 	struct CircleComponent
@@ -272,7 +281,7 @@ namespace Uneye
 	};
 
 	using AllComponents =
-		ComponentGroup<RelationshipComponent,TransformComponent, SpriteComponent,
+		ComponentGroup<RelationshipComponent,TransformComponent, SpriteComponent, TileMapRendererComponent,
 		CircleComponent, CameraComponent, NativeScriptComponent,
 		Rigidbody2DComponent, BoxCollider2DComponent, CircleCollider2DComponent, TextComponent, ScriptComponent>;
 }

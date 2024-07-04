@@ -11,6 +11,8 @@
 
 namespace Uneye
 {
+	// TODO: Make this class static.
+
 	using ScenesMap = std::map<std::filesystem::path, Ref<Scene>>;
 
 	class SceneHierarchyPanel

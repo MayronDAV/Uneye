@@ -1521,6 +1521,7 @@
     <ClInclude Include="vendor\stb\stb_voxel_render.h">
       <Filter>vendor\stb</Filter>
     </ClInclude>
+    <ClInclude Include="src\Uneye\Renderer\TileMap.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Platform\OpenGL\OpenGLBuffer.cpp">

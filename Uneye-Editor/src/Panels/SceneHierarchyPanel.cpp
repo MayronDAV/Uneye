@@ -351,6 +351,7 @@ namespace Uneye
 					DisplayAddComponentEntry<BoxCollider2DComponent>("BoxCollider 2D");
 					DisplayAddComponentEntry<CircleCollider2DComponent>("CircleCollider 2D");
 					DisplayAddComponentEntry<TextComponent>("Text Component");
+					DisplayAddComponentEntry<TileMapRendererComponent>("TileMapRenderer Component");
 
 					ImGui::EndPopup();
 				}
@@ -559,7 +560,28 @@ namespace Uneye
 					UI::DrawFloat2Input("Sprite Size", p_sc.SpriteSize, 1.0f);
 				}
 
-				}, true);
+			}, true);
+
+			DrawComponentUI<TileMapRendererComponent>(entt, "TileMapRenderer", [](auto& component)
+			{
+				auto width = (float)component.Tilemap.Width;
+				auto height = (float)component.Tilemap.Height;
+				auto tilesize = (float)component.Tilemap.TileSize;
+
+				ImGui::Text("Not implemented yet!!!");
+				ImGui::Spacing();
+				ImGui::Spacing();
+
+				UI::DrawFloatControl("Width", width, 32.0f);
+				UI::DrawFloatControl("Height", height, 32.0f);
+				UI::DrawFloatControl("Tile Size", tilesize, 16.0f);
+
+				ImGui::Spacing();
+				
+				std::string mapFilename = "-- Map --";
+				UI::DrawClickableText("TileMap", mapFilename, [=]() {}, [=]() {}); // This Line is just for test, not working!
+
+			}, true);
 
 
 			DrawComponentUI<CircleComponent>(entt, "Circle", [&](auto& cc) {

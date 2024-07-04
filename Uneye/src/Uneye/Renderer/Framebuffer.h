@@ -45,7 +45,8 @@ namespace Uneye
 
 	struct FramebufferSpecification
 	{
-		uint32_t Width = 0, Height = 0;
+		uint32_t Width = 0;
+		uint32_t Height = 0;
 		FramebufferAttachmentSpecification Attachments;
 		uint32_t Samples = 1;
 
